@@ -1,0 +1,49 @@
+{
+    "env": {
+        "development": {
+            "presets": ["es2015", "react", "react-hmre", "stage-0", "stage-1", "stage-2"]
+        },
+        "commonjs": {
+            "presets": [
+                "es2015",
+                "react",
+                "stage-0",
+                "stage-1"
+            ],
+            "plugins": [
+                [
+                    "css-modules-transform", {
+                        "generateScopedName": "Cal__[name]__[local]",
+                        "preprocessCss": "./babel.preprocess.sass.js",
+                        "extensions": [".scss"]
+                    }
+                ]
+            ]
+        },
+        "es6": {
+            "presets": [
+                "es2015-rollup",
+                "react",
+                "stage-0",
+                "stage-1"
+            ],
+            "plugins": [
+                [
+                    "css-modules-transform", {
+                        "generateScopedName": "Cal__[name]__[local]",
+                        "preprocessCss": "./babel.preprocess.sass.js",
+                        "extensions": [".scss"]
+                    }
+                ]
+            ]
+        },
+        "production": {
+            "presets": ["es2015", "react", "stage-0", "stage-1", "stage-2"],
+            "plugins": ["transform-object-assign"]
+        },
+        "testing": {
+            "presets": ["es2015", "react", "stage-0", "stage-1", "stage-2"],
+            "plugins": ["transform-object-assign"]
+        }
+    }
+}
