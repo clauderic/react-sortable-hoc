@@ -24,7 +24,9 @@ export const vendorPrefix = (function () {
         .join('')
         .match(/-(moz|webkit|ms)-/) || (styles.OLink === '' && ['', 'o'])
     )[1];
-    return pre[0].toUpperCase() + pre.substr(1);
+    // ms prefix is lowercase
+    const firstChar = pre === 'ms' ? pre[0] : pre[0].toUpperCase();
+    return firstChar + pre.substr(1);
 })();
 
 export function closest(el, fn) {
