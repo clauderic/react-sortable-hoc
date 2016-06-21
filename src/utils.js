@@ -17,6 +17,11 @@ export const events = {
 	end: (touchSupport) ? 'touchend' : 'mouseup'
 };
 
+function isIE(version) {
+  var myNav = navigator.userAgent.toLowerCase();
+  return (myNav.indexOf('msie') != -1) ? (parseInt(myNav.split('msie')[1], 10) == version) : false;
+}
+
 export const vendorPrefix = (function () {
     let styles = window.getComputedStyle(document.documentElement, '');
     let pre = (Array.prototype.slice
@@ -24,7 +29,15 @@ export const vendorPrefix = (function () {
         .join('')
         .match(/-(moz|webkit|ms)-/) || (styles.OLink === '' && ['', 'o'])
     )[1];
-    return pre[0].toUpperCase() + pre.substr(1);
+
+    switch (pre) {
+        case 'ms':
+            return (isIE(9)) ? 'ms' : '';
+        case 'webkit':
+            return 'Webkit';
+        default:
+            return '';
+    }
 })();
 
 export function closest(el, fn) {
