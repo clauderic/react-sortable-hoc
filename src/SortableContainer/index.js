@@ -1,7 +1,7 @@
 import React, {Component, PropTypes} from 'react';
 import ReactDOM from 'react-dom';
 import Manager from '../Manager';
-import {closest, events, touchSupport, vendorPrefix} from '../utils';
+import {closest, events, vendorPrefix} from '../utils';
 import invariant from 'invariant';
 
 // Export Higher Order Sortable Container Component
@@ -11,9 +11,9 @@ export default function SortableContainer(WrappedComponent, config = {withRef: f
 			super();
 			this.manager = new Manager();
 			this.events = {
-				[events.start]: this.handleStart,
-				[events.move]: this.cancel,
-				[events.end]: this.cancel
+				start: this.handleStart,
+				move: this.cancel,
+				end: this.cancel
 			};
 		}
 		static displayName = (WrappedComponent.displayName) ? `SortableList(${WrappedComponent.displayName})` : 'SortableList';
@@ -60,12 +60,12 @@ export default function SortableContainer(WrappedComponent, config = {withRef: f
 			this.contentWindow = (typeof contentWindow == 'function') ? contentWindow() : contentWindow;
 
 			for (let key in this.events) {
-				this.container.addEventListener(key, this.events[key]);
+				events[key].forEach(eventName => this.container.addEventListener(eventName, this.events[key], false));
 			}
 		}
 		componentWillUnmount() {
 			for (let key in this.events) {
-				this.container.removeEventListener(key, this.events[key]);
+				events[key].forEach(eventName => this.container.removeEventListener(eventName, this.events[key]));
 			}
 		}
 		handleStart = (e) => {
@@ -127,9 +127,9 @@ export default function SortableContainer(WrappedComponent, config = {withRef: f
 					this.helper.classList.add(helperClass.split(' '));
 				}
 
-				this.listenerNode = (touchSupport) ? node : this.contentWindow;
-				this.listenerNode.addEventListener(events.move, this.handleSortMove);
-				this.listenerNode.addEventListener(events.end, this.handleSortEnd);
+				this.listenerNode = (e.touches) ? node : this.contentWindow;
+				events.move.forEach(eventName => this.listenerNode.addEventListener(eventName, this.handleSortMove, false));
+				events.end.forEach(eventName => this.listenerNode.addEventListener(eventName, this.handleSortEnd, false));
 
 				this.setState({
 					sorting: true,
@@ -155,8 +155,8 @@ export default function SortableContainer(WrappedComponent, config = {withRef: f
 
 			// Remove the event listeners if the node is still in the DOM
 			if (this.listenerNode) {
-				this.listenerNode.removeEventListener(events.move, this.handleSortMove);
-				this.listenerNode.removeEventListener(events.end, this.handleSortEnd);
+				events.move.forEach(eventName => this.listenerNode.removeEventListener(eventName, this.handleSortMove));
+				events.end.forEach(eventName => this.listenerNode.removeEventListener(eventName, this.handleSortEnd));
 			}
 
 			// Remove the helper from the DOM
@@ -208,8 +208,8 @@ export default function SortableContainer(WrappedComponent, config = {withRef: f
 		}
 		getOffset(e) {
 			return {
-				x: (touchSupport) ? e.touches[0].clientX : e.clientX,
-				y: (touchSupport) ? e.touches[0].clientY : e.clientY
+				x: (e.touches) ? e.touches[0].clientX : e.clientX,
+				y: (e.touches) ? e.touches[0].clientY : e.clientY
 			}
 		}
 		updatePosition(e) {

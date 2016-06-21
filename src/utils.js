@@ -9,12 +9,10 @@ export function arrayMove (array, previousIndex, newIndex) {
     return array;
 }
 
-export const touchSupport = Boolean(('ontouchstart' in window) || window.DocumentTouch && document instanceof window.DocumentTouch);
-
 export const events = {
-	start: (touchSupport) ? 'touchstart' : 'mousedown',
-	move: (touchSupport) ? 'touchmove' : 'mousemove',
-	end: (touchSupport) ? 'touchend' : 'mouseup'
+	start: ['touchstart', 'mousedown'],
+	move: ['touchmove', 'mousemove'],
+	end: ['touchend', 'mouseup']
 };
 
 export const vendorPrefix = (function () {
