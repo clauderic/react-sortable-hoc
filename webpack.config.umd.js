@@ -27,7 +27,7 @@ module.exports = {
     output: {
         path: path.join(__dirname, 'dist/umd'),
         filename: (minify) ? outputName + '.min.js' : outputName + '.js',
-        library: 'InfiniteCalendar',
+        library: 'SortableHOC',
         libraryTarget: 'umd'
     },
     externals: {
