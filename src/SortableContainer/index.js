@@ -6,11 +6,10 @@ import invariant from 'invariant';
 
 // Export Higher Order Sortable Container Component
 export default function SortableContainer(WrappedComponent, config = {withRef: false}) {
-	const manager = new Manager();
-
 	return class extends Component {
 		constructor() {
 			super();
+			this.manager = new Manager();
 			this.events = {
 				[events.start]: this.handleStart,
 				[events.move]: this.cancel,
@@ -49,7 +48,7 @@ export default function SortableContainer(WrappedComponent, config = {withRef: f
 		state = {};
 		getChildContext() {
 			return {
-				manager
+				manager: this.manager
 			};
 		}
 		componentDidMount() {
@@ -61,35 +60,35 @@ export default function SortableContainer(WrappedComponent, config = {withRef: f
 			this.contentWindow = (typeof contentWindow == 'function') ? contentWindow() : contentWindow;
 
 			for (let key in this.events) {
-				this.document.addEventListener(key, this.events[key]);
+				this.container.addEventListener(key, this.events[key]);
 			}
 		}
 		componentWillUnmount() {
 			for (let key in this.events) {
-				this.document.removeEventListener(key, this.events[key]);
+				this.container.removeEventListener(key, this.events[key]);
 			}
 		}
 		handleStart = (e) => {
 			let node = closest(e.target, (el) => el.sortableInfo != null);
 
-			if (node) {
+			if (node && node.sortableInfo) {
 				let {useDragHandle} = this.props;
 				let {index, collection} = node.sortableInfo;
 
 				if (useDragHandle && !e.target.sortableHandle) return;
 
-				manager.active = {index, collection};
+				this.manager.active = {index, collection};
 				this.pressTimer = setTimeout(() => this.handlePress(e), this.props.pressDelay);
 			}
 		};
 		cancel = () => {
 			if (!this.state.sorting) {
 				clearTimeout(this.pressTimer);
-				manager.active = null;
+				this.manager.active = null;
 			}
 		};
 		handlePress = (e) => {
-			let active = manager.getActive();
+			let active = this.manager.getActive();
 
 			if (active) {
 				let {axis, onSortStart, helperClass, useWindowAsScrollContainer} = this.props;
@@ -152,7 +151,7 @@ export default function SortableContainer(WrappedComponent, config = {withRef: f
 		}
 		handleSortEnd = (e) => {
 			let {hideSortableGhost, onSortEnd} = this.props;
-			let {collection} = manager.active;
+			let {collection} = this.manager.active;
 
 			// Remove the event listeners if the node is still in the DOM
 			if (this.listenerNode) {
@@ -167,7 +166,7 @@ export default function SortableContainer(WrappedComponent, config = {withRef: f
 				this.node.style.visibility = '';
 			}
 
-			let nodes = manager.refs[collection];
+			let nodes = this.manager.refs[collection];
 			for (let i = 0, len = nodes.length; i < len; i++) {
 				let node = nodes[i];
 				let {node: el} = node;
@@ -191,7 +190,7 @@ export default function SortableContainer(WrappedComponent, config = {withRef: f
 			this.autoscrollInterval = null;
 
 			// Update state
-			manager.active = null;
+			this.manager.active = null;
 			this.setState({
 				sorting: false,
 				sortingIndex: null
@@ -244,7 +243,7 @@ export default function SortableContainer(WrappedComponent, config = {withRef: f
 		}
 		animateNodes() {
 			let {axis, transitionDuration, hideSortableGhost} = this.props;
-			let nodes = manager.getOrderedRefs();
+			let nodes = this.manager.getOrderedRefs();
 			let deltaScroll = this.scrollContainer[`scroll${this.edge}`] - this.initialScroll;
 			let sortingOffset = this.offsetEdge + this.translate + deltaScroll;
 			this.newIndex = null;
