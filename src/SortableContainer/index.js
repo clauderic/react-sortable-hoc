@@ -103,6 +103,7 @@ export default function SortableContainer(WrappedComponent, config = {withRef: f
 				this.dimension = (axis == 'x') ? this.width : this.height;
 				this.boundingClientRect = node.getBoundingClientRect();
 				this.index = index;
+				this.newIndex = index;
 
 				let edge = this.edge = (axis == 'x') ? 'Left' : 'Top';
 				this.offsetEdge = this.getEdgeOffset(edge, node);
