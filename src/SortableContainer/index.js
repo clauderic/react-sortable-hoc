@@ -75,7 +75,7 @@ export default function SortableContainer(WrappedComponent, config = {withRef: f
 				let {useDragHandle} = this.props;
 				let {index, collection} = node.sortableInfo;
 
-				if (useDragHandle && !e.target.sortableHandle) return;
+				if (useDragHandle && !closest(e.target, (el) => el.sortableHandle != null)) return;
 
 				this.manager.active = {index, collection};
 				this.pressTimer = setTimeout(() => this.handlePress(e), this.props.pressDelay);
