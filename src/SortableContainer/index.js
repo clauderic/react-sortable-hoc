@@ -81,7 +81,7 @@ export default function SortableContainer(WrappedComponent, config = {withRef: f
 				this.pressTimer = setTimeout(() => this.handlePress(e), this.props.pressDelay);
 			}
 		};
-		cancel = () => {
+		cancel = (e) => {
 			if (!this.state.sorting) {
 				clearTimeout(this.pressTimer);
 				this.manager.active = null;
@@ -104,10 +104,6 @@ export default function SortableContainer(WrappedComponent, config = {withRef: f
 				this.index = index;
 				this.newIndex = index;
 
-				if (hideSortableGhost) {
-					node.style.visibility = 'hidden';
-				}
-
 				let edge = this.edge = (axis == 'x') ? 'Left' : 'Top';
 				this.offsetEdge = this.getEdgeOffset(edge, node);
 				this.initialOffset = this.getOffset(e);
@@ -118,6 +114,10 @@ export default function SortableContainer(WrappedComponent, config = {withRef: f
 				this.helper.style.top = `${this.boundingClientRect.top}px`;
 				this.helper.style.left = `${this.boundingClientRect.left}px`;
 				this.helper.style.width = `${this.width}px`;
+
+				if (hideSortableGhost) {
+					node.style.visibility = 'hidden';
+				}
 
 				if (axis == 'x') {
 					this.minTranslate = ((useWindowAsScrollContainer) ? 0 : containerBoundingRect.left) - this.boundingClientRect.left - this.width/2;
