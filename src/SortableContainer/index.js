@@ -91,7 +91,7 @@ export default function SortableContainer(WrappedComponent, config = {withRef: f
 			let active = this.manager.getActive();
 
 			if (active) {
-				let {axis, onSortStart, helperClass, useWindowAsScrollContainer} = this.props;
+				let {axis, onSortStart, helperClass, hideSortableGhost, useWindowAsScrollContainer} = this.props;
 				let {node, index, collection} = active;
 
 				let containerBoundingRect = this.container.getBoundingClientRect();
@@ -103,6 +103,10 @@ export default function SortableContainer(WrappedComponent, config = {withRef: f
 				this.boundingClientRect = node.getBoundingClientRect();
 				this.index = index;
 				this.newIndex = index;
+
+				if (hideSortableGhost) {
+					node.style.visibility = 'hidden';
+				}
 
 				let edge = this.edge = (axis == 'x') ? 'Left' : 'Top';
 				this.offsetEdge = this.getEdgeOffset(edge, node);
