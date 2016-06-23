@@ -156,6 +156,8 @@ export default function SortableContainer(WrappedComponent, config = {withRef: f
 		handleSortEnd = (e) => {
 			let {hideSortableGhost, onSortEnd} = this.props;
 			let {collection} = this.manager.active;
+			const oldIndex = this.index;
+			const newIndex = this.newIndex;
 
 			// Remove the event listeners if the node is still in the DOM
 			if (this.listenerNode) {
@@ -170,11 +172,16 @@ export default function SortableContainer(WrappedComponent, config = {withRef: f
 				this.node.style.visibility = '';
 			}
 
+			// Re-sort nodes to account for new order
+			this.manager.move(collection, oldIndex, newIndex);
+
 			let nodes = this.manager.refs[collection];
 			for (let i = 0, len = nodes.length; i < len; i++) {
 				let node = nodes[i];
-				let {node: el} = node;
-				node.edgeOffset = null; // Clear the cached offsetTop / offsetLeft value
+				let el = node.node;
+
+				// Clear the cached offsetTop / offsetLeft value
+				node.edgeOffset = null;
 
 				// Remove the transforms / transitions
 				el.style[`${vendorPrefix}Transform`] = '';
@@ -183,8 +190,8 @@ export default function SortableContainer(WrappedComponent, config = {withRef: f
 
 			if (typeof onSortEnd == 'function') {
 				onSortEnd({
-					oldIndex: this.index,
-					newIndex: this.newIndex,
+					oldIndex,
+					newIndex,
 					collection: collection
 				}, e);
 			}
