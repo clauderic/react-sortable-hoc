@@ -129,7 +129,7 @@ export default function SortableContainer(WrappedComponent, config = {withRef: f
 				}
 
 				if (helperClass) {
-					this.helper.classList.add(helperClass.split(' '));
+					this.helper.classList.add(...(helperClass.split(' ')));
 				}
 
 				this.listenerNode = (e.touches) ? node : this.contentWindow;
