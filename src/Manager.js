@@ -12,7 +12,7 @@ export default class Manager {
 		return this.refs[collection].indexOf(ref);
 	}
 	getOrderedRefs(collection = this.active.collection) {
-		return sortBy(this.refs[collection], 'index');
+		return sortBy(this.refs[collection], ({node}) => node.sortableInfo.index);
 	}
 	remove(collection, ref) {
 		let index = this.getIndex(collection, ref);
@@ -22,6 +22,6 @@ export default class Manager {
 		}
 	}
 	getActive() {
-		return find(this.refs[this.active.collection], (ref) => ref.index == this.active.index);
+		return find(this.refs[this.active.collection], ({node}) => node.sortableInfo.index == this.active.index);
 	}
 }

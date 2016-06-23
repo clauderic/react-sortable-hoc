@@ -92,7 +92,8 @@ export default function SortableContainer(WrappedComponent, config = {withRef: f
 
 			if (active) {
 				let {axis, onSortStart, helperClass, hideSortableGhost, useWindowAsScrollContainer} = this.props;
-				let {node, index, collection} = active;
+				let {node, collection} = active;
+				let index = node.sortableInfo.index;
 
 				let containerBoundingRect = this.container.getBoundingClientRect();
 
@@ -173,7 +174,8 @@ export default function SortableContainer(WrappedComponent, config = {withRef: f
 			let nodes = this.manager.refs[collection];
 			for (let i = 0, len = nodes.length; i < len; i++) {
 				let node = nodes[i];
-				let {node: el} = node;
+				let el = node.node;
+				let index = el.sortableInfo.index;
 				node.edgeOffset = null; // Clear the cached offsetTop / offsetLeft value
 
 				// Remove the transforms / transitions
@@ -253,7 +255,8 @@ export default function SortableContainer(WrappedComponent, config = {withRef: f
 			this.newIndex = null;
 
 			for (let i = 0, len = nodes.length; i < len; i++) {
-				let {node, index, edgeOffset} = nodes[i];
+				let {node, edgeOffset} = nodes[i];
+				let index = node.sortableInfo.index;
 				let dimension = (axis == 'x') ? node.offsetWidth : node.offsetHeight;
 				let offset = (this.dimension > dimension) ? dimension / 2 : this.dimension / 2;
 				let translate = 0;
