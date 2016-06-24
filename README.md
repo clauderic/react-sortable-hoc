@@ -121,6 +121,10 @@ Dependencies
 ------------
 React Sortable List has very few dependencies. It depends on `invariant` and a couple `lodash` functions. It has the following peerDependencies: `react`, `react-dom`
 
+Reporting Issues
+----------------
+If you find any [issues](https://github.com/clauderic/react-sortable-hoc/issues), please report it along with any relevant details to reproduce it. The easiest way to do so is to fork this [jsfiddle](https://jsfiddle.net/clauderic/6r7r2cva/).
+
 Contributions
 ------------
 Yes please! Feature requests / pull requests are welcome.
