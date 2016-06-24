@@ -75,6 +75,7 @@ export default function SortableContainer(WrappedComponent, config = {withRef: f
 			}
 		}
 		handleStart = (e) => {
+			e.stopPropagation();
 			let node = closest(e.target, (el) => el.sortableInfo != null);
 
 			if (node && !this.state.sorting && node.sortableInfo) {
@@ -88,12 +89,14 @@ export default function SortableContainer(WrappedComponent, config = {withRef: f
 			}
 		};
 		cancel = (e) => {
+			e.stopPropagation();
 			if (!this.state.sorting) {
 				clearTimeout(this.pressTimer);
 				this.manager.active = null;
 			}
 		};
 		handlePress = (e) => {
+			e.stopPropagation();
 			let active = this.manager.getActive();
 
 			if (active) {
@@ -151,6 +154,7 @@ export default function SortableContainer(WrappedComponent, config = {withRef: f
 			}
 		}
 		handleSortMove = (e) => {
+			e.stopPropagation();
 			let {onSortMove} = this.props;
 			e.preventDefault(); // Prevent scrolling on mobile
 
@@ -161,6 +165,7 @@ export default function SortableContainer(WrappedComponent, config = {withRef: f
 			if (onSortMove) onSortMove(e);
 		}
 		handleSortEnd = (e) => {
+			e.stopPropagation();
 			let {hideSortableGhost, onSortEnd} = this.props;
 			let {collection} = this.manager.active;
 
