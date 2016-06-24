@@ -1,7 +1,7 @@
 import React, {Component, PropTypes} from 'react';
 import ReactDOM from 'react-dom';
 import Manager from '../Manager';
-import {closest, events, vendorPrefix} from '../utils';
+import {closest, events, vendorPrefix, limit} from '../utils';
 import invariant from 'invariant';
 
 // Export Higher Order Sortable Container Component
@@ -25,7 +25,8 @@ export default function SortableContainer(WrappedComponent, config = {withRef: f
 			useWindowAsScrollContainer: false,
 			hideSortableGhost: true,
 			contentWindow: window,
-			lockToContainerEdges: false
+			lockToContainerEdges: false,
+			lockOffset: '50%',
 		};
 		static propTypes = {
 			axis: PropTypes.string,
@@ -40,7 +41,12 @@ export default function SortableContainer(WrappedComponent, config = {withRef: f
 			useDragHandle: PropTypes.bool,
 			useWindowAsScrollContainer: PropTypes.bool,
 			hideSortableGhost: PropTypes.bool,
-			lockToContainerEdges: PropTypes.bool
+			lockToContainerEdges: PropTypes.bool,
+			lockOffset: PropTypes.oneOfType([
+				PropTypes.number,
+				PropTypes.string,
+				PropTypes.arrayOf(PropTypes.oneOfType([PropTypes.number, PropTypes.string]))
+			]),
 		};
 		static childContextTypes = {
 			manager: PropTypes.object.isRequired
@@ -218,6 +224,56 @@ export default function SortableContainer(WrappedComponent, config = {withRef: f
 				y: (e.touches) ? e.touches[0].clientY : e.clientY
 			}
 		}
+		getLockPixelOffsets() {
+			let {lockOffset} = this.props;
+
+			if (!Array.isArray(lockOffset)) {
+				lockOffset = [lockOffset, lockOffset];
+			}
+			invariant(
+				lockOffset.length === 2,
+				'lockOffset prop of SortableContainer should be a single ' +
+				'value or an array of exactly two values. Given %s',
+				lockOffset
+			);
+
+			const [minLockOffset, maxLockOffset] = lockOffset;
+
+			return [
+				this.getLockPixelOffset(minLockOffset),
+				this.getLockPixelOffset(maxLockOffset),
+			];
+		}
+		getLockPixelOffset(lockOffset) {
+			let offset = lockOffset;
+			let unit = 'px';
+
+			if (typeof lockOffset === 'string') {
+				const match = /^[+-]?\d*(?:\.\d*)?(px|%)$/.exec(lockOffset);
+
+				invariant(
+					match !== null,
+					'lockOffset value should be a number or a string of a ' +
+					'number followed by "px" or "%". Given %s',
+					lockOffset
+				);
+
+				offset = parseFloat(lockOffset);
+				unit = match[1];
+			}
+
+			invariant(
+				isFinite(offset),
+				'lockOffset value should be a finite. Given %s',
+				lockOffset
+			);
+
+			if (unit === '%') {
+				offset = offset * this.dimension / 100;
+			}
+
+			return offset;
+		}
 		updatePosition(e) {
 			let {axis, lockAxis, lockToContainerEdges} = this.props;
 			let offset = this.getOffset(e);
@@ -229,11 +285,15 @@ export default function SortableContainer(WrappedComponent, config = {withRef: f
 			this.translate = translate[axis];
 
 			if (lockToContainerEdges) {
-				if (translate[axis] < this.minTranslate) {
-					translate[axis] = this.minTranslate;
-				} else if (translate[axis] > this.maxTranslate) {
-					translate[axis] = this.maxTranslate;
-				}
+				const [minLockOffset, maxLockOffset] = this.getLockPixelOffsets();
+				const minOffset = this.dimension / 2 - minLockOffset;
+				const maxOffset = this.dimension / 2 - maxLockOffset;
+
+				translate[axis] = limit(
+					this.minTranslate + minOffset,
+					this.maxTranslate - maxOffset,
+					translate[axis]
+				);
 			}
 
 			switch (lockAxis) {

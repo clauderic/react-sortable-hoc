@@ -102,6 +102,10 @@ More code examples are available [here](https://github.com/clauderic/react-sorta
 | useWindowAsScrollContainer | Boolean  | `false` | If you want, you can set the `window` as the scrolling container                                                                                                                                                             |
 | hideSortableGhost          | Boolean  | `true`  | Whether to auto-hide the ghost element. By default, as a convenience, React Sortable List will automatically hide the element that is currently being sorted. Set this to false if you would like to apply your own styling. |
 | lockToContainerEdges       | Boolean  | `false` | You can lock movement of the sortable element to it's parent `SortableContainer`                                                                                                                                             |
+| lockOffset                 | `OffsetValue`\* \| [`OffsetValue`\*, `OffsetValue`\*] | `"50%"` | When `lockToContainerEdges` is set to `true`, this controls the offset distance between the sortable helper and the top/bottom edges of it's parent `SortableContainer`. Percentage values are relative to the height of the item currently being sorted. If you wish to specify different behaviours for locking to the *top* of the container vs the *bottom*, you may also pass in an `array` (For example: `["0%", "100%"]`). |
+
+\* `OffsetValue` is either a finite `Number` or a `String` made-up of a number and a unit (`px` or `%`).
+Examples: `10` (is the same as `"10px"`), `"50%"`
 
 #### SortableElement HOC
 | Property   | Type             | Default | Required? | Description                                                                                                                                                                                                                               |
