@@ -37,3 +37,13 @@ export function closest(el, fn) {
         el = el.parentNode;
     }
 }
+
+export function limit(min, max, value) {
+    if (value < min) {
+        return min;
+    }
+    if (value > max) {
+        return max;
+    }
+    return value;
+}
