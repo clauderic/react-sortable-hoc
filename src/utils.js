@@ -27,7 +27,7 @@ export const vendorPrefix = (function () {
         case 'ms':
             return 'ms';
         default:
-            return pre[0].toUpperCase() + pre.substr(1);
+            return (pre && pre.length) ? pre[0].toUpperCase() + pre.substr(1) : '';
     }
 })();
 
