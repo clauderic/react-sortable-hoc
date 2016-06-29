@@ -123,7 +123,7 @@ React Sortable List has very few dependencies. It depends on `invariant` and a c
 
 Reporting Issues
 ----------------
-If you find any [issues](https://github.com/clauderic/react-sortable-hoc/issues), please report it along with any relevant details to reproduce it. The easiest way to do so is to fork this [jsfiddle](https://jsfiddle.net/clauderic/6r7r2cva/).
+If you find an [issue](https://github.com/clauderic/react-sortable-hoc/issues), please report it along with any relevant details to reproduce it. The easiest way to do so is to fork this [jsfiddle](https://jsfiddle.net/clauderic/6r7r2cva/).
 
 Contributions
 ------------
