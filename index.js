@@ -1,10 +1,7 @@
 import 'babel-polyfill';
 import React, {Component} from 'react';
-import { render } from 'react-dom';
+import {render} from 'react-dom';
 import {SortableContainer, SortableElement, arrayMove} from './src/index';
-import {VirtualScroll} from 'react-virtualized';
-import Infinite from 'react-infinite';
-import 'react-virtualized/styles.css';
 import range from 'lodash/range';
 import random from 'lodash/random';
 
@@ -18,7 +15,6 @@ const Item = SortableElement((props) => {
             borderBottom: '1px solid #DEDEDE',
             boxSizing: 'border-box',
             WebkitUserSelect: 'none',
-            visibility: (props.index === props.sortingIndex) ? 'hidden' : null,
             height: props.height
         }}>
             Item {props.value}
@@ -41,42 +37,18 @@ class List extends Component {
         this.setState({items});
     };
     render() {
-        let {sortingIndex} = this.props;
         const {items} = this.state;
 
-        // return (
-        //     <VirtualScroll
-        //         rowHeight={59}
-        //         overscanRowCount={0}
-        //         rowRenderer={({index}) => {
-        //             return <Item index={index} sortingIndex={sortingIndex} value={items[index]}/>;
-        //         }}
-        //         rowCount={300}
-        //         width={500}
-        //         height={400}
-        //     />
-        // );
-
-
         return (
-            <Infinite
-                containerHeight={400}
-                elementHeight={items.map((item) => item.height)}
-            >
-                {items.map(({value, height}, index) => <Item key={`item-${index}`} sortingIndex={sortingIndex} index={index} value={value} height={height}/>)}
-            </Infinite>
+            <div>
+                {items.map((item, index) => <Item key={`item-${index}`} index={index} value={item}/>)}
+            </div>
         );
-
-        // return (
-        //     <div>
-        //         {items.map((item, index) => <Item key={`item-${index}`} sortingIndex={sortingIndex} index={index} value={item}/>)}
-        //     </div>
-        // );
     }
 }
 
 const SortableList = SortableContainer(List);
 
-render(<SortableList useWindowAsScrollContainer={false} />,
+render(<SortableList />,
   document.getElementById('root')
 )
