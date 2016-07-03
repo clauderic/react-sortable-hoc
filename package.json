@@ -53,7 +53,7 @@
     "react-dom": "^0.14.0 || ^15.0.0"
   },
   "devDependencies": {
-    "@kadira/storybook": "git+https://github.com/kadirahq/react-storybook.git",
+    "@kadira/storybook": "^1.36.0",
     "@kadira/storybook-deployer": "^1.0.0",
     "autoprefixer": "^6.3.6",
     "babel-cli": "^6.9.0",

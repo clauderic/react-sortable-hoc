@@ -4,6 +4,4 @@ dist
 styles.min.css
 styles.min.css.map
 coverage
-.stories
-.storybook
 npm-debug.log
