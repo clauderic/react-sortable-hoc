@@ -2,6 +2,7 @@
 > A set of higher-order components to turn any list into an animated, touch-friendly, sortable list.
 
 [![npm version](https://img.shields.io/npm/v/react-sortable-hoc.svg)](https://www.npmjs.com/package/react-sortable-hoc)
+![npm downloads](https://img.shields.io/npm/dm/react-sortable-hoc.svg)
 [![license](https://img.shields.io/github/license/mashape/apistatus.svg?maxAge=2592000)](https://github.com/clauderic/react-sortable-hoc/blob/master/LICENSE)
 [![XO code style](https://img.shields.io/badge/code_style-XO-5ed9c7.svg)](https://github.com/sindresorhus/xo)
 [![Gitter](https://badges.gitter.im/clauderic/react-sortable-hoc.svg)](https://gitter.im/clauderic/react-sortable-hoc)
@@ -20,7 +21,7 @@ Features
 Installation
 ------------
 
-Using [npm](https://www.npmjs.com/):
+Using [npm](https://www.npmjs.com/package/react-sortable-hoc):
 
 	$ npm install react-sortable-hoc --save
 
@@ -123,7 +124,7 @@ React Sortable List has very few dependencies. It depends on `invariant` and a c
 
 Reporting Issues
 ----------------
-If you find an [issue](https://github.com/clauderic/react-sortable-hoc/issues), please report it along with any relevant details to reproduce it. The easiest way to do so is to fork this [jsfiddle](https://jsfiddle.net/clauderic/6r7r2cva/).
+If believe you've found an issue, please [report it](https://github.com/clauderic/react-sortable-hoc/issues) along with any relevant details to reproduce it. The easiest way to do so is to fork this [jsfiddle](https://jsfiddle.net/clauderic/6r7r2cva/).
 
 Contributions
 ------------
