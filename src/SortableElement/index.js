@@ -20,15 +20,15 @@ export default function SortableElement (WrappedComponent, config = {withRef: fa
         };
         addRef() {
             let node = this.node = findDOMNode(this);
-
+            let {collection, index} = this.props;
+            
             node.sortableInfo = {index, collection};
 
             this.ref = {node};
             this.context.manager.add(collection, this.ref);
         }
         componentDidMount() {
-            let {collection, disabled, index} = this.props;
-
+            let {disabled} = this.props;
             if (!disabled) {
                 this.addRef()
             }
