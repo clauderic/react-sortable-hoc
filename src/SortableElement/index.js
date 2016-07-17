@@ -28,7 +28,7 @@ export default function SortableElement (WrappedComponent, config = {withRef: fa
             addOrRemove(collection, this.ref)
         }
         componentDidMount() {
-            this.addOrRemoveRef(this.props.disabled)
+            this.addOrRemoveRef(!this.props.disabled)
         }
         componentWillReceiveProps(nextProps) {
             const {index} = this.props;
