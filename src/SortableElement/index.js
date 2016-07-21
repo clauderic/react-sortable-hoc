@@ -19,15 +19,11 @@ export default function SortableElement (WrappedComponent, config = {withRef: fa
             collection: 0
         };
         componentDidMount() {
+
             let {collection, disabled, index} = this.props;
 
             if (!disabled) {
-                let node = this.node = findDOMNode(this);
-
-                node.sortableInfo = {index, collection};
-
-                this.ref = {node};
-                this.context.manager.add(collection, this.ref);
+                this.setDraggable(collection, index);
             }
         }
         componentWillReceiveProps(nextProps) {
@@ -35,12 +31,38 @@ export default function SortableElement (WrappedComponent, config = {withRef: fa
             if (index !== nextProps.index && this.node) {
                 this.node.sortableInfo.index = nextProps.index;
             }
+            if (this.props.disabled !== nextProps.disabled)
+            {
+                let {collection, disabled, index} = nextProps;
+                if (disabled) {
+                    this.removeDraggable(collection);
+                }
+                else {
+                    this.setDraggable(collection, index);
+                }
+            }
         }
+
         componentWillUnmount() {
             let {collection, disabled} = this.props;
 
-            if (!disabled) this.context.manager.remove(collection, this.ref);
+            if (!disabled) this.removeDraggable(collection);
         }
+
+        
+        setDraggable(collection, index){
+            let node = this.node = findDOMNode(this);
+
+            node.sortableInfo = {index, collection};
+
+            this.ref = {node};
+            this.context.manager.add(collection, this.ref);
+        }
+
+        removeDraggable(collection) {
+            this.context.manager.remove(collection, this.ref);
+        }
+
         getWrappedInstance() {
             invariant(config.withRef, 'To access the wrapped instance, you need to pass in {withRef: true} as the second argument of the SortableElement() call');
             return this.refs.wrappedInstance;
