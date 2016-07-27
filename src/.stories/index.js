@@ -113,7 +113,7 @@ class FlexTableWrapper extends Component {
 
 		return (
 			<SortableFlexTable
-				getContainer={(wrappedInstance) => ReactDOM.findDOMNode(wrappedInstance._grid)}
+				getContainer={(wrappedInstance) => ReactDOM.findDOMNode(wrappedInstance.Grid)}
 				gridClassName={className}
 				headerHeight={itemHeight}
 				height={height}

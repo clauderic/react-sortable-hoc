@@ -91,7 +91,7 @@
     "react-addons-shallow-compare": "^15.1.0",
     "react-addons-test-utils": "^15.1.0",
     "react-infinite": "^0.9.2",
-    "react-virtualized": "^7.15.0",
+    "react-virtualized": "^7.15.1",
     "redux": "^3.5.2",
     "rimraf": "^2.5.2",
     "sass-loader": "^3.2.0",
