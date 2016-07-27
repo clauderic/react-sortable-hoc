@@ -18,22 +18,26 @@ export default function SortableElement (WrappedComponent, config = {withRef: fa
         static defaultProps = {
             collection: 0
         };
+        addOrRemoveRef(shouldAdd) {
+            let node = this.node = findDOMNode(this);
+            let {collection, index} = this.props;
+            let {manager} = this.context;
+            node.sortableInfo = {index, collection};
+            this.ref = {node};
+            let addOrRemove = (shouldAdd) ? manager.add : manager.remove;
+            addOrRemove(collection, this.ref)
+        }
         componentDidMount() {
-            let {collection, disabled, index} = this.props;
-
-            if (!disabled) {
-                let node = this.node = findDOMNode(this);
-
-                node.sortableInfo = {index, collection};
-
-                this.ref = {node};
-                this.context.manager.add(collection, this.ref);
-            }
+            this.addOrRemoveRef(!this.props.disabled)
         }
         componentWillReceiveProps(nextProps) {
             const {index} = this.props;
             if (index !== nextProps.index && this.node) {
                 this.node.sortableInfo.index = nextProps.index;
+            }
+
+            if (this.props.disabled !== nextProps.disabled) {
+                this.addOrRemoveRef(!nextProps.disabled)
             }
         }
         componentWillUnmount() {
