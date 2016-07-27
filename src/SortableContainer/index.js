@@ -47,6 +47,7 @@ export default function SortableContainer(WrappedComponent, config = {withRef: f
 				PropTypes.string,
 				PropTypes.arrayOf(PropTypes.oneOfType([PropTypes.number, PropTypes.string]))
 			]),
+			getContainer: PropTypes.func
 		};
 		static childContextTypes = {
 			manager: PropTypes.object.isRequired
@@ -58,9 +59,9 @@ export default function SortableContainer(WrappedComponent, config = {withRef: f
 			};
 		}
 		componentDidMount() {
-			let {contentWindow} = this.props;
+			let {contentWindow, getContainer} = this.props;
 
-			this.container = ReactDOM.findDOMNode(this);
+			this.container = (typeof getContainer == 'function') ? getContainer(this.getWrappedInstance()) : ReactDOM.findDOMNode(this);
 			this.document = this.container.ownerDocument || document;
 			this.scrollContainer = (this.props.useWindowAsScrollContainer) ? this.document.body : this.container;
 			this.contentWindow = (typeof contentWindow == 'function') ? contentWindow() : contentWindow;
