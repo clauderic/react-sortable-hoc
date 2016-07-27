@@ -47,3 +47,21 @@ export function limit(min, max, value) {
     }
     return value;
 }
+
+function getCSSPixelValue(stringValue) {
+    if (stringValue.substr(-2) === 'px') {
+        return parseFloat(stringValue);
+    }
+    return 0;
+}
+
+export function getElementMargin(element) {
+    const style = window.getComputedStyle(element);
+
+    return {
+        top   : getCSSPixelValue(style.marginTop),
+        right : getCSSPixelValue(style.marginRight),
+        bottom: getCSSPixelValue(style.marginBottom),
+        left  : getCSSPixelValue(style.marginLeft),
+    };
+}
