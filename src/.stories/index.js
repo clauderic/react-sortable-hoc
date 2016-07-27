@@ -1,8 +1,9 @@
 import React, {Component, PropTypes} from 'react';
+import ReactDOM from 'react-dom';
 import {storiesOf} from '@kadira/storybook';
 import style from './Storybook.scss';
 import {SortableContainer, SortableElement, SortableHandle, arrayMove} from '../index';
-import {VirtualScroll} from 'react-virtualized';
+import {defaultFlexTableRowRenderer, FlexColumn, FlexTable, VirtualScroll} from 'react-virtualized';
 import 'react-virtualized/styles.css';
 import Infinite from 'react-infinite';
 import range from 'lodash/range';
@@ -94,6 +95,50 @@ class VirtualList extends Component {
 	}
 }
 const SortableVirtualList = SortableContainer(VirtualList, {withRef: true});
+
+const SortableFlexTable = SortableContainer(FlexTable, {withRef: true});
+const SortableRowRenderer = SortableElement(defaultFlexTableRowRenderer);
+
+class FlexTableWrapper extends Component {
+	render () {
+		const {
+			className,
+			height,
+			itemClass,
+			itemHeight,
+			items,
+			onSortEnd,
+			width
+		} = this.props
+
+		return (
+			<SortableFlexTable
+				getContainer={(wrappedInstance) => ReactDOM.findDOMNode(wrappedInstance._grid)}
+				gridClassName={className}
+				headerHeight={itemHeight}
+				height={height}
+				onSortEnd={onSortEnd}
+				rowClassName={itemClass}
+				rowCount={items.length}
+				rowGetter={({ index }) => items[index]}
+				rowHeight={itemHeight}
+				rowRenderer={(props) => <SortableRowRenderer {...props} />}
+				width={width}
+	    >
+				<FlexColumn
+					label='Index'
+					dataKey='value'
+					width={100}
+				/>
+				<FlexColumn
+					label='Height'
+					dataKey='height'
+					width={width - 100}
+				/>
+			</SortableFlexTable>
+		);
+	}
+}
 
 const SortableInfiniteList = SortableContainer(({className, items, itemClass, sortingIndex, useWindowAsScrollContainer}) => {
 	return (
@@ -221,6 +266,13 @@ storiesOf('React Virtualized', module)
 					instance.forceUpdate();
 				}}
 			/>
+		</div>
+	);
+})
+.add('FlexTable usage', () => {
+	return (
+		<div className={style.root}>
+			<ListWrapper component={FlexTableWrapper} items={getItems(500, 40)} itemHeight={40} helperClass={style.stylizedHelper} />
 		</div>
 	);
 })
