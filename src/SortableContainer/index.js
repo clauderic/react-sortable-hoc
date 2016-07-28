@@ -130,6 +130,7 @@ export default function SortableContainer(WrappedComponent, config = {withRef: f
 				this.helper.style.width = `${this.width}px`;
 
 				if (hideSortableGhost) {
+					this.sortableGhost = node;
 					node.style.visibility = 'hidden';
 				}
 
@@ -180,16 +181,17 @@ export default function SortableContainer(WrappedComponent, config = {withRef: f
 			// Remove the helper from the DOM
 			this.helper.parentNode.removeChild(this.helper);
 
-			if (hideSortableGhost && this.node) {
-				this.node.style.visibility = '';
+			if (hideSortableGhost && this.sortableGhost) {
+				this.sortableGhost.style.visibility = '';
 			}
 
 			let nodes = this.manager.refs[collection];
 			for (let i = 0, len = nodes.length; i < len; i++) {
 				let node = nodes[i];
 				let el = node.node;
-				let index = el.sortableInfo.index;
-				node.edgeOffset = null; // Clear the cached offsetTop / offsetLeft value
+
+				// Clear the cached offsetTop / offsetLeft value
+				node.edgeOffset = null;
 
 				// Remove the transforms / transitions
 				el.style[`${vendorPrefix}Transform`] = '';
@@ -338,6 +340,12 @@ export default function SortableContainer(WrappedComponent, config = {withRef: f
 				// If the node is the one we're currently animating, skip it
 				if (index === this.index) {
 					if (hideSortableGhost) {
+						/*
+						 * With windowing libraries such as `react-virtualized`, the sortableGhost
+						 * node may change while scrolling down and then back up (or vice-versa),
+						 * so we need to update the reference to the new node just to be safe.
+						 */
+						this.sortableGhost = node;
 						node.style.visibility = 'hidden';
 					}
 					continue;
