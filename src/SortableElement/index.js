@@ -42,14 +42,11 @@ export default function SortableElement (WrappedComponent, config = {withRef: fa
                 }
             }
         }
-
         componentWillUnmount() {
             let {collection, disabled} = this.props;
 
             if (!disabled) this.removeDraggable(collection);
         }
-
-        
         setDraggable(collection, index){
             let node = this.node = findDOMNode(this);
 
@@ -58,11 +55,9 @@ export default function SortableElement (WrappedComponent, config = {withRef: fa
             this.ref = {node};
             this.context.manager.add(collection, this.ref);
         }
-
         removeDraggable(collection) {
             this.context.manager.remove(collection, this.ref);
         }
-
         getWrappedInstance() {
             invariant(config.withRef, 'To access the wrapped instance, you need to pass in {withRef: true} as the second argument of the SortableElement() call');
             return this.refs.wrappedInstance;

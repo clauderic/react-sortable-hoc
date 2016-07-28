@@ -26,10 +26,10 @@ export default function SortableContainer(WrappedComponent, config = {withRef: f
 			hideSortableGhost: true,
 			contentWindow: window,
 			lockToContainerEdges: false,
-			lockOffset: '50%',
+			lockOffset: '50%'
 		};
 		static propTypes = {
-			axis: PropTypes.string,
+			axis: PropTypes.oneOf(['x', 'y']),
 			lockAxis: PropTypes.string,
 			helperClass: PropTypes.string,
 			transitionDuration: PropTypes.number,
@@ -88,7 +88,7 @@ export default function SortableContainer(WrappedComponent, config = {withRef: f
 				this.pressTimer = setTimeout(() => this.handlePress(e), this.props.pressDelay);
 			}
 		};
-		cancel = (e) => {
+		cancel = () => {
 			if (!this.state.sorting) {
 				clearTimeout(this.pressTimer);
 				this.manager.active = null;
@@ -250,7 +250,7 @@ export default function SortableContainer(WrappedComponent, config = {withRef: f
 
 			return [
 				this.getLockPixelOffset(minLockOffset),
-				this.getLockPixelOffset(maxLockOffset),
+				this.getLockPixelOffset(maxLockOffset)
 			];
 		}
 		getLockPixelOffset(lockOffset) {

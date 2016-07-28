@@ -104,6 +104,7 @@ class FlexTableWrapper extends Component {
 		const {
 			className,
 			height,
+			helperClass,
 			itemClass,
 			itemHeight,
 			items,
@@ -117,6 +118,7 @@ class FlexTableWrapper extends Component {
 				gridClassName={className}
 				headerHeight={itemHeight}
 				height={height}
+				helperClass={helperClass}
 				onSortEnd={onSortEnd}
 				rowClassName={itemClass}
 				rowCount={items.length}
@@ -124,7 +126,7 @@ class FlexTableWrapper extends Component {
 				rowHeight={itemHeight}
 				rowRenderer={(props) => <SortableRowRenderer {...props} />}
 				width={width}
-	    >
+			>
 				<FlexColumn
 					label='Index'
 					dataKey='value'
@@ -140,14 +142,23 @@ class FlexTableWrapper extends Component {
 	}
 }
 
-const SortableInfiniteList = SortableContainer(({className, items, itemClass, sortingIndex, useWindowAsScrollContainer}) => {
+const SortableInfiniteList = SortableContainer(({className, items, itemClass, sortingIndex}) => {
 	return (
 		<Infinite
 			className={className}
 			containerHeight={600}
 			elementHeight={items.map(({height}) => height)}
 		>
-			{items.map(({value, height}, index) => <Item key={`item-${index}`} className={itemClass} sortingIndex={sortingIndex} index={index} value={value} height={height}/>)}
+			{items.map(({value, height}, index) =>
+				<Item
+					key={`item-${index}`}
+					className={itemClass}
+					sortingIndex={sortingIndex}
+					index={index}
+					value={value}
+					height={height}
+				/>
+			)}
 		</Infinite>
 	)
 });
@@ -272,7 +283,7 @@ storiesOf('React Virtualized', module)
 .add('FlexTable usage', () => {
 	return (
 		<div className={style.root}>
-			<ListWrapper component={FlexTableWrapper} items={getItems(500, 40)} itemHeight={40} helperClass={style.stylizedHelper} />
+			<ListWrapper component={FlexTableWrapper} items={getItems(500, 50)} itemHeight={50} helperClass={style.stylizedHelper} />
 		</div>
 	);
 })
