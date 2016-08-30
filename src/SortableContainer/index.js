@@ -125,6 +125,7 @@ export default function SortableContainer(WrappedComponent, config = {withRef: f
 
 				this.helper = this.document.body.appendChild(node.cloneNode(true));
 				this.helper.style.position = 'fixed';
+				this.helper.style['z-index'] = 999999;
 				this.helper.style.top = `${this.boundingClientRect.top - margin.top}px`;
 				this.helper.style.left = `${this.boundingClientRect.left - margin.left}px`;
 				this.helper.style.width = `${this.width}px`;
