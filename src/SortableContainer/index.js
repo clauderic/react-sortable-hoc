@@ -7,14 +7,19 @@ import invariant from 'invariant';
 // Export Higher Order Sortable Container Component
 export default function SortableContainer(WrappedComponent, config = {withRef: false}) {
 	return class extends Component {
-		constructor() {
+		constructor(props) {
 			super();
 			this.manager = new Manager();
 			this.events = {
 				start: this.handleStart,
-				move: this.cancel,
-				end: this.cancel
+				move: this.handleMove,
+				end: this.handleEnd
 			};
+
+			invariant(
+				!(props.distance && props.pressDelay),
+				'Attempted to set both `pressDelay` and `distance` on SortableContainer, you may only use one or the other, not both at the same time.'
+			)
 		}
 		static displayName = (WrappedComponent.displayName) ? `SortableList(${WrappedComponent.displayName})` : 'SortableList';
         static WrappedComponent = WrappedComponent;
@@ -22,14 +27,21 @@ export default function SortableContainer(WrappedComponent, config = {withRef: f
 			axis: 'y',
 			transitionDuration: 300,
 			pressDelay: 0,
+			distance: 0,
 			useWindowAsScrollContainer: false,
 			hideSortableGhost: true,
-			contentWindow: (typeof window !== 'undefined') ? window : null,
+			contentWindow: typeof window !== 'undefined' ? window : null,
+			shouldCancelStart: function (e) {
+				if (['input', 'textarea', 'select', 'option'].indexOf(e.target.tagName.toLowerCase()) !== -1) {
+					return true;
+				}
+			},
 			lockToContainerEdges: false,
 			lockOffset: '50%'
 		};
 		static propTypes = {
 			axis: PropTypes.oneOf(['x', 'y']),
+			distance: PropTypes.number,
 			lockAxis: PropTypes.string,
 			helperClass: PropTypes.string,
 			transitionDuration: PropTypes.number,
@@ -37,6 +49,7 @@ export default function SortableContainer(WrappedComponent, config = {withRef: f
 			onSortStart: PropTypes.func,
 			onSortMove: PropTypes.func,
 			onSortEnd: PropTypes.func,
+			shouldCancelStart: PropTypes.func,
 			pressDelay: PropTypes.number,
 			useDragHandle: PropTypes.bool,
 			useWindowAsScrollContainer: PropTypes.bool,
@@ -76,6 +89,16 @@ export default function SortableContainer(WrappedComponent, config = {withRef: f
 			}
 		}
 		handleStart = (e) => {
+			const {distance, shouldCancelStart} = this.props;
+
+			if (e.button === 2 || shouldCancelStart(e)) { return false; }
+
+			this._touched = true;
+			this._pos = {
+				x: e.clientX,
+				y: e.clientY
+			};
+
 			let node = closest(e.target, (el) => el.sortableInfo != null);
 
 			if (node && !this.state.sorting && node.sortableInfo) {
@@ -85,9 +108,36 @@ export default function SortableContainer(WrappedComponent, config = {withRef: f
 				if (useDragHandle && !closest(e.target, (el) => el.sortableHandle != null)) return;
 
 				this.manager.active = {index, collection};
-				this.pressTimer = setTimeout(() => this.handlePress(e), this.props.pressDelay);
+
+				if (!distance) {
+					this.pressTimer = setTimeout(() => this.handlePress(e), this.props.pressDelay);
+				}
 			}
 		};
+		handleMove = (e) => {
+			const {distance} = this.props;
+
+			if (!this.state.sorting && this._touched) {
+				this._delta = {
+					x: this._pos.x - e.clientX,
+					y: this._pos.y - e.clientY
+				};
+				let delta = Math.abs(this._delta.x) + Math.abs(this._delta.y);
+
+				if (!distance) {
+					this.cancel();
+				} else if (delta >= distance) {
+					this.handlePress(e);
+				}
+			}
+		}
+		handleEnd = () => {
+			const {distance} = this.props;
+
+			this._touched = false;
+
+			if (!distance) { this.cancel(); }
+		}
 		cancel = () => {
 			if (!this.state.sorting) {
 				clearTimeout(this.pressTimer);
@@ -216,6 +266,8 @@ export default function SortableContainer(WrappedComponent, config = {withRef: f
 				sorting: false,
 				sortingIndex: null
 			});
+
+			this._touched = false;
 		}
 		getEdgeOffset(edge, node, offset = 0) {
 			// Get the actual offsetTop / offsetLeft value, no matter how deep the node is nested
