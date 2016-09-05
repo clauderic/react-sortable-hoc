@@ -1,5 +1,10 @@
 Changelog
 ------------
+### 0.0.8
+- Added `distance` prop ([#35](https://github.com/clauderic/react-sortable-hoc/issues/35))
+- Added a `shouldCancelStart` ([#47](https://github.com/clauderic/react-sortable-hoc/issues/47), [#36](https://github.com/clauderic/react-sortable-hoc/issues/36), [#41](https://github.com/clauderic/react-sortable-hoc/issues/41)) prop to programatically cancel sorting before it begins.
+- Prevent right click from causing sort start ([#46](https://github.com/clauderic/react-sortable-hoc/issues/46))
+
 ### 0.0.7
 Fixes server-side rendering (window undefined) ([#39](https://github.com/clauderic/react-sortable-hoc/issues/39))
 
