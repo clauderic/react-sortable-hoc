@@ -32,8 +32,9 @@ export default function SortableContainer(WrappedComponent, config = {withRef: f
 			hideSortableGhost: true,
 			contentWindow: typeof window !== 'undefined' ? window : null,
 			shouldCancelStart: function (e) {
+				// Cancel sorting if the event target is an `input`, `textarea`, `select` or `option`
 				if (['input', 'textarea', 'select', 'option'].indexOf(e.target.tagName.toLowerCase()) !== -1) {
-					return true;
+					return true; // Return true to cancel sorting
 				}
 			},
 			lockToContainerEdges: false,
