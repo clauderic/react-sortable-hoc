@@ -134,6 +134,13 @@ Asking for help
 ----------------
 Please do not use the issue tracker for personal support requests. Instead, use [Gitter](https://gitter.im/clauderic/react-sortable-hoc) or StackOverflow.
 
+Common Pitfalls
+---------------
+
+### CSS messing up on drag?
+
+Upon sorting, `react-sortable-hoc` creates a clone of the element you are sorting (the _sortable-helper_) and appends it to the end of the `<body>` tag. The original element will still be in-place to preserve its position in the DOM until the end of the drag (with inline-styling to make it invisible). If the _sortable-helper_ gets messed up from a CSS standpoint, consider that maybe your selectors to the draggable item are dependent on a parent element which isn't present anymore (again, since the _sortable-helper_ is at the end of the `<body>`).
+
 Contributions
 ------------
 Yes please! Feature requests / pull requests are welcome.
