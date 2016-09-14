@@ -86,6 +86,10 @@ That's it! React Sortable does not come with any styles by default, since it's m
 
 More code examples are available [here](https://github.com/clauderic/react-sortable-hoc/blob/master/examples/).
 
+### CSS messing up on drag?
+
+When a DOM element is being dragged, a _drag-helper_ node is added to the end of the `<body>`, which is the actual DOM node you see being dragged on the screen. The original DOM node will still be in-place to preserve its position in the DOM until the end of the drag (with inline-styling to make it invisible). If the _drag-helper_ gets messed up from a CSS standpoint, consider that maybe your selectors to the draggable item are dependent on a parent element which isn't present anymore (again, since the _drag-helper_ is at the end of the `<body>`).
+
 ### Prop Types
 
 #### SortableContainer HOC
