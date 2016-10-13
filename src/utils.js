@@ -1,4 +1,5 @@
-export function arrayMove (array, previousIndex, newIndex) {
+export function arrayMove (arr, previousIndex, newIndex) {
+    const array = arr.slice(0);
     if (newIndex >= array.length) {
         var k = newIndex - array.length;
         while ((k--) + 1) {
