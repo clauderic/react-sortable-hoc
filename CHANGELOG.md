@@ -1,5 +1,8 @@
 Changelog
 ------------
+### 0.0.10
+The `arrayMove` helper no longer mutates the array, it now returns a new array [#61](https://github.com/clauderic/react-sortable-hoc/issues/61)
+
 ### 0.0.9
 Server-side rendering bugfix: safeguard against `document` being undefined [#59](https://github.com/clauderic/react-sortable-hoc/pull/59)
 
