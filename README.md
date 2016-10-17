@@ -86,6 +86,15 @@ That's it! React Sortable does not come with any styles by default, since it's m
 
 More code examples are available [here](https://github.com/clauderic/react-sortable-hoc/blob/master/examples/).
 
+### Running Examples
+
+In root folder:
+
+```
+	$ npm install
+	$ npm run storybook
+```
+
 ### Prop Types
 
 #### SortableContainer HOC
