@@ -1,5 +1,8 @@
 Changelog
 ------------
+### 0.0.11
+Utilize babel-plugin-transform-runtime to utilize `babelHelpers` without them being required in application code [#45](https://github.com/clauderic/react-sortable-hoc/issues/45)
+
 ### 0.0.10
 The `arrayMove` helper no longer mutates the array, it now returns a new array [#61](https://github.com/clauderic/react-sortable-hoc/issues/61)
 
