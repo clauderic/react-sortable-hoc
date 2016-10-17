@@ -28,6 +28,7 @@
                 "stage-1"
             ],
             "plugins": [
+                "transform-runtime",
                 [
                     "css-modules-transform", {
                         "generateScopedName": "Cal__[name]__[local]",
@@ -39,7 +40,7 @@
         },
         "production": {
             "presets": ["es2015", "react", "stage-0", "stage-1", "stage-2"],
-            "plugins": ["transform-object-assign"]
+            "plugins": ["transform-runtime", "transform-object-assign"]
         },
         "testing": {
             "presets": ["es2015", "react", "stage-0", "stage-1", "stage-2"],
