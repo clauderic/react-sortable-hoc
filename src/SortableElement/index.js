@@ -41,6 +41,10 @@ export default function SortableElement (WrappedComponent, config = {withRef: fa
                     this.setDraggable(collection, index);
                 }
             }
+            else if (this.props.collection !== nextProps.collection) {
+                this.removeDraggable(this.props.collection);
+                this.setDraggable(nextProps.collection, nextProps.index);
+            }
         }
         componentWillUnmount() {
             let {collection, disabled} = this.props;
