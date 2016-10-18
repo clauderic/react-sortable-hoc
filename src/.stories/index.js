@@ -58,8 +58,8 @@ class ListWrapper extends Component {
     onSortEnd = ({oldIndex, newIndex}) => {
 		let {onSortEnd} = this.props;
         let {items} = this.state;
-        arrayMove(items, oldIndex, newIndex);
-        this.setState({items});
+
+        this.setState({items: arrayMove(items, oldIndex, newIndex)});
 
 		if (onSortEnd) {
 			onSortEnd(this.refs.component);
@@ -142,12 +142,13 @@ class FlexTableWrapper extends Component {
 	}
 }
 
-const SortableInfiniteList = SortableContainer(({className, items, itemClass, sortingIndex}) => {
+const SortableInfiniteList = SortableContainer(({className, items, itemClass, sortingIndex, sortableHandlers}) => {
 	return (
 		<Infinite
 			className={className}
 			containerHeight={600}
 			elementHeight={items.map(({height}) => height)}
+			{...sortableHandlers}
 		>
 			{items.map(({value, height}, index) =>
 				<Item
@@ -163,9 +164,9 @@ const SortableInfiniteList = SortableContainer(({className, items, itemClass, so
 	)
 });
 
-const SortableList = SortableContainer(({className, items, itemClass, sortingIndex, useDragHandle}) => {
+const SortableList = SortableContainer(({className, items, itemClass, sortingIndex, useDragHandle, sortableHandlers}) => {
 	return (
-		<div className={className}>
+		<div className={className} {...sortableHandlers}>
 			{items.map(({value, height}, index) =>
 				<Item
 					key={`item-${value}`}
