@@ -77,7 +77,6 @@ export default function SortableContainer(WrappedComponent, config = {withRef: f
 
 			this.container = (typeof getContainer == 'function') ? getContainer(this.getWrappedInstance()) : ReactDOM.findDOMNode(this);
 			this.document = this.container.ownerDocument || document;
-			this.scrollContainer = (this.props.useWindowAsScrollContainer) ? this.document.body : this.container;
 			this.contentWindow = (typeof contentWindow == 'function') ? contentWindow() : contentWindow;
 
 			for (let key in this.events) {
@@ -87,6 +86,23 @@ export default function SortableContainer(WrappedComponent, config = {withRef: f
 		componentWillUnmount() {
 			for (let key in this.events) {
 				events[key].forEach(eventName => this.container.removeEventListener(eventName, this.events[key]));
+			}
+		}
+		/**
+		* edge: string = 'X' | 'Y ' | 'Left' | 'Top'
+		* value: ?int
+		* return void | int (scrollX | scrollY | scrollLeft | scrollTop)
+		*/
+		scrollEdge = (edge, value) => {
+			let prop = `scroll${edge}`;
+			let doc = this.document;
+			if(value === void 0) {
+				return (this.props.useWindowAsScrollContainer) ? (doc.body[prop] ||  doc.documentElement[prop]) : this.container[prop]; // doc.documentElement <- Firefox; doc.body <- Chrome
+			} else if (this.props.useWindowAsScrollContainer) {
+				if(doc.documentElement) { doc.documentElement[prop] = value; }
+				if(doc.body) { doc.body[prop] = value; }
+			} else {
+				 this.container[prop] = value;
 			}
 		}
 		handleStart = (e) => {
@@ -172,7 +188,7 @@ export default function SortableContainer(WrappedComponent, config = {withRef: f
 				let edge = this.edge = (axis == 'x') ? 'Left' : 'Top';
 				this.offsetEdge = this.getEdgeOffset(edge, node);
 				this.initialOffset = this.getOffset(e);
-				this.initialScroll = this.scrollContainer[`scroll${edge}`];
+				this.initialScroll = this.scrollEdge(edge);
 
 				this.helper = this.document.body.appendChild(node.cloneNode(true));
 				this.helper.style.position = 'fixed';
@@ -373,7 +389,7 @@ export default function SortableContainer(WrappedComponent, config = {withRef: f
 		animateNodes() {
 			let {axis, transitionDuration, hideSortableGhost} = this.props;
 			let nodes = this.manager.getOrderedRefs();
-			let deltaScroll = this.scrollContainer[`scroll${this.edge}`] - this.initialScroll;
+			let deltaScroll = this.scrollEdge(this.edge) - this.initialScroll;
 			let sortingOffset = this.offsetEdge + this.translate + deltaScroll;
 			this.newIndex = null;
 
@@ -457,7 +473,7 @@ export default function SortableContainer(WrappedComponent, config = {withRef: f
 				this.autoscrollInterval = setInterval(() => {
 					this.isAutoScrolling = true;
 					let offset = 1 * speed * direction;
-					this.scrollContainer[`scroll${this.edge}`] += offset;
+					this.scrollEdge(this.edge, this.scrollEdge(this.edge) + offset);
 					this.translate += offset;
 					this.animateNodes();
 				}, 5);
