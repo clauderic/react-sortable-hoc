@@ -13,7 +13,7 @@ export function arrayMove (arr, previousIndex, newIndex) {
 export const events = {
 	start: ['touchstart', 'mousedown'],
 	move: ['touchmove', 'mousemove'],
-	end: ['touchend', 'mouseup']
+	end: ['touchend', 'touchcancel', 'mouseup']
 };
 
 export const vendorPrefix = (function () {
