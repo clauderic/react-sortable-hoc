@@ -1,7 +1,7 @@
 export function arrayMove (arr, previousIndex, newIndex) {
     const array = arr.slice(0);
     if (newIndex >= array.length) {
-        var k = newIndex - array.length;
+        let k = newIndex - array.length;
         while ((k--) + 1) {
             array.push(undefined);
         }
@@ -19,7 +19,7 @@ export const events = {
 export const vendorPrefix = (function () {
     if (typeof window === 'undefined' || typeof document === 'undefined') return ''; // server environment
     let styles = window.getComputedStyle(document.documentElement, '');
-    let pre = (Array.prototype.slice
+    const pre = (Array.prototype.slice
         .call(styles)
         .join('')
         .match(/-(moz|webkit|ms)-/) || (styles.OLink === '' && ['', 'o'])
