@@ -61,9 +61,9 @@ export function getElementMargin(element) {
     const style = window.getComputedStyle(element);
 
     return {
-        top   : getCSSPixelValue(style.marginTop),
-        right : getCSSPixelValue(style.marginRight),
+        top: getCSSPixelValue(style.marginTop),
+        right: getCSSPixelValue(style.marginRight),
         bottom: getCSSPixelValue(style.marginBottom),
-        left  : getCSSPixelValue(style.marginLeft),
+        left: getCSSPixelValue(style.marginLeft)
     };
 }
