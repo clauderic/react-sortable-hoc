@@ -96,13 +96,14 @@ export default function SortableContainer(WrappedComponent, config = {withRef: f
 		scrollEdge = (edge, value) => {
 			let prop = `scroll${edge}`;
 			let doc = this.document;
-			if(value === void 0) {
+
+			if (typeof value === 'undefined') {
 				return (this.props.useWindowAsScrollContainer) ? (doc.body[prop] ||  doc.documentElement[prop]) : this.container[prop]; // doc.documentElement <- Firefox; doc.body <- Chrome
 			} else if (this.props.useWindowAsScrollContainer) {
-				if(doc.documentElement) { doc.documentElement[prop] = value; }
-				if(doc.body) { doc.body[prop] = value; }
+				if (doc.documentElement) { doc.documentElement[prop] = value; }
+				if (doc.body) { doc.body[prop] = value; }
 			} else {
-				 this.container[prop] = value;
+				this.container[prop] = value;
 			}
 		}
 		handleStart = (e) => {
