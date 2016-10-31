@@ -1,5 +1,9 @@
 Changelog
 ------------
+
+### 0.1.1
+Added `touchCancel` listener to properly handle canceled touches [#73](https://github.com/clauderic/react-sortable-hoc/pull/73)
+
 ### 0.1.0
 - Force `box-sizing: border-box` on sortable helper [#67](https://github.com/clauderic/react-sortable-hoc/issues/67)
 - Support changing an item's collection prop on the fly [#66](https://github.com/clauderic/react-sortable-hoc/pull/66)
