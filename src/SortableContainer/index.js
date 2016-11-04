@@ -137,7 +137,8 @@ export default function SortableContainer(WrappedComponent, config = {withRef: f
 				const delta = Math.abs(this._delta.x) + Math.abs(this._delta.y);
 
 				if (!distance) {
-					this.cancel();
+					clearTimeout(this.cancelTimer);
+					this.cancelTimer = setTimeout(this.cancel, 0);
 				} else if (delta >= distance) {
 					this.handlePress(e);
 				}
