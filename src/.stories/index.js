@@ -37,7 +37,7 @@ class ListWrapper extends Component {
 	constructor({items}) {
 		super();
 		this.state = {
-			items
+			items, isSorting: false
 		};
 	}
 	static propTypes = {
@@ -55,11 +55,19 @@ class ListWrapper extends Component {
 		width: 400,
 		height: 600
 	};
+	onSortStart = () => {
+		let {onSortStart} = this.props;
+		this.setState({isSorting: true});
+
+		if (onSortStart) {
+			onSortStart(this.refs.component);
+		}
+	};
     onSortEnd = ({oldIndex, newIndex}) => {
 		let {onSortEnd} = this.props;
         let {items} = this.state;
 
-        this.setState({items: arrayMove(items, oldIndex, newIndex)});
+        this.setState({items: arrayMove(items, oldIndex, newIndex), isSorting: false});
 
 		if (onSortEnd) {
 			onSortEnd(this.refs.component);
@@ -67,9 +75,15 @@ class ListWrapper extends Component {
     };
 	render() {
 		const Component = this.props.component;
-		const {items} = this.state;
+		const {items, isSorting} = this.state;
+		const props = {
+			isSorting, items,
+			onSortEnd: this.onSortEnd,
+			onSortStart: this.onSortStart,
+			ref: "component"
+		}
 
-		return <Component ref="component" {...this.props} items={items} onSortEnd={this.onSortEnd} />;
+		return <Component {...this.props} {...props} />
 	}
 }
 
@@ -182,6 +196,24 @@ const SortableList = SortableContainer(({className, items, itemClass, sortingInd
 	);
 });
 
+const ShrinkingSortableList = SortableContainer(({className, isSorting, items, itemClass, sortingIndex, useDragHandle, sortableHandlers}) => {
+	return (
+		<div className={className} {...sortableHandlers}>
+			{items.map(({value, height}, index) =>
+				<Item
+					key={`item-${value}`}
+					className={itemClass}
+					sortingIndex={sortingIndex}
+					index={index}
+					value={value}
+					height={isSorting ? 20 : height}
+					useDragHandle={useDragHandle}
+					/>
+			)}
+		</div>
+	);
+});
+
 
 storiesOf('Basic Configuration', module)
 .add('Basic usage', () => {
@@ -202,6 +234,16 @@ storiesOf('Basic Configuration', module)
 	return (
 		<div className={style.root}>
 			<ListWrapper component={SortableList}  items={getItems(50)} helperClass={style.stylizedHelper} />
+		</div>
+	);
+})
+.add('Elements that shrink', () => {
+	const getHelperDimensions = ({index, collection, node}) => {
+		return { height: 20, width: node.offsetWidth }
+	}
+	return (
+		<div className={style.root}>
+			<ListWrapper component={ShrinkingSortableList} items={getItems(50)} helperClass={style.stylizedHelper} getHelperDimensions={getHelperDimensions} />
 		</div>
 	);
 })
