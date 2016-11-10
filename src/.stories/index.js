@@ -238,12 +238,10 @@ storiesOf('Basic Configuration', module)
 	);
 })
 .add('Elements that shrink', () => {
-	const getHelperDimensions = ({index, collection, node}) => {
-		return { height: 20, width: node.offsetWidth }
-	}
+	const getHelperDimensions = ({node}) => ({ height: 20, width: node.offsetWidth })
 	return (
 		<div className={style.root}>
-			<ListWrapper component={ShrinkingSortableList} items={getItems(50)} helperClass={style.stylizedHelper} getHelperDimensions={getHelperDimensions} />
+			<ListWrapper component={ShrinkingSortableList} items={getItems(50)} helperClass={style.shrinkedHelper} getHelperDimensions={getHelperDimensions} />
 		</div>
 	);
 })
