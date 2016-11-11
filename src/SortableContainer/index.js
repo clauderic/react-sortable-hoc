@@ -372,15 +372,9 @@ export default function SortableContainer(WrappedComponent, config = {withRef: f
 			}
 
 			invariant(
-				isFinite(offsetX),
+				isFinite(offsetX) && isFinite(offsetY),
 				'lockOffset value should be a finite. Given %s',
-				offsetX
-			);
-
-			invariant(
-				isFinite(offsetY),
-				'lockOffset value should be a finite. Given %s',
-				offsetY
+				lockOffset
 			);
 
 			if (unit === '%') {
