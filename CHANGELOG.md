@@ -1,6 +1,9 @@
 Changelog
 ------------
 
+### 0.2.0
+Add a `getHelperDimensions` prop to control SortableHelper size [#83](https://github.com/clauderic/react-sortable-hoc/issues/83). Thanks [@nervetattoo](https://github.com/nervetattoo)!
+
 ### 0.1.1
 Added `touchCancel` listener to properly handle canceled touches [#73](https://github.com/clauderic/react-sortable-hoc/pull/73)
 
