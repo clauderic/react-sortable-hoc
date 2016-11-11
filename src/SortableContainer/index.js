@@ -497,7 +497,7 @@ export default function SortableContainer(WrappedComponent, config = {withRef: f
 						this.newIndex = index;
 					}
 					else if (index < this.index && (sortingOffset.top <= edgeOffset.top + offset.top)) {
-						translate.y = this.height + this.marginOffset.top;
+						translate.y = this.height + this.marginOffset.y;
 						if (this.newIndex == null) {
 							this.newIndex = index;
 						}
