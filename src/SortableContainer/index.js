@@ -470,10 +470,12 @@ export default function SortableContainer(WrappedComponent, config = {withRef: f
 				};
 
 				// If we haven't cached the node's offsetTop / offsetLeft value
-				if (edgeOffset == null) {
+				if (!edgeOffset) {
 					nodes[i].edgeOffset = edgeOffset = this.getEdgeOffset(node);
 				}
-				if (nextNode) {
+				// Also cache the next node's edge offset if needed.
+				// We need this for calculating the animation in a grid setup
+				if (nextNode && !nextNode.edgeOffset) {
 					nextNode.edgeOffset = this.getEdgeOffset(nextNode.node)
 				}
 
@@ -505,7 +507,6 @@ export default function SortableContainer(WrappedComponent, config = {withRef: f
                   )
               ) {
               translate.x = width;
-							//console.log(index, edgeOffset.left + translate.x, this.containerBoundingRect.width);
               if (edgeOffset.left + translate.x > this.containerBoundingRect.width - offset.width) {
                 translate.x = nextNode.edgeOffset.left - edgeOffset.left;
                 translate.y = nextNode.edgeOffset.top - edgeOffset.top;
