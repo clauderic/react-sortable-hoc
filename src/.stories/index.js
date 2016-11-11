@@ -46,6 +46,7 @@ class ListWrapper extends Component {
 		itemClass: PropTypes.string,
 		width: PropTypes.number,
 		height: PropTypes.number,
+		onSortStart: PropTypes.func,
 		onSortEnd: PropTypes.func,
 		component: PropTypes.func
 	}
@@ -89,6 +90,15 @@ class ListWrapper extends Component {
 
 // Function components cannot have refs, so we'll be using a class for React Virtualized
 class VirtualList extends Component {
+	static propTypes = {
+		items: PropTypes.array,
+		className: PropTypes.string,
+		itemClass: PropTypes.string,
+		width: PropTypes.number,
+		height: PropTypes.number,
+		itemHeight: PropTypes.number,
+		sortingIndex: PropTypes.number
+	}
 	render() {
 		let {className, items, height, width, itemHeight, itemClass, sortingIndex} = this.props;
 		return (
@@ -114,6 +124,16 @@ const SortableFlexTable = SortableContainer(FlexTable, {withRef: true});
 const SortableRowRenderer = SortableElement(defaultFlexTableRowRenderer);
 
 class FlexTableWrapper extends Component {
+	static propTypes = {
+		items: PropTypes.array,
+		className: PropTypes.string,
+		helperClass: PropTypes.string,
+		itemClass: PropTypes.string,
+		width: PropTypes.number,
+		height: PropTypes.number,
+		itemHeight: PropTypes.number,
+		onSortEnd: PropTypes.func
+	}
 	render () {
 		const {
 			className,
@@ -214,7 +234,6 @@ const ShrinkingSortableList = SortableContainer(({className, isSorting, items, i
 	);
 });
 
-
 storiesOf('Basic Configuration', module)
 .add('Basic usage', () => {
 	return (
@@ -249,6 +268,13 @@ storiesOf('Basic Configuration', module)
 	return (
 		<div className={style.root}>
 			<ListWrapper component={SortableList} axis={'x'} items={getItems(50, 300)} helperClass={style.stylizedHelper} className={classNames(style.list, style.stylizedList, style.horizontalList)} itemClass={classNames(style.stylizedItem, style.horizontalItem)} />
+		</div>
+	);
+})
+.add('Grid', () => {
+	return (
+		<div className={style.root}>
+			<ListWrapper component={SortableList} axis={'xy'} items={getItems(50, 100)} helperClass={style.stylizedHelper} className={classNames(style.list, style.stylizedList, style.grid)} itemClass={classNames(style.stylizedItem, style.gridItem)}/>
 		</div>
 	);
 })

@@ -51,7 +51,7 @@ export default function SortableContainer(WrappedComponent, config = {withRef: f
 		};
 
 		static propTypes = {
-			axis: PropTypes.oneOf(['x', 'y']),
+			axis: PropTypes.oneOf(['x', 'y', 'xy']),
 			distance: PropTypes.number,
 			lockAxis: PropTypes.string,
 			helperClass: PropTypes.string,
@@ -189,6 +189,7 @@ export default function SortableContainer(WrappedComponent, config = {withRef: f
 					y: Math.max(this.margin.top, this.margin.bottom)
 				};
 				this.boundingClientRect = node.getBoundingClientRect();
+				this.containerBoundingRect = containerBoundingRect;
 				this.index = index;
 				this.newIndex = index;
 
@@ -441,8 +442,8 @@ export default function SortableContainer(WrappedComponent, config = {withRef: f
 			const {transitionDuration, hideSortableGhost} = this.props;
 			let nodes = this.manager.getOrderedRefs();
 			const deltaScroll = {
-				left: this.scrollContainer.scrollLeft - this.initialScroll.top,
-				top: this.scrollContainer.scrollTop - this.initialScroll.left
+				left: this.scrollContainer.scrollLeft - this.initialScroll.left,
+				top: this.scrollContainer.scrollTop - this.initialScroll.top
 			};
 			const sortingOffset = {
 				left: this.offsetEdge.left + this.translate.x + deltaScroll.left,
@@ -460,8 +461,8 @@ export default function SortableContainer(WrappedComponent, config = {withRef: f
 				const height = node.offsetHeight;
 				const halfHeight = height / 2;
 				const offset = {
-					left: (this.width > width) ? halfWidth : this.halfWidth,
-					top: (this.height > height) ? halfHeight : this.halfHeight
+					width: (this.width > width) ? halfWidth : this.halfWidth,
+					height: (this.height > height) ? halfHeight : this.halfHeight
 				};
 				let translate = {
 					x: 0,
@@ -473,7 +474,7 @@ export default function SortableContainer(WrappedComponent, config = {withRef: f
 					nodes[i].edgeOffset = edgeOffset = this.getEdgeOffset(node);
 				}
 				if (nextNode) {
-					nextNode.edgeOffset = this.getEdgeOffset(nextNode)
+					nextNode.edgeOffset = this.getEdgeOffset(nextNode.node)
 				}
 
 				// If the node is the one we're currently animating, skip it
@@ -495,22 +496,52 @@ export default function SortableContainer(WrappedComponent, config = {withRef: f
 				}
 
 				if (this.axis.x) {
-					if (index > this.index && (sortingOffset.left + offset.left >= edgeOffset.left)) {
-						translate.x = -(this.width + this.marginOffset.x);
-						this.newIndex = index;
-					}
-					else if (index < this.index && (sortingOffset.left <= edgeOffset.left + offset.left)) {
-						translate.x = this.width + this.marginOffset.x;
-						if (this.newIndex == null) {
+					if (this.axis.y) {
+						if (
+              (index < this.index)
+                && (
+                    ((sortingOffset.left - offset.width <= edgeOffset.left) && (sortingOffset.top <= edgeOffset.top + offset.height))
+                    || (sortingOffset.top + offset.height <= edgeOffset.top)
+                  )
+              ) {
+              translate.x = width;
+							//console.log(index, edgeOffset.left + translate.x, this.containerBoundingRect.width);
+              if (edgeOffset.left + translate.x > this.containerBoundingRect.width - offset.width) {
+                translate.x = nextNode.edgeOffset.left - edgeOffset.left;
+                translate.y = nextNode.edgeOffset.top - edgeOffset.top;
+              }
+              if (this.newIndex === null) {
+                this.newIndex = index;
+              }
+            } else if (index > this.index
+                && (((sortingOffset.left + offset.width >= edgeOffset.left) && (sortingOffset.top + offset.height >= edgeOffset.top))
+                || (sortingOffset.top + offset.height >= edgeOffset.top + height))
+              ) {
+              translate.x = -width;
+              if (edgeOffset.left + translate.x < this.containerBoundingRect.left + offset.width) {
+                translate.x = prevNode.edgeOffset.left - edgeOffset.left;
+                translate.y = prevNode.edgeOffset.top - edgeOffset.top;
+              }
+              this.newIndex = index;
+            }
+					} else {
+						if (index > this.index && (sortingOffset.left + offset.width >= edgeOffset.left)) {
+							translate.x = -(this.width + this.marginOffset.x);
 							this.newIndex = index;
+						}
+						else if (index < this.index && (sortingOffset.left <= edgeOffset.left + offset.width)) {
+							translate.x = this.width + this.marginOffset.x;
+							if (this.newIndex == null) {
+								this.newIndex = index;
+							}
 						}
 					}
 				} else if (this.axis.y) {
-					if (index > this.index && (sortingOffset.top + offset.top >= edgeOffset.top)) {
+					if (index > this.index && (sortingOffset.top + offset.height >= edgeOffset.top)) {
 						translate.y = -(this.height + this.marginOffset.y);
 						this.newIndex = index;
 					}
-					else if (index < this.index && (sortingOffset.top <= edgeOffset.top + offset.top)) {
+					else if (index < this.index && (sortingOffset.top <= edgeOffset.top + offset.height)) {
 						translate.y = this.height + this.marginOffset.y;
 						if (this.newIndex == null) {
 							this.newIndex = index;

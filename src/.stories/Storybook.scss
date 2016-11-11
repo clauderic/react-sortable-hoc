@@ -77,6 +77,24 @@
     border-bottom: 0;
 }
 
+// Horizontal list
+.grid {
+    display: block;
+    width: 300px;
+    height: 300px;
+    white-space: nowrap;
+    border-bottom: 0;
+    border-right: 0;
+}
+
+.gridItem {
+    display: flex;
+    float: left;
+    width: 100px;
+    border-right: 1px solid #EFEFEF;
+    border-bottom: 1px solid #EFEFEF;
+}
+
 // Divider
 .divider {
     padding: 10px 20px;
@@ -99,6 +117,9 @@
 
     &.horizontalItem {
         cursor: col-resize;
+    }
+    &.gridItem {
+      white-space: nowrap;
     }
 }
 
