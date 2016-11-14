@@ -500,7 +500,7 @@ export default function SortableContainer(WrappedComponent, config = {withRef: f
                     || (sortingOffset.top + offset.height <= edgeOffset.top)
                   )
               ) {
-              translate.x = width;
+              translate.x = this.width + this.marginOffset.x;
               if (edgeOffset.left + translate.x > this.containerBoundingRect.width - offset.width) {
                 translate.x = nextNode.edgeOffset.left - edgeOffset.left;
                 translate.y = nextNode.edgeOffset.top - edgeOffset.top;
@@ -512,7 +512,7 @@ export default function SortableContainer(WrappedComponent, config = {withRef: f
                 && (((sortingOffset.left + offset.width >= edgeOffset.left) && (sortingOffset.top + offset.height >= edgeOffset.top))
                 || (sortingOffset.top + offset.height >= edgeOffset.top + height))
               ) {
-              translate.x = -width;
+              translate.x = -(this.width + this.marginOffset.x);
               if (edgeOffset.left + translate.x < this.containerBoundingRect.left + offset.width) {
                 translate.x = prevNode.edgeOffset.left - edgeOffset.left;
                 translate.y = prevNode.edgeOffset.top - edgeOffset.top;
