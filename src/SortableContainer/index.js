@@ -585,7 +585,7 @@ export default function SortableContainer(WrappedComponent, config = {withRef: f
 			}
 
 			if (this.autoscrollInterval) {
-				clearTimeout(this.autoscrollInterval);
+				clearInterval(this.autoscrollInterval);
 				this.autoscrollInterval = null;
 				this.isAutoScrolling = false;
 			}
