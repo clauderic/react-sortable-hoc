@@ -447,8 +447,6 @@ export default function SortableContainer(WrappedComponent, config = {withRef: f
 
 			for (let i = 0, len = nodes.length; i < len; i++) {
 				let {node, edgeOffset} = nodes[i];
-				const nextNode = i < nodes.length - 1 ? nodes[i + 1] : undefined;
-				const prevNode = i > 0 ? nodes[i - 1] : undefined;
 				const index = node.sortableInfo.index;
 				const width = node.offsetWidth;
 				const halfWidth = width / 2;
@@ -467,6 +465,11 @@ export default function SortableContainer(WrappedComponent, config = {withRef: f
 				if (!edgeOffset) {
 					nodes[i].edgeOffset = edgeOffset = this.getEdgeOffset(node);
 				}
+
+				// Get a reference to the next and previous node
+				const nextNode = i < nodes.length - 1 && nodes[i + 1];
+				const prevNode = i > 0 && nodes[i - 1];
+
 				// Also cache the next node's edge offset if needed.
 				// We need this for calculating the animation in a grid setup
 				if (nextNode && !nextNode.edgeOffset) {
@@ -493,6 +496,7 @@ export default function SortableContainer(WrappedComponent, config = {withRef: f
 
 				if (this.axis.x) {
 					if (this.axis.y) {
+						// Calculations for a grid setup
 						if (
               (index < this.index)
                 && (
@@ -500,8 +504,13 @@ export default function SortableContainer(WrappedComponent, config = {withRef: f
                     || (sortingOffset.top + offset.height <= edgeOffset.top)
                   )
               ) {
+							// If the current node is to the left on the same row, or above the node that's being dragged
+							// then move it to the right
               translate.x = this.width + this.marginOffset.x;
               if (edgeOffset.left + translate.x > this.containerBoundingRect.width - offset.width) {
+								// If it moves passed the right bounds, then animate it to the first position of the next row.
+								// We just use the offset of the next node to calculate where to move, because that node's original position
+								// is exactly where we want to go
                 translate.x = nextNode.edgeOffset.left - edgeOffset.left;
                 translate.y = nextNode.edgeOffset.top - edgeOffset.top;
               }
@@ -512,8 +521,13 @@ export default function SortableContainer(WrappedComponent, config = {withRef: f
                 && (((sortingOffset.left + offset.width >= edgeOffset.left) && (sortingOffset.top + offset.height >= edgeOffset.top))
                 || (sortingOffset.top + offset.height >= edgeOffset.top + height))
               ) {
+								// If the current node is to the right on the same row, or below the node that's being dragged
+								// then move it to the left
               translate.x = -(this.width + this.marginOffset.x);
               if (edgeOffset.left + translate.x < this.containerBoundingRect.left + offset.width) {
+								// If it moves passed the left bounds, then animate it to the last position of the previous row.
+								// We just use the offset of the previous node to calculate where to move, because that node's original position
+								// is exactly where we want to go
                 translate.x = prevNode.edgeOffset.left - edgeOffset.left;
                 translate.y = prevNode.edgeOffset.top - edgeOffset.top;
               }
@@ -543,7 +557,6 @@ export default function SortableContainer(WrappedComponent, config = {withRef: f
 						}
 					}
 				}
-
 				node.style[`${vendorPrefix}Transform`] = `translate3d(${translate.x}px,${translate.y}px,0)`;
 			}
 
