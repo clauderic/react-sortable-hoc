@@ -27,8 +27,10 @@ const Item = SortableElement((props) => {
         <div className={props.className} style={{
             height: props.height
         }}>
-			{props.useDragHandle && <Handle/>}
-            Item {props.value}
+			<div className={style.wrapper}>
+				{props.useDragHandle && <Handle/>}
+	            <span>Item</span> {props.value}
+			</div>
         </div>
     )
 });
@@ -274,7 +276,7 @@ storiesOf('Basic Configuration', module)
 .add('Grid', () => {
 	return (
 		<div className={style.root}>
-			<ListWrapper component={SortableList} axis={'xy'} items={getItems(50, 100)} helperClass={style.stylizedHelper} className={classNames(style.list, style.stylizedList, style.grid)} itemClass={classNames(style.stylizedItem, style.gridItem)}/>
+			<ListWrapper component={SortableList} axis={'xy'} items={getItems(10, 110)} helperClass={style.stylizedHelper} className={classNames(style.list, style.stylizedList, style.grid)} itemClass={classNames(style.stylizedItem, style.gridItem)}/>
 		</div>
 	);
 })
