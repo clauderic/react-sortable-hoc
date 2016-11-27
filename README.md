@@ -100,7 +100,7 @@ In root folder:
 #### SortableContainer HOC
 | Property                   | Type              | Default                                                                                                    | Description                                                                                                                                                                                                                                                                                                                                                                                                                                                            |
 |:---------------------------|:------------------|:-----------------------------------------------------------------------------------------------------------|:-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| axis                       | String            | `y`                                                                                                        | The axis you want to sort on, either 'x' or 'y' for lists, or 'xy' for a grid                                                                                                                                                                                                                                                                                                                                                                                                                       |
+| axis                       | String            | `y`                                                                                                        | Items can be sorted horizontally, vertically or in a grid. Possible values: `x`, `y` or `xy`                                                                                                                                                                                                                                                                                                                                                                                                                       |
 | lockAxis                   | String            |                                                                                                            | If you'd like, you can lock movement to an axis while sorting. This is not something that is possible with HTML5 Drag & Drop                                                                                                                                                                                                                                                                                                                                           |
 | helperClass                | String            |                                                                                                            | You can provide a class you'd like to add to the sortable helper to add some styles to it                                                                                                                                                                                                                                                                                                                                                                              |
 | transitionDuration         | Number            | `300`                                                                                                      | The duration of the transition when elements shift positions. Set this to `0` if you'd like to disable transitions                                                                                                                                                                                                                                                                                                                                                     |
@@ -132,9 +132,15 @@ Why should I use this?
 --------------------
 There are already a number of great Drag & Drop libraries out there (for instance, [react-dnd](https://github.com/gaearon/react-dnd/) is fantastic). If those libraries fit your needs, you should definitely give them a try first. However, most of those libraries rely on the HTML5 Drag & Drop API, which has some severe limitations. For instance, things rapidly become tricky if you need to support touch devices, if you need to lock dragging to an axis, or want to animate the nodes as they're being sorted. React Sortable HOC aims to provide a simple set of higher-order components to fill those gaps. If you're looking for a dead-simple, mobile-friendly way to add sortable functionality to your lists, then you're in the right place.
 
-Grid support
-------------
-Currently the support for usage in a grid is limited to a setup where all the cells in the grid have the same width and height. Support for varying dimensions is something that is considered a next step.
+FAQ
+---------------
+### Grid support
+Need to sort items in a grid? We've got you covered! Just set the `axis` prop to `xy`. Grid support is currently limited to a setup where all the cells in the grid have the same width and height, though we're working hard to get variable width support in the near future.
+
+### Item disappearing when sorting / CSS issues
+
+Upon sorting, `react-sortable-hoc` creates a clone of the element you are sorting (the _sortable-helper_) and appends it to the end of the `<body>` tag. The original element will still be in-place to preserve its position in the DOM until the end of the drag (with inline-styling to make it invisible). If the _sortable-helper_ gets messed up from a CSS standpoint, consider that maybe your selectors to the draggable item are dependent on a parent element which isn't present anymore (again, since the _sortable-helper_ is at the end of the `<body>`).
+
 
 Dependencies
 ------------
@@ -147,13 +153,6 @@ If believe you've found an issue, please [report it](https://github.com/clauderi
 Asking for help
 ----------------
 Please do not use the issue tracker for personal support requests. Instead, use [Gitter](https://gitter.im/clauderic/react-sortable-hoc) or StackOverflow.
-
-Common Pitfalls
----------------
-
-### CSS messing up on drag?
-
-Upon sorting, `react-sortable-hoc` creates a clone of the element you are sorting (the _sortable-helper_) and appends it to the end of the `<body>` tag. The original element will still be in-place to preserve its position in the DOM until the end of the drag (with inline-styling to make it invisible). If the _sortable-helper_ gets messed up from a CSS standpoint, consider that maybe your selectors to the draggable item are dependent on a parent element which isn't present anymore (again, since the _sortable-helper_ is at the end of the `<body>`).
 
 Contributions
 ------------
