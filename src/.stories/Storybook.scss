@@ -77,6 +77,41 @@
     border-bottom: 0;
 }
 
+// Grid
+.grid {
+    display: block;
+    width: 130 * 4px;
+    height: 350px;
+    white-space: nowrap;
+    border: 0;
+    background-color: transparent;
+}
+
+.gridItem {
+    float: left;
+    width: 130px;
+    padding: 8px;
+    background: transparent;
+    border: 0;
+
+    .wrapper {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+
+        width: 100%;
+        height: 100%;
+        background: #FFF;
+        border: 1px solid #EFEFEF;
+
+        font-size: 28px;
+
+        span {
+            display: none;
+        }
+    }
+}
+
 // Divider
 .divider {
     padding: 10px 20px;
@@ -99,6 +134,16 @@
 
     &.horizontalItem {
         cursor: col-resize;
+    }
+    &.gridItem {
+        background-color: transparent;
+        white-space: nowrap;
+        box-shadow: none;
+
+        .wrapper {
+            background-color: rgba(255,255,255,0.8);
+            box-shadow: 0 0 7px rgba(0,0,0,0.15)
+        }
     }
 }
 
