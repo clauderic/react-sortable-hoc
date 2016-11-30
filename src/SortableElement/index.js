@@ -1,13 +1,14 @@
 import React, {Component, PropTypes} from 'react';
 import {findDOMNode} from 'react-dom';
+import { omit } from 'lodash'
 import invariant from 'invariant';
 
-// Export Higher Order Sortable Element Component
-export default function SortableElement (WrappedComponent, config = {withRef: false}) {
-    return class extends Component {
-        static displayName = (WrappedComponent.displayName) ? `SortableElement(${WrappedComponent.displayName})` : 'SortableElement';
+import { provideDisplayName } from '../utils'
 
-        static WrappedComponent = WrappedComponent;
+// Export Higher Order Sortable Element Component
+export default function sortableElement (WrappedComponent, config = {withRef: false}) {
+    return class extends Component {
+        static displayName = provideDisplayName('sortableElement', WrappedComponent);
 
         static contextTypes = {
             manager: PropTypes.object.isRequired
@@ -75,8 +76,12 @@ export default function SortableElement (WrappedComponent, config = {withRef: fa
 
         render() {
             const ref = (config.withRef) ? 'wrappedInstance' : null;
+
             return (
-                <WrappedComponent ref={ref} {...this.props} />
+                <WrappedComponent
+                    ref={ref}
+                    {...omit(this.props, 'collection', 'disabled', 'index')}
+                />
             );
         }
     };

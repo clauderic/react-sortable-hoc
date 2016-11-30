@@ -67,3 +67,9 @@ export function getElementMargin(element) {
         left: getCSSPixelValue(style.marginLeft)
     };
 }
+
+export function provideDisplayName(prefix, Component) {
+    const componentName = Component.displayName || Component.name
+
+    return componentName ? `${prefix}(${componentName})` : prefix;
+}
