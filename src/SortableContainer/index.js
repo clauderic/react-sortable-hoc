@@ -45,9 +45,9 @@ export default function sortableContainer(WrappedComponent, config = {withRef: f
 			lockToContainerEdges: false,
 			lockOffset: '50%',
 			getHelperDimensions: ({node}) => ({		
- -				width: node.offsetWidth,		
- -				height: node.offsetHeight		
- -			})
+				width: node.offsetWidth,		
+				height: node.offsetHeight		
+			})
 		};
 
 		static propTypes = {
