@@ -126,7 +126,11 @@ export default function SortableContainer(WrappedComponent, config = {withRef: f
 				this.manager.active = {index, collection};
 
 				if (!distance) {
-					this.pressTimer = setTimeout(() => this.handlePress(e), this.props.pressDelay);
+					if (this.props.pressDelay === 0) {
+						this.handlePress(e);
+					} else {
+						this.pressTimer = setTimeout(() => this.handlePress(e), this.props.pressDelay);
+					}
 				}
 			}
 		};
