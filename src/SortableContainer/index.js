@@ -179,7 +179,7 @@ export default function sortableContainer(WrappedComponent, config = {withRef: f
 				this.node = node;
 				this.margin = margin;
 				this.width = dimensions.width;	
- 				this.height = dimensions.height;
+				this.height = dimensions.height;
 				this.marginOffset = {
 					x: this.margin.left + this.margin.right,
 					y: Math.max(this.margin.top, this.margin.bottom)
