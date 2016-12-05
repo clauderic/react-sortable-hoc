@@ -7,7 +7,7 @@ import { provideDisplayName } from '../utils'
 // Export Higher Order Sortable Element Component
 export default function sortableHandle (WrappedComponent, config = {withRef: false}) {
     return class extends Component {
-        static displayName = provideDisplayName('sortableHandle', WrappedComponent)
+        static displayName = provideDisplayName('sortableHandle', WrappedComponent);
 
         componentDidMount() {
             let node = findDOMNode(this);
