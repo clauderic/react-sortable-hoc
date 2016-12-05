@@ -43,7 +43,11 @@ export default function sortableContainer(WrappedComponent, config = {withRef: f
 				}
 			},
 			lockToContainerEdges: false,
-			lockOffset: '50%'
+			lockOffset: '50%',
+			getHelperDimensions: ({node}) => ({		
+ -				width: node.offsetWidth,		
+ -				height: node.offsetHeight		
+ -			})
 		};
 
 		static propTypes = {
@@ -67,7 +71,8 @@ export default function sortableContainer(WrappedComponent, config = {withRef: f
 				PropTypes.string,
 				PropTypes.arrayOf(PropTypes.oneOfType([PropTypes.number, PropTypes.string]))
 			]),
-			getContainer: PropTypes.func
+			getContainer: PropTypes.func,
+			getHelperDimensions: PropTypes.func
 		};
 
 		static childContextTypes = {
@@ -163,17 +168,18 @@ export default function sortableContainer(WrappedComponent, config = {withRef: f
 			const active = this.manager.getActive();
 
 			if (active) {
-				const {axis, onSortStart, helperClass, hideSortableGhost, useWindowAsScrollContainer} = this.props;
+				const {axis, getHelperDimensions, helperClass, hideSortableGhost, onSortStart, useWindowAsScrollContainer} = this.props;
 				let {node, collection} = active;
 				const {index} = node.sortableInfo;
 				const margin = getElementMargin(node);
 
 				const containerBoundingRect = this.container.getBoundingClientRect();
+				const dimensions = getHelperDimensions({index, node, collection});
 
 				this.node = node;
 				this.margin = margin;
-				this.width = node.offsetWidth;
-				this.height = node.offsetHeight;
+				this.width = dimensions.width;	
+ -				this.height = dimensions.height;
 				this.marginOffset = {
 					x: this.margin.left + this.margin.right,
 					y: Math.max(this.margin.top, this.margin.bottom)
