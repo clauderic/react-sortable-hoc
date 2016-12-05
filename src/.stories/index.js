@@ -27,8 +27,8 @@ const Item = SortableElement((props) => {
         <div className={props.className} style={{
             height: props.height
         }}>
+			{props.shouldUseDragHandle && <Handle/>}
 			<div className={style.wrapper}>
-				{props.useDragHandle && <Handle/>}
 	            <span>Item</span> {props.value}
 			</div>
         </div>
@@ -50,7 +50,8 @@ class ListWrapper extends Component {
 		height: PropTypes.number,
 		onSortStart: PropTypes.func,
 		onSortEnd: PropTypes.func,
-		component: PropTypes.func
+		component: PropTypes.func,
+		shouldUseDragHandle: PropTypes.bool
 	}
 	static defaultProps = {
 		className: classNames(style.list, style.stylizedList),
@@ -80,10 +81,12 @@ class ListWrapper extends Component {
 		const Component = this.props.component;
 		const {items, isSorting} = this.state;
 		const props = {
-			isSorting, items,
+			isSorting,
+			items,
 			onSortEnd: this.onSortEnd,
 			onSortStart: this.onSortStart,
-			ref: "component"
+			ref: "component",
+			useDragHandle: this.props.shouldUseDragHandle
 		}
 
 		return <Component {...this.props} {...props} />
@@ -200,7 +203,7 @@ const SortableInfiniteList = SortableContainer(({className, items, itemClass, so
 	)
 });
 
-const SortableList = SortableContainer(({className, items, itemClass, sortingIndex, useDragHandle, sortableHandlers}) => {
+const SortableList = SortableContainer(({className, items, itemClass, sortingIndex, shouldUseDragHandle, sortableHandlers}) => {
 	return (
 		<div className={className} {...sortableHandlers}>
 			{items.map(({value, height}, index) =>
@@ -211,14 +214,14 @@ const SortableList = SortableContainer(({className, items, itemClass, sortingInd
 					index={index}
 					value={value}
 					height={height}
-					useDragHandle={useDragHandle}
+					shouldUseDragHandle={shouldUseDragHandle}
 				/>
 			)}
 		</div>
 	);
 });
 
-const ShrinkingSortableList = SortableContainer(({className, isSorting, items, itemClass, sortingIndex, useDragHandle, sortableHandlers}) => {
+const ShrinkingSortableList = SortableContainer(({className, isSorting, items, itemClass, sortingIndex, shouldUseDragHandle, sortableHandlers}) => {
 	return (
 		<div className={className} {...sortableHandlers}>
 			{items.map(({value, height}, index) =>
@@ -229,8 +232,8 @@ const ShrinkingSortableList = SortableContainer(({className, isSorting, items, i
 					index={index}
 					value={value}
 					height={isSorting ? 20 : height}
-					useDragHandle={useDragHandle}
-					/>
+					shouldUseDragHandle={shouldUseDragHandle}
+				/>
 			)}
 		</div>
 	);
@@ -247,7 +250,7 @@ storiesOf('Basic Configuration', module)
 .add('Drag handle', () => {
 	return (
 		<div className={style.root}>
-			<ListWrapper component={SortableList} useDragHandle={true} items={getItems(50, 59)} helperClass={style.stylizedHelper} />
+			<ListWrapper component={SortableList} shouldUseDragHandle={true} items={getItems(50, 59)} helperClass={style.stylizedHelper} />
 		</div>
 	);
 })
