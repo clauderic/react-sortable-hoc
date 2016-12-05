@@ -2,12 +2,12 @@ import React, {Component} from 'react';
 import {findDOMNode} from 'react-dom';
 import invariant from 'invariant';
 
-// Export Higher Order Sortable Element Component
-export default function SortableHandle (WrappedComponent, config = {withRef: false}) {
-    return class extends Component {
-        static displayName = (WrappedComponent.displayName) ? `SortableHandle(${WrappedComponent.displayName})` : 'SortableHandle';
+import { provideDisplayName } from '../utils'
 
-        static WrappedComponent = WrappedComponent;
+// Export Higher Order Sortable Element Component
+export default function sortableHandle (WrappedComponent, config = {withRef: false}) {
+    return class extends Component {
+        static displayName = provideDisplayName('sortableHandle', WrappedComponent)
 
         componentDidMount() {
             let node = findDOMNode(this);

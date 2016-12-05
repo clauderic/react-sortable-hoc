@@ -1,11 +1,13 @@
 import React, {Component, PropTypes} from 'react';
 import ReactDOM from 'react-dom';
-import Manager from '../Manager';
-import {closest, events, vendorPrefix, limit, getElementMargin} from '../utils';
+import omit from 'lodash/omit'
 import invariant from 'invariant';
 
+import Manager from '../Manager';
+import {closest, events, vendorPrefix, limit, getElementMargin, provideDisplayName} from '../utils';
+
 // Export Higher Order Sortable Container Component
-export default function SortableContainer(WrappedComponent, config = {withRef: false}) {
+export default function sortableContainer(WrappedComponent, config = {withRef: false}) {
 	return class extends Component {
 		constructor(props) {
 			super(props);
@@ -24,9 +26,7 @@ export default function SortableContainer(WrappedComponent, config = {withRef: f
 			this.state = {};
 		}
 
-		static displayName = (WrappedComponent.displayName) ? `SortableList(${WrappedComponent.displayName})` : 'SortableList';
-
-		static WrappedComponent = WrappedComponent;
+		static displayName = provideDisplayName('sortableList', WrappedComponent);
 
 		static defaultProps = {
 			axis: 'y',
@@ -44,9 +44,9 @@ export default function SortableContainer(WrappedComponent, config = {withRef: f
 			},
 			lockToContainerEdges: false,
 			lockOffset: '50%',
-			getHelperDimensions: ({node}) => ({
-				width: node.offsetWidth,
-				height: node.offsetHeight
+			getHelperDimensions: ({node}) => ({		
+				width: node.offsetWidth,		
+				height: node.offsetHeight		
 			})
 		};
 
@@ -172,22 +172,18 @@ export default function SortableContainer(WrappedComponent, config = {withRef: f
 			const active = this.manager.getActive();
 
 			if (active) {
-				const {axis, onSortStart, helperClass, hideSortableGhost, useWindowAsScrollContainer, getHelperDimensions} = this.props;
+				const {axis, getHelperDimensions, helperClass, hideSortableGhost, onSortStart, useWindowAsScrollContainer} = this.props;
 				let {node, collection} = active;
 				const {index} = node.sortableInfo;
 				const margin = getElementMargin(node);
 
 				const containerBoundingRect = this.container.getBoundingClientRect();
-				const dimensions = getHelperDimensions({index, node, collection})
+				const dimensions = getHelperDimensions({index, node, collection});
 
 				this.node = node;
-				this.width = dimensions.width
-				this.height = dimensions.height
 				this.margin = margin;
-				this.width = node.offsetWidth;
-				this.height = node.offsetHeight;
-				this.halfWidth = this.width / 2;
-				this.halfHeight = this.height / 2;
+				this.width = dimensions.width;	
+				this.height = dimensions.height;
 				this.marginOffset = {
 					x: this.margin.left + this.margin.right,
 					y: Math.max(this.margin.top, this.margin.bottom)
@@ -223,12 +219,12 @@ export default function SortableContainer(WrappedComponent, config = {withRef: f
 				this.minTranslate = {};
 				this.maxTranslate = {};
 				if (this.axis.x) {
-					this.minTranslate.x = ((useWindowAsScrollContainer) ? 0 : containerBoundingRect.left) - this.boundingClientRect.left - this.halfWidth;
-					this.maxTranslate.x = ((useWindowAsScrollContainer) ? this.contentWindow.innerWidth : containerBoundingRect.left + containerBoundingRect.width) - this.boundingClientRect.left - this.halfWidth;
+					this.minTranslate.x = ((useWindowAsScrollContainer) ? 0 : containerBoundingRect.left) - this.boundingClientRect.left - (this.width / 2);
+					this.maxTranslate.x = ((useWindowAsScrollContainer) ? this.contentWindow.innerWidth : containerBoundingRect.left + containerBoundingRect.width) - this.boundingClientRect.left - (this.width / 2);
 				}
 				if (this.axis.y) {
-					this.minTranslate.y = ((useWindowAsScrollContainer) ? 0 : containerBoundingRect.top) - this.boundingClientRect.top - this.halfHeight;
-					this.maxTranslate.y = ((useWindowAsScrollContainer) ? this.contentWindow.innerHeight : containerBoundingRect.top + containerBoundingRect.height) - this.boundingClientRect.top - this.halfHeight;
+					this.minTranslate.y = ((useWindowAsScrollContainer) ? 0 : containerBoundingRect.top) - this.boundingClientRect.top - (this.height / 2);
+					this.maxTranslate.y = ((useWindowAsScrollContainer) ? this.contentWindow.innerHeight : containerBoundingRect.top + containerBoundingRect.height) - this.boundingClientRect.top - (this.height / 2);
 				}
 
 				if (helperClass) {
@@ -404,12 +400,12 @@ export default function SortableContainer(WrappedComponent, config = {withRef: f
 			if (lockToContainerEdges) {
 				const [minLockOffset, maxLockOffset] = this.getLockPixelOffsets();
 				const minOffset = {
-					x: this.halfWidth - minLockOffset.x,
-					y: this.halfHeight - minLockOffset.y
+					x: (this.width / 2) - minLockOffset.x,
+					y: (this.height / 2) - minLockOffset.y
 				};
 				const maxOffset = {
-					x: this.halfWidth - maxLockOffset.x,
-					y: this.halfHeight - maxLockOffset.y
+					x: (this.width / 2) - maxLockOffset.x,
+					y: (this.height / 2) - maxLockOffset.y
 				};
 
 				translate.x = limit(
@@ -453,12 +449,10 @@ export default function SortableContainer(WrappedComponent, config = {withRef: f
 				let {node, edgeOffset} = nodes[i];
 				const index = node.sortableInfo.index;
 				const width = node.offsetWidth;
-				const halfWidth = width / 2;
 				const height = node.offsetHeight;
-				const halfHeight = height / 2;
 				const offset = {
-					width: (this.width > width) ? halfWidth : this.halfWidth,
-					height: (this.height > height) ? halfHeight : this.halfHeight
+					width: (this.width > width) ? (width / 2) : (this.width / 2),
+					height: (this.height > height) ? (height / 2) : (this.height / 2)
 				};
 				let translate = {
 					x: 0,
@@ -584,21 +578,21 @@ export default function SortableContainer(WrappedComponent, config = {withRef: f
 				y: 10
 			};
 
-			if (translate.y >= this.maxTranslate.y - this.halfHeight) {
+			if (translate.y >= this.maxTranslate.y - (this.height / 2)) {
 				direction.y = 1; // Scroll Down
-				speed.y = acceleration.y * Math.abs((this.maxTranslate.y - this.halfHeight - translate.y) / this.height);
+				speed.y = acceleration.y * Math.abs((this.maxTranslate.y - (this.height / 2) - translate.y) / this.height);
 			}
-			else if (translate.x >= this.maxTranslate.x - this.halfWidth) {
+			else if (translate.x >= this.maxTranslate.x - (this.width / 2)) {
 				direction.x = 1; // Scroll Right
-				speed.x = acceleration.x * Math.abs((this.maxTranslate.x - this.halfWidth - translate.x) / this.width);
+				speed.x = acceleration.x * Math.abs((this.maxTranslate.x - (this.width / 2) - translate.x) / this.width);
 			}
-			else if (translate.y <= this.minTranslate.y + this.halfHeight) {
+			else if (translate.y <= this.minTranslate.y + (this.height / 2)) {
 				direction.y = -1; // Scroll Up
-				speed.y = acceleration.y * Math.abs((translate.y - this.halfHeight - this.minTranslate.y) / this.height);
+				speed.y = acceleration.y * Math.abs((translate.y - (this.height / 2) - this.minTranslate.y) / this.height);
 			}
-			else if (translate.x <= this.minTranslate.x + this.halfWidth) {
+			else if (translate.x <= this.minTranslate.x + (this.width / 2)) {
 				direction.x = -1; // Scroll Left
-				speed.x = acceleration.x * Math.abs((translate.x - this.halfWidth - this.minTranslate.x) / this.width);
+				speed.x = acceleration.x * Math.abs((translate.x - (this.width / 2) - this.minTranslate.x) / this.width);
 			}
 
 			if (this.autoscrollInterval) {
@@ -631,7 +625,33 @@ export default function SortableContainer(WrappedComponent, config = {withRef: f
 		render() {
 			const ref = (config.withRef) ? 'wrappedInstance' : null;
 
-			return <WrappedComponent ref={ref} {...this.props} {...this.state} />;
+			return (
+				<WrappedComponent
+					ref={ref}
+					{...omit(this.props,
+						'contentWindow',
+						'useWindowAsScrollContainer',
+						'distance',
+						'helperClass',
+						'hideSortableGhost',
+						'transitionDuration',
+						'useDragHandle',
+						'pressDelay',
+
+						'shouldCancelStart',
+						'onSortStart',
+						'onSortMove',
+						'onSortEnd',
+
+						'axis',
+						'lockAxis',
+						'lockOffset',
+						'lockToContainerEdges',
+
+						'getContainer',
+					)}
+				/>
+			);
 		}
 	};
 }
