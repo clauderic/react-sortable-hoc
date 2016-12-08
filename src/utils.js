@@ -18,7 +18,11 @@ export const events = {
 
 export const vendorPrefix = (function () {
     if (typeof window === 'undefined' || typeof document === 'undefined') return ''; // server environment
-    let styles = window.getComputedStyle(document.documentElement, '');
+    // fix for:
+    //    https://bugzilla.mozilla.org/show_bug.cgi?id=548397
+    //    window.getComputedStyle() returns null inside an iframe with display: none
+    // in this case return an array with a fake mozilla style in it.
+    let styles = window.getComputedStyle(document.documentElement, '') || ['-moz-hidden-iframe'];
     const pre = (Array.prototype.slice
         .call(styles)
         .join('')
