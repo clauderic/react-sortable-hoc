@@ -1,7 +1,10 @@
 Changelog
 ------------
+### 0.4.3
+Fixes an edge-case bug in Firefox where window.getComputedStyle() returns null inside an iframe with `display: none` [#106](https://github.com/clauderic/react-sortable-hoc/pull/106). Thanks [@funnel-mark](https://github.com/funnel-mark)!
+
 ### 0.4.2
-Fixes an issue when attempting to sort items while rapidly moving the mouse. By setting an immediate timer, we move the cancel event to the tail of the timer queue, and ensure that it is fired after the pressTimer [#80](https://github.com/clauderic/react-sortable-hoc/pull/80) Thanks @v0lkan!
+Fixes an issue when attempting to sort items while rapidly moving the mouse. By setting an immediate timer, we move the cancel event to the tail of the timer queue, and ensure that it is fired after the pressTimer [#80](https://github.com/clauderic/react-sortable-hoc/pull/80). Thanks [@v0lkan](https://github.com/v0lkan)!
 
 ### 0.4.0
 – Fix a timing issue in Chrome caused by setTimeout [#71](https://github.com/clauderic/react-sortable-hoc/pull/71)
