@@ -1,5 +1,9 @@
 Changelog
 ------------
+### 0.4.0
+– Fix a timing issue in Chrome caused by setTimeout [#71](https://github.com/clauderic/react-sortable-hoc/pull/71)
+– Private props are no longer passed down to the wrapped component [#98](https://github.com/clauderic/react-sortable-hoc/pull/98)
+
 ### 0.3.0
 Added grid support for elements of equal widths / heights [#4](https://github.com/clauderic/react-sortable-hoc/issues/4) [#86](https://github.com/clauderic/react-sortable-hoc/pull/86). Huge shout-out to [@richmeij](https://github.com/richmeij) for making this happen!
 
