@@ -1,5 +1,8 @@
 Changelog
 ------------
+### 0.4.1
+Fixes an issue when attempting to sort items while rapidly moving the mouse. By setting an immediate timer, we move the cancel event to the tail of the timer queue, and ensure that it is fired after the pressTimer [#80](https://github.com/clauderic/react-sortable-hoc/pull/80) Thanks @v0lkan!
+
 ### 0.4.0
 – Fix a timing issue in Chrome caused by setTimeout [#71](https://github.com/clauderic/react-sortable-hoc/pull/71)
 – Private props are no longer passed down to the wrapped component [#98](https://github.com/clauderic/react-sortable-hoc/pull/98)
