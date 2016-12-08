@@ -1,6 +1,6 @@
 Changelog
 ------------
-### 0.4.1
+### 0.4.2
 Fixes an issue when attempting to sort items while rapidly moving the mouse. By setting an immediate timer, we move the cancel event to the tail of the timer queue, and ensure that it is fired after the pressTimer [#80](https://github.com/clauderic/react-sortable-hoc/pull/80) Thanks @v0lkan!
 
 ### 0.4.0
