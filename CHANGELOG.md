@@ -1,5 +1,8 @@
 Changelog
 ------------
+### 0.4.4
+Tweak: cherry-picking lodash methods instead of importing the entire bundle (slipped by in a PR, thanks for pointing this out [arackaf](https://github.com/arackaf)!)
+
 ### 0.4.3
 Fixes an edge-case bug in Firefox where window.getComputedStyle() returns null inside an iframe with `display: none` [#106](https://github.com/clauderic/react-sortable-hoc/pull/106). Thanks [@funnel-mark](https://github.com/funnel-mark)!
 
