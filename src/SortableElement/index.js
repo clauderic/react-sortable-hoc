@@ -1,6 +1,6 @@
 import React, {Component, PropTypes} from 'react';
 import {findDOMNode} from 'react-dom';
-import { omit } from 'lodash'
+import omit from 'lodash/omit'
 import invariant from 'invariant';
 
 import { provideDisplayName } from '../utils'
