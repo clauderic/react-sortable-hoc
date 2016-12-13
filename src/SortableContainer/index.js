@@ -44,9 +44,9 @@ export default function sortableContainer(WrappedComponent, config = {withRef: f
 			},
 			lockToContainerEdges: false,
 			lockOffset: '50%',
-			getHelperDimensions: ({node}) => ({		
-				width: node.offsetWidth,		
-				height: node.offsetHeight		
+			getHelperDimensions: ({node}) => ({
+				width: node.offsetWidth,
+				height: node.offsetHeight
 			})
 		};
 
@@ -183,7 +183,7 @@ export default function sortableContainer(WrappedComponent, config = {withRef: f
 
 				this.node = node;
 				this.margin = margin;
-				this.width = dimensions.width;	
+				this.width = dimensions.width;
 				this.height = dimensions.height;
 				this.marginOffset = {
 					x: this.margin.left + this.margin.right,
@@ -210,6 +210,7 @@ export default function sortableContainer(WrappedComponent, config = {withRef: f
 				this.helper.style.top = `${this.boundingClientRect.top - margin.top}px`;
 				this.helper.style.left = `${this.boundingClientRect.left - margin.left}px`;
 				this.helper.style.width = `${this.width}px`;
+				this.helper.style.height = `${this.height}px`;
 				this.helper.style.boxSizing = 'border-box';
 
 				if (hideSortableGhost) {
