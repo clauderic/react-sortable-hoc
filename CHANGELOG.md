@@ -1,5 +1,8 @@
 Changelog
 ------------
+### 0.4.5
+Fix: getHelperDimensions height was not being used (Thanks [@SMenigat](https://github.com/SMenigat)!)
+
 ### 0.4.4
 Tweak: cherry-picking lodash methods instead of importing the entire bundle (slipped by in a PR, thanks for pointing this out [@arackaf](https://github.com/arackaf)!)
 
