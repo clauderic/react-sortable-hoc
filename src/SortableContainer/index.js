@@ -498,41 +498,41 @@ export default function sortableContainer(WrappedComponent, config = {withRef: f
 					if (this.axis.y) {
 						// Calculations for a grid setup
 						if (
-              (index < this.index)
-                && (
-                    ((sortingOffset.left - offset.width <= edgeOffset.left) && (sortingOffset.top <= edgeOffset.top + offset.height))
-                    || (sortingOffset.top + offset.height <= edgeOffset.top)
-                  )
-              ) {
+							(index < this.index)
+							&& (
+								((sortingOffset.left - offset.width <= edgeOffset.left) && (sortingOffset.top <= edgeOffset.top + offset.height))
+								|| (sortingOffset.top + offset.height <= edgeOffset.top)
+							)
+						) {
 							// If the current node is to the left on the same row, or above the node that's being dragged
 							// then move it to the right
-              translate.x = this.width + this.marginOffset.x;
-              if (edgeOffset.left + translate.x > this.containerBoundingRect.width - offset.width) {
+							translate.x = this.width + this.marginOffset.x;
+							if (edgeOffset.left + translate.x > this.containerBoundingRect.width - offset.width) {
 								// If it moves passed the right bounds, then animate it to the first position of the next row.
 								// We just use the offset of the next node to calculate where to move, because that node's original position
 								// is exactly where we want to go
-                translate.x = nextNode.edgeOffset.left - edgeOffset.left;
-                translate.y = nextNode.edgeOffset.top - edgeOffset.top;
-              }
-              if (this.newIndex === null) {
-                this.newIndex = index;
-              }
-            } else if (index > this.index
-                && (((sortingOffset.left + offset.width >= edgeOffset.left) && (sortingOffset.top + offset.height >= edgeOffset.top))
-                || (sortingOffset.top + offset.height >= edgeOffset.top + height))
-              ) {
-								// If the current node is to the right on the same row, or below the node that's being dragged
-								// then move it to the left
-              translate.x = -(this.width + this.marginOffset.x);
-              if (edgeOffset.left + translate.x < this.containerBoundingRect.left + offset.width) {
+								translate.x = nextNode.edgeOffset.left - edgeOffset.left;
+								translate.y = nextNode.edgeOffset.top - edgeOffset.top;
+							}
+							if (this.newIndex === null) {
+								this.newIndex = index;
+							}
+						} else if (index > this.index
+							&& (((sortingOffset.left + offset.width >= edgeOffset.left) && (sortingOffset.top + offset.height >= edgeOffset.top))
+							|| (sortingOffset.top + offset.height >= edgeOffset.top + height))
+						) {
+							// If the current node is to the right on the same row, or below the node that's being dragged
+							// then move it to the left
+							translate.x = -(this.width + this.marginOffset.x);
+							if (edgeOffset.left + translate.x < this.containerBoundingRect.left + offset.width) {
 								// If it moves passed the left bounds, then animate it to the last position of the previous row.
 								// We just use the offset of the previous node to calculate where to move, because that node's original position
 								// is exactly where we want to go
-                translate.x = prevNode.edgeOffset.left - edgeOffset.left;
-                translate.y = prevNode.edgeOffset.top - edgeOffset.top;
-              }
-              this.newIndex = index;
-            }
+								translate.x = prevNode.edgeOffset.left - edgeOffset.left;
+								translate.y = prevNode.edgeOffset.top - edgeOffset.top;
+							}
+							this.newIndex = index;
+						}
 					} else {
 						if (index > this.index && (sortingOffset.left + offset.width >= edgeOffset.left)) {
 							translate.x = -(this.width + this.marginOffset.x);
