@@ -4,7 +4,7 @@ import omit from 'lodash/omit'
 import invariant from 'invariant';
 
 import Manager from '../Manager';
-import {closest, events, vendorPrefix, limit, getElementMargin, provideDisplayName} from '../utils';
+import {closest, events, vendorPrefix, limit, getElementMargin, provideDisplayName, hitTest} from '../utils';
 
 // Export Higher Order Sortable Container Component
 export default function sortableContainer(WrappedComponent, config = {withRef: false}) {
@@ -436,132 +436,56 @@ export default function sortableContainer(WrappedComponent, config = {withRef: f
 
 		animateNodes() {
 			const {transitionDuration, hideSortableGhost} = this.props;
-			let nodes = this.manager.getOrderedRefs();
-			const deltaScroll = {
-				left: this.scrollContainer.scrollLeft - this.initialScroll.left,
-				top: this.scrollContainer.scrollTop - this.initialScroll.top
+			const axis = {
+				x: this.props.axis.indexOf('x') !== -1,
+				y: this.props.axis.indexOf('y') !== -1
 			};
-			const sortingOffset = {
-				left: this.offsetEdge.left + this.translate.x + deltaScroll.left,
-				top: this.offsetEdge.top + this.translate.y + deltaScroll.top
-			};
-			this.newIndex = null;
+			const nodes = this.manager.getOrderedRefs();
+			const hovering = nodes.find(({node}) => hitTest(node, this.helper, {
+				threshold: '50%',
+				axis
+			}));
 
-			for (let i = 0, len = nodes.length; i < len; i++) {
-				let {node, edgeOffset} = nodes[i];
-				const index = node.sortableInfo.index;
-				const width = node.offsetWidth;
-				const height = node.offsetHeight;
-				const offset = {
-					width: (this.width > width) ? (width / 2) : (this.width / 2),
-					height: (this.height > height) ? (height / 2) : (this.height / 2)
-				};
-				let translate = {
-					x: 0,
-					y: 0
-				};
+			if (hovering) {
+				const hoveringIndex = this.newIndex = hovering.node.sortableInfo.index;
 
-				// If we haven't cached the node's offsetTop / offsetLeft value
-				if (!edgeOffset) {
-					nodes[i].edgeOffset = edgeOffset = this.getEdgeOffset(node);
-				}
+				const offset = axis.x ? this.width : this.height;
 
-				// Get a reference to the next and previous node
-				const nextNode = i < nodes.length - 1 && nodes[i + 1];
-				const prevNode = i > 0 && nodes[i - 1];
+				for (let i = 0, len = nodes.length; i < len; i++) {
+					const {node} = nodes[i];
+					const translate = {x: 0, y: 0};
 
-				// Also cache the next node's edge offset if needed.
-				// We need this for calculating the animation in a grid setup
-				if (nextNode && !nextNode.edgeOffset) {
-					nextNode.edgeOffset = this.getEdgeOffset(nextNode.node)
-				}
-
-				// If the node is the one we're currently animating, skip it
-				if (index === this.index) {
-					if (hideSortableGhost) {
-						/*
-						 * With windowing libraries such as `react-virtualized`, the sortableGhost
-						 * node may change while scrolling down and then back up (or vice-versa),
-						 * so we need to update the reference to the new node just to be safe.
-						 */
-						this.sortableGhost = node;
-						node.style.visibility = 'hidden';
-					}
-					continue;
-				}
-
-				if (transitionDuration) {
-					node.style[`${vendorPrefix}TransitionDuration`] = `${transitionDuration}ms`;
-				}
-
-				if (this.axis.x) {
-					if (this.axis.y) {
-						// Calculations for a grid setup
-						if (
-							(index < this.index)
-							&& (
-								((sortingOffset.left - offset.width <= edgeOffset.left) && (sortingOffset.top <= edgeOffset.top + offset.height))
-								|| (sortingOffset.top + offset.height <= edgeOffset.top)
-							)
-						) {
-							// If the current node is to the left on the same row, or above the node that's being dragged
-							// then move it to the right
-							translate.x = this.width + this.marginOffset.x;
-							if (edgeOffset.left + translate.x > this.containerBoundingRect.width - offset.width) {
-								// If it moves passed the right bounds, then animate it to the first position of the next row.
-								// We just use the offset of the next node to calculate where to move, because that node's original position
-								// is exactly where we want to go
-								translate.x = nextNode.edgeOffset.left - edgeOffset.left;
-								translate.y = nextNode.edgeOffset.top - edgeOffset.top;
-							}
-							if (this.newIndex === null) {
-								this.newIndex = index;
-							}
-						} else if (index > this.index
-							&& (((sortingOffset.left + offset.width >= edgeOffset.left) && (sortingOffset.top + offset.height >= edgeOffset.top))
-							|| (sortingOffset.top + offset.height >= edgeOffset.top + height))
-						) {
-							// If the current node is to the right on the same row, or below the node that's being dragged
-							// then move it to the left
-							translate.x = -(this.width + this.marginOffset.x);
-							if (edgeOffset.left + translate.x < this.containerBoundingRect.left + offset.width) {
-								// If it moves passed the left bounds, then animate it to the last position of the previous row.
-								// We just use the offset of the previous node to calculate where to move, because that node's original position
-								// is exactly where we want to go
-								translate.x = prevNode.edgeOffset.left - edgeOffset.left;
-								translate.y = prevNode.edgeOffset.top - edgeOffset.top;
-							}
-							this.newIndex = index;
+					if (i === this.index) {
+						if (hideSortableGhost) {
+							/*
+							 * With windowing libraries such as `react-virtualized`, the sortableGhost
+							 * node may change while scrolling down and then back up (or vice-versa),
+							 * so we need to update the reference to the new node just to be safe.
+							 */
+							this.sortableGhost = node;
+							node.style.visibility = 'hidden';
 						}
+						continue;
+					}
+
+					if (axis.x && axis.y) {
+						// TODO: Grid sorting to be implemented using hit detection
 					} else {
-						if (index > this.index && (sortingOffset.left + offset.width >= edgeOffset.left)) {
-							translate.x = -(this.width + this.marginOffset.x);
-							this.newIndex = index;
-						}
-						else if (index < this.index && (sortingOffset.left <= edgeOffset.left + offset.width)) {
-							translate.x = this.width + this.marginOffset.x;
-							if (this.newIndex == null) {
-								this.newIndex = index;
-							}
-						}
-					}
-				} else if (this.axis.y) {
-					if (index > this.index && (sortingOffset.top + offset.height >= edgeOffset.top)) {
-						translate.y = -(this.height + this.marginOffset.y);
-						this.newIndex = index;
-					}
-					else if (index < this.index && (sortingOffset.top <= edgeOffset.top + offset.height)) {
-						translate.y = this.height + this.marginOffset.y;
-						if (this.newIndex == null) {
-							this.newIndex = index;
-						}
-					}
-				}
-				node.style[`${vendorPrefix}Transform`] = `translate3d(${translate.x}px,${translate.y}px,0)`;
-			}
+						const translateAxis = (axis.x) ? 'x' : 'y';
 
-			if (this.newIndex == null) {
-				this.newIndex = this.index;
+						if (i > this.index && i <= hoveringIndex) {
+							translate[translateAxis] = -(offset + this.marginOffset[translateAxis]);
+						}
+						else if (i < this.index && i >= hoveringIndex) {
+							translate[translateAxis] = offset + this.marginOffset[translateAxis];
+						}
+					}
+
+					if (transitionDuration) {
+						node.style[`${vendorPrefix}TransitionDuration`] = `${transitionDuration}ms`;
+					}
+					node.style[`${vendorPrefix}Transform`] = `translate3d(${translate.x}px,${translate.y}px,0)`;
+				}
 			}
 		}
 
