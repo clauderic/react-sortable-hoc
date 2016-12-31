@@ -10,6 +10,13 @@ export function arrayMove (arr, previousIndex, newIndex) {
     return array;
 }
 
+export function omit (obj, ...keysToOmit) {
+    return Object.keys(obj).reduce((acc, key) => {
+        if (keysToOmit.indexOf(key) === -1) acc[key] = obj[key];
+        return acc;
+    }, {});
+}
+
 export const events = {
 	start: ['touchstart', 'mousedown'],
 	move: ['touchmove', 'mousemove'],

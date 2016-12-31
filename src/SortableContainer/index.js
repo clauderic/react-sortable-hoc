@@ -1,10 +1,9 @@
 import React, {Component, PropTypes} from 'react';
 import ReactDOM from 'react-dom';
-import omit from 'lodash/omit'
 import invariant from 'invariant';
 
 import Manager from '../Manager';
-import {closest, events, vendorPrefix, limit, getElementMargin, provideDisplayName} from '../utils';
+import {closest, events, vendorPrefix, limit, getElementMargin, provideDisplayName, omit} from '../utils';
 
 // Export Higher Order Sortable Container Component
 export default function sortableContainer(WrappedComponent, config = {withRef: false}) {
