@@ -37,8 +37,10 @@ class Example extends Component {
     };
     onSortEnd = ({oldIndex, newIndex}) => {
         let {items} = this.state;
-        arrayMove(items, oldIndex, newIndex);
-        this.setState({items});
+
+        this.setState({
+            items: arrayMove(items, oldIndex, newIndex)
+        });
     };
     render() {
         const {items} = this.state;
