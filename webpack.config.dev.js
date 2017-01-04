@@ -2,6 +2,7 @@ var path = require('path');
 var webpack = require('webpack');
 var autoprefixer = require('autoprefixer');
 var HtmlWebpackPlugin = require('html-webpack-plugin');
+var DashboardPlugin = require('webpack-dashboard/plugin');
 
 module.exports = {
     devtool: 'cheap-module-eval-source-map',
@@ -15,6 +16,7 @@ module.exports = {
         publicPath: '/static/'
     },
     plugins: [
+        new DashboardPlugin(),
         new HtmlWebpackPlugin({
 			template: './index.html',
 			inject: 'body' // Inject all scripts into the body
