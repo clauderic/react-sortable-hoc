@@ -11,7 +11,8 @@ const SortableItem = SortableElement(({height, value}) => (
         width: '100%',
         display: 'block',
         padding: 20,
-        borderBottom: '1px solid #DEDEDE',
+        backgroundColor: '#FFF',
+        borderBottom: '1px solid #EFEFEF',
         boxSizing: 'border-box',
         WebkitUserSelect: 'none',
         height: height
@@ -21,7 +22,16 @@ const SortableItem = SortableElement(({height, value}) => (
 ));
 
 const SortableList = SortableContainer(({items}) => (
-    <div>
+    <div style={{
+        width: '80%',
+        height: '80vh',
+        maxWidth: '500px',
+        margin: '0 auto',
+        overflow: 'auto',
+        backgroundColor: '#f3f3f3',
+        border: '1px solid #EFEFEF',
+        borderRadius: 3
+    }}>
         {items.map(({height, value}, index) => <SortableItem key={`item-${index}`} index={index} value={value} height={height}/>)}
     </div>
 ));
