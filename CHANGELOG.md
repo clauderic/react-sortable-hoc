@@ -1,5 +1,8 @@
 Changelog
 ------------
+### 0.4.6
+Fix: This release fixes a bug in Firefox caused by active anchor tags preventing mousemove events from being fired [#118](https://github.com/clauderic/react-sortable-hoc/issues/118)
+
 ### 0.4.5
 Fix: getHelperDimensions height was not being used (Thanks [@SMenigat](https://github.com/SMenigat)!)
 
