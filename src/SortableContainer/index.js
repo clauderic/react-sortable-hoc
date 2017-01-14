@@ -180,6 +180,15 @@ export default function sortableContainer(WrappedComponent, config = {withRef: f
 				const containerBoundingRect = this.container.getBoundingClientRect();
 				const dimensions = getHelperDimensions({index, node, collection});
 
+				/*
+				 * Fixes a bug in Firefox where the :active state of anchor tags
+				 * prevent subsequent 'mousemove' events from being fired
+				 * (see https://github.com/clauderic/react-sortable-hoc/issues/118)
+				 */
+				if (e.target.tagName.toLowerCase() === 'a') {
+					e.preventDefault();
+				}
+
 				this.node = node;
 				this.margin = margin;
 				this.width = dimensions.width;
