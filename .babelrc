@@ -9,15 +9,6 @@
                 "react",
                 "stage-0",
                 "stage-1"
-            ],
-            "plugins": [
-                [
-                    "css-modules-transform", {
-                        "generateScopedName": "Cal__[name]__[local]",
-                        "preprocessCss": "./babel.preprocess.sass.js",
-                        "extensions": [".scss"]
-                    }
-                ]
             ]
         },
         "es6": {
@@ -28,14 +19,7 @@
                 "stage-1"
             ],
             "plugins": [
-                "transform-runtime",
-                [
-                    "css-modules-transform", {
-                        "generateScopedName": "Cal__[name]__[local]",
-                        "preprocessCss": "./babel.preprocess.sass.js",
-                        "extensions": [".scss"]
-                    }
-                ]
+                "transform-runtime"
             ]
         },
         "production": {
