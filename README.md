@@ -138,8 +138,10 @@ FAQ
 Need to sort items in a grid? We've got you covered! Just set the `axis` prop to `xy`. Grid support is currently limited to a setup where all the cells in the grid have the same width and height, though we're working hard to get variable width support in the near future.
 
 ### Item disappearing when sorting / CSS issues
-
 Upon sorting, `react-sortable-hoc` creates a clone of the element you are sorting (the _sortable-helper_) and appends it to the end of the `<body>` tag. The original element will still be in-place to preserve its position in the DOM until the end of the drag (with inline-styling to make it invisible). If the _sortable-helper_ gets messed up from a CSS standpoint, consider that maybe your selectors to the draggable item are dependent on a parent element which isn't present anymore (again, since the _sortable-helper_ is at the end of the `<body>`).
+
+### Click events being swallowed
+By default, `react-sortable-hoc` is triggered immediately on `mousedown`. If you'd like to prevent this behaviour, there are a number of strategies readily available. You can use the `distance` prop to set a minimum distance (in pixels) to be dragged before sorting is enabled. You can also use the `pressDelay` prop to add a delay before sorting is enabled. Alternatively, you can also use the [SortableHandle](https://github.com/clauderic/react-sortable-hoc/blob/master/src/SortableHandle/index.js) HOC.
 
 
 Dependencies
@@ -158,11 +160,6 @@ Contributions
 ------------
 Yes please! Feature requests / pull requests are welcome.
 
-<div align="center">
-<a href="http://peoplelikeus.ca">
-<img src="https://cloud.githubusercontent.com/assets/1416436/15581553/d7596d76-233a-11e6-9ac6-aade6b00f6b3.png" border="0" width="72"/>
-</a>
-</div>
 <div align="center">
 <small>Made with ❤︎ in the heart of Montreal.</small>
 </div>
