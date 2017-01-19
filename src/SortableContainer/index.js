@@ -213,7 +213,16 @@ export default function sortableContainer(WrappedComponent, config = {withRef: f
 					left: this.scrollContainer.scrollLeft
 				};
 
-				this.helper = this.document.body.appendChild(node.cloneNode(true));
+				const fields = node.querySelectorAll('input, textarea, select');
+				const nodeCloned = node.cloneNode(true);
+
+				fields.forEach((field) => {
+					const element = nodeCloned.querySelector("input[name='"+field.name+"'], textarea[name='"+field.name+"'], select[name='"+field.name+"']");
+					element ? element.value = field.value : null;
+				});
+
+				this.helper = this.document.body.appendChild(nodeCloned);
+
 				this.helper.style.position = 'fixed';
 				this.helper.style.top = `${this.boundingClientRect.top - margin.top}px`;
 				this.helper.style.left = `${this.boundingClientRect.left - margin.left}px`;
