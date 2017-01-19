@@ -159,7 +159,3 @@ Please do not use the issue tracker for personal support requests. Instead, use 
 Contributions
 ------------
 Yes please! Feature requests / pull requests are welcome.
-
-<div align="center">
-<small>Made with ❤︎ in the heart of Montreal.</small>
-</div>
