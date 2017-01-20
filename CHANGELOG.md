@@ -1,5 +1,8 @@
 Changelog
 ------------
+### 0.4.8
+Fix: Added logic to ensure that `select`, `input` and `textarea` fields in `SortableElement` always retain their `value` when the element is cloned (this happens when sorting begins) [#122](https://github.com/clauderic/react-sortable-hoc/issues/122) [#123](https://github.com/clauderic/react-sortable-hoc/pull/123). Thanks [@tomasztomys](https://github.com/tomasztomys)!
+
 ### 0.4.7
 Fix: This release fixes a bug in Firefox caused by active anchor tags preventing mousemove events from being fired [#118](https://github.com/clauderic/react-sortable-hoc/issues/118)
 
