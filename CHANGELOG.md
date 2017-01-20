@@ -1,5 +1,8 @@
 Changelog
 ------------
+### 0.4.9
+Fix: This release fixes a bug introduced in `0.4.8` caused by calling the `forEach` method directly on a NodeList, which is undefined in a number of browsers [#125](https://github.com/clauderic/react-sortable-hoc/issues/125)
+
 ### 0.4.8
 Fix: Added logic to ensure that `select`, `input` and `textarea` fields in `SortableElement` always retain their `value` when the element is cloned (this happens when sorting begins) [#122](https://github.com/clauderic/react-sortable-hoc/issues/122) [#123](https://github.com/clauderic/react-sortable-hoc/pull/123). Thanks [@tomasztomys](https://github.com/tomasztomys)!
 
