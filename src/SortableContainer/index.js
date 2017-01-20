@@ -214,7 +214,6 @@ export default function sortableContainer(WrappedComponent, config = {withRef: f
 				};
 
 				const fields = node.querySelectorAll('input, textarea, select');
-				const fields = node.querySelectorAll('input, textarea, select');
 				const clonedNode = node.cloneNode(true);
 				const clonedFields = clonedNode.querySelectorAll('input, textarea, select'); // Returns the clonedFields in the same order as fields
 
