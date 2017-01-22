@@ -86,14 +86,9 @@ That's it! React Sortable does not come with any styles by default, since it's m
 
 More code examples are available [here](https://github.com/clauderic/react-sortable-hoc/blob/master/examples/).
 
-### Running Examples
-
-In root folder:
-
-```
-	$ npm install
-	$ npm run storybook
-```
+Why should I use this?
+--------------------
+There are already a number of great Drag & Drop libraries out there (for instance, [react-dnd](https://github.com/gaearon/react-dnd/) is fantastic). If those libraries fit your needs, you should definitely give them a try first. However, most of those libraries rely on the HTML5 Drag & Drop API, which has some severe limitations. For instance, things rapidly become tricky if you need to support touch devices, if you need to lock dragging to an axis, or want to animate the nodes as they're being sorted. React Sortable HOC aims to provide a simple set of higher-order components to fill those gaps. If you're looking for a dead-simple, mobile-friendly way to add sortable functionality to your lists, then you're in the right place.
 
 ### Prop Types
 
@@ -128,12 +123,17 @@ Examples: `10` (which is the same as `"10px"`), `"50%"`
 | collection | Number or String | `0`     |           | The collection the element is part of. This is useful if you have multiple groups of sortable elements within the same `SortableContainer`. [Example](http://clauderic.github.io/react-sortable-hoc/#/basic-configuration/multiple-lists) |
 | disabled   | Boolean          | `false` |           | Whether the element should be sortable or not                                                                                                                                                                                             |
 
-Why should I use this?
---------------------
-There are already a number of great Drag & Drop libraries out there (for instance, [react-dnd](https://github.com/gaearon/react-dnd/) is fantastic). If those libraries fit your needs, you should definitely give them a try first. However, most of those libraries rely on the HTML5 Drag & Drop API, which has some severe limitations. For instance, things rapidly become tricky if you need to support touch devices, if you need to lock dragging to an axis, or want to animate the nodes as they're being sorted. React Sortable HOC aims to provide a simple set of higher-order components to fill those gaps. If you're looking for a dead-simple, mobile-friendly way to add sortable functionality to your lists, then you're in the right place.
-
 FAQ
 ---------------
+### Running Examples
+
+In root folder:
+
+```
+	$ npm install
+	$ npm run storybook
+```
+
 ### Grid support
 Need to sort items in a grid? We've got you covered! Just set the `axis` prop to `xy`. Grid support is currently limited to a setup where all the cells in the grid have the same width and height, though we're working hard to get variable width support in the near future.
 
