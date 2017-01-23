@@ -59,7 +59,8 @@ export default function sortableElement (WrappedComponent, config = {withRef: fa
             let node = this.node = findDOMNode(this);
 
             node.sortableInfo = {
-              index, collection,
+              index,
+              collection,
               manager: this.context.manager
             };
 
