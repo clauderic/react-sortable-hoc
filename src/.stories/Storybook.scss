@@ -112,6 +112,24 @@
     }
 }
 
+// Nested
+.category {
+  height: auto;
+  margin-bottom: 20px;
+
+  .categoryHeader {
+    display: flex;
+    flex-flow: row nowrap;
+    align-items: center;
+    padding: 10px;
+    border-bottom: 1px solid #EFEFEF;
+  }
+
+  .categoryList {
+    height: auto;
+  }
+}
+
 // Divider
 .divider {
     padding: 10px 20px;

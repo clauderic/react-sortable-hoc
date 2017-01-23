@@ -58,7 +58,10 @@ export default function sortableElement (WrappedComponent, config = {withRef: fa
         setDraggable(collection, index){
             let node = this.node = findDOMNode(this);
 
-            node.sortableInfo = {index, collection};
+            node.sortableInfo = {
+              index, collection,
+              manager: this.context.manager
+            };
 
             this.ref = {node};
             this.context.manager.add(collection, this.ref);

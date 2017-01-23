@@ -116,7 +116,7 @@ export default function sortableContainer(WrappedComponent, config = {withRef: f
 
 			const node = closest(e.target, (el) => el.sortableInfo != null);
 
-			if (node && node.sortableInfo && !this.state.sorting) {
+			if (node && node.sortableInfo && this.nodeIsChild(node) && !this.state.sorting) {
 				const {useDragHandle} = this.props;
 				const {index, collection} = node.sortableInfo;
 
@@ -142,6 +142,10 @@ export default function sortableContainer(WrappedComponent, config = {withRef: f
 				}
 			}
 		};
+
+    nodeIsChild = node => {
+      return node.sortableInfo.manager == this.manager;
+    };
 
 		handleMove = (e) => {
 			const {distance} = this.props;

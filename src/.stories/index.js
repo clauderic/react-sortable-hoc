@@ -27,12 +27,24 @@ const Item = SortableElement((props) => {
         <div className={props.className} style={{
             height: props.height
         }}>
-			{props.shouldUseDragHandle && <Handle/>}
+      {props.shouldUseDragHandle && <Handle/>}
 			<div className={style.wrapper}>
 	            <span>Item</span> {props.value}
 			</div>
         </div>
     )
+});
+
+const Category = SortableElement((props) => {
+  return (
+    <div className={style.category}>
+      <div className={style.categoryHeader}>
+        <Handle/>
+        <span>Category {props.value}</span>
+      </div>
+			<ListWrapper component={SortableList} className={style.categoryList} items={getItems(5, 59)} shouldUseDragHandle={true} helperClass={style.stylizedHelper} />
+    </div>
+  )
 });
 
 class ListWrapper extends Component {
@@ -239,6 +251,20 @@ const ShrinkingSortableList = SortableContainer(({className, isSorting, items, i
 	);
 });
 
+const NestedSortableList = SortableContainer(({className, items, isSorting, sortableHandlers}) => {
+  return (
+    <div className={className} {...sortableHandlers}>
+      {items.map((value, index) =>
+        <Category
+          key={`category-${value}`}
+          index={index}
+          value={value}
+        />
+      )}
+    </div>
+  );
+});
+
 storiesOf('Basic Configuration', module)
 .add('Basic usage', () => {
 	return (
@@ -282,6 +308,13 @@ storiesOf('Basic Configuration', module)
 			<ListWrapper component={SortableList} axis={'xy'} items={getItems(10, 110)} helperClass={style.stylizedHelper} className={classNames(style.list, style.stylizedList, style.grid)} itemClass={classNames(style.stylizedItem, style.gridItem)}/>
 		</div>
 	);
+})
+.add('Nested Lists', () => {
+  return (
+    <div className={style.root}>
+      <ListWrapper component={NestedSortableList} items={range(4)} shouldUseDragHandle={true} helperClass={style.stylizedHelper} />
+    </div>
+  );
 })
 
 storiesOf('Advanced', module)
