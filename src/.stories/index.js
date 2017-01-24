@@ -42,7 +42,7 @@ const Category = SortableElement((props) => {
 				<Handle/>
 				<span>Category {props.value}</span>
 			</div>
-			<ListWrapper component={SortableList} className={style.categoryList} items={getItems(5, 59)} shouldUseDragHandle={true} helperClass={style.stylizedHelper} />
+			<ListWrapper component={SortableList} className={style.categoryList} items={getItems(3, 59)} shouldUseDragHandle={true} helperClass={style.stylizedHelper} />
 		</div>
 	)
 });
