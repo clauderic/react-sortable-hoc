@@ -143,9 +143,9 @@ export default function sortableContainer(WrappedComponent, config = {withRef: f
 			}
 		};
 
-    nodeIsChild = node => {
-      return node.sortableInfo.manager == this.manager;
-    };
+		nodeIsChild = node => {
+			return node.sortableInfo.manager == this.manager;
+		};
 
 		handleMove = (e) => {
 			const {distance} = this.props;
