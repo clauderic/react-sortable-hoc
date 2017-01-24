@@ -1,0 +1,75 @@
+{
+  "author": {
+    "name": "Isaac Z. Schlueter",
+    "email": "i@izs.me",
+    "url": "http://blog.izs.me/"
+  },
+  "name": "npmlog",
+  "description": "logger for npm",
+  "version": "3.1.2",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/npm/npmlog.git"
+  },
+  "main": "log.js",
+  "files": [
+    "log.js"
+  ],
+  "scripts": {
+    "test": "standard && tap test/*.js"
+  },
+  "dependencies": {
+    "are-we-there-yet": "~1.1.2",
+    "console-control-strings": "~1.1.0",
+    "gauge": "~2.6.0",
+    "set-blocking": "~2.0.0"
+  },
+  "devDependencies": {
+    "standard": "~7.1.2",
+    "tap": "~5.7.0"
+  },
+  "license": "ISC",
+  "gitHead": "444e237743fa1339cb91bea2d3f16f710be56984",
+  "bugs": {
+    "url": "https://github.com/npm/npmlog/issues"
+  },
+  "homepage": "https://github.com/npm/npmlog#readme",
+  "_id": "npmlog@3.1.2",
+  "_shasum": "2d46fa874337af9498a2f12bb43d8d0be4a36873",
+  "_from": "npmlog@>=0.0.0 <1.0.0||>=1.0.0 <2.0.0||>=2.0.0 <3.0.0||>=3.0.0 <4.0.0",
+  "_npmVersion": "3.9.6",
+  "_nodeVersion": "4.4.0",
+  "_npmUser": {
+    "name": "iarna",
+    "email": "me@re-becca.org"
+  },
+  "dist": {
+    "shasum": "2d46fa874337af9498a2f12bb43d8d0be4a36873",
+    "tarball": "https://registry.npmjs.org/npmlog/-/npmlog-3.1.2.tgz"
+  },
+  "maintainers": [
+    {
+      "name": "iarna",
+      "email": "me@re-becca.org"
+    },
+    {
+      "name": "isaacs",
+      "email": "i@izs.me"
+    },
+    {
+      "name": "othiym23",
+      "email": "ogd@aoaioxxysz.net"
+    },
+    {
+      "name": "zkat",
+      "email": "kat@sykosomatic.org"
+    }
+  ],
+  "_npmOperationalInternal": {
+    "host": "packages-12-west.internal.npmjs.com",
+    "tmp": "tmp/npmlog-3.1.2.tgz_1466073052641_0.36111341998912394"
+  },
+  "directories": {},
+  "_resolved": "https://registry.npmjs.org/npmlog/-/npmlog-3.1.2.tgz",
+  "readme": "ERROR: No README data found!"
+}

@@ -1,0 +1,71 @@
+{
+  "name": "lodash",
+  "version": "4.17.2",
+  "description": "Lodash modular utilities.",
+  "keywords": [
+    "modules",
+    "stdlib",
+    "util"
+  ],
+  "homepage": "https://lodash.com/",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/lodash/lodash.git"
+  },
+  "icon": "https://lodash.com/icon.svg",
+  "license": "MIT",
+  "main": "lodash.js",
+  "author": {
+    "name": "John-David Dalton",
+    "email": "john.david.dalton@gmail.com",
+    "url": "http://allyoucanleet.com/"
+  },
+  "contributors": [
+    {
+      "name": "John-David Dalton",
+      "email": "john.david.dalton@gmail.com",
+      "url": "http://allyoucanleet.com/"
+    },
+    {
+      "name": "Mathias Bynens",
+      "email": "mathias@qiwi.be",
+      "url": "https://mathiasbynens.be/"
+    }
+  ],
+  "scripts": {
+    "test": "echo \"See https://travis-ci.org/lodash/lodash-cli for testing details.\""
+  },
+  "bugs": {
+    "url": "https://github.com/lodash/lodash/issues"
+  },
+  "_id": "lodash@4.17.2",
+  "_shasum": "34a3055babe04ce42467b607d700072c7ff6bf42",
+  "_from": "lodash@>=4.17.2 <5.0.0",
+  "_npmVersion": "2.15.11",
+  "_nodeVersion": "7.1.0",
+  "_npmUser": {
+    "name": "jdalton",
+    "email": "john.david.dalton@gmail.com"
+  },
+  "dist": {
+    "shasum": "34a3055babe04ce42467b607d700072c7ff6bf42",
+    "tarball": "https://registry.npmjs.org/lodash/-/lodash-4.17.2.tgz"
+  },
+  "maintainers": [
+    {
+      "name": "jdalton",
+      "email": "john.david.dalton@gmail.com"
+    },
+    {
+      "name": "mathias",
+      "email": "mathias@qiwi.be"
+    }
+  ],
+  "_npmOperationalInternal": {
+    "host": "packages-18-east.internal.npmjs.com",
+    "tmp": "tmp/lodash-4.17.2.tgz_1479280899250_0.8391377755906433"
+  },
+  "directories": {},
+  "_resolved": "https://registry.npmjs.org/lodash/-/lodash-4.17.2.tgz",
+  "readme": "ERROR: No README data found!"
+}

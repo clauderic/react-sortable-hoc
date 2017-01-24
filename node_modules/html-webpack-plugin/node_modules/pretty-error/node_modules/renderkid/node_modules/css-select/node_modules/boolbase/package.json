@@ -1,0 +1,32 @@
+{
+  "name": "boolbase",
+  "version": "1.0.0",
+  "description": "two functions: One that returns true, one that returns false",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/fb55/boolbase.git"
+  },
+  "keywords": [
+    "boolean",
+    "function"
+  ],
+  "author": {
+    "name": "Felix Boehm",
+    "email": "me@feedic.com"
+  },
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/fb55/boolbase/issues"
+  },
+  "homepage": "https://github.com/fb55/boolbase",
+  "readme": "#boolbase\nThis very simple module provides two basic functions, one that always returns true (`trueFunc`) and one that always returns false (`falseFunc`).\n\n###WTF?\n\nBy having only a single instance of these functions around, it's possible to do some nice optimizations. Eg. [`CSSselect`](https://github.com/fb55/CSSselect) uses these functions to determine whether a selector won't match any elements. If that's the case, the DOM doesn't even have to be touched.\n\n###And why is this a separate module?\n\nI'm trying to modularize `CSSselect` and most modules depend on these functions. IMHO, having a separate module is the easiest solution to this problem.",
+  "readmeFilename": "README.md",
+  "_id": "boolbase@1.0.0",
+  "_shasum": "68dff5fbe60c51eb37725ea9e3ed310dcc1e776e",
+  "_resolved": "https://registry.npmjs.org/boolbase/-/boolbase-1.0.0.tgz",
+  "_from": "boolbase@>=1.0.0 <1.1.0"
+}

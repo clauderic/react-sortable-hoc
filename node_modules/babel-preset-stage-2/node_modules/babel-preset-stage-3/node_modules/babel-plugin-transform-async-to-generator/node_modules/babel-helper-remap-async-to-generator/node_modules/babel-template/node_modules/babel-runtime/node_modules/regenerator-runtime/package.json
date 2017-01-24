@@ -1,0 +1,48 @@
+{
+  "name": "regenerator-runtime",
+  "author": {
+    "name": "Ben Newman",
+    "email": "bn@cs.stanford.edu"
+  },
+  "description": "Runtime for Regenerator-compiled generator and async functions.",
+  "version": "0.9.5",
+  "main": "runtime-module.js",
+  "keywords": [
+    "regenerator",
+    "runtime",
+    "generator",
+    "async"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/facebook/regenerator/tree/master/packages/regenerator-runtime"
+  },
+  "license": "MIT",
+  "_id": "regenerator-runtime@0.9.5",
+  "scripts": {},
+  "_shasum": "403d6d40a4bdff9c330dd9392dcbb2d9a8bba1fc",
+  "_from": "regenerator-runtime@>=0.9.5 <0.10.0",
+  "_npmVersion": "3.3.9",
+  "_nodeVersion": "7.0.0-pre",
+  "_npmUser": {
+    "name": "benjamn",
+    "email": "bn@cs.stanford.edu"
+  },
+  "maintainers": [
+    {
+      "name": "benjamn",
+      "email": "bn@cs.stanford.edu"
+    }
+  ],
+  "dist": {
+    "shasum": "403d6d40a4bdff9c330dd9392dcbb2d9a8bba1fc",
+    "tarball": "https://registry.npmjs.org/regenerator-runtime/-/regenerator-runtime-0.9.5.tgz"
+  },
+  "_npmOperationalInternal": {
+    "host": "packages-16-east.internal.npmjs.com",
+    "tmp": "tmp/regenerator-runtime-0.9.5.tgz_1462199689741_0.4502820009365678"
+  },
+  "directories": {},
+  "_resolved": "https://registry.npmjs.org/regenerator-runtime/-/regenerator-runtime-0.9.5.tgz",
+  "readme": "ERROR: No README data found!"
+}

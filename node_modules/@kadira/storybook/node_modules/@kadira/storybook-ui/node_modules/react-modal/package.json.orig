@@ -1,0 +1,86 @@
+{
+  "name": "react-modal",
+  "version": "1.1.0",
+  "description": "Accessible modal dialog component for React.JS",
+  "main": "./lib/index",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/rackt/react-modal.git"
+  },
+  "homepage": "https://github.com/rackt/react-modal",
+  "bugs": "https://github.com/rackt/react-modal/issues",
+  "directories": {
+    "example": "examples"
+  },
+  "scripts": {
+    "test": "scripts/test --browsers Firefox --single-run",
+    "start": "scripts/dev-examples"
+  },
+  "authors": [
+    "Ryan Florence"
+  ],
+  "license": "MIT",
+  "devDependencies": {
+    "babel-core": "^6.7.4",
+    "babel-loader": "^6.2.4",
+    "babel-preset-es2015": "^6.6.0",
+    "babel-preset-react": "^6.5.0",
+    "expect": "1.10.0",
+<<<<<<< HEAD
+    "jsx-loader": "0.13.2",
+    "karma": "^0.13.22",
+=======
+    "karma": "0.13.10",
+>>>>>>> development-improvements
+    "karma-browserify": "^4.2.1",
+    "karma-chrome-launcher": "0.2.0",
+    "karma-cli": "0.1.0",
+    "karma-firefox-launcher": "0.1.6",
+    "karma-mocha": "0.2.0",
+    "karma-safari-launcher": "^0.1.1",
+    "mocha": "2.3.3",
+<<<<<<< HEAD
+    "react": "^15.0.0",
+    "react-addons-test-utils": "^15.0.0",
+    "react-dom": "^15.0.0",
+    "reactify": "^1.1.1",
+=======
+    "react": "^0.14.0",
+    "react-addons-test-utils": "^0.14.0",
+    "react-dom": "^0.14.0",
+>>>>>>> development-improvements
+    "rf-release": "0.4.0",
+    "sinon": "^1.17.3",
+    "uglify-js": "2.4.24",
+    "webpack": "^1.12.14",
+    "webpack-dev-server": "1.11.0"
+  },
+  "dependencies": {
+    "element-class": "^0.2.0",
+    "exenv": "1.2.0",
+    "lodash.assign": "^3.2.0"
+  },
+  "peerDependencies": {
+    "react": "^0.14.0 || ^15.0.0-0"
+  },
+  "tags": [
+    "react",
+    "modal",
+    "dialog"
+  ],
+  "keywords": [
+    "react",
+    "react-component",
+    "modal",
+    "dialog"
+<<<<<<< HEAD
+  ],
+  "browserify-shim": {
+    "react": "global:React",
+    "react-dom": "global:ReactDOM"
+  }
+}
+=======
+  ]
+}
+>>>>>>> development-improvements

@@ -1,0 +1,69 @@
+{
+  "name": "after",
+  "description": "after - tiny flow control",
+  "version": "0.8.2",
+  "author": {
+    "name": "Raynos",
+    "email": "raynos2@gmail.com"
+  },
+  "contributors": [
+    {
+      "name": "Raynos",
+      "email": "raynos2@gmail.com",
+      "url": "http://raynos.org"
+    }
+  ],
+  "scripts": {
+    "test": "mocha --ui tdd --reporter spec test/*.js"
+  },
+  "devDependencies": {
+    "mocha": "~1.8.1"
+  },
+  "keywords": [
+    "flowcontrol",
+    "after",
+    "flow",
+    "control",
+    "arch"
+  ],
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/Raynos/after.git"
+  },
+  "gitHead": "e8c26046f36962b90e68dc5df33a9672a54b25f5",
+  "bugs": {
+    "url": "https://github.com/Raynos/after/issues"
+  },
+  "homepage": "https://github.com/Raynos/after#readme",
+  "_id": "after@0.8.2",
+  "_shasum": "fedb394f9f0e02aa9768e702bda23b505fae7e1f",
+  "_from": "after@0.8.2",
+  "_npmVersion": "2.15.9",
+  "_nodeVersion": "0.10.32",
+  "_npmUser": {
+    "name": "raynos",
+    "email": "raynos2@gmail.com"
+  },
+  "dist": {
+    "shasum": "fedb394f9f0e02aa9768e702bda23b505fae7e1f",
+    "tarball": "https://registry.npmjs.org/after/-/after-0.8.2.tgz"
+  },
+  "maintainers": [
+    {
+      "name": "raynos",
+      "email": "raynos2@gmail.com"
+    },
+    {
+      "name": "defunctzombie",
+      "email": "shtylman@gmail.com"
+    }
+  ],
+  "_npmOperationalInternal": {
+    "host": "packages-12-west.internal.npmjs.com",
+    "tmp": "tmp/after-0.8.2.tgz_1471308639186_0.9132961586583406"
+  },
+  "directories": {},
+  "_resolved": "https://registry.npmjs.org/after/-/after-0.8.2.tgz",
+  "readme": "ERROR: No README data found!"
+}

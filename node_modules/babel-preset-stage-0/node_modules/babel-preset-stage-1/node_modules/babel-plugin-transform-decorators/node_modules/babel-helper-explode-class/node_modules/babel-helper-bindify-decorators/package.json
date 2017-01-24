@@ -1,0 +1,62 @@
+{
+  "name": "babel-helper-bindify-decorators",
+  "version": "6.8.0",
+  "description": "## Usage",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/babel/babel/tree/master/packages/babel-helper-bindify-decorators"
+  },
+  "license": "MIT",
+  "main": "lib/index.js",
+  "dependencies": {
+    "babel-runtime": "^6.0.0",
+    "babel-traverse": "^6.8.0",
+    "babel-types": "^6.8.0"
+  },
+  "_id": "babel-helper-bindify-decorators@6.8.0",
+  "scripts": {},
+  "_shasum": "b34805a30b1433cc0042f7054f88a7133c144909",
+  "_from": "babel-helper-bindify-decorators@>=6.8.0 <7.0.0",
+  "_npmVersion": "3.8.6",
+  "_nodeVersion": "5.1.0",
+  "_npmUser": {
+    "name": "hzoo",
+    "email": "hi@henryzoo.com"
+  },
+  "maintainers": [
+    {
+      "name": "amasad",
+      "email": "amjad.masad@gmail.com"
+    },
+    {
+      "name": "hzoo",
+      "email": "hi@henryzoo.com"
+    },
+    {
+      "name": "jmm",
+      "email": "npm-public@jessemccarthy.net"
+    },
+    {
+      "name": "loganfsmyth",
+      "email": "loganfsmyth@gmail.com"
+    },
+    {
+      "name": "sebmck",
+      "email": "sebmck@gmail.com"
+    },
+    {
+      "name": "thejameskyle",
+      "email": "me@thejameskyle.com"
+    }
+  ],
+  "dist": {
+    "shasum": "b34805a30b1433cc0042f7054f88a7133c144909",
+    "tarball": "https://registry.npmjs.org/babel-helper-bindify-decorators/-/babel-helper-bindify-decorators-6.8.0.tgz"
+  },
+  "_npmOperationalInternal": {
+    "host": "packages-12-west.internal.npmjs.com",
+    "tmp": "tmp/babel-helper-bindify-decorators-6.8.0.tgz_1462232634409_0.4687562899198383"
+  },
+  "directories": {},
+  "_resolved": "https://registry.npmjs.org/babel-helper-bindify-decorators/-/babel-helper-bindify-decorators-6.8.0.tgz"
+}

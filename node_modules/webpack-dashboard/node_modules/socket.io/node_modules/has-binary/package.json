@@ -1,0 +1,40 @@
+{
+  "name": "has-binary",
+  "version": "0.1.7",
+  "description": "A function that takes anything in javascript and returns true if its argument contains binary data.",
+  "dependencies": {
+    "isarray": "0.0.1"
+  },
+  "devDependencies": {
+    "better-assert": "1.0.0",
+    "mocha": "2.3.4"
+  },
+  "author": {
+    "name": "Kevin Roark"
+  },
+  "license": "MIT",
+  "gitHead": "73875a20978a219f726f7d313ccd1de19335f5a1",
+  "_id": "has-binary@0.1.7",
+  "scripts": {},
+  "_shasum": "68e61eb16210c9545a0a5cce06a873912fe1e68c",
+  "_from": "has-binary@0.1.7",
+  "_npmVersion": "2.14.7",
+  "_nodeVersion": "4.2.2",
+  "_npmUser": {
+    "name": "rauchg",
+    "email": "rauchg@gmail.com"
+  },
+  "maintainers": [
+    {
+      "name": "rauchg",
+      "email": "rauchg@gmail.com"
+    }
+  ],
+  "dist": {
+    "shasum": "68e61eb16210c9545a0a5cce06a873912fe1e68c",
+    "tarball": "https://registry.npmjs.org/has-binary/-/has-binary-0.1.7.tgz"
+  },
+  "directories": {},
+  "_resolved": "https://registry.npmjs.org/has-binary/-/has-binary-0.1.7.tgz",
+  "readme": "ERROR: No README data found!"
+}

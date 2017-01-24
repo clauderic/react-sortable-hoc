@@ -1,0 +1,60 @@
+{
+  "name": "wide-align",
+  "version": "1.1.0",
+  "description": "A wide-character aware text alignment function for use on the console or with fixed width fonts.",
+  "main": "align.js",
+  "scripts": {
+    "test": "tap --coverage test/*.js"
+  },
+  "keywords": [
+    "wide",
+    "double",
+    "unicode",
+    "cjkv",
+    "pad",
+    "align"
+  ],
+  "author": {
+    "name": "Rebecca Turner",
+    "email": "me@re-becca.org",
+    "url": "http://re-becca.org/"
+  },
+  "license": "ISC",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/iarna/wide-align.git"
+  },
+  "dependencies": {
+    "string-width": "^1.0.1"
+  },
+  "devDependencies": {
+    "tap": "^2.3.2"
+  },
+  "gitHead": "fe3f7f210650913d5bee702d7e19938f6977bc8a",
+  "bugs": {
+    "url": "https://github.com/iarna/wide-align/issues"
+  },
+  "homepage": "https://github.com/iarna/wide-align#readme",
+  "_id": "wide-align@1.1.0",
+  "_shasum": "40edde802a71fea1f070da3e62dcda2e7add96ad",
+  "_from": "wide-align@>=1.1.0 <2.0.0",
+  "_npmVersion": "3.5.3",
+  "_nodeVersion": "4.2.2",
+  "_npmUser": {
+    "name": "iarna",
+    "email": "me@re-becca.org"
+  },
+  "dist": {
+    "shasum": "40edde802a71fea1f070da3e62dcda2e7add96ad",
+    "tarball": "https://registry.npmjs.org/wide-align/-/wide-align-1.1.0.tgz"
+  },
+  "maintainers": [
+    {
+      "name": "iarna",
+      "email": "me@re-becca.org"
+    }
+  ],
+  "directories": {},
+  "_resolved": "https://registry.npmjs.org/wide-align/-/wide-align-1.1.0.tgz",
+  "readme": "ERROR: No README data found!"
+}

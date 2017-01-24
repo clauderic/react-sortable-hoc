@@ -1,0 +1,10 @@
+{
+    "subobject": {
+        "test": 5
+    },
+    "subarray": [
+        {
+           "foo": 7
+        }
+    ]
+}

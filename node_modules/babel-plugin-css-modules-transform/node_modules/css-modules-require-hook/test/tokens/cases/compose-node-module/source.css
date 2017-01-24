@@ -1,0 +1,4 @@
+.foo
+{
+  composes: paragraph from 'awesome-theme/common.css';
+}

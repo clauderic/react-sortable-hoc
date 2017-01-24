@@ -1,0 +1,49 @@
+{
+  "name": "in-publish",
+  "version": "2.0.0",
+  "description": "Detect if we were run as a result of `npm publish`",
+  "main": "index.js",
+  "bin": {
+    "in-publish": "in-publish.js",
+    "in-install": "in-install.js",
+    "not-in-publish": "not-in-publish.js",
+    "not-in-install": "not-in-install.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/iarna/in-publish.git"
+  },
+  "author": {
+    "name": "Rebecca Turner",
+    "email": "me@re-becca.org"
+  },
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/iarna/in-publish/issues"
+  },
+  "homepage": "https://github.com/iarna/in-publish",
+  "gitHead": "7602f2f81f8be988cae554d706bd4a3f1d563f1a",
+  "_id": "in-publish@2.0.0",
+  "scripts": {},
+  "_shasum": "e20ff5e3a2afc2690320b6dc552682a9c7fadf51",
+  "_from": "in-publish@>=2.0.0 <3.0.0",
+  "_npmVersion": "2.11.3",
+  "_nodeVersion": "2.3.3",
+  "_npmUser": {
+    "name": "iarna",
+    "email": "me@re-becca.org"
+  },
+  "dist": {
+    "shasum": "e20ff5e3a2afc2690320b6dc552682a9c7fadf51",
+    "tarball": "https://registry.npmjs.org/in-publish/-/in-publish-2.0.0.tgz"
+  },
+  "maintainers": [
+    {
+      "name": "iarna",
+      "email": "me@re-becca.org"
+    }
+  ],
+  "directories": {},
+  "_resolved": "https://registry.npmjs.org/in-publish/-/in-publish-2.0.0.tgz",
+  "readme": "ERROR: No README data found!"
+}

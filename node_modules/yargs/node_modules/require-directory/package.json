@@ -1,0 +1,67 @@
+{
+  "author": {
+    "name": "Troy Goode",
+    "email": "troygoode@gmail.com",
+    "url": "http://github.com/troygoode/"
+  },
+  "name": "require-directory",
+  "version": "2.1.1",
+  "description": "Recursively iterates over specified directory, require()'ing each file, and returning a nested hash structure containing those modules.",
+  "keywords": [
+    "require",
+    "directory",
+    "library",
+    "recursive"
+  ],
+  "homepage": "https://github.com/troygoode/node-require-directory/",
+  "main": "index.js",
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/troygoode/node-require-directory.git"
+  },
+  "contributors": [
+    {
+      "name": "Troy Goode",
+      "email": "troygoode@gmail.com",
+      "url": "http://github.com/troygoode/"
+    }
+  ],
+  "license": "MIT",
+  "bugs": {
+    "url": "http://github.com/troygoode/node-require-directory/issues/"
+  },
+  "engines": {
+    "node": ">=0.10.0"
+  },
+  "devDependencies": {
+    "jshint": "^2.6.0",
+    "mocha": "^2.1.0"
+  },
+  "scripts": {
+    "test": "mocha",
+    "lint": "jshint index.js test/test.js"
+  },
+  "gitHead": "cc71c23dd0c16cefd26855303c16ca1b9b50a36d",
+  "_id": "require-directory@2.1.1",
+  "_shasum": "8c64ad5fd30dab1c976e2344ffe7f792a6a6df42",
+  "_from": "require-directory@>=2.1.1 <3.0.0",
+  "_npmVersion": "2.5.1",
+  "_nodeVersion": "0.12.0",
+  "_npmUser": {
+    "name": "troygoode",
+    "email": "troygoode@gmail.com"
+  },
+  "maintainers": [
+    {
+      "name": "troygoode",
+      "email": "troygoode@gmail.com"
+    }
+  ],
+  "dist": {
+    "shasum": "8c64ad5fd30dab1c976e2344ffe7f792a6a6df42",
+    "tarball": "https://registry.npmjs.org/require-directory/-/require-directory-2.1.1.tgz"
+  },
+  "directories": {},
+  "_resolved": "https://registry.npmjs.org/require-directory/-/require-directory-2.1.1.tgz",
+  "readme": "ERROR: No README data found!"
+}

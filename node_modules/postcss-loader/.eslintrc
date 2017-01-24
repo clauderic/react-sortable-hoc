@@ -1,0 +1,6 @@
+{
+  "extends": "eslint-config-postcss/es5",
+  "env": {
+    "mocha": true
+  }
+}

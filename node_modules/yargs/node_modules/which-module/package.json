@@ -1,0 +1,70 @@
+{
+  "name": "which-module",
+  "version": "1.0.0",
+  "description": "Find the module object for something that was require()d",
+  "main": "index.js",
+  "scripts": {
+    "pretest": "standard",
+    "test": "nyc ava",
+    "coverage": "nyc report --reporter=text-lcov | coveralls",
+    "release": "standard-version"
+  },
+  "files": [
+    "index.js"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/nexdrew/which-module.git"
+  },
+  "keywords": [
+    "which",
+    "module",
+    "exports",
+    "filename",
+    "require",
+    "reverse",
+    "lookup"
+  ],
+  "author": {
+    "name": "nexdrew"
+  },
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/nexdrew/which-module/issues"
+  },
+  "homepage": "https://github.com/nexdrew/which-module#readme",
+  "devDependencies": {
+    "ava": "^0.15.2",
+    "coveralls": "^2.11.9",
+    "nyc": "^6.4.4",
+    "standard": "^7.1.2",
+    "standard-version": "^2.3.0"
+  },
+  "gitHead": "a5b7492798fac7e484fd8812d3d3a1138bb08784",
+  "_id": "which-module@1.0.0",
+  "_shasum": "bba63ca861948994ff307736089e3b96026c2a4f",
+  "_from": "which-module@>=1.0.0 <2.0.0",
+  "_npmVersion": "3.8.8",
+  "_nodeVersion": "5.11.0",
+  "_npmUser": {
+    "name": "nexdrew",
+    "email": "andrew@npmjs.com"
+  },
+  "dist": {
+    "shasum": "bba63ca861948994ff307736089e3b96026c2a4f",
+    "tarball": "https://registry.npmjs.org/which-module/-/which-module-1.0.0.tgz"
+  },
+  "maintainers": [
+    {
+      "name": "nexdrew",
+      "email": "andrew@npmjs.com"
+    }
+  ],
+  "_npmOperationalInternal": {
+    "host": "packages-16-east.internal.npmjs.com",
+    "tmp": "tmp/which-module-1.0.0.tgz_1465192451403_0.19380306638777256"
+  },
+  "directories": {},
+  "_resolved": "https://registry.npmjs.org/which-module/-/which-module-1.0.0.tgz",
+  "readme": "ERROR: No README data found!"
+}

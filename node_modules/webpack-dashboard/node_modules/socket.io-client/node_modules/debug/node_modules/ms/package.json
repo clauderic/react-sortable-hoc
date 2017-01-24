@@ -1,0 +1,74 @@
+{
+  "name": "ms",
+  "version": "0.7.2",
+  "description": "Tiny milisecond conversion utility",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/zeit/ms.git"
+  },
+  "main": "./index",
+  "files": [
+    "index.js"
+  ],
+  "scripts": {
+    "test": "xo && mocha test/index.js",
+    "test-browser": "serve ./test"
+  },
+  "license": "MIT",
+  "devDependencies": {
+    "expect.js": "^0.3.1",
+    "mocha": "^3.0.2",
+    "serve": "^1.4.0",
+    "xo": "^0.17.0"
+  },
+  "component": {
+    "scripts": {
+      "ms/index.js": "index.js"
+    }
+  },
+  "xo": {
+    "space": true,
+    "semicolon": false,
+    "envs": [
+      "mocha"
+    ],
+    "rules": {
+      "complexity": 0
+    }
+  },
+  "gitHead": "ac92a7e0790ba2622a74d9d60690ca0d2c070a45",
+  "bugs": {
+    "url": "https://github.com/zeit/ms/issues"
+  },
+  "homepage": "https://github.com/zeit/ms#readme",
+  "_id": "ms@0.7.2",
+  "_shasum": "ae25cf2512b3885a1d95d7f037868d8431124765",
+  "_from": "ms@0.7.2",
+  "_npmVersion": "3.10.8",
+  "_nodeVersion": "6.8.0",
+  "_npmUser": {
+    "name": "leo",
+    "email": "leo@zeit.co"
+  },
+  "dist": {
+    "shasum": "ae25cf2512b3885a1d95d7f037868d8431124765",
+    "tarball": "https://registry.npmjs.org/ms/-/ms-0.7.2.tgz"
+  },
+  "maintainers": [
+    {
+      "name": "leo",
+      "email": "leo@zeit.co"
+    },
+    {
+      "name": "rauchg",
+      "email": "rauchg@gmail.com"
+    }
+  ],
+  "_npmOperationalInternal": {
+    "host": "packages-18-east.internal.npmjs.com",
+    "tmp": "tmp/ms-0.7.2.tgz_1477383407940_0.4743474116548896"
+  },
+  "directories": {},
+  "_resolved": "https://registry.npmjs.org/ms/-/ms-0.7.2.tgz",
+  "readme": "ERROR: No README data found!"
+}

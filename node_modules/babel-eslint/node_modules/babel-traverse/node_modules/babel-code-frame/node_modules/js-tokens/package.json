@@ -1,0 +1,66 @@
+{
+  "name": "js-tokens",
+  "version": "2.0.0",
+  "author": {
+    "name": "Simon Lydell"
+  },
+  "license": "MIT",
+  "description": "A regex that tokenizes JavaScript.",
+  "keywords": [
+    "JavaScript",
+    "js",
+    "token",
+    "tokenize",
+    "regex"
+  ],
+  "files": [
+    "index.js"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/lydell/js-tokens.git"
+  },
+  "scripts": {
+    "test": "mocha --ui tdd",
+    "esprima-compare": "node esprima-compare ./index.js everything.js/es5.js",
+    "build": "node generate-index.js",
+    "dev": "npm run build && npm test"
+  },
+  "devDependencies": {
+    "coffee-script": "~1.10.0",
+    "esprima": "^2.7.2",
+    "everything.js": "^1.0.3",
+    "mocha": "^2.5.3"
+  },
+  "gitHead": "23fcbe4639fb4baee5dc53616958cc04c8b94026",
+  "bugs": {
+    "url": "https://github.com/lydell/js-tokens/issues"
+  },
+  "homepage": "https://github.com/lydell/js-tokens#readme",
+  "_id": "js-tokens@2.0.0",
+  "_shasum": "79903f5563ee778cc1162e6dcf1a0027c97f9cb5",
+  "_from": "js-tokens@>=2.0.0 <3.0.0",
+  "_npmVersion": "3.8.6",
+  "_nodeVersion": "5.11.1",
+  "_npmUser": {
+    "name": "lydell",
+    "email": "simon.lydell@gmail.com"
+  },
+  "dist": {
+    "shasum": "79903f5563ee778cc1162e6dcf1a0027c97f9cb5",
+    "tarball": "https://registry.npmjs.org/js-tokens/-/js-tokens-2.0.0.tgz"
+  },
+  "maintainers": [
+    {
+      "name": "lydell",
+      "email": "simon.lydell@gmail.com"
+    }
+  ],
+  "_npmOperationalInternal": {
+    "host": "packages-16-east.internal.npmjs.com",
+    "tmp": "tmp/js-tokens-2.0.0.tgz_1466321890449_0.1510669116396457"
+  },
+  "directories": {},
+  "_resolved": "https://registry.npmjs.org/js-tokens/-/js-tokens-2.0.0.tgz",
+  "readme": "ERROR: No README data found!"
+}

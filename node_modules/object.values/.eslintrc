@@ -1,0 +1,13 @@
+{
+	"root": true,
+
+	"extends": "@ljharb",
+
+	"rules": {
+		"max-nested-callbacks": [2, 3],
+		"max-statements": [2, 12],
+		"new-cap": [2, { "capIsNewExceptions": ["RequireObjectCoercible"] }],
+		"no-invalid-this": [1],
+		"no-restricted-syntax": [2, "BreakStatement", "ContinueStatement", "DebuggerStatement", "LabeledStatement", "WithStatement"]
+	}
+}

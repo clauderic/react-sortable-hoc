@@ -1,0 +1,54 @@
+{
+  "name": "base64id",
+  "version": "1.0.0",
+  "license": "MIT",
+  "description": "Generates a base64 id",
+  "author": {
+    "name": "Kristian Faeldt",
+    "email": "faeldt_kristian@cyberagent.co.jp"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/faeldt/base64id.git"
+  },
+  "main": "./lib/base64id.js",
+  "engines": {
+    "node": ">= 0.4.0"
+  },
+  "gitHead": "3c846f0818ff88b683ad39fde2f8e015ce0f9807",
+  "bugs": {
+    "url": "https://github.com/faeldt/base64id/issues"
+  },
+  "homepage": "https://github.com/faeldt/base64id#readme",
+  "_id": "base64id@1.0.0",
+  "scripts": {},
+  "_shasum": "47688cb99bb6804f0e06d3e763b1c32e57d8e6b6",
+  "_from": "base64id@1.0.0",
+  "_npmVersion": "2.15.8",
+  "_nodeVersion": "4.4.7",
+  "_npmUser": {
+    "name": "darrachequesne",
+    "email": "damien.arrachequesne@gmail.com"
+  },
+  "dist": {
+    "shasum": "47688cb99bb6804f0e06d3e763b1c32e57d8e6b6",
+    "tarball": "https://registry.npmjs.org/base64id/-/base64id-1.0.0.tgz"
+  },
+  "maintainers": [
+    {
+      "name": "darrachequesne",
+      "email": "damien.arrachequesne@gmail.com"
+    },
+    {
+      "name": "faeldt_kristian",
+      "email": "kristian.faeldt@gmail.com"
+    }
+  ],
+  "_npmOperationalInternal": {
+    "host": "packages-18-east.internal.npmjs.com",
+    "tmp": "tmp/base64id-1.0.0.tgz_1480551701495_0.042360062478110194"
+  },
+  "directories": {},
+  "_resolved": "https://registry.npmjs.org/base64id/-/base64id-1.0.0.tgz",
+  "readme": "ERROR: No README data found!"
+}

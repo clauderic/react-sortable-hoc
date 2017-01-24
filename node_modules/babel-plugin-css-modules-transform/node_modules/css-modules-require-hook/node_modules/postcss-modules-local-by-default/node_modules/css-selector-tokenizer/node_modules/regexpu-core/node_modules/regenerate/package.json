@@ -1,0 +1,66 @@
+{
+  "name": "regenerate",
+  "version": "1.3.1",
+  "description": "Generate JavaScript-compatible regular expressions based on a given set of Unicode symbols or code points.",
+  "homepage": "https://mths.be/regenerate",
+  "main": "regenerate.js",
+  "keywords": [
+    "regex",
+    "regexp",
+    "javascript",
+    "unicode",
+    "generator",
+    "tool"
+  ],
+  "license": "MIT",
+  "author": {
+    "name": "Mathias Bynens",
+    "url": "https://mathiasbynens.be/"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/mathiasbynens/regenerate.git"
+  },
+  "bugs": {
+    "url": "https://github.com/mathiasbynens/regenerate/issues"
+  },
+  "scripts": {
+    "test": "node tests/tests.js"
+  },
+  "devDependencies": {
+    "coveralls": "^2.11.2",
+    "grunt": "^0.4.5",
+    "grunt-shell": "^1.1.1",
+    "istanbul": "^0.3.2",
+    "qunit-extras": "^1.1.0",
+    "qunitjs": "~1.11.0",
+    "requirejs": "^2.1.15"
+  },
+  "gitHead": "b842e5af68e07d8cb020fd1f03c12d31d9304999",
+  "_id": "regenerate@1.3.1",
+  "_shasum": "0300203a5d2fdcf89116dce84275d011f5903f33",
+  "_from": "regenerate@>=1.2.1 <2.0.0",
+  "_npmVersion": "3.8.6",
+  "_nodeVersion": "6.1.0",
+  "_npmUser": {
+    "name": "mathias",
+    "email": "mathias@qiwi.be"
+  },
+  "maintainers": [
+    {
+      "name": "mathias",
+      "email": "mathias@qiwi.be"
+    }
+  ],
+  "dist": {
+    "shasum": "0300203a5d2fdcf89116dce84275d011f5903f33",
+    "tarball": "https://registry.npmjs.org/regenerate/-/regenerate-1.3.1.tgz"
+  },
+  "_npmOperationalInternal": {
+    "host": "packages-16-east.internal.npmjs.com",
+    "tmp": "tmp/regenerate-1.3.1.tgz_1464792438757_0.7200901845935732"
+  },
+  "directories": {},
+  "_resolved": "https://registry.npmjs.org/regenerate/-/regenerate-1.3.1.tgz",
+  "readme": "ERROR: No README data found!"
+}

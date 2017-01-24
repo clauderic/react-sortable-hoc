@@ -1,0 +1,40 @@
+<html>
+  <head>
+    <style>
+    .infinite-example {
+        border: 1px solid #ddd;
+        border-radius: 4px;
+        margin-bottom: 20px;
+        margin: auto;
+        width: 300px;
+        height: 250px;
+    }
+
+    .infinite-list-item {
+        text-align: center;
+        width: 150px;
+        margin: auto;
+        vertical-align: bottom;
+    }
+
+    .infinite-list-item {
+        border-bottom: 1px solid #ddd;
+    }
+
+    .infinite-list-item:last-child span {
+        border-bottom: 0;
+    }
+
+    </style>
+  </head>
+  <body>
+    <div id="infinite-example-one" class="infinite-example"></div>
+    <div id="infinite-example-two" class="infinite-example"></div>
+    <div id="infinite-example-three" class="infinite-example"></div>
+    <script src="../node_modules/react/dist/react.js"></script>
+    <script src="../node_modules/react-dom/dist/react-dom.js"></script>
+    <script src="../dist/react-infinite.js"></script>
+    <!-- Running gulp develop will create this file -->
+    <script src="./index.js"></script>
+  </body>
+</html>

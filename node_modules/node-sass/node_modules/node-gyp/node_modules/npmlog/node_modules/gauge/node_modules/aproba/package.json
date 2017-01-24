@@ -1,0 +1,63 @@
+{
+  "name": "aproba",
+  "version": "1.0.4",
+  "description": "A rediculously light-weight argument validator",
+  "main": "index.js",
+  "directories": {
+    "test": "test"
+  },
+  "dependencies": {},
+  "devDependencies": {
+    "standard": "^7.1.2",
+    "tap": "^5.7.3"
+  },
+  "files": [
+    "index.js"
+  ],
+  "scripts": {
+    "test": "standard && tap test/*.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/iarna/aproba.git"
+  },
+  "keywords": [
+    "argument",
+    "validate"
+  ],
+  "author": {
+    "name": "Rebecca Turner",
+    "email": "me@re-becca.org"
+  },
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/iarna/aproba/issues"
+  },
+  "homepage": "https://github.com/iarna/aproba",
+  "gitHead": "c6c8f82d519b9ec3816f20f23a9101083c022200",
+  "_id": "aproba@1.0.4",
+  "_shasum": "2713680775e7614c8ba186c065d4e2e52d1072c0",
+  "_from": "aproba@>=1.0.3 <2.0.0",
+  "_npmVersion": "3.10.2",
+  "_nodeVersion": "4.4.0",
+  "_npmUser": {
+    "name": "iarna",
+    "email": "me@re-becca.org"
+  },
+  "dist": {
+    "shasum": "2713680775e7614c8ba186c065d4e2e52d1072c0",
+    "tarball": "https://registry.npmjs.org/aproba/-/aproba-1.0.4.tgz"
+  },
+  "maintainers": [
+    {
+      "name": "iarna",
+      "email": "me@re-becca.org"
+    }
+  ],
+  "_npmOperationalInternal": {
+    "host": "packages-12-west.internal.npmjs.com",
+    "tmp": "tmp/aproba-1.0.4.tgz_1466718885402_0.5348939662799239"
+  },
+  "_resolved": "https://registry.npmjs.org/aproba/-/aproba-1.0.4.tgz",
+  "readme": "ERROR: No README data found!"
+}

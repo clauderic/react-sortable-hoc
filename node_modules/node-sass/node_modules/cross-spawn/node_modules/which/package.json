@@ -1,0 +1,67 @@
+{
+  "author": {
+    "name": "Isaac Z. Schlueter",
+    "email": "i@izs.me",
+    "url": "http://blog.izs.me"
+  },
+  "name": "which",
+  "description": "Like which(1) unix command. Find the first instance of an executable in the PATH.",
+  "version": "1.2.10",
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/isaacs/node-which.git"
+  },
+  "main": "which.js",
+  "bin": {
+    "which": "./bin/which"
+  },
+  "license": "ISC",
+  "dependencies": {
+    "isexe": "^1.1.1"
+  },
+  "devDependencies": {
+    "mkdirp": "^0.5.0",
+    "rimraf": "^2.3.3",
+    "tap": "^5.1.1"
+  },
+  "scripts": {
+    "test": "tap test/*.js --cov",
+    "changelog": "bash changelog.sh",
+    "postversion": "npm run changelog && git add CHANGELOG.md && git commit -m 'update changelog - '${npm_package_version}"
+  },
+  "files": [
+    "which.js",
+    "bin/which"
+  ],
+  "gitHead": "3f590834623ee940d922e12b1c8b9cbf24bd5012",
+  "bugs": {
+    "url": "https://github.com/isaacs/node-which/issues"
+  },
+  "homepage": "https://github.com/isaacs/node-which#readme",
+  "_id": "which@1.2.10",
+  "_shasum": "91cd9bd0751322411b659b40f054b21de957ab2d",
+  "_from": "which@>=1.2.9 <2.0.0",
+  "_npmVersion": "3.9.1",
+  "_nodeVersion": "4.4.4",
+  "_npmUser": {
+    "name": "isaacs",
+    "email": "i@izs.me"
+  },
+  "dist": {
+    "shasum": "91cd9bd0751322411b659b40f054b21de957ab2d",
+    "tarball": "https://registry.npmjs.org/which/-/which-1.2.10.tgz"
+  },
+  "maintainers": [
+    {
+      "name": "isaacs",
+      "email": "i@izs.me"
+    }
+  ],
+  "_npmOperationalInternal": {
+    "host": "packages-12-west.internal.npmjs.com",
+    "tmp": "tmp/which-1.2.10.tgz_1465116744337_0.4818702598568052"
+  },
+  "directories": {},
+  "_resolved": "https://registry.npmjs.org/which/-/which-1.2.10.tgz",
+  "readme": "ERROR: No README data found!"
+}

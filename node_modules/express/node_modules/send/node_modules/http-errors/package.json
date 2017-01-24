@@ -1,0 +1,96 @@
+{
+  "name": "http-errors",
+  "description": "Create HTTP error objects",
+  "version": "1.5.0",
+  "author": {
+    "name": "Jonathan Ong",
+    "email": "me@jongleberry.com",
+    "url": "http://jongleberry.com"
+  },
+  "contributors": [
+    {
+      "name": "Alan Plum",
+      "email": "me@pluma.io"
+    },
+    {
+      "name": "Douglas Christopher Wilson",
+      "email": "doug@somethingdoug.com"
+    }
+  ],
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/jshttp/http-errors.git"
+  },
+  "dependencies": {
+    "inherits": "2.0.1",
+    "setprototypeof": "1.0.1",
+    "statuses": ">= 1.3.0 < 2"
+  },
+  "devDependencies": {
+    "eslint": "2.10.2",
+    "eslint-config-standard": "5.3.1",
+    "eslint-plugin-promise": "1.1.0",
+    "eslint-plugin-standard": "1.3.2",
+    "istanbul": "0.4.3",
+    "mocha": "1.21.5"
+  },
+  "engines": {
+    "node": ">= 0.6"
+  },
+  "scripts": {
+    "lint": "eslint **/*.js",
+    "test": "mocha --reporter spec --bail",
+    "test-cov": "istanbul cover node_modules/mocha/bin/_mocha -- --reporter dot",
+    "test-travis": "istanbul cover node_modules/mocha/bin/_mocha --report lcovonly -- --reporter dot"
+  },
+  "keywords": [
+    "http",
+    "error"
+  ],
+  "files": [
+    "index.js",
+    "HISTORY.md",
+    "LICENSE",
+    "README.md"
+  ],
+  "gitHead": "1a826d7ac31dde16931b9c566041697939ebd0e0",
+  "bugs": {
+    "url": "https://github.com/jshttp/http-errors/issues"
+  },
+  "homepage": "https://github.com/jshttp/http-errors#readme",
+  "_id": "http-errors@1.5.0",
+  "_shasum": "b1cb3d8260fd8e2386cad3189045943372d48211",
+  "_from": "http-errors@>=1.5.0 <1.6.0",
+  "_npmVersion": "2.15.1",
+  "_nodeVersion": "4.4.3",
+  "_npmUser": {
+    "name": "dougwilson",
+    "email": "doug@somethingdoug.com"
+  },
+  "dist": {
+    "shasum": "b1cb3d8260fd8e2386cad3189045943372d48211",
+    "tarball": "https://registry.npmjs.org/http-errors/-/http-errors-1.5.0.tgz"
+  },
+  "maintainers": [
+    {
+      "name": "dougwilson",
+      "email": "doug@somethingdoug.com"
+    },
+    {
+      "name": "egeste",
+      "email": "npm@egeste.net"
+    },
+    {
+      "name": "jongleberry",
+      "email": "jonathanrichardong@gmail.com"
+    }
+  ],
+  "_npmOperationalInternal": {
+    "host": "packages-16-east.internal.npmjs.com",
+    "tmp": "tmp/http-errors-1.5.0.tgz_1463621678183_0.44013352948240936"
+  },
+  "directories": {},
+  "_resolved": "https://registry.npmjs.org/http-errors/-/http-errors-1.5.0.tgz",
+  "readme": "ERROR: No README data found!"
+}

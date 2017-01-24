@@ -1,0 +1,12 @@
+sudo: false
+language: node_js
+node_js:
+  - 0.10
+env:
+  - TEST=1
+  - TYPECHECK=1
+  - LINT=1
+
+script:
+  - ./config/travis/test.sh
+after_success: cat ./coverage/lcov.info | ./node_modules/coveralls/bin/coveralls.js

@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+</head>
+<body>
+  <script type="text/javascript" charset="utf-8">
+    function createIframe(name) {
+      var h3 = document.createElement('h3')
+      h3.textContent = name
+      document.body.appendChild(h3)
+      var iframe = document.createElement('iframe');
+      iframe.frameBorder="0";
+      iframe.scrolling="no";
+      iframe.sandbox="allow-same-origin allow-scripts";
+      iframe.width = "100%";
+      iframe.height = "200px";
+      var html = '<body><script src="./build/' + name + '.js" type="text/javascript" charset="utf-8"></' + 'script></body>';
+      document.body.appendChild(iframe);
+      iframe.contentWindow.document.open();
+      iframe.contentWindow.document.write(html);
+      iframe.contentWindow.document.close();
+    }
+    createIframe('cheap-module-eval-sourcemap')
+    createIframe('cheap-eval-sourcemap')
+    createIframe('eval-sourcemap')
+    createIframe('inline-sourcemap')
+    createIframe('sourcemap')
+  </script>
+</body>
+</html>

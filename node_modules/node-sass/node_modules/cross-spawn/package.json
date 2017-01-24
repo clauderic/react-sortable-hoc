@@ -1,0 +1,79 @@
+{
+  "name": "cross-spawn",
+  "version": "3.0.1",
+  "description": "Cross platform child_process#spawn and child_process#spawnSync",
+  "main": "index.js",
+  "scripts": {
+    "test": "node test/prepare && mocha --bail test/test",
+    "lint": "eslint '{*.js,lib/**/*.js,test/**/*.js}'"
+  },
+  "bugs": {
+    "url": "https://github.com/IndigoUnited/node-cross-spawn/issues/"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/IndigoUnited/node-cross-spawn.git"
+  },
+  "keywords": [
+    "spawn",
+    "spawnSync",
+    "windows",
+    "cross",
+    "platform",
+    "path",
+    "ext",
+    "path-ext",
+    "path_ext",
+    "shebang",
+    "hashbang",
+    "cmd",
+    "execute"
+  ],
+  "author": {
+    "name": "IndigoUnited",
+    "email": "hello@indigounited.com",
+    "url": "http://indigounited.com"
+  },
+  "license": "MIT",
+  "dependencies": {
+    "lru-cache": "^4.0.1",
+    "which": "^1.2.9"
+  },
+  "devDependencies": {
+    "@satazor/eslint-config": "^2.3.0",
+    "eslint": "^2.10.2",
+    "expect.js": "^0.3.0",
+    "glob": "^7.0.0",
+    "mkdirp": "^0.5.1",
+    "mocha": "^2.2.5",
+    "rimraf": "^2.5.0"
+  },
+  "gitHead": "24df88c465e5828b62c374e58366547bd94629db",
+  "homepage": "https://github.com/IndigoUnited/node-cross-spawn#readme",
+  "_id": "cross-spawn@3.0.1",
+  "_shasum": "1256037ecb9f0c5f79e3d6ef135e30770184b982",
+  "_from": "cross-spawn@>=3.0.0 <4.0.0",
+  "_npmVersion": "2.15.4",
+  "_nodeVersion": "4.4.3",
+  "_npmUser": {
+    "name": "satazor",
+    "email": "andremiguelcruz@msn.com"
+  },
+  "maintainers": [
+    {
+      "name": "satazor",
+      "email": "andremiguelcruz@msn.com"
+    }
+  ],
+  "dist": {
+    "shasum": "1256037ecb9f0c5f79e3d6ef135e30770184b982",
+    "tarball": "https://registry.npmjs.org/cross-spawn/-/cross-spawn-3.0.1.tgz"
+  },
+  "_npmOperationalInternal": {
+    "host": "packages-12-west.internal.npmjs.com",
+    "tmp": "tmp/cross-spawn-3.0.1.tgz_1463607513426_0.7439773543737829"
+  },
+  "directories": {},
+  "_resolved": "https://registry.npmjs.org/cross-spawn/-/cross-spawn-3.0.1.tgz",
+  "readme": "ERROR: No README data found!"
+}

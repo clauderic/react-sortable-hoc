@@ -1,0 +1,105 @@
+{
+  "name": "currently-unhandled",
+  "version": "0.4.1",
+  "description": "Track the list of currently unhandled promise rejections.",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/jamestalmage/currently-unhandled.git"
+  },
+  "author": {
+    "name": "James Talmage",
+    "email": "james@talmage.io",
+    "url": "github.com/jamestalmage"
+  },
+  "engines": {
+    "node": ">=0.10.0"
+  },
+  "scripts": {
+    "test": "xo && nyc ava"
+  },
+  "files": [
+    "index.js",
+    "core.js",
+    "browser.js"
+  ],
+  "keywords": [
+    "unhandled",
+    "unhandledRejection",
+    "rejected",
+    "promises"
+  ],
+  "dependencies": {
+    "array-find-index": "^1.0.1"
+  },
+  "devDependencies": {
+    "ava": "^0.15.1",
+    "bluebird": "^3.4.0",
+    "browserify": "^13.0.1",
+    "coveralls": "^2.11.9",
+    "delay": "^1.3.1",
+    "is-ci": "^1.0.8",
+    "karma": "^0.13.22",
+    "karma-browserify": "^5.0.5",
+    "karma-chrome-launcher": "^1.0.1",
+    "karma-firefox-launcher": "^1.0.0",
+    "karma-mocha": "^1.0.1",
+    "mocha": "^2.5.3",
+    "nyc": "^6.4.0",
+    "watchify": "^3.7.0",
+    "xo": "^0.15.0"
+  },
+  "browser": {
+    "./index.js": "./browser.js"
+  },
+  "ava": {
+    "files": "test.js"
+  },
+  "nyc": {
+    "reporter": [
+      "lcov",
+      "text"
+    ]
+  },
+  "xo": {
+    "ignores": [
+      "browser-bluebird-test.js"
+    ],
+    "envs": [
+      "browser",
+      "mocha",
+      "node"
+    ]
+  },
+  "gitHead": "6b998300e8cc2f732d80f99b7ecea37c97ab6ded",
+  "bugs": {
+    "url": "https://github.com/jamestalmage/currently-unhandled/issues"
+  },
+  "homepage": "https://github.com/jamestalmage/currently-unhandled#readme",
+  "_id": "currently-unhandled@0.4.1",
+  "_shasum": "988df33feab191ef799a61369dd76c17adf957ea",
+  "_from": "currently-unhandled@>=0.4.1 <0.5.0",
+  "_npmVersion": "3.8.6",
+  "_nodeVersion": "5.10.1",
+  "_npmUser": {
+    "name": "jamestalmage",
+    "email": "james@talmage.io"
+  },
+  "dist": {
+    "shasum": "988df33feab191ef799a61369dd76c17adf957ea",
+    "tarball": "https://registry.npmjs.org/currently-unhandled/-/currently-unhandled-0.4.1.tgz"
+  },
+  "maintainers": [
+    {
+      "name": "jamestalmage",
+      "email": "james@talmage.io"
+    }
+  ],
+  "_npmOperationalInternal": {
+    "host": "packages-12-west.internal.npmjs.com",
+    "tmp": "tmp/currently-unhandled-0.4.1.tgz_1464866113117_0.9455041608307511"
+  },
+  "directories": {},
+  "_resolved": "https://registry.npmjs.org/currently-unhandled/-/currently-unhandled-0.4.1.tgz",
+  "readme": "ERROR: No README data found!"
+}

@@ -1,0 +1,69 @@
+{
+  "name": "babel-plugin-transform-es2015-computed-properties",
+  "version": "6.8.0",
+  "description": "Compile ES2015 computed properties to ES5",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/babel/babel/tree/master/packages/babel-plugin-transform-es2015-computed-properties"
+  },
+  "license": "MIT",
+  "main": "lib/index.js",
+  "keywords": [
+    "babel-plugin"
+  ],
+  "dependencies": {
+    "babel-helper-define-map": "^6.8.0",
+    "babel-template": "^6.8.0",
+    "babel-runtime": "^6.0.0"
+  },
+  "devDependencies": {
+    "babel-helper-plugin-test-runner": "^6.8.0"
+  },
+  "_id": "babel-plugin-transform-es2015-computed-properties@6.8.0",
+  "scripts": {},
+  "_shasum": "f51010fd61b3bd7b6b60a5fdfd307bb7a5279870",
+  "_from": "babel-plugin-transform-es2015-computed-properties@>=6.3.13 <7.0.0",
+  "_npmVersion": "3.8.6",
+  "_nodeVersion": "5.1.0",
+  "_npmUser": {
+    "name": "hzoo",
+    "email": "hi@henryzoo.com"
+  },
+  "maintainers": [
+    {
+      "name": "amasad",
+      "email": "amjad.masad@gmail.com"
+    },
+    {
+      "name": "hzoo",
+      "email": "hi@henryzoo.com"
+    },
+    {
+      "name": "jmm",
+      "email": "npm-public@jessemccarthy.net"
+    },
+    {
+      "name": "loganfsmyth",
+      "email": "loganfsmyth@gmail.com"
+    },
+    {
+      "name": "sebmck",
+      "email": "sebmck@gmail.com"
+    },
+    {
+      "name": "thejameskyle",
+      "email": "me@thejameskyle.com"
+    }
+  ],
+  "dist": {
+    "shasum": "f51010fd61b3bd7b6b60a5fdfd307bb7a5279870",
+    "tarball": "https://registry.npmjs.org/babel-plugin-transform-es2015-computed-properties/-/babel-plugin-transform-es2015-computed-properties-6.8.0.tgz"
+  },
+  "_npmOperationalInternal": {
+    "host": "packages-12-west.internal.npmjs.com",
+    "tmp": "tmp/babel-plugin-transform-es2015-computed-properties-6.8.0.tgz_1462232676067_0.7725889810826629"
+  },
+  "directories": {},
+  "_resolved": "https://registry.npmjs.org/babel-plugin-transform-es2015-computed-properties/-/babel-plugin-transform-es2015-computed-properties-6.8.0.tgz",
+  "readme": "ERROR: No README data found!"
+}

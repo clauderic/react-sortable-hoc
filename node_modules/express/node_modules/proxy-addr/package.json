@@ -1,0 +1,75 @@
+{
+  "name": "proxy-addr",
+  "description": "Determine address of proxied request",
+  "version": "1.1.2",
+  "author": {
+    "name": "Douglas Christopher Wilson",
+    "email": "doug@somethingdoug.com"
+  },
+  "license": "MIT",
+  "keywords": [
+    "ip",
+    "proxy",
+    "x-forwarded-for"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/jshttp/proxy-addr.git"
+  },
+  "dependencies": {
+    "forwarded": "~0.1.0",
+    "ipaddr.js": "1.1.1"
+  },
+  "devDependencies": {
+    "benchmark": "2.1.0",
+    "beautify-benchmark": "0.2.4",
+    "istanbul": "0.4.3",
+    "mocha": "~1.21.5"
+  },
+  "files": [
+    "LICENSE",
+    "HISTORY.md",
+    "README.md",
+    "index.js"
+  ],
+  "engines": {
+    "node": ">= 0.6"
+  },
+  "scripts": {
+    "bench": "node benchmark/index.js",
+    "test": "mocha --reporter spec --bail --check-leaks test/",
+    "test-cov": "istanbul cover node_modules/mocha/bin/_mocha -- --reporter dot --check-leaks test/",
+    "test-travis": "istanbul cover node_modules/mocha/bin/_mocha --report lcovonly -- --reporter spec --check-leaks test/"
+  },
+  "gitHead": "28c34525632884a6d5e69a9165d7420b3f972d8b",
+  "bugs": {
+    "url": "https://github.com/jshttp/proxy-addr/issues"
+  },
+  "homepage": "https://github.com/jshttp/proxy-addr#readme",
+  "_id": "proxy-addr@1.1.2",
+  "_shasum": "b4cc5f22610d9535824c123aef9d3cf73c40ba37",
+  "_from": "proxy-addr@>=1.1.2 <1.2.0",
+  "_npmVersion": "2.15.1",
+  "_nodeVersion": "4.4.3",
+  "_npmUser": {
+    "name": "dougwilson",
+    "email": "doug@somethingdoug.com"
+  },
+  "dist": {
+    "shasum": "b4cc5f22610d9535824c123aef9d3cf73c40ba37",
+    "tarball": "https://registry.npmjs.org/proxy-addr/-/proxy-addr-1.1.2.tgz"
+  },
+  "maintainers": [
+    {
+      "name": "dougwilson",
+      "email": "doug@somethingdoug.com"
+    }
+  ],
+  "_npmOperationalInternal": {
+    "host": "packages-12-west.internal.npmjs.com",
+    "tmp": "tmp/proxy-addr-1.1.2.tgz_1464573376704_0.6896329398732632"
+  },
+  "directories": {},
+  "_resolved": "https://registry.npmjs.org/proxy-addr/-/proxy-addr-1.1.2.tgz",
+  "readme": "ERROR: No README data found!"
+}

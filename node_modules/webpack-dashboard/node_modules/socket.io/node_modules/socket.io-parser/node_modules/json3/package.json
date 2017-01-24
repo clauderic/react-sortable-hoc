@@ -1,0 +1,113 @@
+{
+  "name": "json3",
+  "version": "3.3.2",
+  "description": "A modern JSON implementation compatible with nearly all JavaScript platforms.",
+  "homepage": "http://bestiejs.github.io/json3",
+  "main": "./lib/json3",
+  "keywords": [
+    "json",
+    "spec",
+    "ecma",
+    "es5",
+    "lexer",
+    "parser",
+    "stringify"
+  ],
+  "licenses": [
+    {
+      "type": "MIT",
+      "url": "http://kit.mit-license.org/"
+    }
+  ],
+  "author": {
+    "name": "Kit Cambridge",
+    "email": "github@kitcambridge.be",
+    "url": "http://kitcambridge.be/"
+  },
+  "maintainers": [
+    {
+      "name": "kitcambridge",
+      "email": "kitcambridge@me.com"
+    },
+    {
+      "name": "d10",
+      "email": "demoneaux@gmail.com"
+    }
+  ],
+  "contributors": [
+    {
+      "name": "Mangled Deutz",
+      "email": "olivier@webitup.fr",
+      "url": "http://tech.roxee.tv/"
+    },
+    {
+      "name": "Øyvind Sean Kinsey",
+      "email": "oyvind@kinsey.no",
+      "url": "http://fb.me/ok"
+    },
+    {
+      "name": "Oskar Schöldström",
+      "email": "public@oxy.fi",
+      "url": "http://oxy.fi/"
+    },
+    {
+      "name": "Kiryl Yermakou",
+      "email": "rma4ok@gmail.com",
+      "url": "https://github.com/rma4ok"
+    }
+  ],
+  "bugs": {
+    "url": "https://github.com/bestiejs/json3/issues"
+  },
+  "scripts": {
+    "test": "node test/test_*.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/bestiejs/json3.git"
+  },
+  "files": [
+    "README.md",
+    "LICENSE",
+    "lib/json3.js",
+    "lib/json3.min.js"
+  ],
+  "jam": {
+    "main": "./lib/json3.js",
+    "includes": [
+      "README.md",
+      "LICENSE",
+      "lib/json3.js",
+      "lib/json3.min.js"
+    ]
+  },
+  "volo": {
+    "type": "directory",
+    "ignore": [
+      ".*",
+      "build.js",
+      "index.html",
+      "component.json",
+      "bower.json",
+      "benchmark",
+      "page",
+      "test",
+      "vendor"
+    ]
+  },
+  "_id": "json3@3.3.2",
+  "dist": {
+    "shasum": "3c0434743df93e2f5c42aee7b19bcb483575f4e1",
+    "tarball": "https://registry.npmjs.org/json3/-/json3-3.3.2.tgz"
+  },
+  "_from": "json3@3.3.2",
+  "_npmVersion": "1.4.3",
+  "_npmUser": {
+    "name": "kitcambridge",
+    "email": "github@kitcambridge.be"
+  },
+  "directories": {},
+  "_shasum": "3c0434743df93e2f5c42aee7b19bcb483575f4e1",
+  "_resolved": "https://registry.npmjs.org/json3/-/json3-3.3.2.tgz",
+  "readme": "ERROR: No README data found!"
+}

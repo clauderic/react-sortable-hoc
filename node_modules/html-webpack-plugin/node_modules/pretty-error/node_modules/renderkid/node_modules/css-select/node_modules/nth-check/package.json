@@ -1,0 +1,36 @@
+{
+  "name": "nth-check",
+  "version": "1.0.1",
+  "description": "performant nth-check parser & compiler",
+  "main": "index.js",
+  "scripts": {
+    "test": "node test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/fb55/nth-check.git"
+  },
+  "keywords": [
+    "nth-child",
+    "nth",
+    "css"
+  ],
+  "author": {
+    "name": "Felix Boehm",
+    "email": "me@feedic.com"
+  },
+  "license": "BSD",
+  "bugs": {
+    "url": "https://github.com/fb55/nth-check/issues"
+  },
+  "homepage": "https://github.com/fb55/nth-check",
+  "dependencies": {
+    "boolbase": "~1.0.0"
+  },
+  "readme": "#nth-check [![Build Status](https://travis-ci.org/fb55/nth-check.png)](https://travis-ci.org/fb55/nth-check)\n\nA performant nth-check parser & compiler.\n\n###About\n\nThis module can be used to parse & compile nth-checks, as they are found in CSS 3's `nth-child()` and `nth-last-of-type()`.\n\n`nth-check` focusses on speed, providing optimized functions for different kinds of nth-child formulas, while still following the [spec](http://www.w3.org/TR/css3-selectors/#nth-child-pseudo).\n\n###API\n\n```js\nvar nthCheck = require(\"nth-check\");\n```\n\n#####`nthCheck(formula)`\n\nFirst parses, then compiles the formula.\n\n#####`nthCheck.parse(formula)`\n\nParses the expression, throws a `SyntaxError` if it fails, otherwise returns an array containing two elements.\n\n__Example:__\n\n```js\nnthCheck.parse(\"2n+3\") //[2, 3]\n```\n\n#####`nthCheck.compile([a, b])`\n\nTakes an array with two elements (as returned by `.parse`) and returns a highly optimized function.\n\nIf the formula doesn't match any elements, it returns [`boolbase`](https://github.com/fb55/boolbase)'s `falseFunc`, otherwise, a function accepting an _index_ is returned, which returns whether or not a passed _index_ matches the formula. (Note: The spec starts counting at `1`, the returned function at `0`).\n\n__Example:__\n```js\nvar check = nthCheck.compile([2, 3]);\n\ncheck(0) //false\ncheck(1) //false\ncheck(2) //true\ncheck(3) //false\ncheck(4) //true\ncheck(5) //false\ncheck(6) //true\n```\n\n---\nLicense: BSD\n",
+  "readmeFilename": "README.md",
+  "_id": "nth-check@1.0.1",
+  "_shasum": "9929acdf628fc2c41098deab82ac580cf149aae4",
+  "_resolved": "https://registry.npmjs.org/nth-check/-/nth-check-1.0.1.tgz",
+  "_from": "nth-check@>=1.0.1 <1.1.0"
+}

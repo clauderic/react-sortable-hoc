@@ -1,0 +1,72 @@
+{
+  "name": "cookie",
+  "description": "HTTP server cookie parsing and serialization",
+  "version": "0.3.1",
+  "author": {
+    "name": "Roman Shtylman",
+    "email": "shtylman@gmail.com"
+  },
+  "contributors": [
+    {
+      "name": "Douglas Christopher Wilson",
+      "email": "doug@somethingdoug.com"
+    }
+  ],
+  "license": "MIT",
+  "keywords": [
+    "cookie",
+    "cookies"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/jshttp/cookie.git"
+  },
+  "devDependencies": {
+    "istanbul": "0.4.3",
+    "mocha": "1.21.5"
+  },
+  "files": [
+    "HISTORY.md",
+    "LICENSE",
+    "README.md",
+    "index.js"
+  ],
+  "engines": {
+    "node": ">= 0.6"
+  },
+  "scripts": {
+    "test": "mocha --reporter spec --bail --check-leaks test/",
+    "test-ci": "istanbul cover node_modules/mocha/bin/_mocha --report lcovonly -- --reporter spec --check-leaks test/",
+    "test-cov": "istanbul cover node_modules/mocha/bin/_mocha -- --reporter dot --check-leaks test/"
+  },
+  "gitHead": "e3c77d497d66c8b8d4b677b8954c1b192a09f0b3",
+  "bugs": {
+    "url": "https://github.com/jshttp/cookie/issues"
+  },
+  "homepage": "https://github.com/jshttp/cookie",
+  "_id": "cookie@0.3.1",
+  "_shasum": "e7e0a1f9ef43b4c8ba925c5c5a96e806d16873bb",
+  "_from": "cookie@0.3.1",
+  "_npmVersion": "1.4.28",
+  "_npmUser": {
+    "name": "dougwilson",
+    "email": "doug@somethingdoug.com"
+  },
+  "maintainers": [
+    {
+      "name": "dougwilson",
+      "email": "doug@somethingdoug.com"
+    }
+  ],
+  "dist": {
+    "shasum": "e7e0a1f9ef43b4c8ba925c5c5a96e806d16873bb",
+    "tarball": "https://registry.npmjs.org/cookie/-/cookie-0.3.1.tgz"
+  },
+  "_npmOperationalInternal": {
+    "host": "packages-12-west.internal.npmjs.com",
+    "tmp": "tmp/cookie-0.3.1.tgz_1464323556714_0.6435900838114321"
+  },
+  "directories": {},
+  "_resolved": "https://registry.npmjs.org/cookie/-/cookie-0.3.1.tgz",
+  "readme": "ERROR: No README data found!"
+}

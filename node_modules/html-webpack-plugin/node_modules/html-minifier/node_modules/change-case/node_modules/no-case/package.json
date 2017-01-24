@@ -1,0 +1,83 @@
+{
+  "name": "no-case",
+  "version": "2.3.0",
+  "description": "Remove case from a string",
+  "main": "no-case.js",
+  "typings": "no-case.d.ts",
+  "files": [
+    "no-case.js",
+    "no-case.d.ts",
+    "vendor",
+    "LICENSE"
+  ],
+  "scripts": {
+    "lint": "standard",
+    "test-cov": "istanbul cover node_modules/mocha/bin/_mocha -- -R spec --bail",
+    "test": "npm run build && npm run lint && npm run test-cov",
+    "build": "node build.js"
+  },
+  "standard": {
+    "ignore": [
+      "coverage/**"
+    ]
+  },
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/blakeembrey/no-case.git"
+  },
+  "keywords": [
+    "no",
+    "case",
+    "space",
+    "lower",
+    "trim"
+  ],
+  "author": {
+    "name": "Blake Embrey",
+    "email": "hello@blakeembrey.com",
+    "url": "http://blakeembrey.me"
+  },
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/blakeembrey/no-case/issues"
+  },
+  "homepage": "https://github.com/blakeembrey/no-case",
+  "devDependencies": {
+    "chai": "^3.5.0",
+    "istanbul": "^0.4.3",
+    "jsesc": "^2.2.0",
+    "mocha": "^2.1.0",
+    "standard": "^7.1.2",
+    "xregexp": "^3.1.1"
+  },
+  "dependencies": {
+    "lower-case": "^1.1.1"
+  },
+  "gitHead": "651f544bf864011205b48736ebc3029ace0af563",
+  "_id": "no-case@2.3.0",
+  "_shasum": "ca2825ccb76b18e6f79d573dcfbf1eace33dd164",
+  "_from": "no-case@>=2.2.0 <3.0.0",
+  "_npmVersion": "3.9.3",
+  "_nodeVersion": "6.2.1",
+  "_npmUser": {
+    "name": "blakeembrey",
+    "email": "hello@blakeembrey.com"
+  },
+  "dist": {
+    "shasum": "ca2825ccb76b18e6f79d573dcfbf1eace33dd164",
+    "tarball": "https://registry.npmjs.org/no-case/-/no-case-2.3.0.tgz"
+  },
+  "maintainers": [
+    {
+      "name": "blakeembrey",
+      "email": "hello@blakeembrey.com"
+    }
+  ],
+  "_npmOperationalInternal": {
+    "host": "packages-16-east.internal.npmjs.com",
+    "tmp": "tmp/no-case-2.3.0.tgz_1466439491980_0.6107419265899807"
+  },
+  "directories": {},
+  "_resolved": "https://registry.npmjs.org/no-case/-/no-case-2.3.0.tgz",
+  "readme": "ERROR: No README data found!"
+}

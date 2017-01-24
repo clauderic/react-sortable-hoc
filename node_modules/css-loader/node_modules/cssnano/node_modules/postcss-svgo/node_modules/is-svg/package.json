@@ -1,0 +1,81 @@
+{
+  "name": "is-svg",
+  "version": "2.0.1",
+  "description": "Check if a String/Buffer is SVG",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/sindresorhus/is-svg.git"
+  },
+  "author": {
+    "name": "Sindre Sorhus",
+    "email": "sindresorhus@gmail.com",
+    "url": "sindresorhus.com"
+  },
+  "engines": {
+    "node": ">=0.10.0"
+  },
+  "scripts": {
+    "test": "xo && ava"
+  },
+  "files": [
+    "index.js"
+  ],
+  "keywords": [
+    "svg",
+    "vector",
+    "graphics",
+    "image",
+    "img",
+    "pic",
+    "picture",
+    "type",
+    "detect",
+    "check",
+    "is",
+    "string",
+    "str",
+    "buffer"
+  ],
+  "dependencies": {
+    "html-comment-regex": "^1.1.0"
+  },
+  "devDependencies": {
+    "ava": "*",
+    "xo": "*"
+  },
+  "gitHead": "3df048398e4bafecbdf5f44a6a658fab829ffd03",
+  "bugs": {
+    "url": "https://github.com/sindresorhus/is-svg/issues"
+  },
+  "homepage": "https://github.com/sindresorhus/is-svg#readme",
+  "_id": "is-svg@2.0.1",
+  "_shasum": "f93ab3bf1d6bbca30e9753cd3485b1300eebc013",
+  "_from": "is-svg@>=2.0.0 <3.0.0",
+  "_npmVersion": "2.15.0",
+  "_nodeVersion": "4.4.2",
+  "_npmUser": {
+    "name": "sindresorhus",
+    "email": "sindresorhus@gmail.com"
+  },
+  "dist": {
+    "shasum": "f93ab3bf1d6bbca30e9753cd3485b1300eebc013",
+    "tarball": "https://registry.npmjs.org/is-svg/-/is-svg-2.0.1.tgz"
+  },
+  "maintainers": [
+    {
+      "name": "sindresorhus",
+      "email": "sindresorhus@gmail.com"
+    },
+    {
+      "name": "kevva",
+      "email": "kevinmartensson@gmail.com"
+    }
+  ],
+  "_npmOperationalInternal": {
+    "host": "packages-16-east.internal.npmjs.com",
+    "tmp": "tmp/is-svg-2.0.1.tgz_1462806735180_0.8559287949465215"
+  },
+  "directories": {},
+  "_resolved": "https://registry.npmjs.org/is-svg/-/is-svg-2.0.1.tgz"
+}

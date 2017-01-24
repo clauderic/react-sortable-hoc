@@ -1,0 +1,63 @@
+{
+  "name": "babel-helper-explode-class",
+  "version": "6.8.0",
+  "description": "## Usage",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/babel/babel/tree/master/packages/babel-helper-explode-class"
+  },
+  "license": "MIT",
+  "main": "lib/index.js",
+  "dependencies": {
+    "babel-runtime": "^6.0.0",
+    "babel-traverse": "^6.8.0",
+    "babel-types": "^6.8.0",
+    "babel-helper-bindify-decorators": "^6.8.0"
+  },
+  "_id": "babel-helper-explode-class@6.8.0",
+  "scripts": {},
+  "_shasum": "196a228cc69ea57308695e4ebd1a36cf3f8eca3d",
+  "_from": "babel-helper-explode-class@>=6.8.0 <7.0.0",
+  "_npmVersion": "3.8.6",
+  "_nodeVersion": "5.1.0",
+  "_npmUser": {
+    "name": "hzoo",
+    "email": "hi@henryzoo.com"
+  },
+  "maintainers": [
+    {
+      "name": "amasad",
+      "email": "amjad.masad@gmail.com"
+    },
+    {
+      "name": "hzoo",
+      "email": "hi@henryzoo.com"
+    },
+    {
+      "name": "jmm",
+      "email": "npm-public@jessemccarthy.net"
+    },
+    {
+      "name": "loganfsmyth",
+      "email": "loganfsmyth@gmail.com"
+    },
+    {
+      "name": "sebmck",
+      "email": "sebmck@gmail.com"
+    },
+    {
+      "name": "thejameskyle",
+      "email": "me@thejameskyle.com"
+    }
+  ],
+  "dist": {
+    "shasum": "196a228cc69ea57308695e4ebd1a36cf3f8eca3d",
+    "tarball": "https://registry.npmjs.org/babel-helper-explode-class/-/babel-helper-explode-class-6.8.0.tgz"
+  },
+  "_npmOperationalInternal": {
+    "host": "packages-12-west.internal.npmjs.com",
+    "tmp": "tmp/babel-helper-explode-class-6.8.0.tgz_1462232639916_0.6421866654418409"
+  },
+  "directories": {},
+  "_resolved": "https://registry.npmjs.org/babel-helper-explode-class/-/babel-helper-explode-class-6.8.0.tgz"
+}

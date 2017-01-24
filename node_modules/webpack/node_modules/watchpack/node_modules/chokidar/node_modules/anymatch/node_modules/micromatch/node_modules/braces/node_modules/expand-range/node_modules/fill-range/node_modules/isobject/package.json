@@ -1,0 +1,104 @@
+{
+  "name": "isobject",
+  "description": "Returns true if the value is an object and not an array or null.",
+  "version": "2.1.0",
+  "homepage": "https://github.com/jonschlinkert/isobject",
+  "author": {
+    "name": "Jon Schlinkert",
+    "url": "https://github.com/jonschlinkert"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/jonschlinkert/isobject.git"
+  },
+  "bugs": {
+    "url": "https://github.com/jonschlinkert/isobject/issues"
+  },
+  "license": "MIT",
+  "files": [
+    "index.js"
+  ],
+  "main": "index.js",
+  "engines": {
+    "node": ">=0.10.0"
+  },
+  "scripts": {
+    "test": "mocha"
+  },
+  "dependencies": {
+    "isarray": "1.0.0"
+  },
+  "devDependencies": {
+    "gulp-format-md": "^0.1.9",
+    "mocha": "^2.4.5"
+  },
+  "keywords": [
+    "check",
+    "is",
+    "is-object",
+    "isobject",
+    "kind",
+    "kind-of",
+    "kindof",
+    "native",
+    "object",
+    "type",
+    "typeof",
+    "value"
+  ],
+  "verb": {
+    "related": {
+      "list": [
+        "merge-deep",
+        "extend-shallow",
+        "is-plain-object",
+        "kind-of"
+      ]
+    },
+    "toc": false,
+    "layout": "default",
+    "tasks": [
+      "readme"
+    ],
+    "plugins": [
+      "gulp-format-md"
+    ],
+    "lint": {
+      "reflinks": true
+    },
+    "reflinks": [
+      "verb"
+    ]
+  },
+  "gitHead": "d693ec8d31b02b42a19b2d806407a4ecb2f9fb73",
+  "_id": "isobject@2.1.0",
+  "_shasum": "f065561096a3f1da2ef46272f815c840d87e0c89",
+  "_from": "isobject@>=2.0.0 <3.0.0",
+  "_npmVersion": "3.6.0",
+  "_nodeVersion": "5.5.0",
+  "_npmUser": {
+    "name": "jonschlinkert",
+    "email": "github@sellside.com"
+  },
+  "maintainers": [
+    {
+      "name": "jonschlinkert",
+      "email": "github@sellside.com"
+    },
+    {
+      "name": "doowb",
+      "email": "brian.woodward@gmail.com"
+    }
+  ],
+  "dist": {
+    "shasum": "f065561096a3f1da2ef46272f815c840d87e0c89",
+    "tarball": "https://registry.npmjs.org/isobject/-/isobject-2.1.0.tgz"
+  },
+  "_npmOperationalInternal": {
+    "host": "packages-16-east.internal.npmjs.com",
+    "tmp": "tmp/isobject-2.1.0.tgz_1461618425262_0.8524945541284978"
+  },
+  "directories": {},
+  "_resolved": "https://registry.npmjs.org/isobject/-/isobject-2.1.0.tgz",
+  "readme": "ERROR: No README data found!"
+}

@@ -1,0 +1,17 @@
+{
+	"root": true,
+
+	"extends": "@ljharb",
+
+	"rules": {
+		"eqeqeq": [2, "allow-null"],
+		"id-length": [2, { "min": 1, "max": 30 }],
+		"no-implicit-coercion": [1],
+		"no-invalid-this": [1],
+		"no-magic-numbers": [0],
+		"new-cap": [0],
+		"no-extra-parens": [1],
+		"max-nested-callbacks": [2, 3],
+		"max-statements": [2, 14]
+	}
+}

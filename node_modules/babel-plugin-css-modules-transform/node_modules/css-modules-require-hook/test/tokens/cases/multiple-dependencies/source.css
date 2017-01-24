@@ -1,0 +1,6 @@
+.article
+{
+  composes: text from './colors.css';
+  composes: medium from './fonts.css';
+  composes: mediumBottom mediumTop from './margins.css';
+}

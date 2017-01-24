@@ -1,0 +1,80 @@
+{
+  "name": "lodash",
+  "version": "4.12.0",
+  "description": "Lodash modular utilities.",
+  "keywords": [
+    "modules",
+    "stdlib",
+    "util"
+  ],
+  "homepage": "https://lodash.com/",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/lodash/lodash.git"
+  },
+  "icon": "https://lodash.com/icon.svg",
+  "license": "MIT",
+  "main": "lodash.js",
+  "author": {
+    "name": "John-David Dalton",
+    "email": "john.david.dalton@gmail.com",
+    "url": "http://allyoucanleet.com/"
+  },
+  "contributors": [
+    {
+      "name": "John-David Dalton",
+      "email": "john.david.dalton@gmail.com",
+      "url": "http://allyoucanleet.com/"
+    },
+    {
+      "name": "Blaine Bublitz",
+      "email": "blaine.bublitz@gmail.com",
+      "url": "https://github.com/phated"
+    },
+    {
+      "name": "Mathias Bynens",
+      "email": "mathias@qiwi.be",
+      "url": "https://mathiasbynens.be/"
+    }
+  ],
+  "scripts": {
+    "test": "echo \"See https://travis-ci.org/lodash/lodash-cli for testing details.\""
+  },
+  "bugs": {
+    "url": "https://github.com/lodash/lodash/issues"
+  },
+  "_id": "lodash@4.12.0",
+  "_shasum": "2bd6dc46a040f59e686c972ed21d93dc59053258",
+  "_from": "lodash@>=4.6.1 <5.0.0",
+  "_npmVersion": "2.15.5",
+  "_nodeVersion": "6.0.0",
+  "_npmUser": {
+    "name": "jdalton",
+    "email": "john.david.dalton@gmail.com"
+  },
+  "dist": {
+    "shasum": "2bd6dc46a040f59e686c972ed21d93dc59053258",
+    "tarball": "https://registry.npmjs.org/lodash/-/lodash-4.12.0.tgz"
+  },
+  "maintainers": [
+    {
+      "name": "jdalton",
+      "email": "john.david.dalton@gmail.com"
+    },
+    {
+      "name": "mathias",
+      "email": "mathias@qiwi.be"
+    },
+    {
+      "name": "phated",
+      "email": "blaine.bublitz@gmail.com"
+    }
+  ],
+  "_npmOperationalInternal": {
+    "host": "packages-16-east.internal.npmjs.com",
+    "tmp": "tmp/lodash-4.12.0.tgz_1462735540938_0.36508488352410495"
+  },
+  "directories": {},
+  "_resolved": "https://registry.npmjs.org/lodash/-/lodash-4.12.0.tgz",
+  "readme": "ERROR: No README data found!"
+}

@@ -1,0 +1,63 @@
+{
+  "name": "babel-helper-regex",
+  "version": "6.9.0",
+  "description": "## Usage",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/babel/babel/tree/master/packages/babel-helper-regex"
+  },
+  "license": "MIT",
+  "main": "lib/index.js",
+  "dependencies": {
+    "babel-runtime": "^6.9.0",
+    "lodash": "^4.2.0",
+    "babel-types": "^6.9.0"
+  },
+  "_id": "babel-helper-regex@6.9.0",
+  "scripts": {},
+  "_shasum": "c74265fde180ff9a16735fee05e63cadb9e0b057",
+  "_from": "babel-helper-regex@>=6.8.0 <7.0.0",
+  "_npmVersion": "3.8.6",
+  "_nodeVersion": "5.1.0",
+  "_npmUser": {
+    "name": "hzoo",
+    "email": "hi@henryzoo.com"
+  },
+  "maintainers": [
+    {
+      "name": "amasad",
+      "email": "amjad.masad@gmail.com"
+    },
+    {
+      "name": "hzoo",
+      "email": "hi@henryzoo.com"
+    },
+    {
+      "name": "jmm",
+      "email": "npm-public@jessemccarthy.net"
+    },
+    {
+      "name": "loganfsmyth",
+      "email": "loganfsmyth@gmail.com"
+    },
+    {
+      "name": "sebmck",
+      "email": "sebmck@gmail.com"
+    },
+    {
+      "name": "thejameskyle",
+      "email": "me@thejameskyle.com"
+    }
+  ],
+  "dist": {
+    "shasum": "c74265fde180ff9a16735fee05e63cadb9e0b057",
+    "tarball": "https://registry.npmjs.org/babel-helper-regex/-/babel-helper-regex-6.9.0.tgz"
+  },
+  "_npmOperationalInternal": {
+    "host": "packages-16-east.internal.npmjs.com",
+    "tmp": "tmp/babel-helper-regex-6.9.0.tgz_1463510966244_0.7352650363463908"
+  },
+  "directories": {},
+  "_resolved": "https://registry.npmjs.org/babel-helper-regex/-/babel-helper-regex-6.9.0.tgz",
+  "readme": "ERROR: No README data found!"
+}

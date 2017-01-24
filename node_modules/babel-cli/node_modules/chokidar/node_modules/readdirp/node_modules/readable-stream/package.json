@@ -1,0 +1,92 @@
+{
+  "name": "readable-stream",
+  "version": "2.1.4",
+  "description": "Streams3, a user-land copy of the stream library from Node.js",
+  "main": "readable.js",
+  "dependencies": {
+    "buffer-shims": "^1.0.0",
+    "core-util-is": "~1.0.0",
+    "inherits": "~2.0.1",
+    "isarray": "~1.0.0",
+    "process-nextick-args": "~1.0.6",
+    "string_decoder": "~0.10.x",
+    "util-deprecate": "~1.0.1"
+  },
+  "devDependencies": {
+    "assert": "~1.4.0",
+    "nyc": "^6.4.0",
+    "tap": "~0.7.1",
+    "tape": "~4.5.1",
+    "zuul": "~3.9.0",
+    "zuul-ngrok": "^4.0.0"
+  },
+  "scripts": {
+    "test": "tap test/parallel/*.js test/ours/*.js",
+    "browser": "npm run write-zuul && zuul -- test/browser.js",
+    "write-zuul": "printf \"ui: tape\ntunnel: ngrok\nbrowsers:\n  - name: $BROWSER_NAME\n    version: $BROWSER_VERSION\n\">.zuul.yml",
+    "local": "zuul --local -- test/browser.js",
+    "cover": "nyc npm test",
+    "report": "nyc report --reporter=lcov"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/nodejs/readable-stream.git"
+  },
+  "keywords": [
+    "readable",
+    "stream",
+    "pipe"
+  ],
+  "browser": {
+    "util": false
+  },
+  "nyc": {
+    "include": [
+      "lib/**.js"
+    ]
+  },
+  "license": "MIT",
+  "gitHead": "7752832fba237929388dea6c96911a0a6379abfc",
+  "bugs": {
+    "url": "https://github.com/nodejs/readable-stream/issues"
+  },
+  "_id": "readable-stream@2.1.4",
+  "_shasum": "70b9791c6fcb8480db44bd155a0f6bb58f172468",
+  "_from": "readable-stream@>=2.0.2 <3.0.0",
+  "_npmVersion": "3.8.6",
+  "_nodeVersion": "5.11.0",
+  "_npmUser": {
+    "name": "cwmma",
+    "email": "calvin.metcalf@gmail.com"
+  },
+  "dist": {
+    "shasum": "70b9791c6fcb8480db44bd155a0f6bb58f172468",
+    "tarball": "https://registry.npmjs.org/readable-stream/-/readable-stream-2.1.4.tgz"
+  },
+  "maintainers": [
+    {
+      "name": "isaacs",
+      "email": "isaacs@npmjs.com"
+    },
+    {
+      "name": "tootallnate",
+      "email": "nathan@tootallnate.net"
+    },
+    {
+      "name": "rvagg",
+      "email": "rod@vagg.org"
+    },
+    {
+      "name": "cwmma",
+      "email": "calvin.metcalf@gmail.com"
+    }
+  ],
+  "_npmOperationalInternal": {
+    "host": "packages-12-west.internal.npmjs.com",
+    "tmp": "tmp/readable-stream-2.1.4.tgz_1463679605032_0.6917394688352942"
+  },
+  "directories": {},
+  "_resolved": "https://registry.npmjs.org/readable-stream/-/readable-stream-2.1.4.tgz",
+  "readme": "ERROR: No README data found!",
+  "homepage": "https://github.com/nodejs/readable-stream#readme"
+}

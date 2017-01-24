@@ -1,0 +1,77 @@
+{
+  "name": "output-file-sync",
+  "version": "1.1.2",
+  "description": "Synchronously write a file and create its ancestor directories if needed",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/shinnn/output-file-sync.git"
+  },
+  "author": {
+    "name": "Shinnosuke Watanabe",
+    "url": "https://github.com/shinnn"
+  },
+  "scripts": {
+    "pretest": "eslint --fix --config @shinnn/node-legacy index.js test.js",
+    "test": "node --strong_mode --throw-deprecation --track-heap-objects test.js | tap-spec",
+    "coverage": "node --strong_mode --throw-deprecation --track-heap-objects node_modules/.bin/istanbul cover test.js"
+  },
+  "license": "MIT",
+  "files": [
+    "index.js"
+  ],
+  "keywords": [
+    "fs",
+    "write",
+    "sync",
+    "synchronous",
+    "output",
+    "create",
+    "file",
+    "mkdir",
+    "mkdirp"
+  ],
+  "dependencies": {
+    "graceful-fs": "^4.1.4",
+    "mkdirp": "^0.5.1",
+    "object-assign": "^4.1.0"
+  },
+  "devDependencies": {
+    "@shinnn/eslint-config-node-legacy": "^2.0.0",
+    "eslint": "^2.13.0",
+    "istanbul": "^0.4.3",
+    "read-remove-file": "^3.0.0",
+    "tap-spec": "^4.1.1",
+    "tape": "^4.5.1"
+  },
+  "gitHead": "42d4b6792bbaee919805b2cb9afc95233addb239",
+  "bugs": {
+    "url": "https://github.com/shinnn/output-file-sync/issues"
+  },
+  "homepage": "https://github.com/shinnn/output-file-sync#readme",
+  "_id": "output-file-sync@1.1.2",
+  "_shasum": "d0a33eefe61a205facb90092e826598d5245ce76",
+  "_from": "output-file-sync@>=1.1.0 <2.0.0",
+  "_npmVersion": "3.9.6",
+  "_nodeVersion": "6.2.1",
+  "_npmUser": {
+    "name": "shinnn",
+    "email": "snnskwtnb@gmail.com"
+  },
+  "maintainers": [
+    {
+      "name": "shinnn",
+      "email": "snnskwtnb@gmail.com"
+    }
+  ],
+  "dist": {
+    "shasum": "d0a33eefe61a205facb90092e826598d5245ce76",
+    "tarball": "https://registry.npmjs.org/output-file-sync/-/output-file-sync-1.1.2.tgz"
+  },
+  "_npmOperationalInternal": {
+    "host": "packages-12-west.internal.npmjs.com",
+    "tmp": "tmp/output-file-sync-1.1.2.tgz_1466355133680_0.8832209098618478"
+  },
+  "directories": {},
+  "_resolved": "https://registry.npmjs.org/output-file-sync/-/output-file-sync-1.1.2.tgz",
+  "readme": "ERROR: No README data found!"
+}

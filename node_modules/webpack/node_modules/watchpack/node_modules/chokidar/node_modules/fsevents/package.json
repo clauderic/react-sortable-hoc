@@ -1,0 +1,94 @@
+{
+  "name": "fsevents",
+  "version": "1.0.14",
+  "description": "Native Access to Mac OS-X FSEvents",
+  "main": "fsevents.js",
+  "dependencies": {
+    "nan": "^2.3.0",
+    "node-pre-gyp": "^0.6.29"
+  },
+  "os": [
+    "darwin"
+  ],
+  "engines": {
+    "node": ">=0.8.0"
+  },
+  "scripts": {
+    "install": "node-pre-gyp install --fallback-to-build",
+    "prepublish": "if [ $(npm -v | head -c 1) -lt 3 ]; then exit 1; fi && npm dedupe",
+    "test": "tap ./test"
+  },
+  "binary": {
+    "module_name": "fse",
+    "module_path": "./lib/binding/{configuration}/{node_abi}-{platform}-{arch}/",
+    "remote_path": "./v{version}/",
+    "package_name": "{module_name}-v{version}-{node_abi}-{platform}-{arch}.tar.gz",
+    "host": "https://fsevents-binaries.s3-us-west-2.amazonaws.com"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/strongloop/fsevents.git"
+  },
+  "keywords": [
+    "fsevents",
+    "mac"
+  ],
+  "author": {
+    "name": "Philipp Dunkel",
+    "email": "pip@pipobscure.com"
+  },
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/strongloop/fsevents/issues"
+  },
+  "homepage": "https://github.com/strongloop/fsevents",
+  "devDependencies": {
+    "tap": "~0.4.8"
+  },
+  "gitHead": "fe059ea77fae15ed289271eecc881a2b7fb54edd",
+  "bundleDependencies": [
+    "node-pre-gyp"
+  ],
+  "_id": "fsevents@1.0.14",
+  "_shasum": "558e8cc38643d8ef40fe45158486d0d25758eee4",
+  "_from": "fsevents@>=1.0.0 <2.0.0",
+  "_npmVersion": "3.6.0",
+  "_nodeVersion": "5.6.0",
+  "_npmUser": {
+    "name": "es128",
+    "email": "elan.shanker+npm@gmail.com"
+  },
+  "dist": {
+    "shasum": "558e8cc38643d8ef40fe45158486d0d25758eee4",
+    "tarball": "https://registry.npmjs.org/fsevents/-/fsevents-1.0.14.tgz"
+  },
+  "maintainers": [
+    {
+      "name": "bajtos",
+      "email": "miro.bajtos@gmail.com"
+    },
+    {
+      "name": "bnoordhuis",
+      "email": "info@bnoordhuis.nl"
+    },
+    {
+      "name": "es128",
+      "email": "elan.shanker+npm@gmail.com"
+    },
+    {
+      "name": "pipobscure",
+      "email": "pip@pipobscure.com"
+    },
+    {
+      "name": "strongloop",
+      "email": "callback@strongloop.com"
+    }
+  ],
+  "_npmOperationalInternal": {
+    "host": "packages-16-east.internal.npmjs.com",
+    "tmp": "tmp/fsevents-1.0.14.tgz_1468846610948_0.4684492303058505"
+  },
+  "directories": {},
+  "_resolved": "https://registry.npmjs.org/fsevents/-/fsevents-1.0.14.tgz",
+  "readme": "ERROR: No README data found!"
+}

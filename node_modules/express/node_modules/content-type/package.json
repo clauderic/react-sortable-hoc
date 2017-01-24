@@ -1,0 +1,70 @@
+{
+  "name": "content-type",
+  "description": "Create and parse HTTP Content-Type header",
+  "version": "1.0.2",
+  "author": {
+    "name": "Douglas Christopher Wilson",
+    "email": "doug@somethingdoug.com"
+  },
+  "license": "MIT",
+  "keywords": [
+    "content-type",
+    "http",
+    "req",
+    "res",
+    "rfc7231"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/jshttp/content-type.git"
+  },
+  "devDependencies": {
+    "istanbul": "0.4.3",
+    "mocha": "~1.21.5"
+  },
+  "files": [
+    "LICENSE",
+    "HISTORY.md",
+    "README.md",
+    "index.js"
+  ],
+  "engines": {
+    "node": ">= 0.6"
+  },
+  "scripts": {
+    "test": "mocha --reporter spec --check-leaks --bail test/",
+    "test-ci": "istanbul cover node_modules/mocha/bin/_mocha --report lcovonly -- --reporter spec --check-leaks test/",
+    "test-cov": "istanbul cover node_modules/mocha/bin/_mocha -- --reporter dot --check-leaks test/"
+  },
+  "gitHead": "8118763adfbbac80cf1254191889330aec8b8be7",
+  "bugs": {
+    "url": "https://github.com/jshttp/content-type/issues"
+  },
+  "homepage": "https://github.com/jshttp/content-type#readme",
+  "_id": "content-type@1.0.2",
+  "_shasum": "b7d113aee7a8dd27bd21133c4dc2529df1721eed",
+  "_from": "content-type@>=1.0.2 <1.1.0",
+  "_npmVersion": "2.15.1",
+  "_nodeVersion": "4.4.3",
+  "_npmUser": {
+    "name": "dougwilson",
+    "email": "doug@somethingdoug.com"
+  },
+  "dist": {
+    "shasum": "b7d113aee7a8dd27bd21133c4dc2529df1721eed",
+    "tarball": "https://registry.npmjs.org/content-type/-/content-type-1.0.2.tgz"
+  },
+  "maintainers": [
+    {
+      "name": "dougwilson",
+      "email": "doug@somethingdoug.com"
+    }
+  ],
+  "_npmOperationalInternal": {
+    "host": "packages-12-west.internal.npmjs.com",
+    "tmp": "tmp/content-type-1.0.2.tgz_1462852785748_0.5491233412176371"
+  },
+  "directories": {},
+  "_resolved": "https://registry.npmjs.org/content-type/-/content-type-1.0.2.tgz",
+  "readme": "ERROR: No README data found!"
+}

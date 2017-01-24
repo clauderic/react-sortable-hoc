@@ -1,0 +1,4 @@
+﻿{
+    // First character of this file is BOM
+    "test": "valid JSON, except for the the hidden BOM character"
+}

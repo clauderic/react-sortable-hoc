@@ -1,0 +1,52 @@
+{
+  "name": "spdx-exceptions",
+  "description": "list of SPDX standard license exceptions",
+  "version": "1.0.5",
+  "author": {
+    "name": "The Linux Foundation"
+  },
+  "contributors": [
+    {
+      "name": "Kyle E. Mitchell",
+      "email": "kyle@kemitchell.com",
+      "url": "https://kemitchell.com/"
+    }
+  ],
+  "license": "CC-BY-3.0",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/kemitchell/spdx-exceptions.json.git"
+  },
+  "gitHead": "c6cd1f9bfc3cf5685398e3d08582b4ddb2da42b2",
+  "bugs": {
+    "url": "https://github.com/kemitchell/spdx-exceptions.json/issues"
+  },
+  "homepage": "https://github.com/kemitchell/spdx-exceptions.json#readme",
+  "_id": "spdx-exceptions@1.0.5",
+  "scripts": {},
+  "_shasum": "9d21ac4da4bdb71d060fb74e5a67531d032cbba6",
+  "_from": "spdx-exceptions@>=1.0.4 <2.0.0",
+  "_npmVersion": "3.10.3",
+  "_nodeVersion": "4.4.7",
+  "_npmUser": {
+    "name": "kemitchell",
+    "email": "kyle@kemitchell.com"
+  },
+  "dist": {
+    "shasum": "9d21ac4da4bdb71d060fb74e5a67531d032cbba6",
+    "tarball": "https://registry.npmjs.org/spdx-exceptions/-/spdx-exceptions-1.0.5.tgz"
+  },
+  "maintainers": [
+    {
+      "name": "kemitchell",
+      "email": "kyle@kemitchell.com"
+    }
+  ],
+  "_npmOperationalInternal": {
+    "host": "packages-16-east.internal.npmjs.com",
+    "tmp": "tmp/spdx-exceptions-1.0.5.tgz_1468446541697_0.12741880933754146"
+  },
+  "directories": {},
+  "_resolved": "https://registry.npmjs.org/spdx-exceptions/-/spdx-exceptions-1.0.5.tgz",
+  "readme": "ERROR: No README data found!"
+}

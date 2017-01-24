@@ -1,0 +1,78 @@
+{
+  "name": "postcss-zindex",
+  "version": "2.1.1",
+  "description": "Reduce z-index values with PostCSS.",
+  "main": "index.js",
+  "scripts": {
+    "lint": "jshint index.js lib/*.js --reporter node_modules/jshint-stylish/stylish.js",
+    "test": "tape test.js | tap-spec"
+  },
+  "files": [
+    "LICENSE-MIT",
+    "index.js",
+    "lib"
+  ],
+  "keywords": [
+    "css",
+    "normalize",
+    "optimise",
+    "optimisation",
+    "postcss",
+    "postcss-plugin",
+    "z-index"
+  ],
+  "license": "MIT",
+  "dependencies": {
+    "postcss": "^5.0.4",
+    "uniqs": "^2.0.0"
+  },
+  "devDependencies": {
+    "jshint": "^2.8.0",
+    "jshint-stylish": "^2.0.1",
+    "tap-spec": "^4.1.0",
+    "tape": "^4.2.0"
+  },
+  "homepage": "https://github.com/ben-eb/postcss-zindex",
+  "author": {
+    "name": "Ben Briggs",
+    "email": "beneb.info@gmail.com",
+    "url": "http://beneb.info"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ben-eb/postcss-zindex.git"
+  },
+  "gitHead": "2ccdfac421e7b822f98d1cb3e8e6530953849241",
+  "bugs": {
+    "url": "https://github.com/ben-eb/postcss-zindex/issues"
+  },
+  "_id": "postcss-zindex@2.1.1",
+  "_shasum": "ea3fbe656c9738aa8729e2ee96ec2a46089b720f",
+  "_from": "postcss-zindex@>=2.0.1 <3.0.0",
+  "_npmVersion": "3.3.12",
+  "_nodeVersion": "5.4.1",
+  "_npmUser": {
+    "name": "beneb",
+    "email": "beneb.info@gmail.com"
+  },
+  "dist": {
+    "shasum": "ea3fbe656c9738aa8729e2ee96ec2a46089b720f",
+    "tarball": "https://registry.npmjs.org/postcss-zindex/-/postcss-zindex-2.1.1.tgz"
+  },
+  "maintainers": [
+    {
+      "name": "beneb",
+      "email": "beneb.info@gmail.com"
+    },
+    {
+      "name": "trysound",
+      "email": "trysound@yandex.ru"
+    }
+  ],
+  "_npmOperationalInternal": {
+    "host": "packages-12-west.internal.npmjs.com",
+    "tmp": "tmp/postcss-zindex-2.1.1.tgz_1460561207553_0.1399674208369106"
+  },
+  "directories": {},
+  "_resolved": "https://registry.npmjs.org/postcss-zindex/-/postcss-zindex-2.1.1.tgz"
+}

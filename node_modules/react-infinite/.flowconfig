@@ -1,0 +1,12 @@
+[ignore]
+.*/fbjs/.*
+.*/build/.*
+.*/dist/.*
+.*/y18n/.*
+
+[include]
+
+[libs]
+./typelib
+
+[options]

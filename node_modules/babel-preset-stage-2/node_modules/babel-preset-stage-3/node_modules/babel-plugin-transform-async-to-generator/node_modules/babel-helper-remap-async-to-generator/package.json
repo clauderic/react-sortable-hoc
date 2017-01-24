@@ -1,0 +1,65 @@
+{
+  "name": "babel-helper-remap-async-to-generator",
+  "version": "6.11.2",
+  "description": "## Usage",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/babel/babel/tree/master/packages/babel-helper-remap-async-to-generator"
+  },
+  "license": "MIT",
+  "main": "lib/index.js",
+  "dependencies": {
+    "babel-runtime": "^6.0.0",
+    "babel-template": "^6.8.0",
+    "babel-types": "^6.8.0",
+    "babel-traverse": "^6.8.0",
+    "babel-helper-function-name": "^6.8.0"
+  },
+  "_id": "babel-helper-remap-async-to-generator@6.11.2",
+  "scripts": {},
+  "_shasum": "fe482d566355d36f946d7db162fd4eb56258a6ff",
+  "_from": "babel-helper-remap-async-to-generator@>=6.8.0 <7.0.0",
+  "_npmVersion": "3.9.3",
+  "_nodeVersion": "5.9.0",
+  "_npmUser": {
+    "name": "loganfsmyth",
+    "email": "loganfsmyth@gmail.com"
+  },
+  "dist": {
+    "shasum": "fe482d566355d36f946d7db162fd4eb56258a6ff",
+    "tarball": "https://registry.npmjs.org/babel-helper-remap-async-to-generator/-/babel-helper-remap-async-to-generator-6.11.2.tgz"
+  },
+  "maintainers": [
+    {
+      "name": "amasad",
+      "email": "amjad.masad@gmail.com"
+    },
+    {
+      "name": "hzoo",
+      "email": "hi@henryzoo.com"
+    },
+    {
+      "name": "jmm",
+      "email": "npm-public@jessemccarthy.net"
+    },
+    {
+      "name": "loganfsmyth",
+      "email": "loganfsmyth@gmail.com"
+    },
+    {
+      "name": "sebmck",
+      "email": "sebmck@gmail.com"
+    },
+    {
+      "name": "thejameskyle",
+      "email": "me@thejameskyle.com"
+    }
+  ],
+  "_npmOperationalInternal": {
+    "host": "packages-16-east.internal.npmjs.com",
+    "tmp": "tmp/babel-helper-remap-async-to-generator-6.11.2.tgz_1467180885035_0.28857485693879426"
+  },
+  "directories": {},
+  "_resolved": "https://registry.npmjs.org/babel-helper-remap-async-to-generator/-/babel-helper-remap-async-to-generator-6.11.2.tgz",
+  "readme": "ERROR: No README data found!"
+}

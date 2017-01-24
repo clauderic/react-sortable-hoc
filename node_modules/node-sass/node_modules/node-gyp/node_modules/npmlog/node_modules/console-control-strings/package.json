@@ -1,0 +1,61 @@
+{
+  "name": "console-control-strings",
+  "version": "1.1.0",
+  "description": "A library of cross-platform tested terminal/console command strings for doing things like color and cursor positioning.  This is a subset of both ansi and vt100.  All control codes included work on both Windows & Unix-like OSes, except where noted.",
+  "main": "index.js",
+  "directories": {
+    "test": "test"
+  },
+  "scripts": {
+    "test": "standard && tap test/*.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/iarna/console-control-strings.git"
+  },
+  "keywords": [],
+  "author": {
+    "name": "Rebecca Turner",
+    "email": "me@re-becca.org",
+    "url": "http://re-becca.org/"
+  },
+  "license": "ISC",
+  "files": [
+    "LICENSE",
+    "index.js"
+  ],
+  "devDependencies": {
+    "standard": "^7.1.2",
+    "tap": "^5.7.2"
+  },
+  "gitHead": "722439b4998d2964ac3d3f9ec175c008aa9b7b4b",
+  "bugs": {
+    "url": "https://github.com/iarna/console-control-strings/issues"
+  },
+  "homepage": "https://github.com/iarna/console-control-strings#readme",
+  "_id": "console-control-strings@1.1.0",
+  "_shasum": "3d7cf4464db6446ea644bf4b39507f9851008e8e",
+  "_from": "console-control-strings@>=1.1.0 <1.2.0",
+  "_npmVersion": "3.9.2",
+  "_nodeVersion": "4.4.0",
+  "_npmUser": {
+    "name": "iarna",
+    "email": "me@re-becca.org"
+  },
+  "dist": {
+    "shasum": "3d7cf4464db6446ea644bf4b39507f9851008e8e",
+    "tarball": "https://registry.npmjs.org/console-control-strings/-/console-control-strings-1.1.0.tgz"
+  },
+  "maintainers": [
+    {
+      "name": "iarna",
+      "email": "me@re-becca.org"
+    }
+  ],
+  "_npmOperationalInternal": {
+    "host": "packages-16-east.internal.npmjs.com",
+    "tmp": "tmp/console-control-strings-1.1.0.tgz_1466033396831_0.9470485949423164"
+  },
+  "_resolved": "https://registry.npmjs.org/console-control-strings/-/console-control-strings-1.1.0.tgz",
+  "readme": "ERROR: No README data found!"
+}

@@ -1,0 +1,78 @@
+{
+  "name": "emojis-list",
+  "description": "Complete list of standard emojis.",
+  "homepage": "https://github.com/Kikobeats/emojis-list",
+  "version": "2.0.1",
+  "main": "./index.js",
+  "author": {
+    "name": "Kiko Beats",
+    "email": "josefrancisco.verdu@gmail.com",
+    "url": "https://github.com/Kikobeats"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/kikobeats/emojis-list.git"
+  },
+  "bugs": {
+    "url": "https://github.com/Kikobeats/emojis-list/issues"
+  },
+  "keywords": [
+    "archive",
+    "complete",
+    "emoji",
+    "list",
+    "standard"
+  ],
+  "devDependencies": {
+    "acho": "latest",
+    "browserify": "latest",
+    "cheerio": "latest",
+    "got": ">=5 <6",
+    "gulp": "latest",
+    "gulp-header": "latest",
+    "gulp-uglify": "latest",
+    "gulp-util": "latest",
+    "standard": "latest",
+    "vinyl-buffer": "latest",
+    "vinyl-source-stream": "latest"
+  },
+  "engines": {
+    "node": ">= 0.10"
+  },
+  "files": [
+    "index.js"
+  ],
+  "scripts": {
+    "pretest": "standard update.js",
+    "test": "echo 'YOLO'",
+    "update": "node update"
+  },
+  "license": "MIT",
+  "gitHead": "f1188056dd40564e23dccee809d27b6eedff2b77",
+  "_id": "emojis-list@2.0.1",
+  "_shasum": "a174d9d0838eb36af3d0590bb6d3e8dcd94f4fbd",
+  "_from": "emojis-list@>=2.0.0 <3.0.0",
+  "_npmVersion": "3.7.3",
+  "_nodeVersion": "5.9.0",
+  "_npmUser": {
+    "name": "kikobeats",
+    "email": "josefrancisco.verdu@gmail.com"
+  },
+  "dist": {
+    "shasum": "a174d9d0838eb36af3d0590bb6d3e8dcd94f4fbd",
+    "tarball": "https://registry.npmjs.org/emojis-list/-/emojis-list-2.0.1.tgz"
+  },
+  "maintainers": [
+    {
+      "name": "kikobeats",
+      "email": "josefrancisco.verdu@gmail.com"
+    }
+  ],
+  "_npmOperationalInternal": {
+    "host": "packages-12-west.internal.npmjs.com",
+    "tmp": "tmp/emojis-list-2.0.1.tgz_1463051940954_0.1902820896357298"
+  },
+  "directories": {},
+  "_resolved": "https://registry.npmjs.org/emojis-list/-/emojis-list-2.0.1.tgz",
+  "readme": "ERROR: No README data found!"
+}

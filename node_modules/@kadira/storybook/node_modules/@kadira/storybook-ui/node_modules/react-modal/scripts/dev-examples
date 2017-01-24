@@ -1,0 +1,3 @@
+#!/bin/sh
+node_modules/.bin/webpack-dev-server --inline --host 0.0.0.0 --content-base examples/
+

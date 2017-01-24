@@ -1,0 +1,76 @@
+{
+  "name": "coa",
+  "description": "Command-Option-Argument: Yet another parser for command line options.",
+  "version": "1.0.1",
+  "homepage": "http://github.com/veged/coa",
+  "author": {
+    "name": "Sergey Berezhnoy",
+    "email": "veged@ya.ru",
+    "url": "http://github.com/veged"
+  },
+  "maintainers": [
+    {
+      "name": "veged",
+      "email": "veged@mail.ru"
+    },
+    {
+      "name": "arikon",
+      "email": "peimei@ya.ru"
+    }
+  ],
+  "contributors": [
+    {
+      "name": "Sergey Belov",
+      "email": "peimei@ya.ru",
+      "url": "http://github.com/arikon"
+    }
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/veged/coa.git"
+  },
+  "directories": {
+    "lib": "./lib"
+  },
+  "dependencies": {
+    "q": "^1.1.2"
+  },
+  "devDependencies": {
+    "coffee-script": "~1.6.3",
+    "istanbul": "~0.1.40",
+    "mocha-istanbul": "*",
+    "mocha": "~1.21.4",
+    "chai": "~1.7.2"
+  },
+  "scripts": {
+    "test": "make test",
+    "coverage": "make coverage"
+  },
+  "engines": {
+    "node": ">= 0.8.0"
+  },
+  "licenses": [
+    {
+      "type": "MIT"
+    }
+  ],
+  "optionalDependencies": {},
+  "gitHead": "ec694e82e7fb2c79fc114c9b23625a90c57e81fe",
+  "bugs": {
+    "url": "https://github.com/veged/coa/issues"
+  },
+  "_id": "coa@1.0.1",
+  "_shasum": "7f959346cfc8719e3f7233cd6852854a7c67d8a3",
+  "_from": "coa@>=1.0.1 <1.1.0",
+  "_npmVersion": "2.0.0-alpha-5",
+  "_npmUser": {
+    "name": "veged",
+    "email": "veged@ya.ru"
+  },
+  "dist": {
+    "shasum": "7f959346cfc8719e3f7233cd6852854a7c67d8a3",
+    "tarball": "http://registry.npmjs.org/coa/-/coa-1.0.1.tgz"
+  },
+  "_resolved": "https://registry.npmjs.org/coa/-/coa-1.0.1.tgz",
+  "readme": "ERROR: No README data found!"
+}

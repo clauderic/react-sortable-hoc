@@ -1,0 +1,52 @@
+{
+  "name": "parseuri",
+  "version": "0.0.5",
+  "description": "Method that parses a URI and returns an array of its components",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/get/parseuri.git"
+  },
+  "homepage": "https://github.com/get/parseuri",
+  "scripts": {
+    "test": "make test"
+  },
+  "devDependencies": {
+    "mocha": "1.17.1",
+    "better-assert": "1.0.0"
+  },
+  "author": "",
+  "license": "MIT",
+  "dependencies": {
+    "better-assert": "~1.0.0"
+  },
+  "gitHead": "792c9a63162a4484eb6b4f95fc611ccf224a24b6",
+  "bugs": {
+    "url": "https://github.com/get/parseuri/issues"
+  },
+  "_id": "parseuri@0.0.5",
+  "_shasum": "80204a50d4dbb779bfdc6ebe2778d90e4bce320a",
+  "_from": "parseuri@0.0.5",
+  "_npmVersion": "3.10.8",
+  "_nodeVersion": "6.9.1",
+  "_npmUser": {
+    "name": "gal",
+    "email": "koren@mit.edu"
+  },
+  "dist": {
+    "shasum": "80204a50d4dbb779bfdc6ebe2778d90e4bce320a",
+    "tarball": "https://registry.npmjs.org/parseuri/-/parseuri-0.0.5.tgz"
+  },
+  "maintainers": [
+    {
+      "name": "gal",
+      "email": "koren@mit.edu"
+    }
+  ],
+  "_npmOperationalInternal": {
+    "host": "packages-18-east.internal.npmjs.com",
+    "tmp": "tmp/parseuri-0.0.5.tgz_1477582137634_0.3768787120934576"
+  },
+  "directories": {},
+  "_resolved": "https://registry.npmjs.org/parseuri/-/parseuri-0.0.5.tgz",
+  "readme": "ERROR: No README data found!"
+}
