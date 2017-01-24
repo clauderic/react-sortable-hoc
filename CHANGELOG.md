@@ -1,5 +1,8 @@
 Changelog
 ------------
+### 0.4.10
+Fix: This version fixes issues with nested `SortableContainer` elements using drag handles from also dragging their parent [#112](https://github.com/clauderic/react-sortable-hoc/issues/112), #127(https://github.com/clauderic/react-sortable-hoc/pull/127). Thanks []@DeadHeadRussell](https://github.com/DeadHeadRussell)!
+
 ### 0.4.9
 Fix: This release fixes a bug introduced in `0.4.8` caused by calling the `forEach` method directly on a NodeList, which is undefined in a number of browsers [#125](https://github.com/clauderic/react-sortable-hoc/issues/125)
 
