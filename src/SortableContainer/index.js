@@ -308,14 +308,6 @@ export default function sortableContainer(WrappedComponent, config = {withRef: f
 				el.style[`${vendorPrefix}TransitionDuration`] = '';
 			}
 
-			if (typeof onSortEnd === 'function') {
-				onSortEnd({
-					oldIndex: this.index,
-					newIndex: this.newIndex,
-					collection
-				}, e);
-			}
-
 			// Stop autoscroll
 			clearInterval(this.autoscrollInterval);
 			this.autoscrollInterval = null;
@@ -327,6 +319,14 @@ export default function sortableContainer(WrappedComponent, config = {withRef: f
 				sorting: false,
 				sortingIndex: null
 			});
+			
+			if (typeof onSortEnd === 'function') {
+				onSortEnd({
+					oldIndex: this.index,
+					newIndex: this.newIndex,
+					collection
+				}, e);
+			}
 
 			this._touched = false;
 		}
