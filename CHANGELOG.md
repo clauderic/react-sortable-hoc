@@ -1,5 +1,8 @@
 Changelog
 ------------
+### 0.4.12
+Fix: This release fixes some issues caused by the `onSortEnd` callback being invoked before `setState` [#82](https://github.com/clauderic/react-sortable-hoc/issues/82).
+
 ### 0.4.10
 Fix: This version fixes issues with nested `SortableContainer` elements using drag handles from also dragging their parent [#112](https://github.com/clauderic/react-sortable-hoc/issues/112), #127(https://github.com/clauderic/react-sortable-hoc/pull/127). Thanks []@DeadHeadRussell](https://github.com/DeadHeadRussell)!
 
