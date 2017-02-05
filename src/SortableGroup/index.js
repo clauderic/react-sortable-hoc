@@ -139,7 +139,7 @@ export default class SortableGroup {
             // above last item in list
             r = nodes[nodes.length - 1].getBoundingClientRect();
             sd = r.bottom;
-            //console.log('mouse y vs last node y', y, sd, r.top, r.bottom);
+            
             if(y < sd){
                 sd = 999999999;
                 // closest node
