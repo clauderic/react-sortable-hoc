@@ -136,7 +136,7 @@ class GroupWrapper extends Component {
 			// remove from old list
 			components[index].items.splice(oldIndex, 1);
 			
-			// change table if required
+			// change list if required
 			if(newList != oldList){
 				index = findIndex(components, { 'key': newList});
 			}
