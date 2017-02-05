@@ -33,7 +33,7 @@ export default class SortableGroup {
         this.debounceCheckList();
     }
     
-    onSortEnd = ({oldIndex, newIndex}, e) => {
+    onSortEnd = ({oldIndex, newIndex}) => {
         let containers = this.getRefs();
         let t = this.center(this.dragInfo.target);
         let closest = this.closestContainer(t.x, t.y, containers);
