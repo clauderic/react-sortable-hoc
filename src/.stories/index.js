@@ -14,16 +14,17 @@ import 'react-virtualized/styles.css';
 import Infinite from 'react-infinite';
 import range from 'lodash/range';
 import random from 'lodash/random';
+import findIndex from 'lodash/findIndex';
 import classNames from 'classnames';
 
-function getItems(count, height) {
-  var heights = [65, 110, 140, 65, 90, 65];
-  return range(count).map(value => {
-    return {
-      value,
-      height: height || heights[random(0, heights.length - 1)],
-    };
-  });
+function getItems(count, height, label) {
+	var heights = [65, 110, 140, 65, 90, 65];
+	return range(count).map((value) => {
+		return {
+			value: label ? label + value : value,
+			height: height || heights[random(0, heights.length - 1)]
+		};
+	});
 }
 
 const Handle = SortableHandle(() => <div className={style.handle} />);
@@ -466,6 +467,48 @@ storiesOf('Advanced', module)
       />
     );
   });
+
+storiesOf('Grouping', module)
+.add('Vertical', () => {
+	const className = classNames(style.list, style.stylizedList);
+	const itemClass = classNames(style.item, style.stylizedItem);
+	return (
+		<GroupWrapper
+			wrapperClass={style.vertGroups}
+			components={[
+				{component:SortableList, className:className, itemClass:itemClass, items:getItems(5, 59, 'Dog')},
+				{component:SortableList, className:className, itemClass:itemClass, items:getItems(5, 59, 'Cat')},
+				{component:SortableList, className:className, itemClass:itemClass, items:getItems(5, 59, 'Bird')}
+			]}
+		/>
+	);
+})
+.add('Horizontal', () => {
+	const className = classNames(style.list, style.stylizedList, style.horizontalList);
+	const itemClass = classNames(style.item, style.stylizedItem, style.horizontalItem);
+	return (
+		<GroupWrapper
+			wrapperClass={style.root}
+			components={[
+				{component:SortableList, className:className, itemClass:itemClass, items:getItems(5, 300, 'Dog'), axis:'x'},
+				{component:SortableList, className:className, itemClass:itemClass, items:getItems(5, 300, 'Cat'), axis:'x'}
+			]}
+		/>
+	);
+})
+.add('Grid', () => {
+	const className = classNames(style.list, style.stylizedList, style.grid);
+	const itemClass = classNames(style.stylizedItem, style.gridItem);
+	return (
+		<GroupWrapper
+			wrapperClass={style.root}
+			components={[
+				{component:SortableList, className:className, itemClass:itemClass, items:getItems(5, 110, 'Dog'), axis:'xy'},
+				{component:SortableList, className:className, itemClass:itemClass, items:getItems(5, 110, 'Cat'), axis:'xy'}
+			]}
+		/>
+	);
+})
 
 storiesOf('Customization', module)
   .add('Minimal styling', () => {

@@ -42,7 +42,7 @@
     "clean:umd": "rimraf dist/umd",
     "clean:es6": "rimraf dist/es6",
     "clean:commonjs": "rimraf dist/commonjs",
-    "storybook": "start-storybook -p 9001",
+    "storybook": "start-storybook -p 8082",
     "test": "eslint src/** --ext .js"
   },
   "dependencies": {
