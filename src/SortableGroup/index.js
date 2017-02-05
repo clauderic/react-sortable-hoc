@@ -6,7 +6,7 @@ export default class SortableGroup {
         this.dragInfo = {
             pageX: 0,
             pageY: 0,
-            delta: 0,
+            delta: {x:0, y:0},
             current: null,
             target: null
         };
@@ -14,10 +14,10 @@ export default class SortableGroup {
         this.getRefs = getRefs;
     }
     
-    onSortStart = (item, e, container) => {
+    onSortStart = (item, e, listName) => {
         let target = item.node.getBoundingClientRect();
         this.dragInfo.target = target;
-        this.dragInfo.current = container;
+        this.dragInfo.current = listName;
         this.dragInfo.delta = {
             x: target.left - e.clientX,
             y: target.top - e.clientY
@@ -34,24 +34,25 @@ export default class SortableGroup {
     }
     
     onSortEnd = ({oldIndex, newIndex}) => {
-        let containers = this.getRefs();
-        let t = this.center(this.dragInfo.target);
-        let closest = this.closestContainer(t.x, t.y, containers);
+        let lists = this.getRefs();
+        let {target, current} = this.dragInfo;
+        let t = this.center(target);
+        let closest = this.closestList(t.x, t.y, lists);
         
-        // Moved within current container
-        if(this.dragInfo.current == closest && oldIndex != newIndex){
-            this.onMove(oldIndex, this.dragInfo.current, newIndex, closest);
+        // Moved within current list
+        if(current == closest && oldIndex != newIndex){
+            this.onMove(oldIndex, current, newIndex, closest);
             
             this.dragInfo.current = closest;
         }
-        // Moved different container
-        else if (this.dragInfo.current != closest) {
+        // Moved different list
+        else if (current != closest) {
             
-            // Find the closest index in new container
+            // Find the closest index in new list
             newIndex = this.closestNodeIndex(t.x, t.y,
-                    containers[closest].container.childNodes);
+                    lists[closest].container.childNodes);
             
-            this.onMove(oldIndex, this.dragInfo.current, newIndex, closest);
+            this.onMove(oldIndex, current, newIndex, closest);
             this.dragInfo.current = closest;
         }
         
@@ -60,41 +61,41 @@ export default class SortableGroup {
     }
     
     checkList = () => {
-        let containers = this.getRefs();
-        let {target, current} = this.dragInfo;
+        let lists = this.getRefs();
+        let {target, current, delta, pageX, pageY} = this.dragInfo;
         let t = this.center(target);
-        let closest = this.closestContainer(t.x, t.y, containers);
+        let closest = this.closestList(t.x, t.y, lists);
         
-        // closest container is not the current container
+        // closest list is not the current list
         if(current != closest){
             
             // overlap closest
-            let containerB = containers[closest].container.getBoundingClientRect();
-            if(this.overlap(target, containerB)){
-                let t = this.center(target);
+            let list = lists[closest].container.getBoundingClientRect();
+            if(this.overlap(target, list)){
+                t = this.center(target);
                 let newIndex = this.closestNodeIndex(t.x, t.y,
-                    containers[closest].container.childNodes);
+                    lists[closest].container.childNodes);
                 
-                // stop dragging from the prev container (calls onSortEnd)
-                containers[current].handleSortEnd({});
+                // stop dragging from the prev list (calls onSortEnd)
+                lists[current].handleSortEnd({});
                 
-                // start dragging from the closest container
-                this.startDragging(closest, newIndex, this.dragInfo.delta);
+                // start dragging from the closest list
+                this.startDragging(closest, newIndex, delta, pageX, pageY);
                 
                 this.dragInfo.current = closest;
             }
         }
     }
     
-    startDragging = (listName, index, delta) => {
-        let containers = this.getRefs();
-        let containerA = containers[listName];
-        let newIndex = this.clamp(index, 0, containerA.container.childNodes.length - 1);
-        let target = containerA.container.childNodes[newIndex];
+    startDragging = (listName, index, delta, pageX, pageY) => {
+        let lists = this.getRefs();
+        let list = lists[listName];
+        let newIndex = this.clamp(index, 0, list.container.childNodes.length - 1);
+        let target = list.container.childNodes[newIndex];
         let rect = target.getBoundingClientRect();
         
         // start dragging item
-        containerA.handleStart({
+        list.handleStart({
           target: target,
           clientX: rect.left - delta.x,
           clientY: rect.top - delta.y,
@@ -102,7 +103,7 @@ export default class SortableGroup {
         });
         
         // force update item position
-        containerA.helper.dispatchEvent(this.mouseMove(this.dragInfo.pageX, this.dragInfo.pageY));
+        list.helper.dispatchEvent(this.mouseMove(pageX, pageY));
     }
     
     mouseMove(x, y) {
@@ -115,21 +116,21 @@ export default class SortableGroup {
         });
     }
     
-    closestContainer(x, y, containers) {
-        let containerB;
+    closestList(x, y, lists) {
+        let list;
         let d = 0;
         let sd = 999999999;
-        let newList;
+        let listName;
         
-        each(containers, (c, key) => {
-            containerB = this.center(c.container.getBoundingClientRect());
-            d = this.distance(x, y, containerB.x, containerB.y);
+        each(lists, (c, key) => {
+            list = this.center(c.container.getBoundingClientRect());
+            d = this.distance(x, y, list.x, list.y);
             if(d < sd){
                 sd = d;
-                newList = key;
+                listName = key;
             }
         });
-        return newList;
+        return listName;
     }
 
     closestNodeIndex(x, y, nodes) {
@@ -156,14 +157,6 @@ export default class SortableGroup {
         }
         // default last node
         return nodes.length;
-    }
-    
-    closer(target, containerA, containerB) {
-        target = this.center(target);
-        containerA = this.center(containerA);
-        containerB = this.center(containerB);
-        return this.distance(target.x, target.y, containerA.x, containerA.y) <
-            this.distance(target.x, target.y, containerB.x, containerB.y);
     }
     
     center(rect) {
