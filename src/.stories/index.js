@@ -179,6 +179,76 @@ const SortableVirtualList = SortableContainer(({
     />
   );
 });
+class GroupWrapper extends Component {
+	constructor({components}) {
+		super();
+		this.state = {
+			components: components.map((c, i) => ({...c, key: `list-${i}`}))
+		};
+		this.group = new SortableGroup(this.handleMove, this.getRefs);
+	}
+	static propTypes = {
+		components: PropTypes.arrayOf(React.PropTypes.shape({
+			component: PropTypes.func,
+			className: PropTypes.string,
+			wrapperClass: PropTypes.string,
+			itemClass: PropTypes.string,
+			items: React.PropTypes.array
+		}))
+	}
+	
+	handleMove = (oldIndex, oldList, newIndex, newList) => {
+    	let components = this.state.components.slice(0);
+    	let index = findIndex(components, { 'key': oldList});
+    	let switchItem = components[index].items[oldIndex];
+		
+		// item found
+		if(switchItem){
+			
+			// remove from old list
+			components[index].items.splice(oldIndex, 1);
+			
+			// change list if required
+			if(newList != oldList){
+				index = findIndex(components, { 'key': newList});
+			}
+			
+			// add to new list
+			components[index].items.splice(newIndex, 0, switchItem);
+		}
+    	
+    	this.setState({
+	        components
+	    });
+	}
+	
+	getRefs = () => {
+		return this.refs;
+	}
+	
+    renderComponent = (c) => {
+    	const Component = c.component;
+    	const props = {
+			isSorting: false,
+			onSortStart: (item, e) => this.group.onSortStart(item, e, c.key),
+			onSortMove: this.group.onSortMove,
+			onSortEnd: this.group.onSortEnd,
+			ref: c.key,
+			...c
+		};
+		return <Component {...props} />;
+    }
+    
+	render(){
+		const {wrapperClass} = this.props;
+		const {components} = this.state;
+		return (
+		  <div className={wrapperClass}>
+		    {components.map(c => this.renderComponent(c))}
+		  </div>
+		);
+	}
+} 
 
 // Function components cannot have refs, so we'll be using a class for React Virtualized
 class VirtualizedListWrapper extends Component {
