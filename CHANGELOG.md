@@ -1,5 +1,9 @@
 Changelog
 ------------
+### 0.5.0
+Tweak: `button` elements are now included in the default `shouldCancelStart` implementation [#142](https://github.com/clauderic/react-sortable-hoc/pull/142).
+Fix: Omit `getHelperDimensions` before passing down props in `SortableContainer`
+
 ### 0.4.12
 Fix: This release fixes some issues caused by the `onSortEnd` callback being invoked before `setState` [#82](https://github.com/clauderic/react-sortable-hoc/issues/82).
 
