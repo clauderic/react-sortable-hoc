@@ -672,6 +672,7 @@ export default function sortableContainer(WrappedComponent, config = {withRef: f
 						'lockToContainerEdges',
 
 						'getContainer',
+						'getHelperDimensions'
 					)}
 				/>
 			);
