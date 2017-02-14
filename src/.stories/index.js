@@ -451,6 +451,20 @@ storiesOf('Grouping', module)
 		/>
 	);
 })
+.add('Different Height Containers', () => {
+	const classNameA = classNames(style.list, style.stylizedList, style.sizedA);
+	const classNameB = classNames(style.list, style.stylizedList, style.sizedB);
+	const itemClass = classNames(style.item, style.stylizedItem);
+	return (
+		<GroupWrapper
+			wrapperClass={style.root}
+			components={[
+				{component:SortableList, className:classNameA, itemClass:itemClass, items:getItems(3, 50, 'Dog')},
+				{component:SortableList, className:classNameB, itemClass:itemClass, items:getItems(3, 50, 'Cat')}
+			]}
+		/>
+	);
+})
 
 storiesOf('Customization', module)
 .add('Minimal styling', () => {

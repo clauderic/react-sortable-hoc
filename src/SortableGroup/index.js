@@ -117,14 +117,12 @@ export default class SortableGroup {
     }
     
     closestList(x, y, lists) {
-        let list;
         let d = 0;
         let sd = 999999999;
         let listName;
         
         each(lists, (c, key) => {
-            list = this.center(c.container.getBoundingClientRect());
-            d = this.distance(x, y, list.x, list.y);
+            d = this.distanceRect(x, y, c.container.getBoundingClientRect());
             if(d < sd){
                 sd = d;
                 listName = key;
@@ -168,6 +166,12 @@ export default class SortableGroup {
     
     clamp(value, min, max) {
         return Math.min(Math.max(value, min), max);
+    }
+    
+    distanceRect(x, y, rect) {
+        let dx = x - this.clamp(x, rect.left, rect.right);
+        let dy = y - this.clamp(y, rect.top, rect.bottom);
+        return Math.sqrt((dx * dx) + (dy * dy));
     }
     
     distance(x1, y1, x2, y2) {
