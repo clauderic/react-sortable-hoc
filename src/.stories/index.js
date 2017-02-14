@@ -325,6 +325,13 @@ storiesOf('Advanced', module)
 		</div>
 	);
 })
+.add('Distance (20px)', () => {
+	return (
+		<div className={style.root}>
+			<ListWrapper component={SortableList} items={getItems(50, 50)} distance={20} helperClass={style.stylizedHelper} />
+		</div>
+	);
+})
 .add('Lock axis', () => {
 	return (
 		<div className={style.root}>
