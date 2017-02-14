@@ -122,6 +122,14 @@
     align-items: center;
 }
 
+.sizedA {
+    flex: 3;
+}
+
+.sizedB {
+    flex: 1;
+}
+
 // Nested
 .category {
     height: auto;
