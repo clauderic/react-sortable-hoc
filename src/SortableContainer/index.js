@@ -222,7 +222,9 @@ export default function sortableContainer(WrappedComponent, config = {withRef: f
 				const clonedFields = [...clonedNode.querySelectorAll('input, textarea, select')]; // Convert NodeList to Array
 
 				clonedFields.forEach((field, index) => {
-					return field.value = fields[index] && fields[index].value;
+					if (field.type !== 'file') {
+						field.value = fields[index] && fields[index].value;
+					}
 				});
 
 				this.helper = this.document.body.appendChild(clonedNode);
