@@ -5,13 +5,13 @@ import {SortableContainer, SortableElement, arrayMove} from './src/index';
 import range from 'lodash/range';
 import random from 'lodash/random';
 
-const SortableItem = SortableElement(({height, value}) => (
+const SortableItem = SortableElement(({height, value, isDragging}) => (
     <div style={{
         position: 'relative',
         width: '100%',
         display: 'block',
         padding: 20,
-        backgroundColor: '#FFF',
+        backgroundColor: isDragging ? 'orange' : '#FFF',
         borderBottom: '1px solid #EFEFEF',
         boxSizing: 'border-box',
         WebkitUserSelect: 'none',

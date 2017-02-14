@@ -79,10 +79,12 @@ export default function sortableElement (WrappedComponent, config = {withRef: fa
 
         render() {
             const ref = (config.withRef) ? 'wrappedInstance' : null;
+            const isDragging = this.context.manager.active && this.context.manager.active.index === this.props.index;
 
             return (
                 <WrappedComponent
                     ref={ref}
+                    isDragging={isDragging}
                     {...omit(this.props, 'collection', 'disabled', 'index')}
                 />
             );
