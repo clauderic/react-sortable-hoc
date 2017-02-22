@@ -1,4 +1,5 @@
 import { debounce, each } from 'lodash';
+import { closest } from '../utils';
 
 export default class SortableGroup {
     constructor(onMove, getRefs) {
@@ -93,10 +94,11 @@ export default class SortableGroup {
         let newIndex = this.clamp(index, 0, list.container.childNodes.length - 1);
         let target = list.container.childNodes[newIndex];
         let rect = target.getBoundingClientRect();
+        let handle = closest(target.firstChild, (el) => el.sortableHandle != null);
         
         // start dragging item
         list.handleStart({
-          target: target,
+          target: handle || target,
           clientX: rect.left - delta.x,
           clientY: rect.top - delta.y,
           preventDefault: function (){}

@@ -465,6 +465,19 @@ storiesOf('Grouping', module)
 		/>
 	);
 })
+.add('Hand Cursor', () => {
+	const className = classNames(style.list, style.stylizedList);
+	const itemClass = classNames(style.item, style.stylizedItem);
+	return (
+		<GroupWrapper
+			wrapperClass={style.vertGroups}
+			components={[
+				{component:SortableList, className:className, useDragHandle:true, shouldUseDragHandle:true, itemClass:itemClass, items:getItems(5, 59, 'Dog')},
+				{component:SortableList, className:className, useDragHandle:true, shouldUseDragHandle:true, itemClass:itemClass, items:getItems(5, 59, 'Cat')}
+			]}
+		/>
+	);
+})
 
 storiesOf('Customization', module)
 .add('Minimal styling', () => {
