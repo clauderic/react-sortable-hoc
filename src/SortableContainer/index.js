@@ -3,7 +3,7 @@ import ReactDOM from 'react-dom';
 import invariant from 'invariant';
 
 import Manager from '../Manager';
-import {closest, events, vendorPrefix, limit, getElementMargin, provideDisplayName, omit} from '../utils';
+import {closest, events, vendorPrefix, limit, getElementMargin, provideDisplayName, omit, getOffsetParent} from '../utils';
 
 // Export Higher Order Sortable Container Component
 export default function sortableContainer(WrappedComponent, config = {withRef: false}) {
@@ -338,7 +338,7 @@ export default function sortableContainer(WrappedComponent, config = {withRef: f
 					top: offset.top + node.offsetTop,
 					left: offset.left + node.offsetLeft
 				};
-				if (node.parentNode !== this.container) {
+				if (getOffsetParent(node, this.container) !== this.container) {
 					return this.getEdgeOffset(node.parentNode, nodeOffset);
 				} else {
 					return nodeOffset;

@@ -1,4 +1,4 @@
-export function arrayMove (arr, previousIndex, newIndex) {
+export function arrayMove(arr, previousIndex, newIndex) {
     const array = arr.slice(0);
     if (newIndex >= array.length) {
         let k = newIndex - array.length;
@@ -10,7 +10,7 @@ export function arrayMove (arr, previousIndex, newIndex) {
     return array;
 }
 
-export function omit (obj, ...keysToOmit) {
+export function omit(obj, ...keysToOmit) {
     return Object.keys(obj).reduce((acc, key) => {
         if (keysToOmit.indexOf(key) === -1) acc[key] = obj[key];
         return acc;
@@ -18,9 +18,9 @@ export function omit (obj, ...keysToOmit) {
 }
 
 export const events = {
-	start: ['touchstart', 'mousedown'],
-	move: ['touchmove', 'mousemove'],
-	end: ['touchend', 'touchcancel', 'mouseup']
+    start: ['touchstart', 'mousedown'],
+    move: ['touchmove', 'mousemove'],
+    end: ['touchend', 'touchcancel', 'mouseup']
 };
 
 export const vendorPrefix = (function () {
@@ -83,4 +83,31 @@ export function provideDisplayName(prefix, Component) {
     const componentName = Component.displayName || Component.name
 
     return componentName ? `${prefix}(${componentName})` : prefix;
+}
+
+/**
+ * Gets the first absolute or relative positioned parent node for given node if it's inside the container.
+ * If there is no positioned parent node between the node and the container the container gets returned
+ * 
+ * @export
+ * @param {HTMLElement} node
+ * @param {HTMLElement} container
+ * @returns {HTMLElement}
+ */
+export function getOffsetParent(node, container) {
+    if(node === container) {
+        return node
+    }
+    if (node && node.parentNode) {
+        if (node.parentNode.style &&
+            node.parentNode.style.position && (
+            node.parentNode.style.position === 'absolute' ||
+            node.parentNode.style.position === 'relative')) {
+            return node.parentNode;
+        }
+        else {
+            return getOffsetParent(node.parentNode);
+        }
+    }
+    return node;
 }
