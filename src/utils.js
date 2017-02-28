@@ -1,4 +1,4 @@
-export function arrayMove(arr, previousIndex, newIndex) {
+export function arrayMove (arr, previousIndex, newIndex) {
     const array = arr.slice(0);
     if (newIndex >= array.length) {
         let k = newIndex - array.length;
@@ -10,7 +10,7 @@ export function arrayMove(arr, previousIndex, newIndex) {
     return array;
 }
 
-export function omit(obj, ...keysToOmit) {
+export function omit (obj, ...keysToOmit) {
     return Object.keys(obj).reduce((acc, key) => {
         if (keysToOmit.indexOf(key) === -1) acc[key] = obj[key];
         return acc;
@@ -18,9 +18,9 @@ export function omit(obj, ...keysToOmit) {
 }
 
 export const events = {
-    start: ['touchstart', 'mousedown'],
-    move: ['touchmove', 'mousemove'],
-    end: ['touchend', 'touchcancel', 'mouseup']
+  start: ['touchstart', 'mousedown'],
+  move: ['touchmove', 'mousemove'],
+  end: ['touchend', 'touchcancel', 'mouseup']
 };
 
 export const vendorPrefix = (function () {
