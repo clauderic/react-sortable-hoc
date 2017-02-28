@@ -18,9 +18,9 @@ export function omit (obj, ...keysToOmit) {
 }
 
 export const events = {
-  start: ['touchstart', 'mousedown'],
-  move: ['touchmove', 'mousemove'],
-  end: ['touchend', 'touchcancel', 'mouseup']
+	start: ['touchstart', 'mousedown'],
+	move: ['touchmove', 'mousemove'],
+	end: ['touchend', 'touchcancel', 'mouseup']
 };
 
 export const vendorPrefix = (function () {
