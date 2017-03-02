@@ -86,15 +86,17 @@ export default function sortableContainer(WrappedComponent, config = {withRef: f
 
 		componentDidMount() {
 			const {contentWindow, getContainer, useWindowAsScrollContainer} = this.props;
+			const $container = (typeof getContainer === 'function') ? getContainer(this.getWrappedInstance()) : ReactDOM.findDOMNode(this);
+			Promise.resolve($container).then((container) => {
+				this.container = container;
+				this.document = this.container.ownerDocument || document;
+				this.scrollContainer = (useWindowAsScrollContainer) ? this.document.body : this.container;
+				this.contentWindow = (typeof contentWindow === 'function') ? contentWindow() : contentWindow;
 
-			this.container = (typeof getContainer === 'function') ? getContainer(this.getWrappedInstance()) : ReactDOM.findDOMNode(this);
-			this.document = this.container.ownerDocument || document;
-			this.scrollContainer = (useWindowAsScrollContainer) ? this.document.body : this.container;
-			this.contentWindow = (typeof contentWindow === 'function') ? contentWindow() : contentWindow;
-
-			for (let key in this.events) {
-				events[key].forEach(eventName => this.container.addEventListener(eventName, this.events[key], false));
-			}
+				for (let key in this.events) {
+					events[key].forEach(eventName => this.container.addEventListener(eventName, this.events[key], false));
+				}
+			});
 		}
 
 		componentWillUnmount() {
@@ -319,7 +321,7 @@ export default function sortableContainer(WrappedComponent, config = {withRef: f
 				sorting: false,
 				sortingIndex: null
 			});
-			
+
 			if (typeof onSortEnd === 'function') {
 				onSortEnd({
 					oldIndex: this.index,
