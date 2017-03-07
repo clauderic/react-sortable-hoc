@@ -20,24 +20,24 @@ export function moveGroupItems(items, {oldIndex, oldKey, newIndex, newKey}) {
 
 export function closestNodeIndex(x, y, nodes) {
     if(nodes.length > 0){
-        let si, sd, d, r, i;
+        let closestIndex, closestDistance, d, rect, i;
 
         // above last item in list
-        r = nodes[nodes.length - 1].getBoundingClientRect();
-        sd = r.bottom;
+        rect = nodes[nodes.length - 1].getBoundingClientRect();
+        closestDistance = rect.bottom;
 
-        if(y < sd){
-            sd = 999999999;
+        if(y < closestDistance){
+            closestDistance = 999999999;
             // closest node
             for (i= 0; i < nodes.length; i++){
-                r = center(nodes[i].getBoundingClientRect());
-                d = distance(x, y, r.x, r.y);
-                if (d < sd){
-                    sd = d;
-                    si = i;
+                rect = center(nodes[i].getBoundingClientRect());
+                d = distance(x, y, rect.x, rect.y);
+                if (d < closestDistance){
+                    closestDistance = d;
+                    closestIndex = i;
                 }
             }
-            return si;
+            return closestIndex;
         }
     }
     // default last node
@@ -68,12 +68,24 @@ export function overlap(a, b) {
         b.top <= a.bottom);
 }
 
-export function mouseMove(x, y) {
-    return new MouseEvent('mousemove', {
-        clientX: x,
-        clientY: y,
-        bubbles: true,
-        cancelable: true,
-        view: window
-    });
+export function touch(e) {
+    e = e.touches ? e.touches[0] : e;
+    return {
+        clientX: e.clientX,
+        clientY: e.clientY,
+        pageX: e.pageX,
+        pageY: e.pageY
+    };
+}
+
+export function translateRect(translateX, translateY, rect) {
+    let {width, height} = rect;
+    return {
+        left: translateX,
+        top: translateY,
+        right: width + translateX,
+        bottom: height + translateY,
+        width: width,
+        height: height
+    };
 }

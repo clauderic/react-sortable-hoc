@@ -1,6 +1,6 @@
 import {Component, PropTypes} from 'react';
 import debounce from 'lodash/debounce';
-import {closestNodeIndex, center, distanceRect, overlap, mouseMove} from './utils';
+import {closestNodeIndex, center, distanceRect, overlap, touch, translateRect} from './utils';
 import {closestChild, clamp} from '../utils';
 
 /*
@@ -33,7 +33,8 @@ export default class SortableGroup extends Component {
           y: 0
         },
         currentKey: null,
-        target: null
+        target: null,
+        rect: null
     };
 
     lists = {};
@@ -44,27 +45,30 @@ export default class SortableGroup extends Component {
 
     onSortStart = key => (item, e) => {
         const target = item.node.getBoundingClientRect();
-
+        const loc = touch(e);
+        
         this.dragInfo.target = target;
         this.dragInfo.currentKey = key;
         this.dragInfo.delta = {
-            x: target.left - e.clientX,
-            y: target.top - e.clientY
+            x: target.left - loc.clientX,
+            y: target.top - loc.clientY
         };
     }
 
     onSortMove = (e) => {
-        this.dragInfo.pageX = e.pageX;
-        this.dragInfo.pageY = e.pageY;
-        this.dragInfo.target = e.target.getBoundingClientRect();
+        const loc = touch(e);
+        
+        this.dragInfo.pageX = loc.pageX;
+        this.dragInfo.pageY = loc.pageY;
 
         // limit the amount of times checkList() can be called
         this.findTargetContainer();
     }
 
     onSortEnd = ({oldIndex, newIndex}) => {
-        let {target, currentKey} = this.dragInfo;
-        let t = center(target);
+        let {currentKey, delta, pageX, pageY, target} = this.dragInfo;
+        let targetRect = translateRect(pageX + delta.x, pageY + delta.y, target);
+        let t = center(targetRect);
         let closestKey = this.closestContainer(t.x, t.y);
 
         // Moved within current list
@@ -88,20 +92,20 @@ export default class SortableGroup extends Component {
     }
 
     findTargetContainer = debounce(() => {
-        const {target, currentKey, delta, pageX, pageY} = this.dragInfo;
-        let t = center(target);
+        const {currentKey, delta, pageX, pageY, target} = this.dragInfo;
+        let targetRect = translateRect(pageX + delta.x, pageY + delta.y, target);
+        let t = center(targetRect);
 
         const closestKey = this.closestContainer(t.x, t.y);
         const closest = this.lists[closestKey];
-
 
         // closest list is not the current list
         if (currentKey !== closestKey){
             // overlap closest
             let list = closest.container.getBoundingClientRect();
 
-            if (overlap(target, list)){
-                t = center(target);
+            if (overlap(targetRect, list)){
+                t = center(targetRect);
                 let newIndex = closestNodeIndex(t.x, t.y, closest.container.childNodes);
 
                 // stop dragging from the prev list (calls onSortEnd)
@@ -130,7 +134,14 @@ export default class SortableGroup extends Component {
         });
 
         // force update item position
-        list.helper.dispatchEvent(mouseMove(pageX, pageY));
+        list.handleSortMove({
+            target: list.helper,
+            clientX: pageX,
+            clientY: pageY,
+            pageX: pageX,
+            pageY: pageY,
+            preventDefault: function (){}
+        });
     }
 
     closestContainer(x, y) {
