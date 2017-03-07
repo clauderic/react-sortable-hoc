@@ -1,9 +1,9 @@
 import React, {Component, PropTypes} from 'react';
 import {findDOMNode} from 'react-dom';
 import invariant from 'invariant';
-
 import Manager from '../Manager';
 import {
+<<<<<<< HEAD
   closest,
   events,
   vendorPrefix,
@@ -11,6 +11,15 @@ import {
   getElementMargin,
   provideDisplayName,
   omit,
+=======
+  clamp,
+  closest,
+  events,
+  getElementMargin,
+  omit,
+  provideDisplayName,
+  vendorPrefix
+>>>>>>> Refactoring
 } from '../utils';
 
 // Export Higher Order Sortable Container Component
@@ -170,6 +179,7 @@ export default function sortableContainer(WrappedComponent, config = {withRef: f
 				 * prevent subsequent 'mousemove' events from being fired
 				 * (see https://github.com/clauderic/react-sortable-hoc/issues/118)
 				 */
+<<<<<<< HEAD
         if (e.target.tagName.toLowerCase() === 'a') {
           e.preventDefault();
         }
@@ -591,6 +601,380 @@ export default function sortableContainer(WrappedComponent, config = {withRef: f
         if (index === this.index) {
           if (hideSortableGhost) {
             /*
+=======
+				if (e.target.tagName.toLowerCase() === 'a') {
+					e.preventDefault();
+				}
+
+				if (!distance) {
+					if (this.props.pressDelay === 0) {
+						this.handlePress(e);
+					} else {
+						this.pressTimer = setTimeout(() => this.handlePress(e), this.props.pressDelay);
+					}
+				}
+			}
+		};
+
+		nodeIsChild = node => {
+			return node.sortableInfo.manager == this.manager;
+		};
+
+		handleMove = (e) => {
+			const {distance} = this.props;
+
+			if (!this.state.sorting && this._touched) {
+				this._delta = {
+					x: this._pos.x - e.clientX,
+					y: this._pos.y - e.clientY
+				};
+				const delta = Math.abs(this._delta.x) + Math.abs(this._delta.y);
+
+				if (!distance) {
+					clearTimeout(this.cancelTimer);
+					this.cancelTimer = setTimeout(this.cancel, 0);
+				} else if (delta >= distance) {
+					this.handlePress(e);
+				}
+			}
+		};
+
+		handleEnd = () => {
+			const {distance} = this.props;
+
+			this._touched = false;
+
+			if (!distance) { this.cancel(); }
+		};
+
+		cancel = () => {
+			if (!this.state.sorting) {
+				clearTimeout(this.pressTimer);
+				this.manager.active = null;
+			}
+		};
+
+		handlePress = (e) => {
+			const active = this.manager.getActive();
+
+			if (active) {
+				const {axis, getHelperDimensions, helperClass, hideSortableGhost, onSortStart, useWindowAsScrollContainer} = this.props;
+				let {node, collection} = active;
+				const {index} = node.sortableInfo;
+				const margin = getElementMargin(node);
+
+				const containerBoundingRect = this.container.getBoundingClientRect();
+				const dimensions = getHelperDimensions({index, node, collection});
+
+				this.node = node;
+				this.margin = margin;
+				this.width = dimensions.width;
+				this.height = dimensions.height;
+				this.marginOffset = {
+					x: this.margin.left + this.margin.right,
+					y: Math.max(this.margin.top, this.margin.bottom)
+				};
+				this.boundingClientRect = node.getBoundingClientRect();
+				this.containerBoundingRect = containerBoundingRect;
+				this.index = index;
+				this.newIndex = index;
+
+				this.axis = {
+					x: axis.indexOf('x') >= 0,
+					y: axis.indexOf('y') >= 0
+				};
+				this.offsetEdge = this.getEdgeOffset(node);
+				this.initialOffset = this.getOffset(e);
+				this.initialScroll = {
+					top: this.scrollContainer.scrollTop,
+					left: this.scrollContainer.scrollLeft
+				};
+
+				const fields = node.querySelectorAll('input, textarea, select');
+				const clonedNode = node.cloneNode(true);
+				const clonedFields = [...clonedNode.querySelectorAll('input, textarea, select')]; // Convert NodeList to Array
+
+				clonedFields.forEach((field, index) => {
+					return field.value = fields[index] && fields[index].value;
+				});
+
+				this.helper = this.document.body.appendChild(clonedNode);
+
+				this.helper.style.position = 'fixed';
+				this.helper.style.top = `${this.boundingClientRect.top - margin.top}px`;
+				this.helper.style.left = `${this.boundingClientRect.left - margin.left}px`;
+				this.helper.style.width = `${this.width}px`;
+				this.helper.style.height = `${this.height}px`;
+				this.helper.style.boxSizing = 'border-box';
+
+				if (hideSortableGhost) {
+					this.sortableGhost = node;
+					node.style.visibility = 'hidden';
+				}
+
+				this.minTranslate = {};
+				this.maxTranslate = {};
+				if (this.axis.x) {
+					this.minTranslate.x = ((useWindowAsScrollContainer) ? 0 : containerBoundingRect.left) - this.boundingClientRect.left - (this.width / 2);
+					this.maxTranslate.x = ((useWindowAsScrollContainer) ? this.contentWindow.innerWidth : containerBoundingRect.left + containerBoundingRect.width) - this.boundingClientRect.left - (this.width / 2);
+				}
+				if (this.axis.y) {
+					this.minTranslate.y = ((useWindowAsScrollContainer) ? 0 : containerBoundingRect.top) - this.boundingClientRect.top - (this.height / 2);
+					this.maxTranslate.y = ((useWindowAsScrollContainer) ? this.contentWindow.innerHeight : containerBoundingRect.top + containerBoundingRect.height) - this.boundingClientRect.top - (this.height / 2);
+				}
+
+				if (helperClass) {
+					this.helper.classList.add(...(helperClass.split(' ')));
+				}
+
+				this.listenerNode = (e.touches) ? node : this.contentWindow;
+				events.move.forEach(eventName => this.listenerNode.addEventListener(eventName, this.handleSortMove, false));
+				events.end.forEach(eventName => this.listenerNode.addEventListener(eventName, this.handleSortEnd, false));
+
+				this.setState({
+					sorting: true,
+					sortingIndex: index
+				});
+
+				if (onSortStart) onSortStart({node, index, collection}, e);
+			}
+		}
+
+		handleSortMove = (e) => {
+			const {onSortMove} = this.props;
+			e.preventDefault(); // Prevent scrolling on mobile
+
+			this.updatePosition(e);
+			this.animateNodes();
+			this.autoscroll();
+
+			if (onSortMove) onSortMove(e);
+		}
+
+		handleSortEnd = (e) => {
+			const {hideSortableGhost, onSortEnd} = this.props;
+			const {collection} = this.manager.active;
+
+			// Remove the event listeners if the node is still in the DOM
+			if (this.listenerNode) {
+				events.move.forEach(eventName => this.listenerNode.removeEventListener(eventName, this.handleSortMove));
+				events.end.forEach(eventName => this.listenerNode.removeEventListener(eventName, this.handleSortEnd));
+			}
+
+			// Remove the helper from the DOM
+			this.helper.parentNode.removeChild(this.helper);
+
+			if (hideSortableGhost && this.sortableGhost) {
+				this.sortableGhost.style.visibility = '';
+			}
+
+			const nodes = this.manager.refs[collection];
+			for (let i = 0, len = nodes.length; i < len; i++) {
+				let node = nodes[i];
+				let el = node.node;
+
+				// Clear the cached offsetTop / offsetLeft value
+				node.edgeOffset = null;
+
+				// Remove the transforms / transitions
+				el.style[`${vendorPrefix}Transform`] = '';
+				el.style[`${vendorPrefix}TransitionDuration`] = '';
+			}
+
+			// Stop autoscroll
+			clearInterval(this.autoscrollInterval);
+			this.autoscrollInterval = null;
+
+			// Update state
+			this.manager.active = null;
+
+			this.setState({
+				sorting: false,
+				sortingIndex: null
+			});
+
+			if (typeof onSortEnd === 'function') {
+				onSortEnd({
+					oldIndex: this.index,
+					newIndex: this.newIndex,
+					collection
+				}, e);
+			}
+
+			this._touched = false;
+		}
+
+		getEdgeOffset(node, offset = { top: 0, left: 0 }) {
+			// Get the actual offsetTop / offsetLeft value, no matter how deep the node is nested
+			if (node) {
+				const nodeOffset = {
+					top: offset.top + node.offsetTop,
+					left: offset.left + node.offsetLeft
+				};
+				if (node.parentNode !== this.container) {
+					return this.getEdgeOffset(node.parentNode, nodeOffset);
+				} else {
+					return nodeOffset;
+				}
+			}
+		}
+
+		getOffset(e) {
+			return {
+				x: (e.touches) ? e.touches[0].clientX : e.clientX,
+				y: (e.touches) ? e.touches[0].clientY : e.clientY
+			};
+		}
+
+		getLockPixelOffsets() {
+			let {lockOffset} = this.props;
+
+			if (!Array.isArray(lockOffset)) {
+				lockOffset = [lockOffset, lockOffset];
+			}
+
+			invariant(
+				lockOffset.length === 2,
+				'lockOffset prop of SortableContainer should be a single ' +
+				'value or an array of exactly two values. Given %s',
+				lockOffset
+			);
+
+			const [minLockOffset, maxLockOffset] = lockOffset;
+
+			return [
+				this.getLockPixelOffset(minLockOffset),
+				this.getLockPixelOffset(maxLockOffset)
+			];
+		}
+
+		getLockPixelOffset(lockOffset) {
+			let offsetX = lockOffset;
+			let offsetY = lockOffset;
+			let unit = 'px';
+
+			if (typeof lockOffset === 'string') {
+				const match = /^[+-]?\d*(?:\.\d*)?(px|%)$/.exec(lockOffset);
+
+				invariant(
+					match !== null,
+					'lockOffset value should be a number or a string of a ' +
+					'number followed by "px" or "%". Given %s',
+					lockOffset
+				);
+
+				offsetX = offsetY = parseFloat(lockOffset);
+				unit = match[1];
+			}
+
+			invariant(
+				isFinite(offsetX) && isFinite(offsetY),
+				'lockOffset value should be a finite. Given %s',
+				lockOffset
+			);
+
+			if (unit === '%') {
+				offsetX = offsetX * this.width / 100;
+				offsetY = offsetY * this.height / 100;
+			}
+
+			return {
+				x: offsetX,
+				y: offsetY
+			};
+		}
+
+		updatePosition(e) {
+			const {lockAxis, lockToContainerEdges} = this.props;
+			const offset = this.getOffset(e);
+			let translate = {
+				x: offset.x - this.initialOffset.x,
+				y: offset.y - this.initialOffset.y
+			};
+			this.translate = translate;
+
+			if (lockToContainerEdges) {
+				const [minLockOffset, maxLockOffset] = this.getLockPixelOffsets();
+				const minOffset = {
+					x: (this.width / 2) - minLockOffset.x,
+					y: (this.height / 2) - minLockOffset.y
+				};
+				const maxOffset = {
+					x: (this.width / 2) - maxLockOffset.x,
+					y: (this.height / 2) - maxLockOffset.y
+				};
+
+				translate.x = clamp(
+          translate.x,
+					this.minTranslate.x + minOffset.x,
+					this.maxTranslate.x - maxOffset.x,
+				);
+				translate.y = clamp(
+          translate.y,
+					this.minTranslate.y + minOffset.y,
+					this.maxTranslate.y - maxOffset.y,
+				);
+			}
+
+			switch (lockAxis) {
+				case 'x':
+					translate.y = 0;
+					break;
+				case 'y':
+					translate.x = 0;
+					break;
+			}
+
+			this.helper.style[`${vendorPrefix}Transform`] = `translate3d(${translate.x}px,${translate.y}px, 0)`;
+		}
+
+		animateNodes() {
+			const {transitionDuration, hideSortableGhost} = this.props;
+			let nodes = this.manager.getOrderedRefs();
+			const deltaScroll = {
+				left: this.scrollContainer.scrollLeft - this.initialScroll.left,
+				top: this.scrollContainer.scrollTop - this.initialScroll.top
+			};
+			const sortingOffset = {
+				left: this.offsetEdge.left + this.translate.x + deltaScroll.left,
+				top: this.offsetEdge.top + this.translate.y + deltaScroll.top
+			};
+			this.newIndex = null;
+
+			for (let i = 0, len = nodes.length; i < len; i++) {
+				let {node, edgeOffset} = nodes[i];
+				const index = node.sortableInfo.index;
+				const width = node.offsetWidth;
+				const height = node.offsetHeight;
+				const offset = {
+					width: (this.width > width) ? (width / 2) : (this.width / 2),
+					height: (this.height > height) ? (height / 2) : (this.height / 2)
+				};
+				let translate = {
+					x: 0,
+					y: 0
+				};
+
+				// If we haven't cached the node's offsetTop / offsetLeft value
+				if (!edgeOffset) {
+					nodes[i].edgeOffset = edgeOffset = this.getEdgeOffset(node);
+				}
+
+				// Get a reference to the next and previous node
+				const nextNode = i < nodes.length - 1 && nodes[i + 1];
+				const prevNode = i > 0 && nodes[i - 1];
+
+				// Also cache the next node's edge offset if needed.
+				// We need this for calculating the animation in a grid setup
+				if (nextNode && !nextNode.edgeOffset) {
+					nextNode.edgeOffset = this.getEdgeOffset(nextNode.node)
+				}
+
+				// If the node is the one we're currently animating, skip it
+				if (index === this.index) {
+					if (hideSortableGhost) {
+						/*
+>>>>>>> Refactoring
 						 * With windowing libraries such as `react-virtualized`, the sortableGhost
 						 * node may change while scrolling down and then back up (or vice-versa),
 						 * so we need to update the reference to the new node just to be safe.

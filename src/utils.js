@@ -57,6 +57,7 @@ export function closestChild(el, fn) {
     return closestChild(childList, fn);
 }
 
+<<<<<<< HEAD
 export function limit(min, max, value) {
   if (value < min) {
     return min;
@@ -65,6 +66,16 @@ export function limit(min, max, value) {
     return max;
   }
   return value;
+=======
+export function clamp(value, min, max) {
+    if (value < min) {
+        return min;
+    }
+    if (value > max) {
+        return max;
+    }
+    return value;
+>>>>>>> Refactoring
 }
 
 function getCSSPixelValue(stringValue) {
