@@ -1,9 +1,16 @@
 import React, {Component, PropTypes} from 'react';
 import ReactDOM from 'react-dom';
 import invariant from 'invariant';
-
 import Manager from '../Manager';
-import {closest, events, vendorPrefix, limit, getElementMargin, provideDisplayName, omit} from '../utils';
+import {
+  clamp,
+  closest,
+  events,
+  getElementMargin,
+  omit,
+  provideDisplayName,
+  vendorPrefix
+} from '../utils';
 
 // Export Higher Order Sortable Container Component
 export default function sortableContainer(WrappedComponent, config = {withRef: false}) {
@@ -319,7 +326,7 @@ export default function sortableContainer(WrappedComponent, config = {withRef: f
 				sorting: false,
 				sortingIndex: null
 			});
-			
+
 			if (typeof onSortEnd === 'function') {
 				onSortEnd({
 					oldIndex: this.index,
@@ -431,15 +438,15 @@ export default function sortableContainer(WrappedComponent, config = {withRef: f
 					y: (this.height / 2) - maxLockOffset.y
 				};
 
-				translate.x = limit(
+				translate.x = clamp(
+          translate.x,
 					this.minTranslate.x + minOffset.x,
 					this.maxTranslate.x - maxOffset.x,
-					translate.x
 				);
-				translate.y = limit(
+				translate.y = clamp(
+          translate.y,
 					this.minTranslate.y + minOffset.y,
 					this.maxTranslate.y - maxOffset.y,
-					translate.y
 				);
 			}
 

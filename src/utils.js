@@ -61,7 +61,7 @@ export function closestChild(el, fn) {
     return closestChild(childList, fn);
 }
 
-export function limit(min, max, value) {
+export function clamp(value, min, max) {
     if (value < min) {
         return min;
     }

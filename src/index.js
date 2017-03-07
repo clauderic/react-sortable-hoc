@@ -8,3 +8,4 @@ export sortableElement from './SortableElement';
 export sortableHandle from './SortableHandle';
 
 export {arrayMove} from './utils';
+export {moveGroupItems} from './SortableGroup/utils';

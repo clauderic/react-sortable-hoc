@@ -2,13 +2,12 @@ import React, {Component, PropTypes} from 'react';
 import ReactDOM from 'react-dom';
 import {storiesOf} from '@kadira/storybook';
 import style from './Storybook.scss';
-import {SortableContainer, SortableElement, SortableGroup, SortableHandle, arrayMove} from '../index';
+import {SortableContainer, SortableElement, SortableGroup, SortableHandle, arrayMove, moveGroupItems} from '../index';
 import {defaultFlexTableRowRenderer, FlexColumn, FlexTable, VirtualScroll} from 'react-virtualized';
 import 'react-virtualized/styles.css';
 import Infinite from 'react-infinite';
 import range from 'lodash/range';
 import random from 'lodash/random';
-import findIndex from 'lodash/findIndex';
 import classNames from 'classnames';
 
 function getItems(count, height, label) {
@@ -80,7 +79,7 @@ class ListWrapper extends Component {
 			onSortStart(this.refs.component);
 		}
 	};
-    onSortEnd = ({oldIndex, newIndex}) => {
+  onSortEnd = ({oldIndex, newIndex}) => {
 		let {onSortEnd} = this.props;
         let {items} = this.state;
 
@@ -89,7 +88,7 @@ class ListWrapper extends Component {
 		if (onSortEnd) {
 			onSortEnd(this.refs.component);
 		}
-    };
+  };
 	render() {
 		const Component = this.props.component;
 		const {items, isSorting} = this.state;
@@ -106,76 +105,51 @@ class ListWrapper extends Component {
 	}
 }
 
+
 class GroupWrapper extends Component {
-	constructor({components}) {
-		super();
-		this.state = {
-			components: components.map((c, i) => ({...c, key: `list-${i}`}))
-		};
-		this.group = new SortableGroup(this.handleMove, this.getRefs);
-	}
+  state = {
+    items: this.props.items
+  };
 	static propTypes = {
+    items: React.PropTypes.array,
 		components: PropTypes.arrayOf(React.PropTypes.shape({
 			component: PropTypes.func,
 			className: PropTypes.string,
-			wrapperClass: PropTypes.string,
-			itemClass: PropTypes.string,
-			items: React.PropTypes.array
-		}))
+			itemClass: PropTypes.string
+		})),
+    wrapperClass: PropTypes.string
 	}
-	
-	handleMove = (oldIndex, oldList, newIndex, newList) => {
-    	let components = this.state.components.slice(0);
-    	let index = findIndex(components, { 'key': oldList});
-    	let switchItem = components[index].items[oldIndex];
-		
-		// item found
-		if(switchItem){
-			
-			// remove from old list
-			components[index].items.splice(oldIndex, 1);
-			
-			// change list if required
-			if(newList != oldList){
-				index = findIndex(components, { 'key': newList});
-			}
-			
-			// add to new list
-			components[index].items.splice(newIndex, 0, switchItem);
-		}
-    	
-    	this.setState({
-	        components
-	    });
+	handleMove = (movedItems) => {
+    const {items} = this.state;
+
+    this.setState({
+      items: moveGroupItems(items, movedItems)
+    });
 	}
-	
-	getRefs = () => {
-		return this.refs;
-	}
-	
-    renderComponent = (c) => {
-    	const Component = c.component;
-    	const props = {
-			isSorting: false,
-			onSortStart: (item, e) => this.group.onSortStart(item, e, c.key),
-			onSortMove: this.group.onSortMove,
-			onSortEnd: this.group.onSortEnd,
-			ref: c.key,
-			...c
-		};
-		return <Component {...props} />;
-    }
-    
 	render(){
-		const {wrapperClass} = this.props;
-		const {components} = this.state;
+		const {components, wrapperClass} = this.props;
+		const {items} = this.state;
+
 		return (
-		  <div className={wrapperClass}>
-		    {components.map(c => this.renderComponent(c))}
-		  </div>
+      <SortableGroup
+        items={items}
+        onMove={this.handleMove}
+      >
+        {connectGroupTarget =>
+          <div className={wrapperClass}>
+            {components.map(({Component, ...props}, index) =>
+              <Component
+                key={index}
+                {...props}
+                {...connectGroupTarget(index)}
+              />
+            )}
+          </div>
+        }
+      </SortableGroup>
 		);
 	}
-} 
+}
 
 // Function components cannot have refs, so we'll be using a class for React Virtualized
 class VirtualList extends Component {
@@ -323,7 +297,7 @@ const ShrinkingSortableList = SortableContainer(({className, isSorting, items, i
 	);
 });
 
-const NestedSortableList = SortableContainer(({className, items, isSorting, sortableHandlers}) => {
+const NestedSortableList = SortableContainer(({className, items, sortableHandlers}) => {
 	return (
 		<div className={className} {...sortableHandlers}>
 			{items.map((value, index) =>
@@ -414,13 +388,19 @@ storiesOf('Grouping', module)
 .add('Vertical', () => {
 	const className = classNames(style.list, style.stylizedList);
 	const itemClass = classNames(style.item, style.stylizedItem);
+
 	return (
 		<GroupWrapper
+      items={[
+        getItems(5, 59, 'Dog'),
+        getItems(5, 59, 'Cat'),
+        getItems(5, 59, 'Bird')
+      ]}
 			wrapperClass={style.vertGroups}
 			components={[
-				{component:SortableList, className:className, itemClass:itemClass, items:getItems(5, 59, 'Dog')},
-				{component:SortableList, className:className, itemClass:itemClass, items:getItems(5, 59, 'Cat')},
-				{component:SortableList, className:className, itemClass:itemClass, items:getItems(5, 59, 'Bird')}
+				{Component: SortableList, className, itemClass},
+				{Component: SortableList, className, itemClass},
+				{Component: SortableList, className, itemClass}
 			]}
 		/>
 	);
@@ -428,12 +408,18 @@ storiesOf('Grouping', module)
 .add('Horizontal', () => {
 	const className = classNames(style.list, style.stylizedList, style.horizontalList);
 	const itemClass = classNames(style.item, style.stylizedItem, style.horizontalItem);
+
 	return (
 		<GroupWrapper
+      items={[
+        getItems(5, 300, 'Dog'),
+        getItems(5, 300, 'Cat'),
+        getItems(5, 300, 'Cat')
+      ]}
 			wrapperClass={style.root}
 			components={[
-				{component:SortableList, className:className, itemClass:itemClass, items:getItems(5, 300, 'Dog'), axis:'x'},
-				{component:SortableList, className:className, itemClass:itemClass, items:getItems(5, 300, 'Cat'), axis:'x'}
+				{Component: SortableList, className, itemClass, axis:'x'},
+				{Component: SortableList, className, itemClass, axis:'x'}
 			]}
 		/>
 	);
@@ -441,12 +427,17 @@ storiesOf('Grouping', module)
 .add('Grid', () => {
 	const className = classNames(style.list, style.stylizedList, style.grid);
 	const itemClass = classNames(style.stylizedItem, style.gridItem);
+
 	return (
 		<GroupWrapper
+      items={[
+        getItems(5, 110, 'Dog'),
+        getItems(5, 110, 'Cat')
+      ]}
 			wrapperClass={style.root}
 			components={[
-				{component:SortableList, className:className, itemClass:itemClass, items:getItems(5, 110, 'Dog'), axis:'xy'},
-				{component:SortableList, className:className, itemClass:itemClass, items:getItems(5, 110, 'Cat'), axis:'xy'}
+				{Component: SortableList, className, itemClass, axis:'xy'},
+				{Component: SortableList, className, itemClass, axis:'xy'}
 			]}
 		/>
 	);
@@ -455,12 +446,17 @@ storiesOf('Grouping', module)
 	const classNameA = classNames(style.list, style.stylizedList, style.sizedA);
 	const classNameB = classNames(style.list, style.stylizedList, style.sizedB);
 	const itemClass = classNames(style.item, style.stylizedItem);
+
 	return (
 		<GroupWrapper
+      items={[
+        getItems(3, 50, 'Dog'),
+        getItems(3, 50, 'Cat')
+      ]}
 			wrapperClass={style.root}
 			components={[
-				{component:SortableList, className:classNameA, itemClass:itemClass, items:getItems(3, 50, 'Dog')},
-				{component:SortableList, className:classNameB, itemClass:itemClass, items:getItems(3, 50, 'Cat')}
+				{Component: SortableList, className: classNameA, itemClass},
+				{Component: SortableList, className: classNameB, itemClass}
 			]}
 		/>
 	);
@@ -470,10 +466,14 @@ storiesOf('Grouping', module)
 	const itemClass = classNames(style.item, style.stylizedItem);
 	return (
 		<GroupWrapper
+      items={[
+        getItems(5, 59, 'Dog'),
+        getItems(5, 59, 'Cat')
+      ]}
 			wrapperClass={style.vertGroups}
 			components={[
-				{component:SortableList, className:className, useDragHandle:true, shouldUseDragHandle:true, itemClass:itemClass, items:getItems(5, 59, 'Dog')},
-				{component:SortableList, className:className, useDragHandle:true, shouldUseDragHandle:true, itemClass:itemClass, items:getItems(5, 59, 'Cat')}
+				{Component: SortableList, className, useDragHandle: true, shouldUseDragHandle: true, itemClass},
+				{Component: SortableList, className, useDragHandle: true, shouldUseDragHandle: true, itemClass}
 			]}
 		/>
 	);
