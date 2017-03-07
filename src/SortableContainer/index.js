@@ -262,8 +262,8 @@ export default function sortableContainer(WrappedComponent, config = {withRef: f
 				}
 
 				this.listenerNode = (e.touches) ? node : this.contentWindow;
-				events.move.forEach(eventName => this.listenerNode.addEventListener(eventName, this.handleSortMove, false));
-				events.end.forEach(eventName => this.listenerNode.addEventListener(eventName, this.handleSortEnd, false));
+				events.move.forEach(eventName => this.listenerNode.addEventListener(eventName, this.handleSortMove, {passive: false}));
+				events.end.forEach(eventName => this.listenerNode.addEventListener(eventName, this.handleSortEnd, {passive: false}));
 
 				this.setState({
 					sorting: true,
