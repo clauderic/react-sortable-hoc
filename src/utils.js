@@ -23,6 +23,7 @@ export const events = {
   end: ['touchend', 'touchcancel', 'mouseup'],
 };
 
+<<<<<<< HEAD
 export const vendorPrefix = (function() {
   if (typeof window === 'undefined' || typeof document === 'undefined') return ''; // server environment
   // fix for:
@@ -32,6 +33,25 @@ export const vendorPrefix = (function() {
   const styles = window.getComputedStyle(document.documentElement, '') || ['-moz-hidden-iframe'];
   const pre = (Array.prototype.slice.call(styles).join('').match(/-(moz|webkit|ms)-/) || (styles.OLink === '' && ['', 'o']))[1];
 
+=======
+
+export const vendorPrefix = (function() {
+  if (typeof window === 'undefined' || typeof document === 'undefined') {
+    return ''; // server environment
+  }
+
+  // fix for:
+  //    https://bugzilla.mozilla.org/show_bug.cgi?id=548397
+  //    window.getComputedStyle() returns null inside an iframe with display: none
+  // in this case return an array with a fake mozilla style in it.
+  const styles = window.getComputedStyle(document.documentElement, '') || ['-moz-hidden-iframe'];
+  const pre = (Array.prototype.slice
+    .call(styles)
+    .join('')
+    .match(/-(moz|webkit|ms)-/) ||
+    styles.OLink === '' && ['', 'o'])[1];
+
+>>>>>>> Enforce consistent linting
   switch (pre) {
     case 'ms':
       return 'ms';
@@ -48,13 +68,13 @@ export function closest(el, fn) {
 }
 
 export function closestChild(el, fn) {
-    el = [].concat(el);
-    // search siblings
-    let found = el.find(fn) || false;
-    if(el.length === 0 || found) return found;
-    // search children of siblings
-    let childList = [].concat.apply([], el.map(e => Array.from(e.childNodes)));
-    return closestChild(childList, fn);
+  el = [].concat(el);
+  // search siblings
+  const found = el.find(fn) || false;
+  if (el.length === 0 || found) return found;
+  // search children of siblings
+  const childList = [].concat.apply([], el.map(e => Array.from(e.childNodes)));
+  return closestChild(childList, fn);
 }
 
 <<<<<<< HEAD
@@ -68,6 +88,7 @@ export function limit(min, max, value) {
   return value;
 =======
 export function clamp(value, min, max) {
+<<<<<<< HEAD
     if (value < min) {
         return min;
     }
@@ -76,6 +97,15 @@ export function clamp(value, min, max) {
     }
     return value;
 >>>>>>> Refactoring
+=======
+  if (value < min) {
+    return min;
+  }
+  if (value > max) {
+    return max;
+  }
+  return value;
+>>>>>>> Enforce consistent linting
 }
 
 function getCSSPixelValue(stringValue) {

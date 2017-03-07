@@ -2,13 +2,19 @@ import React, {Component, PropTypes} from 'react';
 import ReactDOM from 'react-dom';
 import {storiesOf} from '@kadira/storybook';
 import style from './Storybook.scss';
-import {SortableContainer, SortableElement, SortableHandle, arrayMove} from '../index';
-import VirtualList from 'react-tiny-virtual-list';
 import {
-  defaultTableRowRenderer,
-  Column,
-  Table,
-  List,
+  SortableContainer,
+  SortableElement,
+  SortableGroup,
+  SortableHandle,
+  arrayMove,
+  moveGroupItems,
+} from '../index';
+import {
+  defaultFlexTableRowRenderer,
+  FlexColumn,
+  FlexTable,
+  VirtualScroll,
 } from 'react-virtualized';
 import 'react-virtualized/styles.css';
 import Infinite from 'react-infinite';
@@ -17,13 +23,13 @@ import random from 'lodash/random';
 import classNames from 'classnames';
 
 function getItems(count, height, label) {
-	var heights = [65, 110, 140, 65, 90, 65];
-	return range(count).map((value) => {
-		return {
-			value: label ? label + value : value,
-			height: height || heights[random(0, heights.length - 1)]
-		};
-	});
+  var heights = [65, 110, 140, 65, 90, 65];
+  return range(count).map(value => {
+    return {
+      value: label ? label + value : value,
+      height: height || heights[random(0, heights.length - 1)],
+    };
+  });
 }
 
 const Handle = SortableHandle(() => <div className={style.handle} />);
@@ -180,47 +186,46 @@ const SortableVirtualList = SortableContainer(({
 });
 class GroupWrapper extends Component {
   state = {
-    items: this.props.items
+    items: this.props.items,
   };
-	static propTypes = {
+  static propTypes = {
     items: React.PropTypes.array,
-		components: PropTypes.arrayOf(React.PropTypes.shape({
-			component: PropTypes.func,
-			className: PropTypes.string,
-			itemClass: PropTypes.string
-		})),
-    wrapperClass: PropTypes.string
-	}
-	handleMove = (movedItems) => {
+    components: PropTypes.arrayOf(
+      React.PropTypes.shape({
+        component: PropTypes.func,
+        className: PropTypes.string,
+        itemClass: PropTypes.string,
+      })
+    ),
+    wrapperClass: PropTypes.string,
+  };
+  handleMove = movedItems => {
     const {items} = this.state;
 
     this.setState({
-      items: moveGroupItems(items, movedItems)
+      items: moveGroupItems(items, movedItems),
     });
-	}
-	render(){
-		const {components, wrapperClass} = this.props;
-		const {items} = this.state;
+  };
+  render() {
+    const {components, wrapperClass} = this.props;
+    const {items} = this.state;
 
-		return (
-      <SortableGroup
-        items={items}
-        onMove={this.handleMove}
-      >
-        {connectGroupTarget =>
+    return (
+      <SortableGroup items={items} onMove={this.handleMove}>
+        {connectGroupTarget => (
           <div className={wrapperClass}>
-            {components.map(({Component, ...props}, index) =>
+            {components.map(({Component, ...props}, index) => (
               <Component
                 key={index}
                 {...props}
                 {...connectGroupTarget(index)}
               />
-            )}
+            ))}
           </div>
-        }
+        )}
       </SortableGroup>
-		);
-	}
+    );
+  }
 }
 
 // Function components cannot have refs, so we'll be using a class for React Virtualized
@@ -314,17 +319,20 @@ const SortableInfiniteList = SortableContainer(({
   className,
   items,
   itemClass,
+
 }) => {
   return (
     <Infinite
       className={className}
       containerHeight={600}
       elementHeight={items.map(({height}) => height)}
+
     >
       {items.map(({value, height}, index) => (
         <Item
           key={`item-${index}`}
           className={itemClass}
+
           index={index}
           value={value}
           height={height}
@@ -512,99 +520,110 @@ storiesOf('Advanced', module)
   });
 
 storiesOf('Grouping', module)
-.add('Vertical', () => {
-	const className = classNames(style.list, style.stylizedList);
-	const itemClass = classNames(style.item, style.stylizedItem);
+  .add('Vertical', () => {
+    const className = classNames(style.list, style.stylizedList);
+    const itemClass = classNames(style.item, style.stylizedItem);
 
-	return (
-		<GroupWrapper
-      items={[
-        getItems(5, 59, 'Dog'),
-        getItems(5, 59, 'Cat'),
-        getItems(5, 59, 'Bird')
-      ]}
-			wrapperClass={style.vertGroups}
-			components={[
-				{Component: SortableList, className, itemClass},
-				{Component: SortableList, className, itemClass},
-				{Component: SortableList, className, itemClass}
-			]}
-		/>
-	);
-})
-.add('Horizontal', () => {
-	const className = classNames(style.list, style.stylizedList, style.horizontalList);
-	const itemClass = classNames(style.item, style.stylizedItem, style.horizontalItem);
+    return (
+      <GroupWrapper
+        items={[
+          getItems(5, 59, 'Dog'),
+          getItems(5, 59, 'Cat'),
+          getItems(5, 59, 'Bird'),
+        ]}
+        wrapperClass={style.vertGroups}
+        components={[
+          {Component: SortableList, className, itemClass},
+          {Component: SortableList, className, itemClass},
+          {Component: SortableList, className, itemClass},
+        ]}
+      />
+    );
+  })
+  .add('Horizontal', () => {
+    const className = classNames(
+      style.list,
+      style.stylizedList,
+      style.horizontalList
+    );
+    const itemClass = classNames(
+      style.item,
+      style.stylizedItem,
+      style.horizontalItem
+    );
 
-	return (
-		<GroupWrapper
-      items={[
-        getItems(5, 300, 'Dog'),
-        getItems(5, 300, 'Cat'),
-        getItems(5, 300, 'Cat')
-      ]}
-			wrapperClass={style.root}
-			components={[
-				{Component: SortableList, className, itemClass, axis:'x'},
-				{Component: SortableList, className, itemClass, axis:'x'}
-			]}
-		/>
-	);
-})
-.add('Grid', () => {
-	const className = classNames(style.list, style.stylizedList, style.grid);
-	const itemClass = classNames(style.stylizedItem, style.gridItem);
+    return (
+      <GroupWrapper
+        items={[
+          getItems(5, 300, 'Dog'),
+          getItems(5, 300, 'Cat'),
+          getItems(5, 300, 'Cat'),
+        ]}
+        wrapperClass={style.root}
+        components={[
+          {Component: SortableList, className, itemClass, axis: 'x'},
+          {Component: SortableList, className, itemClass, axis: 'x'},
+        ]}
+      />
+    );
+  })
+  .add('Grid', () => {
+    const className = classNames(style.list, style.stylizedList, style.grid);
+    const itemClass = classNames(style.stylizedItem, style.gridItem);
 
-	return (
-		<GroupWrapper
-      items={[
-        getItems(5, 110, 'Dog'),
-        getItems(5, 110, 'Cat')
-      ]}
-			wrapperClass={style.root}
-			components={[
-				{Component: SortableList, className, itemClass, axis:'xy'},
-				{Component: SortableList, className, itemClass, axis:'xy'}
-			]}
-		/>
-	);
-})
-.add('Different Height Containers', () => {
-	const classNameA = classNames(style.list, style.stylizedList, style.sizedA);
-	const classNameB = classNames(style.list, style.stylizedList, style.sizedB);
-	const itemClass = classNames(style.item, style.stylizedItem);
+    return (
+      <GroupWrapper
+        items={[getItems(5, 110, 'Dog'), getItems(5, 110, 'Cat')]}
+        wrapperClass={style.root}
+        components={[
+          {Component: SortableList, className, itemClass, axis: 'xy'},
+          {Component: SortableList, className, itemClass, axis: 'xy'},
+        ]}
+      />
+    );
+  })
+  .add('Different Height Containers', () => {
+    const classNameA = classNames(style.list, style.stylizedList, style.sizedA);
+    const classNameB = classNames(style.list, style.stylizedList, style.sizedB);
+    const itemClass = classNames(style.item, style.stylizedItem);
 
-	return (
-		<GroupWrapper
-      items={[
-        getItems(3, 50, 'Dog'),
-        getItems(3, 50, 'Cat')
-      ]}
-			wrapperClass={style.root}
-			components={[
-				{Component: SortableList, className: classNameA, itemClass},
-				{Component: SortableList, className: classNameB, itemClass}
-			]}
-		/>
-	);
-})
-.add('Hand Cursor', () => {
-	const className = classNames(style.list, style.stylizedList);
-	const itemClass = classNames(style.item, style.stylizedItem);
-	return (
-		<GroupWrapper
-      items={[
-        getItems(5, 59, 'Dog'),
-        getItems(5, 59, 'Cat')
-      ]}
-			wrapperClass={style.vertGroups}
-			components={[
-				{Component: SortableList, className, useDragHandle: true, shouldUseDragHandle: true, itemClass},
-				{Component: SortableList, className, useDragHandle: true, shouldUseDragHandle: true, itemClass}
-			]}
-		/>
-	);
-})
+    return (
+      <GroupWrapper
+        items={[getItems(3, 50, 'Dog'), getItems(3, 50, 'Cat')]}
+        wrapperClass={style.root}
+        components={[
+          {Component: SortableList, className: classNameA, itemClass},
+          {Component: SortableList, className: classNameB, itemClass},
+        ]}
+      />
+    );
+  })
+  .add('Hand Cursor', () => {
+    const className = classNames(style.list, style.stylizedList);
+    const itemClass = classNames(style.item, style.stylizedItem);
+    return (
+      <GroupWrapper
+        items={[getItems(5, 59, 'Dog'), getItems(5, 59, 'Cat')]}
+        wrapperClass={style.vertGroups}
+        components={[
+          {
+            Component: SortableList,
+            className,
+            useDragHandle: true,
+            shouldUseDragHandle: true,
+            itemClass,
+          },
+          {
+            Component: SortableList,
+            className,
+            useDragHandle: true,
+            shouldUseDragHandle: true,
+            itemClass,
+          },
+        ]}
+      />
+    );
+  });
 
 storiesOf('Customization', module)
   .add('Minimal styling', () => {

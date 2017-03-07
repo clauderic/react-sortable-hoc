@@ -5,9 +5,13 @@ export default class Manager {
   refs = {};
 
   add(collection, ref) {
+<<<<<<< HEAD
     if (!this.refs[collection]) {
       this.refs[collection] = [];
     }
+=======
+    if (!this.refs[collection]) this.refs[collection] = [];
+>>>>>>> Enforce consistent linting
 
     this.refs[collection].push(ref);
   }
