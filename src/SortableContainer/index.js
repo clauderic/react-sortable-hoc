@@ -1,5 +1,5 @@
 import React, {Component, PropTypes} from 'react';
-import ReactDOM from 'react-dom';
+import {findDOMNode} from 'react-dom';
 import invariant from 'invariant';
 
 import Manager from '../Manager';
@@ -105,7 +105,7 @@ export default function sortableContainer(WrappedComponent, config = {withRef: f
 
       this.container = typeof getContainer === 'function'
         ? getContainer(this.getWrappedInstance())
-        : ReactDOM.findDOMNode(this);
+        : findDOMNode(this);
       this.document = this.container.ownerDocument || document;
       this.scrollContainer = useWindowAsScrollContainer
         ? this.document.body
