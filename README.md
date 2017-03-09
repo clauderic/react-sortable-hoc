@@ -13,7 +13,7 @@ Features
 * **Higher Order Components** – Integrates with your existing components
 * **Drag handle, auto-scrolling, locked axis, events, and more!**
 * **Suuuper smooth animations** – Chasing the 60FPS dream 🌈
-* **Works with virtualization libraries: [react-virtualized](https://github.com/bvaughn/react-virtualized/), [react-tiny-virtual-list](https://github.com/clauderic/virtualized-list), [react-infinite](https://github.com/seatgeek/react-infinite), etc.**
+* **Works with virtualization libraries: [react-virtualized](https://github.com/bvaughn/react-virtualized/), [react-tiny-virtual-list](https://github.com/clauderic/react-tiny-virtual-list), [react-infinite](https://github.com/seatgeek/react-infinite), etc.**
 * **Horizontal lists, vertical lists, or a grid** ↔ ↕ ⤡
 * **Touch support** 👌
 
