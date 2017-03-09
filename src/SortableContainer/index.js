@@ -39,6 +39,7 @@ export default function sortableContainer(WrappedComponent, config = {withRef: f
       axis: 'y',
       transitionDuration: 300,
       pressDelay: 0,
+      pressThreshold: 5,
       distance: 0,
       useWindowAsScrollContainer: false,
       hideSortableGhost: true,
@@ -191,7 +192,7 @@ export default function sortableContainer(WrappedComponent, config = {withRef: f
     };
 
     handleMove = e => {
-      const {distance} = this.props;
+      const {distance, pressThreshold} = this.props;
 
       if (!this.state.sorting && this._touched) {
         this._delta = {
@@ -200,10 +201,10 @@ export default function sortableContainer(WrappedComponent, config = {withRef: f
         };
         const delta = Math.abs(this._delta.x) + Math.abs(this._delta.y);
 
-        if (!distance) {
+        if (!distance && (!pressThreshold || pressThreshold && delta >= pressThreshold)) {
           clearTimeout(this.cancelTimer);
           this.cancelTimer = setTimeout(this.cancel, 0);
-        } else if (delta >= distance) {
+        } else if (distance && delta >= distance) {
           this.handlePress(e);
         }
       }
