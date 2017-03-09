@@ -4,7 +4,6 @@
 [![npm version](https://img.shields.io/npm/v/react-sortable-hoc.svg)](https://www.npmjs.com/package/react-sortable-hoc)
 [![npm downloads](https://img.shields.io/npm/dm/react-sortable-hoc.svg)](https://www.npmjs.com/package/react-sortable-hoc)
 [![license](https://img.shields.io/github/license/mashape/apistatus.svg?maxAge=2592000)](https://github.com/clauderic/react-sortable-hoc/blob/master/LICENSE)
-[![XO code style](https://img.shields.io/badge/code_style-XO-5ed9c7.svg)](https://github.com/sindresorhus/xo)
 [![Gitter](https://badges.gitter.im/clauderic/react-sortable-hoc.svg)](https://gitter.im/clauderic/react-sortable-hoc)
 
 ### Examples available here: <a href="#">http://clauderic.github.io/react-sortable-hoc/</a>
@@ -52,32 +51,32 @@ import React, {Component} from 'react';
 import {render} from 'react-dom';
 import {SortableContainer, SortableElement, arrayMove} from 'react-sortable-hoc';
 
-const SortableItem = SortableElement(({value}) => <li>{value}</li>);
+const SortableItem = SortableElement(({value}) =>
+  <li>{value}</li>
+);
 
 const SortableList = SortableContainer(({items}) => {
-	return (
-		<ul>
-			{items.map((value, index) =>
-                <SortableItem key={`item-${index}`} index={index} value={value} />
-            )}
-		</ul>
-	);
+  return (
+    <ul>
+      {items.map((value, index) => (
+        <SortableItem key={`item-${index}`} index={index} value={value} />
+      ))}
+    </ul>
+  );
 });
 
 class SortableComponent extends Component {
-    state = {
-        items: ['Item 1', 'Item 2', 'Item 3', 'Item 4', 'Item 5', 'Item 6']
-    }
-    onSortEnd = ({oldIndex, newIndex}) => {
-        this.setState({
-            items: arrayMove(this.state.items, oldIndex, newIndex)
-        });
-    };
-    render() {
-        return (
-            <SortableList items={this.state.items} onSortEnd={this.onSortEnd} />
-        )
-    }
+  state = {
+    items: ['Item 1', 'Item 2', 'Item 3', 'Item 4', 'Item 5', 'Item 6'],
+  };
+  onSortEnd = ({oldIndex, newIndex}) => {
+    this.setState({
+      items: arrayMove(this.state.items, oldIndex, newIndex),
+    });
+  };
+  render() {
+    return <SortableList items={this.state.items} onSortEnd={this.onSortEnd} />;
+  }
 }
 
 render(<SortableComponent/>, document.getElementById('root'));
@@ -95,7 +94,7 @@ There are already a number of great Drag & Drop libraries out there (for instanc
 #### SortableContainer HOC
 | Property                   | Type              | Default                                                                                                    | Description                                                                                                                                                                                                                                                                                                                                                                                                                                                            |
 |:---------------------------|:------------------|:-----------------------------------------------------------------------------------------------------------|:-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| axis                       | String            | `y`                                                                                                        | Items can be sorted horizontally, vertically or in a grid. Possible values: `x`, `y` or `xy`                                                                                                                                                                                                                                                                                                                                                                                                                       |
+| axis                       | String            | `y`                                                                                                        | Items can be sorted horizontally, vertically or in a grid. Possible values: `x`, `y` or `xy`                                                                                                                                                                                                                                                                                                                                                                           |
 | lockAxis                   | String            |                                                                                                            | If you'd like, you can lock movement to an axis while sorting. This is not something that is possible with HTML5 Drag & Drop                                                                                                                                                                                                                                                                                                                                           |
 | helperClass                | String            |                                                                                                            | You can provide a class you'd like to add to the sortable helper to add some styles to it                                                                                                                                                                                                                                                                                                                                                                              |
 | transitionDuration         | Number            | `300`                                                                                                      | The duration of the transition when elements shift positions. Set this to `0` if you'd like to disable transitions                                                                                                                                                                                                                                                                                                                                                     |
