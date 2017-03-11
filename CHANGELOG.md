@@ -1,5 +1,8 @@
 Changelog
 ------------
+### 0.6.1
+Tweak: default to `pointerEvents: none` on sortable helper, this way the underlying view can still be scrolled using the trackpad/mousewheel while sorting [#160](https://github.com/clauderic/react-sortable-hoc/pull/160)
+
 ### 0.6.0
 Feature: added `pressThreshold` prop to make `pressDelay` fault tolerant [#159](https://github.com/clauderic/react-sortable-hoc/pull/159)
 
