@@ -288,6 +288,7 @@ export default function sortableContainer(WrappedComponent, config = {withRef: f
         this.helper.style.width = `${this.width}px`;
         this.helper.style.height = `${this.height}px`;
         this.helper.style.boxSizing = 'border-box';
+        this.helper.style.pointerEvents = 'none';
 
         if (hideSortableGhost) {
           this.sortableGhost = node;
