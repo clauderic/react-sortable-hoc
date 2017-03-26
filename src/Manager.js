@@ -21,11 +21,15 @@ export default class Manager {
   }
 
   getActive() {
-    return find(
-      this.refs[this.active.collection],
-      // eslint-disable-next-line eqeqeq
-      ({node}) => node.sortableInfo.index == this.active.index
-    );
+    // check if this.active is defined
+    // see https://github.com/clauderic/react-sortable-hoc/issues/170
+    if (this.active) {
+      return find(
+        this.refs[this.active.collection],
+        // eslint-disable-next-line eqeqeq
+        ({ node }) => node.sortableInfo.index == this.active.index
+      );
+    }
   }
 
   getIndex(collection, ref) {
