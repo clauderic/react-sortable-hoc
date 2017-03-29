@@ -2,7 +2,6 @@ import React, {Component} from 'react';
 import {render} from 'react-dom';
 import {SortableContainer, SortableElement, arrayMove} from 'react-sortable-hoc';
 import {VirtualScroll} from 'react-virtualized';
-import Infinite from 'react-infinite';
 
 const SortableItem = SortableElement(({value}) => {
     return (
