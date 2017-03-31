@@ -44,7 +44,7 @@ export default function sortableContainer(WrappedComponent, config = {withRef: f
       useWindowAsScrollContainer: false,
       hideSortableGhost: true,
       contentWindow: typeof window !== 'undefined' ? window : null,
-      shouldCancelStart: function(e) {
+      shouldCancelStart: function (e) {
         // Cancel sorting if the event target is an `input`, `textarea`, `select` or `option`
         const disabledElements = ['input', 'textarea', 'select', 'option', 'button'];
 
@@ -166,10 +166,10 @@ export default function sortableContainer(WrappedComponent, config = {withRef: f
         this.manager.active = {index, collection};
 
         /*
-				 * Fixes a bug in Firefox where the :active state of anchor tags
-				 * prevent subsequent 'mousemove' events from being fired
-				 * (see https://github.com/clauderic/react-sortable-hoc/issues/118)
-				 */
+         * Fixes a bug in Firefox where the :active state of anchor tags
+         * prevent subsequent 'mousemove' events from being fired
+         * (see https://github.com/clauderic/react-sortable-hoc/issues/118)
+         */
         if (e.target.tagName.toLowerCase() === 'a') {
           e.preventDefault();
         }
@@ -270,82 +270,82 @@ export default function sortableContainer(WrappedComponent, config = {withRef: f
           left: this.scrollContainer.scrollLeft,
         };
 
-        const fields = node.querySelectorAll('input, textarea, select');
-        const clonedNode = node.cloneNode(true);
-        const clonedFields = [
-          ...clonedNode.querySelectorAll('input, textarea, select'),
-        ]; // Convert NodeList to Array
-
-        clonedFields.forEach((field, index) => {
-          return (field.value = fields[index] && fields[index].value);
-        });
-
-        this.helper = this.document.body.appendChild(clonedNode);
-
-        this.helper.style.position = 'fixed';
-        this.helper.style.top = `${this.boundingClientRect.top - margin.top}px`;
-        this.helper.style.left = `${this.boundingClientRect.left - margin.left}px`;
-        this.helper.style.width = `${this.width}px`;
-        this.helper.style.height = `${this.height}px`;
-        this.helper.style.boxSizing = 'border-box';
-        this.helper.style.pointerEvents = 'none';
-
-        if (hideSortableGhost) {
-          this.sortableGhost = node;
-          node.style.visibility = 'hidden';
-        }
-
-        this.minTranslate = {};
-        this.maxTranslate = {};
-        if (this.axis.x) {
-          this.minTranslate.x = (useWindowAsScrollContainer
-            ? 0
-            : containerBoundingRect.left) -
-            this.boundingClientRect.left -
-            this.width / 2;
-          this.maxTranslate.x = (useWindowAsScrollContainer
-            ? this.contentWindow.innerWidth
-            : containerBoundingRect.left + containerBoundingRect.width) -
-            this.boundingClientRect.left -
-            this.width / 2;
-        }
-        if (this.axis.y) {
-          this.minTranslate.y = (useWindowAsScrollContainer
-            ? 0
-            : containerBoundingRect.top) -
-            this.boundingClientRect.top -
-            this.height / 2;
-          this.maxTranslate.y = (useWindowAsScrollContainer
-            ? this.contentWindow.innerHeight
-            : containerBoundingRect.top + containerBoundingRect.height) -
-            this.boundingClientRect.top -
-            this.height / 2;
-        }
-
-        if (helperClass) {
-          this.helper.classList.add(...helperClass.split(' '));
-        }
-
-        this.listenerNode = e.touches ? node : this.contentWindow;
-        events.move.forEach(eventName =>
-          this.listenerNode.addEventListener(
-            eventName,
-            this.handleSortMove,
-            false
-          ));
-        events.end.forEach(eventName =>
-          this.listenerNode.addEventListener(
-            eventName,
-            this.handleSortEnd,
-            false
-          ));
-
         this.setState({
           sorting: true,
           sortingIndex: index,
-        });
+        }, () => {
+          const fields = node.querySelectorAll('input, textarea, select');
+          const clonedNode = node.cloneNode(true);
+          const clonedFields = [
+            ...clonedNode.querySelectorAll('input, textarea, select'),
+          ]; // Convert NodeList to Array
 
-        if (onSortStart) onSortStart({node, index, collection}, e);
+          clonedFields.forEach((field, index) => {
+            return (field.value = fields[index] && fields[index].value);
+          });
+
+          this.helper = this.document.body.appendChild(clonedNode);
+
+          this.helper.style.position = 'fixed';
+          this.helper.style.top = `${this.boundingClientRect.top - margin.top}px`;
+          this.helper.style.left = `${this.boundingClientRect.left - margin.left}px`;
+          this.helper.style.width = `${this.width}px`;
+          this.helper.style.height = `${this.height}px`;
+          this.helper.style.boxSizing = 'border-box';
+          this.helper.style.pointerEvents = 'none';
+
+          if (hideSortableGhost) {
+            this.sortableGhost = node;
+            node.style.visibility = 'hidden';
+          }
+
+          this.minTranslate = {};
+          this.maxTranslate = {};
+          if (this.axis.x) {
+            this.minTranslate.x = (useWindowAsScrollContainer
+                ? 0
+                : containerBoundingRect.left) -
+              this.boundingClientRect.left -
+              this.width / 2;
+            this.maxTranslate.x = (useWindowAsScrollContainer
+                ? this.contentWindow.innerWidth
+                : containerBoundingRect.left + containerBoundingRect.width) -
+              this.boundingClientRect.left -
+              this.width / 2;
+          }
+          if (this.axis.y) {
+            this.minTranslate.y = (useWindowAsScrollContainer
+                ? 0
+                : containerBoundingRect.top) -
+              this.boundingClientRect.top -
+              this.height / 2;
+            this.maxTranslate.y = (useWindowAsScrollContainer
+                ? this.contentWindow.innerHeight
+                : containerBoundingRect.top + containerBoundingRect.height) -
+              this.boundingClientRect.top -
+              this.height / 2;
+          }
+
+          if (helperClass) {
+            this.helper.classList.add(...helperClass.split(' '));
+          }
+
+          this.listenerNode = e.touches ? node : this.contentWindow;
+          events.move.forEach(eventName =>
+            this.listenerNode.addEventListener(
+              eventName,
+              this.handleSortMove,
+              false
+            ));
+          events.end.forEach(eventName =>
+            this.listenerNode.addEventListener(
+              eventName,
+              this.handleSortEnd,
+              false
+            ));
+
+          if (onSortStart) onSortStart({node, index, collection}, e);
+        });
       }
     };
 
@@ -453,7 +453,7 @@ export default function sortableContainer(WrappedComponent, config = {withRef: f
       invariant(
         lockOffset.length === 2,
         'lockOffset prop of SortableContainer should be a single ' +
-          'value or an array of exactly two values. Given %s',
+        'value or an array of exactly two values. Given %s',
         lockOffset
       );
 
@@ -476,7 +476,7 @@ export default function sortableContainer(WrappedComponent, config = {withRef: f
         invariant(
           match !== null,
           'lockOffset value should be a number or a string of a ' +
-            'number followed by "px" or "%". Given %s',
+          'number followed by "px" or "%". Given %s',
           lockOffset
         );
 
@@ -541,7 +541,7 @@ export default function sortableContainer(WrappedComponent, config = {withRef: f
 
       this.helper.style[
         `${vendorPrefix}Transform`
-      ] = `translate3d(${translate.x}px,${translate.y}px, 0)`;
+        ] = `translate3d(${translate.x}px,${translate.y}px, 0)`;
     }
 
     animateNodes() {
@@ -591,10 +591,10 @@ export default function sortableContainer(WrappedComponent, config = {withRef: f
         if (index === this.index) {
           if (hideSortableGhost) {
             /*
-						 * With windowing libraries such as `react-virtualized`, the sortableGhost
-						 * node may change while scrolling down and then back up (or vice-versa),
-						 * so we need to update the reference to the new node just to be safe.
-						 */
+             * With windowing libraries such as `react-virtualized`, the sortableGhost
+             * node may change while scrolling down and then back up (or vice-versa),
+             * so we need to update the reference to the new node just to be safe.
+             */
             this.sortableGhost = node;
             node.style.visibility = 'hidden';
           }
@@ -604,7 +604,7 @@ export default function sortableContainer(WrappedComponent, config = {withRef: f
         if (transitionDuration) {
           node.style[
             `${vendorPrefix}TransitionDuration`
-          ] = `${transitionDuration}ms`;
+            ] = `${transitionDuration}ms`;
         }
 
         if (this.axis.x) {
