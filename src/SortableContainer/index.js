@@ -777,7 +777,7 @@ export default function sortableContainer(WrappedComponent, config = {withRef: f
             'transitionDuration',
             'useDragHandle',
             'pressDelay',
-	    'pressThreshold',
+            'pressThreshold',
             'shouldCancelStart',
             'onSortStart',
             'onSortMove',
