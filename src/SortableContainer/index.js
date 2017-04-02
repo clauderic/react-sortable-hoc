@@ -345,7 +345,7 @@ export default function sortableContainer(WrappedComponent, config = {withRef: f
           sortingIndex: index,
         });
 
-        if (onSortStart) onSortStart({node, index, collection}, e);
+        if (onSortStart) onSortStart({clonedNode, node, index, collection}, e);
       }
     };
 
