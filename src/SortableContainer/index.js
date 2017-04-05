@@ -293,6 +293,7 @@ export default function sortableContainer(WrappedComponent, config = {withRef: f
         if (hideSortableGhost) {
           this.sortableGhost = node;
           node.style.visibility = 'hidden';
+          node.style.opacity = 0;
         }
 
         this.minTranslate = {};
@@ -380,6 +381,7 @@ export default function sortableContainer(WrappedComponent, config = {withRef: f
 
       if (hideSortableGhost && this.sortableGhost) {
         this.sortableGhost.style.visibility = '';
+        this.sortableGhost.style.opacity = '';
       }
 
       const nodes = this.manager.refs[collection];
@@ -597,6 +599,7 @@ export default function sortableContainer(WrappedComponent, config = {withRef: f
 						 */
             this.sortableGhost = node;
             node.style.visibility = 'hidden';
+            node.style.opacity = 0;
           }
           continue;
         }
