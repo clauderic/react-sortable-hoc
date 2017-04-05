@@ -110,12 +110,12 @@ class ListWrapper extends Component {
     width: 400,
     height: 600,
   };
-  onSortStart = () => {
+  onSortStart = (...args) => {
     const {onSortStart} = this.props;
     this.setState({isSorting: true});
 
     if (onSortStart) {
-      onSortStart(this.refs.component);
+      onSortStart(...args);
     }
   };
   onSortEnd = ({oldIndex, newIndex}) => {
@@ -327,6 +327,30 @@ const NestedSortableList = SortableContainer(({
   );
 });
 
+const VariableWidthRow = SortableElement(({className, value}) => (
+  <tr className={className}>
+    <td>{value}</td><td>X</td><td>Y</td><td>Z</td>
+  </tr>
+));
+
+const VariableWidthSortableTable = SortableContainer(({
+  className,
+  items,
+  itemClass,
+}) => {
+  return (
+    <div className={className}>
+      <table style={{userSelect: 'none', MozUserSelect: 'none', WebKitUserSelect: 'none'}} width="100%">
+        <tbody>
+          {items.map(({value}, index) =>
+            <VariableWidthRow className={itemClass} key={`item-${value}`} index={index} value={value} />
+          )}
+        </tbody>
+      </table>
+    </div>
+  );
+});
+
 storiesOf('Basic Configuration', module)
   .add('Basic usage', () => {
     return (
@@ -411,6 +435,26 @@ storiesOf('Basic Configuration', module)
           items={range(4)}
           shouldUseDragHandle={true}
           helperClass={style.stylizedHelper}
+        />
+      </div>
+    );
+  })
+  .add('Variable width columns', () => {
+    return (
+      <div className={style.root}>
+        <ListWrapper
+          component={VariableWidthSortableTable}
+          items={getItems(50, 59)}
+          helperClass={style.stylizedHelper}
+          className={classNames(style.list, style.stylizedList, style.table)}
+          itemClass={classNames(style.tableItem)}
+          onSortStart={({clonedNode, node}) => {
+            const clonedChildren = clonedNode.childNodes;
+            const children = node.childNodes;
+            for (let i = 0; i < children.length; i++) {
+              clonedChildren[i].style.width = `${children[i].offsetWidth}px`;
+            }
+          }}
         />
       </div>
     );
