@@ -4,8 +4,8 @@
 [![npm version](https://img.shields.io/npm/v/react-sortable-hoc.svg)](https://www.npmjs.com/package/react-sortable-hoc)
 [![npm downloads](https://img.shields.io/npm/dm/react-sortable-hoc.svg)](https://www.npmjs.com/package/react-sortable-hoc)
 [![license](https://img.shields.io/github/license/mashape/apistatus.svg?maxAge=2592000)](https://github.com/clauderic/react-sortable-hoc/blob/master/LICENSE)
-[![XO code style](https://img.shields.io/badge/code_style-XO-5ed9c7.svg)](https://github.com/sindresorhus/xo)
 [![Gitter](https://badges.gitter.im/clauderic/react-sortable-hoc.svg)](https://gitter.im/clauderic/react-sortable-hoc)
+![gzip size](http://img.badgesize.io/https://npmcdn.com/react-sortable-hoc/dist/umd/react-sortable-hoc.min.js?compression=gzip)
 
 ### Examples available here: <a href="#">http://clauderic.github.io/react-sortable-hoc/</a>
 
@@ -14,7 +14,7 @@ Features
 * **Higher Order Components** – Integrates with your existing components
 * **Drag handle, auto-scrolling, locked axis, events, and more!**
 * **Suuuper smooth animations** – Chasing the 60FPS dream 🌈
-* **Works with React Virtualized, React-Infinite, etc.**
+* **Works with virtualization libraries: [react-virtualized](https://github.com/bvaughn/react-virtualized/), [react-tiny-virtual-list](https://github.com/clauderic/react-tiny-virtual-list), [react-infinite](https://github.com/seatgeek/react-infinite), etc.**
 * **Horizontal lists, vertical lists, or a grid** ↔ ↕ ⤡
 * **Touch support** 👌
 
@@ -52,32 +52,32 @@ import React, {Component} from 'react';
 import {render} from 'react-dom';
 import {SortableContainer, SortableElement, arrayMove} from 'react-sortable-hoc';
 
-const SortableItem = SortableElement(({value}) => <li>{value}</li>);
+const SortableItem = SortableElement(({value}) =>
+  <li>{value}</li>
+);
 
 const SortableList = SortableContainer(({items}) => {
-	return (
-		<ul>
-			{items.map((value, index) =>
-                <SortableItem key={`item-${index}`} index={index} value={value} />
-            )}
-		</ul>
-	);
+  return (
+    <ul>
+      {items.map((value, index) => (
+        <SortableItem key={`item-${index}`} index={index} value={value} />
+      ))}
+    </ul>
+  );
 });
 
 class SortableComponent extends Component {
-    state = {
-        items: ['Item 1', 'Item 2', 'Item 3', 'Item 4', 'Item 5', 'Item 6']
-    }
-    onSortEnd = ({oldIndex, newIndex}) => {
-        this.setState({
-            items: arrayMove(this.state.items, oldIndex, newIndex)
-        });
-    };
-    render() {
-        return (
-            <SortableList items={this.state.items} onSortEnd={this.onSortEnd} />
-        )
-    }
+  state = {
+    items: ['Item 1', 'Item 2', 'Item 3', 'Item 4', 'Item 5', 'Item 6'],
+  };
+  onSortEnd = ({oldIndex, newIndex}) => {
+    this.setState({
+      items: arrayMove(this.state.items, oldIndex, newIndex),
+    });
+  };
+  render() {
+    return <SortableList items={this.state.items} onSortEnd={this.onSortEnd} />;
+  }
 }
 
 render(<SortableComponent/>, document.getElementById('root'));
@@ -95,11 +95,12 @@ There are already a number of great Drag & Drop libraries out there (for instanc
 #### SortableContainer HOC
 | Property                   | Type              | Default                                                                                                    | Description                                                                                                                                                                                                                                                                                                                                                                                                                                                            |
 |:---------------------------|:------------------|:-----------------------------------------------------------------------------------------------------------|:-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| axis                       | String            | `y`                                                                                                        | Items can be sorted horizontally, vertically or in a grid. Possible values: `x`, `y` or `xy`                                                                                                                                                                                                                                                                                                                                                                                                                       |
+| axis                       | String            | `y`                                                                                                        | Items can be sorted horizontally, vertically or in a grid. Possible values: `x`, `y` or `xy`                                                                                                                                                                                                                                                                                                                                                                           |
 | lockAxis                   | String            |                                                                                                            | If you'd like, you can lock movement to an axis while sorting. This is not something that is possible with HTML5 Drag & Drop                                                                                                                                                                                                                                                                                                                                           |
 | helperClass                | String            |                                                                                                            | You can provide a class you'd like to add to the sortable helper to add some styles to it                                                                                                                                                                                                                                                                                                                                                                              |
 | transitionDuration         | Number            | `300`                                                                                                      | The duration of the transition when elements shift positions. Set this to `0` if you'd like to disable transitions                                                                                                                                                                                                                                                                                                                                                     |
 | pressDelay                 | Number            | `0`                                                                                                        | If you'd like elements to only become sortable after being pressed for a certain time, change this property. A good sensible default value for mobile is `200`. Cannot be used in conjunction with the `distance` prop.                                                                                                                                                                                                                                                |
+| pressThreshold             | Number            | `5`                                                                                                        | Number of pixels of movement to tolerate before ignoring a press event.                                                                                                                                                                                                                                                                                                                                                                                                |
 | distance                   | Number            | `0`                                                                                                        | If you'd like elements to only become sortable after being dragged a certain number of pixels. Cannot be used in conjunction with the `pressDelay` prop.                                                                                                                                                                                                                                                                                                               |
 | shouldCancelStart          | Function          | [Function](https://github.com/clauderic/react-sortable-hoc/blob/master/src/SortableContainer/index.js#L34) | This function get's invoked before sorting begins, and can be used to programatically cancel sorting before it begins. By default, it will cancel sorting if the event target is either an `input`, `textarea`, `select` or `option`.                                                                                                                                                                                                                                  |
 | onSortStart                | Function          |                                                                                                            | Callback that get's invoked when sorting begins. `function({node, index, collection}, event)`                                                                                                                                                                                                                                                                                                                                                                          |

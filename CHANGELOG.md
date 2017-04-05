@@ -1,5 +1,11 @@
 Changelog
 ------------
+### 0.6.1
+Tweak: default to `pointerEvents: none` on sortable helper, this way the underlying view can still be scrolled using the trackpad/mousewheel while sorting [#160](https://github.com/clauderic/react-sortable-hoc/pull/160)
+
+### 0.6.0
+Feature: added `pressThreshold` prop to make `pressDelay` fault tolerant [#159](https://github.com/clauderic/react-sortable-hoc/pull/159)
+
 ### 0.5.0
 Tweak: `button` elements are now included in the default `shouldCancelStart` implementation [#142](https://github.com/clauderic/react-sortable-hoc/pull/142).
 Fix: Omit `getHelperDimensions` before passing down props in `SortableContainer`
