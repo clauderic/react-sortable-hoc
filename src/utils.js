@@ -91,19 +91,20 @@ export function provideDisplayName(prefix, Component) {
  * @returns {HTMLElement}
  */
 export function getOffsetParent(node, container) {
-    if(node === container) {
-        return node
-    }
-    if (node && node.parentNode) {
-        if (node.parentNode.style &&
-            node.parentNode.style.position && (
-            node.parentNode.style.position === 'absolute' ||
-            node.parentNode.style.position === 'relative')) {
-            return node.parentNode;
-        }
-        else {
-            return getOffsetParent(node.parentNode);
-        }
-    }
+  if (node === container) {
     return node;
+  }
+  if (node && node.parentNode) {
+    if (
+      node.parentNode.style &&
+      node.parentNode.style.position &&
+      (node.parentNode.style.position === 'absolute' ||
+        node.parentNode.style.position === 'relative')
+    ) {
+      return node.parentNode;
+    } else {
+      return getOffsetParent(node.parentNode);
+    }
+  }
+  return node;
 }
