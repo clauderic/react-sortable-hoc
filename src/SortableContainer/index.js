@@ -15,10 +15,7 @@ import {
 } from '../utils';
 
 // Export Higher Order Sortable Container Component
-export default function sortableContainer(
-  WrappedComponent,
-  config = {withRef: false}
-) {
+export default function sortableContainer(WrappedComponent, config = {withRef: false}) {
   return class extends Component {
     constructor(props) {
       super(props);
@@ -50,13 +47,7 @@ export default function sortableContainer(
       contentWindow: typeof window !== 'undefined' ? window : null,
       shouldCancelStart: function(e) {
         // Cancel sorting if the event target is an `input`, `textarea`, `select` or `option`
-        const disabledElements = [
-          'input',
-          'textarea',
-          'select',
-          'option',
-          'button',
-        ];
+        const disabledElements = ['input', 'textarea', 'select', 'option', 'button'];
 
         if (disabledElements.indexOf(e.target.tagName.toLowerCase()) !== -1) {
           return true; // Return true to cancel sorting
@@ -128,11 +119,8 @@ export default function sortableContainer(
       for (const key in this.events) {
         if (this.events.hasOwnProperty(key)) {
           events[key].forEach(eventName =>
-            this.container.addEventListener(
-              eventName,
-              this.events[key],
-              false
-            ));
+            this.container.addEventListener(eventName, this.events[key], false)
+          );
         }
       }
     }
@@ -141,7 +129,8 @@ export default function sortableContainer(
       for (const key in this.events) {
         if (this.events.hasOwnProperty(key)) {
           events[key].forEach(eventName =>
-            this.container.removeEventListener(eventName, this.events[key]));
+            this.container.removeEventListener(eventName, this.events[key])
+          );
         }
       }
     }
@@ -213,10 +202,7 @@ export default function sortableContainer(
         };
         const delta = Math.abs(this._delta.x) + Math.abs(this._delta.y);
 
-        if (
-          !distance &&
-          (!pressThreshold || (pressThreshold && delta >= pressThreshold))
-        ) {
+        if (!distance && (!pressThreshold || pressThreshold && delta >= pressThreshold)) {
           clearTimeout(this.cancelTimer);
           this.cancelTimer = setTimeout(this.cancel, 0);
         } else if (distance && delta >= distance) {
@@ -445,7 +431,7 @@ export default function sortableContainer(
           top: offset.top + node.offsetTop,
           left: offset.left + node.offsetLeft,
         };
-        if (getOffsetParent(node, this.container) !== this.container) {
+        if (getOffsetParent(node, this.container) !== this.container) { 
           return this.getEdgeOffset(node.parentNode, nodeOffset);
         } else {
           return nodeOffset;
@@ -630,9 +616,11 @@ export default function sortableContainer(
             // Calculations for a grid setup
             if (
               index < this.index &&
-              ((sortingOffset.left - offset.width <= edgeOffset.left &&
+              (
+                (sortingOffset.left - offset.width <= edgeOffset.left &&
                 sortingOffset.top <= edgeOffset.top + offset.height) ||
-                sortingOffset.top + offset.height <= edgeOffset.top)
+                sortingOffset.top + offset.height <= edgeOffset.top
+              )
             ) {
               // If the current node is to the left on the same row, or above the node that's being dragged
               // then move it to the right
@@ -652,9 +640,11 @@ export default function sortableContainer(
               }
             } else if (
               index > this.index &&
-              ((sortingOffset.left + offset.width >= edgeOffset.left &&
+              (
+                (sortingOffset.left + offset.width >= edgeOffset.left &&
                 sortingOffset.top + offset.height >= edgeOffset.top) ||
-                sortingOffset.top + offset.height >= edgeOffset.top + height)
+                sortingOffset.top + offset.height >= edgeOffset.top + height
+              )
             ) {
               // If the current node is to the right on the same row, or below the node that's being dragged
               // then move it to the left
@@ -705,9 +695,7 @@ export default function sortableContainer(
             }
           }
         }
-        node.style[
-          `${vendorPrefix}Transform`
-        ] = `translate3d(${translate.x}px,${translate.y}px,0)`;
+        node.style[`${vendorPrefix}Transform`] = `translate3d(${translate.x}px,${translate.y}px,0)`;
       }
 
       if (this.newIndex == null) {
@@ -732,28 +720,16 @@ export default function sortableContainer(
 
       if (translate.y >= this.maxTranslate.y - this.height / 2) {
         direction.y = 1; // Scroll Down
-        speed.y = acceleration.y *
-          Math.abs(
-            (this.maxTranslate.y - this.height / 2 - translate.y) / this.height
-          );
+        speed.y = acceleration.y * Math.abs((this.maxTranslate.y - this.height / 2 - translate.y) / this.height);
       } else if (translate.x >= this.maxTranslate.x - this.width / 2) {
         direction.x = 1; // Scroll Right
-        speed.x = acceleration.x *
-          Math.abs(
-            (this.maxTranslate.x - this.width / 2 - translate.x) / this.width
-          );
+        speed.x = acceleration.x * Math.abs((this.maxTranslate.x - this.width / 2 - translate.x) / this.width);
       } else if (translate.y <= this.minTranslate.y + this.height / 2) {
         direction.y = -1; // Scroll Up
-        speed.y = acceleration.y *
-          Math.abs(
-            (translate.y - this.height / 2 - this.minTranslate.y) / this.height
-          );
+        speed.y = acceleration.y * Math.abs((translate.y - this.height / 2 - this.minTranslate.y) / this.height);
       } else if (translate.x <= this.minTranslate.x + this.width / 2) {
         direction.x = -1; // Scroll Left
-        speed.x = acceleration.x *
-          Math.abs(
-            (translate.x - this.width / 2 - this.minTranslate.x) / this.width
-          );
+        speed.x = acceleration.x * Math.abs((translate.x - this.width / 2 - this.minTranslate.x) / this.width);
       }
 
       if (this.autoscrollInterval) {
