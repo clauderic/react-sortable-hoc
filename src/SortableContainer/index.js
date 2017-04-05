@@ -15,10 +15,7 @@ import {
 } from '../utils';
 
 // Export Higher Order Sortable Container Component
-export default function sortableContainer(
-  WrappedComponent,
-  config = {withRef: false}
-) {
+export default function sortableContainer(WrappedComponent, config = {withRef: false}) {
   return class extends Component {
     constructor(props) {
       super(props);
@@ -50,13 +47,7 @@ export default function sortableContainer(
       contentWindow: typeof window !== 'undefined' ? window : null,
       shouldCancelStart: function(e) {
         // Cancel sorting if the event target is an `input`, `textarea`, `select` or `option`
-        const disabledElements = [
-          'input',
-          'textarea',
-          'select',
-          'option',
-          'button',
-        ];
+        const disabledElements = ['input', 'textarea', 'select', 'option', 'button'];
 
         if (disabledElements.indexOf(e.target.tagName.toLowerCase()) !== -1) {
           return true; // Return true to cancel sorting
@@ -89,9 +80,7 @@ export default function sortableContainer(
       lockOffset: PropTypes.oneOfType([
         PropTypes.number,
         PropTypes.string,
-        PropTypes.arrayOf(
-          PropTypes.oneOfType([PropTypes.number, PropTypes.string])
-        ),
+        PropTypes.arrayOf(PropTypes.oneOfType([PropTypes.number, PropTypes.string])),
       ]),
       getContainer: PropTypes.func,
       getHelperDimensions: PropTypes.func,
@@ -118,21 +107,13 @@ export default function sortableContainer(
         ? getContainer(this.getWrappedInstance())
         : findDOMNode(this);
       this.document = this.container.ownerDocument || document;
-      this.scrollContainer = useWindowAsScrollContainer
-        ? this.document.body
-        : this.container;
-      this.contentWindow = typeof contentWindow === 'function'
-        ? contentWindow()
-        : contentWindow;
+      this.scrollContainer = useWindowAsScrollContainer ? this.document.body : this.container;
+      this.contentWindow = typeof contentWindow === 'function' ? contentWindow() : contentWindow;
 
       for (const key in this.events) {
         if (this.events.hasOwnProperty(key)) {
           events[key].forEach(eventName =>
-            this.container.addEventListener(
-              eventName,
-              this.events[key],
-              false
-            ));
+            this.container.addEventListener(eventName, this.events[key], false));
         }
       }
     }
@@ -161,19 +142,11 @@ export default function sortableContainer(
 
       const node = closest(e.target, el => el.sortableInfo != null);
 
-      if (
-        node &&
-        node.sortableInfo &&
-        this.nodeIsChild(node) &&
-        !this.state.sorting
-      ) {
+      if (node && node.sortableInfo && this.nodeIsChild(node) && !this.state.sorting) {
         const {useDragHandle} = this.props;
         const {index, collection} = node.sortableInfo;
 
-        if (
-          useDragHandle && !closest(e.target, el => el.sortableHandle != null)
-        )
-          return;
+        if (useDragHandle && !closest(e.target, el => el.sortableHandle != null)) return;
 
         this.manager.active = {index, collection};
 
@@ -190,10 +163,7 @@ export default function sortableContainer(
           if (this.props.pressDelay === 0) {
             this.handlePress(e);
           } else {
-            this.pressTimer = setTimeout(
-              () => this.handlePress(e),
-              this.props.pressDelay
-            );
+            this.pressTimer = setTimeout(() => this.handlePress(e), this.props.pressDelay);
           }
         }
       }
@@ -213,10 +183,7 @@ export default function sortableContainer(
         };
         const delta = Math.abs(this._delta.x) + Math.abs(this._delta.y);
 
-        if (
-          !distance &&
-          (!pressThreshold || (pressThreshold && delta >= pressThreshold))
-        ) {
+        if (!distance && (!pressThreshold || (pressThreshold && delta >= pressThreshold))) {
           clearTimeout(this.cancelTimer);
           this.cancelTimer = setTimeout(this.cancel, 0);
         } else if (distance && delta >= distance) {
@@ -287,9 +254,7 @@ export default function sortableContainer(
 
         const fields = node.querySelectorAll('input, textarea, select');
         const clonedNode = node.cloneNode(true);
-        const clonedFields = [
-          ...clonedNode.querySelectorAll('input, textarea, select'),
-        ]; // Convert NodeList to Array
+        const clonedFields = [...clonedNode.querySelectorAll('input, textarea, select')]; // Convert NodeList to Array
 
         clonedFields.forEach((field, index) => {
           return (field.value = fields[index] && fields[index].value);
@@ -314,9 +279,7 @@ export default function sortableContainer(
         this.minTranslate = {};
         this.maxTranslate = {};
         if (this.axis.x) {
-          this.minTranslate.x = (useWindowAsScrollContainer
-            ? 0
-            : containerBoundingRect.left) -
+          this.minTranslate.x = (useWindowAsScrollContainer ? 0 : containerBoundingRect.left) -
             this.boundingClientRect.left -
             this.width / 2;
           this.maxTranslate.x = (useWindowAsScrollContainer
@@ -326,9 +289,7 @@ export default function sortableContainer(
             this.width / 2;
         }
         if (this.axis.y) {
-          this.minTranslate.y = (useWindowAsScrollContainer
-            ? 0
-            : containerBoundingRect.top) -
+          this.minTranslate.y = (useWindowAsScrollContainer ? 0 : containerBoundingRect.top) -
             this.boundingClientRect.top -
             this.height / 2;
           this.maxTranslate.y = (useWindowAsScrollContainer
@@ -344,17 +305,9 @@ export default function sortableContainer(
 
         this.listenerNode = e.touches ? node : this.contentWindow;
         events.move.forEach(eventName =>
-          this.listenerNode.addEventListener(
-            eventName,
-            this.handleSortMove,
-            false
-          ));
+          this.listenerNode.addEventListener(eventName, this.handleSortMove, false));
         events.end.forEach(eventName =>
-          this.listenerNode.addEventListener(
-            eventName,
-            this.handleSortEnd,
-            false
-          ));
+          this.listenerNode.addEventListener(eventName, this.handleSortEnd, false));
 
         this.setState({
           sorting: true,
@@ -383,10 +336,7 @@ export default function sortableContainer(
       // Remove the event listeners if the node is still in the DOM
       if (this.listenerNode) {
         events.move.forEach(eventName =>
-          this.listenerNode.removeEventListener(
-            eventName,
-            this.handleSortMove
-          ));
+          this.listenerNode.removeEventListener(eventName, this.handleSortMove));
         events.end.forEach(eventName =>
           this.listenerNode.removeEventListener(eventName, this.handleSortEnd));
       }
@@ -476,10 +426,7 @@ export default function sortableContainer(
 
       const [minLockOffset, maxLockOffset] = lockOffset;
 
-      return [
-        this.getLockPixelOffset(minLockOffset),
-        this.getLockPixelOffset(maxLockOffset),
-      ];
+      return [this.getLockPixelOffset(minLockOffset), this.getLockPixelOffset(maxLockOffset)];
     }
 
     getLockPixelOffset(lockOffset) {
@@ -620,9 +567,7 @@ export default function sortableContainer(
         }
 
         if (transitionDuration) {
-          node.style[
-            `${vendorPrefix}TransitionDuration`
-          ] = `${transitionDuration}ms`;
+          node.style[`${vendorPrefix}TransitionDuration`] = `${transitionDuration}ms`;
         }
 
         if (this.axis.x) {
@@ -637,10 +582,7 @@ export default function sortableContainer(
               // If the current node is to the left on the same row, or above the node that's being dragged
               // then move it to the right
               translate.x = this.width + this.marginOffset.x;
-              if (
-                edgeOffset.left + translate.x >
-                this.containerBoundingRect.width - offset.width
-              ) {
+              if (edgeOffset.left + translate.x > this.containerBoundingRect.width - offset.width) {
                 // If it moves passed the right bounds, then animate it to the first position of the next row.
                 // We just use the offset of the next node to calculate where to move, because that node's original position
                 // is exactly where we want to go
@@ -659,10 +601,7 @@ export default function sortableContainer(
               // If the current node is to the right on the same row, or below the node that's being dragged
               // then move it to the left
               translate.x = -(this.width + this.marginOffset.x);
-              if (
-                edgeOffset.left + translate.x <
-                this.containerBoundingRect.left + offset.width
-              ) {
+              if (edgeOffset.left + translate.x < this.containerBoundingRect.left + offset.width) {
                 // If it moves passed the left bounds, then animate it to the last position of the previous row.
                 // We just use the offset of the previous node to calculate where to move, because that node's original position
                 // is exactly where we want to go
@@ -672,16 +611,10 @@ export default function sortableContainer(
               this.newIndex = index;
             }
           } else {
-            if (
-              index > this.index &&
-              sortingOffset.left + offset.width >= edgeOffset.left
-            ) {
+            if (index > this.index && sortingOffset.left + offset.width >= edgeOffset.left) {
               translate.x = -(this.width + this.marginOffset.x);
               this.newIndex = index;
-            } else if (
-              index < this.index &&
-              sortingOffset.left <= edgeOffset.left + offset.width
-            ) {
+            } else if (index < this.index && sortingOffset.left <= edgeOffset.left + offset.width) {
               translate.x = this.width + this.marginOffset.x;
               if (this.newIndex == null) {
                 this.newIndex = index;
@@ -689,25 +622,17 @@ export default function sortableContainer(
             }
           }
         } else if (this.axis.y) {
-          if (
-            index > this.index &&
-            sortingOffset.top + offset.height >= edgeOffset.top
-          ) {
+          if (index > this.index && sortingOffset.top + offset.height >= edgeOffset.top) {
             translate.y = -(this.height + this.marginOffset.y);
             this.newIndex = index;
-          } else if (
-            index < this.index &&
-            sortingOffset.top <= edgeOffset.top + offset.height
-          ) {
+          } else if (index < this.index && sortingOffset.top <= edgeOffset.top + offset.height) {
             translate.y = this.height + this.marginOffset.y;
             if (this.newIndex == null) {
               this.newIndex = index;
             }
           }
         }
-        node.style[
-          `${vendorPrefix}Transform`
-        ] = `translate3d(${translate.x}px,${translate.y}px,0)`;
+        node.style[`${vendorPrefix}Transform`] = `translate3d(${translate.x}px,${translate.y}px,0)`;
       }
 
       if (this.newIndex == null) {
@@ -733,27 +658,19 @@ export default function sortableContainer(
       if (translate.y >= this.maxTranslate.y - this.height / 2) {
         direction.y = 1; // Scroll Down
         speed.y = acceleration.y *
-          Math.abs(
-            (this.maxTranslate.y - this.height / 2 - translate.y) / this.height
-          );
+          Math.abs((this.maxTranslate.y - this.height / 2 - translate.y) / this.height);
       } else if (translate.x >= this.maxTranslate.x - this.width / 2) {
         direction.x = 1; // Scroll Right
         speed.x = acceleration.x *
-          Math.abs(
-            (this.maxTranslate.x - this.width / 2 - translate.x) / this.width
-          );
+          Math.abs((this.maxTranslate.x - this.width / 2 - translate.x) / this.width);
       } else if (translate.y <= this.minTranslate.y + this.height / 2) {
         direction.y = -1; // Scroll Up
         speed.y = acceleration.y *
-          Math.abs(
-            (translate.y - this.height / 2 - this.minTranslate.y) / this.height
-          );
+          Math.abs((translate.y - this.height / 2 - this.minTranslate.y) / this.height);
       } else if (translate.x <= this.minTranslate.x + this.width / 2) {
         direction.x = -1; // Scroll Left
         speed.x = acceleration.x *
-          Math.abs(
-            (translate.x - this.width / 2 - this.minTranslate.x) / this.width
-          );
+          Math.abs((translate.x - this.width / 2 - this.minTranslate.x) / this.width);
       }
 
       if (this.autoscrollInterval) {
