@@ -13,6 +13,8 @@ import {
   omit,
 } from '../utils';
 
+const inputFields = ['input, textarea, select'];
+
 // Export Higher Order Sortable Container Component
 export default function sortableContainer(WrappedComponent, config = {withRef: false}) {
   return class extends Component {
@@ -270,17 +272,24 @@ export default function sortableContainer(WrappedComponent, config = {withRef: f
           left: this.scrollContainer.scrollLeft,
         };
 
-        const fields = node.querySelectorAll('input, textarea, select');
+        const elements = node.querySelectorAll('*');
         const clonedNode = node.cloneNode(true);
-        const clonedFields = [
-          ...clonedNode.querySelectorAll('input, textarea, select'),
+        const clonedElements = [
+          ...clonedNode.querySelectorAll('*'),
         ]; // Convert NodeList to Array
 
-        clonedFields.forEach((field, index) => {
-          return (field.value = fields[index] && fields[index].value);
-        });
-
         this.helper = this.document.body.appendChild(clonedNode);
+
+        clonedElements.forEach((field, index) => {
+          const originalElement = elements[index];
+          if (!originalElement) return;
+          if (inputFields.includes(originalElement.tagName.toLowerCase())) {
+            field.value = originalElement.value;
+          }
+          if (originalElement.scrollTop > 0) {
+            field.scrollTop = originalElement.scrollTop;
+          }
+        });
 
         this.helper.style.position = 'fixed';
         this.helper.style.top = `${this.boundingClientRect.top - margin.top}px`;
