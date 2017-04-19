@@ -86,7 +86,7 @@ export default function sortableElement(WrappedComponent, config = {withRef: fal
       return (
         <WrappedComponent
           ref={ref}
-          {...omit(this.props, 'collection', 'disabled', 'index')}
+          {...omit(this.props, 'collection', 'index')}
         />
       );
     }
