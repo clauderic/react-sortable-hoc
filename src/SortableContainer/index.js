@@ -43,6 +43,7 @@ export default function sortableContainer(WrappedComponent, config = {withRef: f
       pressThreshold: 5,
       distance: 0,
       useWindowAsScrollContainer: false,
+      useContainerAsSortableHelperParent: false,
       hideSortableGhost: true,
       contentWindow: typeof window !== 'undefined' ? window : null,
       shouldCancelStart: function(e) {
@@ -75,6 +76,7 @@ export default function sortableContainer(WrappedComponent, config = {withRef: f
       pressDelay: PropTypes.number,
       useDragHandle: PropTypes.bool,
       useWindowAsScrollContainer: PropTypes.bool,
+      useContainerAsSortableHelperParent: PropTypes.bool,
       hideSortableGhost: PropTypes.bool,
       lockToContainerEdges: PropTypes.bool,
       lockOffset: PropTypes.oneOfType([
@@ -239,6 +241,7 @@ export default function sortableContainer(WrappedComponent, config = {withRef: f
           hideSortableGhost,
           onSortStart,
           useWindowAsScrollContainer,
+          useContainerAsSortableHelperParent,
         } = this.props;
         const {node, collection} = active;
         const {index} = node.sortableInfo;
@@ -281,7 +284,8 @@ export default function sortableContainer(WrappedComponent, config = {withRef: f
           return (field.value = fields[index] && fields[index].value);
         });
 
-        this.helper = this.document.body.appendChild(clonedNode);
+        const helperParent = useContainerAsSortableHelperParent ? this.container : this.document.body
+        this.helper = helperParent.appendChild(clonedNode);
 
         this.helper.style.position = 'fixed';
         this.helper.style.top = `${this.boundingClientRect.top - margin.top}px`;
