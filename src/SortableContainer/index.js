@@ -284,7 +284,7 @@ export default function sortableContainer(WrappedComponent, config = {withRef: f
           return (field.value = fields[index] && fields[index].value);
         });
 
-        const helperParent = useContainerAsSortableHelperParent ? this.container : this.document.body
+        const helperParent = useContainerAsSortableHelperParent ? this.container : this.document.body;
         this.helper = helperParent.appendChild(clonedNode);
 
         this.helper.style.position = 'fixed';
