@@ -1,5 +1,8 @@
 Changelog
 ------------
+### 0.6.3
+Fixes issues caused by a disabled SortableElement being moved when `distance` is set to a value other than `0`
+
 ### 0.6.2
 Use `prop-types` package for PropType validation for compatibility with React ^15.5
 
