@@ -20,6 +20,10 @@ export default class Manager {
     }
   }
 
+  isActive() {
+    return this.active;
+  }
+
   getActive() {
     return find(
       this.refs[this.active.collection],
