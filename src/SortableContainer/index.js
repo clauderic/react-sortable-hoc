@@ -105,12 +105,18 @@ export default function sortableContainer(WrappedComponent, config = {withRef: f
         useWindowAsScrollContainer,
       } = this.props;
 
+      const findScrollTop = () => {
+        if (this.document.body['scrollTop']) { return this.document.body; }
+        else if (this.document.documentElement['scrollTop']) { return this.document.documentElement; }
+        return;
+      };
+
       this.container = typeof getContainer === 'function'
         ? getContainer(this.getWrappedInstance())
         : findDOMNode(this);
       this.document = this.container.ownerDocument || document;
       this.scrollContainer = useWindowAsScrollContainer
-        ? this.document.body
+        ? findScrollTop()
         : this.container;
       this.contentWindow = typeof contentWindow === 'function'
         ? contentWindow()
