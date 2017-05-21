@@ -1,5 +1,11 @@
 Changelog
 ------------
+### 0.6.3
+Fixes issues caused by a disabled SortableElement being moved when `distance` is set to a value other than `0`
+
+### 0.6.2
+Use `prop-types` package for PropType validation for compatibility with React ^15.5
+
 ### 0.6.1
 Tweak: default to `pointerEvents: none` on sortable helper, this way the underlying view can still be scrolled using the trackpad/mousewheel while sorting [#160](https://github.com/clauderic/react-sortable-hoc/pull/160)
 

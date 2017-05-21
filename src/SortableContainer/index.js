@@ -1,4 +1,5 @@
-import React, {Component, PropTypes} from 'react';
+import React, {Component} from 'react';
+import PropTypes from 'prop-types';
 import {findDOMNode} from 'react-dom';
 import invariant from 'invariant';
 
@@ -204,7 +205,7 @@ export default function sortableContainer(WrappedComponent, config = {withRef: f
         if (!distance && (!pressThreshold || pressThreshold && delta >= pressThreshold)) {
           clearTimeout(this.cancelTimer);
           this.cancelTimer = setTimeout(this.cancel, 0);
-        } else if (distance && delta >= distance) {
+        } else if (distance && delta >= distance && this.manager.isActive()) {
           this.handlePress(e);
         }
       }
@@ -293,6 +294,7 @@ export default function sortableContainer(WrappedComponent, config = {withRef: f
         if (hideSortableGhost) {
           this.sortableGhost = node;
           node.style.visibility = 'hidden';
+          node.style.opacity = 0;
         }
 
         this.minTranslate = {};
@@ -380,6 +382,7 @@ export default function sortableContainer(WrappedComponent, config = {withRef: f
 
       if (hideSortableGhost && this.sortableGhost) {
         this.sortableGhost.style.visibility = '';
+        this.sortableGhost.style.opacity = '';
       }
 
       const nodes = this.manager.refs[collection];
@@ -597,6 +600,7 @@ export default function sortableContainer(WrappedComponent, config = {withRef: f
 						 */
             this.sortableGhost = node;
             node.style.visibility = 'hidden';
+            node.style.opacity = 0;
           }
           continue;
         }
