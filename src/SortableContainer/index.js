@@ -326,6 +326,7 @@ export default function sortableContainer(WrappedComponent, config = {withRef: f
 
         if (helperClass) {
           this.helper.classList.add(...helperClass.split(' '));
+          this.originTransform = window.getComputedStyle(this.helper).transform;
         }
 
         this.listenerNode = e.touches ? node : this.contentWindow;
@@ -544,7 +545,7 @@ export default function sortableContainer(WrappedComponent, config = {withRef: f
 
       this.helper.style[
         `${vendorPrefix}Transform`
-      ] = `translate3d(${translate.x}px,${translate.y}px, 0)`;
+      ] = `translate3d(${translate.x}px,${translate.y}px, 0) ${this.originTransform || ''}`;
     }
 
     animateNodes() {
