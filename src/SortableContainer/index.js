@@ -143,10 +143,7 @@ export default function sortableContainer(WrappedComponent, config = {withRef: f
       }
 
       this._touched = true;
-      this._pos = {
-        x: e.pageX,
-        y: e.pageY,
-      };
+      this._pos = this.getOffset(e);
 
       const node = closest(e.target, el => el.sortableInfo != null);
 
@@ -196,9 +193,10 @@ export default function sortableContainer(WrappedComponent, config = {withRef: f
       const {distance, pressThreshold} = this.props;
 
       if (!this.state.sorting && this._touched) {
+        var current_pos = this.getOffset(e);
         this._delta = {
-          x: this._pos.x - e.pageX,
-          y: this._pos.y - e.pageY,
+          x: this._pos.x - current_pos.x,
+          y: this._pos.y - current_pos.y,
         };
         const delta = Math.abs(this._delta.x) + Math.abs(this._delta.y);
 
