@@ -144,8 +144,8 @@ export default function sortableContainer(WrappedComponent, config = {withRef: f
 
       this._touched = true;
       this._pos = {
-        x: e.clientX,
-        y: e.clientY,
+        x: e.pageX,
+        y: e.pageY,
       };
 
       const node = closest(e.target, el => el.sortableInfo != null);
@@ -197,8 +197,8 @@ export default function sortableContainer(WrappedComponent, config = {withRef: f
 
       if (!this.state.sorting && this._touched) {
         this._delta = {
-          x: this._pos.x - e.clientX,
-          y: this._pos.y - e.clientY,
+          x: this._pos.x - e.pageX,
+          y: this._pos.y - e.pageY,
         };
         const delta = Math.abs(this._delta.x) + Math.abs(this._delta.y);
 
@@ -440,9 +440,10 @@ export default function sortableContainer(WrappedComponent, config = {withRef: f
     }
 
     getOffset(e) {
+      debugger
       return {
-        x: e.touches ? e.touches[0].clientX : e.clientX,
-        y: e.touches ? e.touches[0].clientY : e.clientY,
+        x: e.touches ? e.touches[0].pageX : e.pageX,
+        y: e.touches ? e.touches[0].pageY : e.pageY,
       };
     }
 
