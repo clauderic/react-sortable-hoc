@@ -144,6 +144,29 @@ Upon sorting, `react-sortable-hoc` creates a clone of the element you are sortin
 ### Click events being swallowed
 By default, `react-sortable-hoc` is triggered immediately on `mousedown`. If you'd like to prevent this behaviour, there are a number of strategies readily available. You can use the `distance` prop to set a minimum distance (in pixels) to be dragged before sorting is enabled. You can also use the `pressDelay` prop to add a delay before sorting is enabled. Alternatively, you can also use the [SortableHandle](https://github.com/clauderic/react-sortable-hoc/blob/master/src/SortableHandle/index.js) HOC.
 
+### Wrapper props not passed down to wrapped Component
+All props for `SortableContainer` and `SortableElement` listed above are intentionally consumed by the wrapper component and are **not** passed down to the wrapped component. To make them available pass down the desired prop again with a different name. E.g.:
+
+```js
+const SortableItem = SortableElement(({value, sortIndex}) =>
+  <li>{value} - #{sortIndex}</li>
+);
+
+const SortableList = SortableContainer(({items}) => {
+  return (
+    <ul>
+      {items.map((value, index) => (
+        <SortableItem 
+          key={`item-${index}`}
+          index={index}
+          sortIndex={index}
+          value={value} 
+        />
+      ))}
+    </ul>
+  );
+});
+```
 
 Dependencies
 ------------
