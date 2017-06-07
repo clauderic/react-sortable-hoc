@@ -6,4 +6,5 @@ export sortableContainer from './SortableContainer';
 export sortableElement from './SortableElement';
 export sortableHandle from './SortableHandle';
 
-export {arrayMove} from './utils';
+export {arrayInsert,arrayMove} from './utils';
+export DragLayer from './DragLayer';

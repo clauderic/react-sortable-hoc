@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import ReactDOM from 'react-dom';
 import {storiesOf} from '@kadira/storybook';
 import style from './Storybook.scss';
-import {SortableContainer, SortableElement, SortableHandle, arrayMove} from '../index';
+import {SortableContainer, SortableElement, SortableHandle, arrayInsert, arrayMove, DragLayer} from '../index';
 import VirtualList from 'react-tiny-virtual-list';
 import {
   defaultTableRowRenderer,
@@ -17,10 +17,11 @@ import range from 'lodash/range';
 import random from 'lodash/random';
 import classNames from 'classnames';
 
-function getItems(count, height) {
+function getItems(count, height, label="Item") {
   var heights = [65, 110, 140, 65, 90, 65];
   return range(count).map(value => {
     return {
+      label,
       value,
       height: height || heights[random(0, heights.length - 1)],
     };
@@ -40,7 +41,7 @@ const Item = SortableElement(props => {
     >
       {props.shouldUseDragHandle && <Handle />}
       <div className={style.wrapper}>
-        <span>Item</span> {props.value}
+        <span>{props.label}</span> {props.value}
       </div>
     </div>
   );
@@ -54,11 +55,12 @@ const SortableList = SortableContainer(({
 }) => {
   return (
     <div className={className}>
-      {items.map(({value, height}, index) => (
+      {items.map(({value, height, label}, index) => (
         <Item
-          key={`item-${value}`}
+          key={`item-${value}${index}`}
           className={itemClass}
           index={index}
+          label={label}
           value={value}
           height={height}
           shouldUseDragHandle={shouldUseDragHandle}
@@ -67,6 +69,8 @@ const SortableList = SortableContainer(({
     </div>
   );
 });
+
+const dragLayer = new DragLayer();
 
 const Category = SortableElement(props => {
   return (
@@ -102,8 +106,10 @@ class ListWrapper extends Component {
     height: PropTypes.number,
     onSortStart: PropTypes.func,
     onSortEnd: PropTypes.func,
+    onSortSwap: PropTypes.func,
     component: PropTypes.func,
     shouldUseDragHandle: PropTypes.bool,
+    dragLayer: PropTypes.object,
   };
   static defaultProps = {
     className: classNames(style.list, style.stylizedList),
@@ -119,14 +125,35 @@ class ListWrapper extends Component {
       onSortStart(this.refs.component);
     }
   };
-  onSortEnd = ({oldIndex, newIndex}) => {
+  onSortEnd = ({oldIndex, newIndex, newList}) => {
     const {onSortEnd} = this.props;
     const {items} = this.state;
-
-    this.setState({items: arrayMove(items, oldIndex, newIndex), isSorting: false});
+    
+    if(newList){
+      newList.handleSortSwap(newIndex, {...items[oldIndex]});
+      newIndex = -1;
+    }
+    
+    this.setState({
+      items: arrayMove(items, oldIndex, newIndex),
+      isSorting: false,
+    });
 
     if (onSortEnd) {
       onSortEnd(this.refs.component);
+    }
+  };
+  onSortSwap = ({index, item}) => {
+    const {onSortSwap} = this.props;
+    const {items} = this.state;
+    
+    this.setState({
+      items: arrayInsert(items, index, item),
+      isSorting: true
+    });
+    
+    if (onSortSwap) {
+      onSortSwap(this.refs.component);
     }
   };
   render() {
@@ -137,6 +164,7 @@ class ListWrapper extends Component {
       items,
       onSortEnd: this.onSortEnd,
       onSortStart: this.onSortStart,
+      onSortSwap: this.onSortSwap,
       ref: 'component',
       useDragHandle: this.props.shouldUseDragHandle,
     };
@@ -467,6 +495,50 @@ storiesOf('Advanced', module)
       />
     );
   });
+
+storiesOf('Grouping', module)
+  .add('Basic usage', () => {
+    return (
+      <div className={style.rootRow}>
+        <ListWrapper
+          component={SortableList}
+          items={getItems(5, 59, "Dog")}
+          helperClass={style.stylizedHelper}
+          dragLayer={dragLayer}
+        />
+        <ListWrapper
+          component={SortableList}
+          items={getItems(5, 59, "Cat")}
+          helperClass={style.stylizedHelper}
+          dragLayer={dragLayer}
+        />
+      </div>
+    );
+  })
+  .add('Grid', () => {
+    return (
+      <div className={style.root}>
+        <ListWrapper
+          component={SortableList}
+          axis={'xy'}
+          items={getItems(10, 110, "Dog")}
+          helperClass={style.stylizedHelper}
+          dragLayer={dragLayer}
+          className={classNames(style.list, style.stylizedList, style.grid)}
+          itemClass={classNames(style.stylizedItem, style.gridItem)}
+        />
+        <ListWrapper
+          component={SortableList}
+          axis={'xy'}
+          items={getItems(10, 110, "Cat")}
+          helperClass={style.stylizedHelper}
+          dragLayer={dragLayer}
+          className={classNames(style.list, style.stylizedList, style.grid)}
+          itemClass={classNames(style.stylizedItem, style.gridItem)}
+        />
+      </div>
+    );
+  })
 
 storiesOf('Customization', module)
   .add('Minimal styling', () => {
