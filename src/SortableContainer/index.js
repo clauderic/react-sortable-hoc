@@ -2,6 +2,8 @@ import React, {Component} from 'react';
 import PropTypes from 'prop-types';
 import {findDOMNode} from 'react-dom';
 import invariant from 'invariant';
+import isEqual from 'lodash/isEqual'
+import findIndex from 'lodash/findIndex'
 
 import DragLayer from '../DragLayer';
 import Manager from '../Manager';
@@ -24,6 +26,7 @@ export default function sortableContainer(WrappedComponent, config = {withRef: f
       super(props);
       this.dragLayer = props.dragLayer || new DragLayer();
       this.dragLayer.addRef(this);
+      this.dragLayer.onDragEnd = props.onDragEnd
       this.manager = new Manager();
       this.events = {
         start: this.handleStart,
@@ -77,6 +80,7 @@ export default function sortableContainer(WrappedComponent, config = {withRef: f
       onSortStart: PropTypes.func,
       onSortMove: PropTypes.func,
       onSortEnd: PropTypes.func,
+      onDragEnd: PropTypes.func,
       shouldCancelStart: PropTypes.func,
       pressDelay: PropTypes.number,
       useDragHandle: PropTypes.bool,
@@ -118,6 +122,10 @@ export default function sortableContainer(WrappedComponent, config = {withRef: f
       this.scrollContainer = useWindowAsScrollContainer
         ? this.document.body
         : this.container;
+      this.initialScroll = {
+        top: this.scrollContainer.scrollTop,
+        left: this.scrollContainer.scrollLeft,
+      };
       this.contentWindow = typeof contentWindow === 'function'
         ? contentWindow()
         : contentWindow;
@@ -140,6 +148,25 @@ export default function sortableContainer(WrappedComponent, config = {withRef: f
           );
         }
       }
+    }
+
+    componentWillReceiveProps(nextProps) {
+      const { items } = this.props;
+      const { items: newItems } = nextProps;
+      const { active } = this.manager;
+      if (!active) return
+
+      const { index, collection } = active;
+
+      if (isEqual(items[index], newItems[index])) return
+      const newIndex = findIndex(newItems, items[index]);
+      if (newIndex==-1) {
+        this.dragLayer.stopDrag();
+        return
+      }
+      this.manager.active.index = newIndex;
+      this.index = newIndex
+
     }
 
     handleStart = e => {
@@ -237,7 +264,6 @@ export default function sortableContainer(WrappedComponent, config = {withRef: f
       const active = this.dragLayer.helper
         ? this.manager.getActive()
         : this.dragLayer.startDrag(this.document.body, this, e);
-      console.log('handlePress', this.manager.refs, this.manager.active, active)
       if (active) {
         const {
           axis,
@@ -247,7 +273,7 @@ export default function sortableContainer(WrappedComponent, config = {withRef: f
         } = this.props;
         const {node, collection} = active;
         const {index} = node.sortableInfo;
-        
+
         this.index = index;
         this.newIndex = index;
         this.axis = {
@@ -281,7 +307,7 @@ export default function sortableContainer(WrappedComponent, config = {withRef: f
 
     handleSortMove = e => {
       const {onSortMove} = this.props;
-      
+
       // animate nodes if required
       if(this.checkActive(e)){
         this.animateNodes();
@@ -293,6 +319,10 @@ export default function sortableContainer(WrappedComponent, config = {withRef: f
 
     handleSortEnd = (e, newList = null) => {
       const {hideSortableGhost, onSortEnd} = this.props;
+      if (!this.manager.active) {
+        console.warn('there is no active node', e)
+        return
+      }
       const {collection} = this.manager.active;
 
       if (hideSortableGhost && this.sortableGhost) {
@@ -331,8 +361,7 @@ export default function sortableContainer(WrappedComponent, config = {withRef: f
           //this.manager.active = newList.getClosestNode(e);
           this.newIndex = newList.getClosestNode(e).index;
         }
-        console.log('sort end', this.index, this.newIndex)
-        
+
         onSortEnd(
           {
             oldIndex: this.index,
@@ -346,7 +375,7 @@ export default function sortableContainer(WrappedComponent, config = {withRef: f
 
       this._touched = false;
     };
-    
+
     handleSortSwap = (index, item) => {
       const {onSortSwap} = this.props;
       if (typeof onSortSwap === 'function') {
@@ -431,7 +460,7 @@ export default function sortableContainer(WrappedComponent, config = {withRef: f
         y: offsetY,
       };
     }
-    
+
     getClosestNode = (e) => {
       // const node = closest(e.target, el => el.sortableInfo != null);
       // if(node && node.sortableInfo){
@@ -452,10 +481,16 @@ export default function sortableContainer(WrappedComponent, config = {withRef: f
       })
       const index = closestRect(p.x, p.y, closestNodes);
       const collection = closestCollections[index];
+      if (!collection) {
+        return {
+          collection,
+          index: 0
+        }
+      }
       const finalNodes = this.manager.refs[collection].map(n => n.node);
       const finalIndex = finalNodes.indexOf(closestNodes[index]);
       const node = closestNodes[index];
-      
+
       //TODO: add better support for grid
       const rect = node.getBoundingClientRect();
       return {
@@ -463,7 +498,7 @@ export default function sortableContainer(WrappedComponent, config = {withRef: f
         index: finalIndex + (p.y > rect.bottom ? 1 : 0)
       };
     }
-    
+
     checkActive = (e) => {
       const active = this.manager.active;
       if(!active){

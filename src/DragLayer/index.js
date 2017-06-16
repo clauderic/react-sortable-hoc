@@ -10,21 +10,21 @@ import {
 } from './utils';
 
 export default class DragLayer {
-  
+
   helper = null;
   lists = [];
-  
+
   addRef(list) {
     this.lists.push(list);
   }
-  
+
   removeRef(list) {
     let i = this.lists.indexOf(list);
     if(i != -1) {
       this.lists.splice(i, 1);
     }
   }
-  
+
   startDrag(parent, list, e) {
     const offset = getOffset(e);
     const active = list.manager.getActive();
@@ -42,7 +42,7 @@ export default class DragLayer {
       const margin = getElementMargin(node);
       const containerBoundingRect = list.container.getBoundingClientRect();
       const dimensions = getHelperDimensions({index, node, collection});
-  
+
       this.width = dimensions.width;
       this.height = dimensions.height;
       this.marginOffset = {
@@ -52,26 +52,26 @@ export default class DragLayer {
       this.boundingClientRect = node.getBoundingClientRect();
       this.containerBoundingRect = containerBoundingRect;
       this.currentList = list;
-  
+
       this.axis = {
         x: axis.indexOf('x') >= 0,
         y: axis.indexOf('y') >= 0,
       };
       this.offsetEdge = list.getEdgeOffset(node);
       this.initialOffset = offset;
-      
+
       const fields = node.querySelectorAll('input, textarea, select');
       const clonedNode = node.cloneNode(true);
       const clonedFields = [
         ...clonedNode.querySelectorAll('input, textarea, select'),
       ]; // Convert NodeList to Array
-  
+
       clonedFields.forEach((field, index) => {
         return (field.value = fields[index] && fields[index].value);
       });
-      
+
       this.helper = parent.appendChild(clonedNode);
-  
+
       this.helper.style.position = 'fixed';
       this.helper.style.top = `${this.boundingClientRect.top - margin.top}px`;
       this.helper.style.left = `${this.boundingClientRect.left - margin.left}px`;
@@ -79,7 +79,7 @@ export default class DragLayer {
       this.helper.style.height = `${this.height}px`;
       this.helper.style.boxSizing = 'border-box';
       this.helper.style.pointerEvents = 'none';
-      
+
       this.minTranslate = {};
       this.maxTranslate = {};
       if (this.axis.x) {
@@ -106,7 +106,7 @@ export default class DragLayer {
           this.boundingClientRect.top -
           this.height / 2;
       }
-      
+
       this.listenerNode = e.touches ? node : list.contentWindow;
       events.move.forEach(eventName =>
         this.listenerNode.addEventListener(
@@ -120,12 +120,16 @@ export default class DragLayer {
           this.handleSortEnd,
           false
         ));
-      
+
       return active;
     }
     return false;
   }
-  
+
+  stopDrag() {
+    this.handleSortEnd()
+  }
+
   handleSortMove = (e) => {
     e.preventDefault(); // Prevent scrolling on mobile
     this.updatePosition(e);
@@ -134,7 +138,7 @@ export default class DragLayer {
       this.currentList.handleSortMove(e);
     }
   }
-  
+
   handleSortEnd = (e) => {
     if (this.listenerNode) {
       events.move.forEach(eventName =>
@@ -145,12 +149,18 @@ export default class DragLayer {
       events.end.forEach(eventName =>
         this.listenerNode.removeEventListener(eventName, this.handleSortEnd));
     }
+
+    if (typeof this.onDragEnd === 'function') {
+      this.onDragEnd()
+    }
     // Remove the helper from the DOM
-    this.helper.parentNode.removeChild(this.helper);
-    this.helper = null;
-    this.currentList.handleSortEnd(e);
+    if (this.helper) {
+      this.helper.parentNode.removeChild(this.helper);
+      this.helper = null;
+      this.currentList.handleSortEnd(e);
+    }
   }
-  
+
   updatePosition(e) {
     const {lockAxis, lockToContainerEdges} = this.currentList.props;
     const offset = getOffset(e);
@@ -194,7 +204,7 @@ export default class DragLayer {
       `${vendorPrefix}Transform`
     ] = `translate3d(${translate.x}px,${translate.y}px, 0)`;
   }
-  
+
   updateTargetContainer(e) {
     const {pageX, pageY} = this.delta;
     const closest = this.lists[closestRect(pageX, pageY, this.lists.map(l => l.container))];
