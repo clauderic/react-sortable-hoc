@@ -25,7 +25,9 @@ export default class Manager {
   }
 
   getActive() {
+    if (!this.active) return null
     const activeRef = this.refs[this.active.collection]
+    if (!activeRef) return null
     return find(
       activeRef,
       // eslint-disable-next-line eqeqeq

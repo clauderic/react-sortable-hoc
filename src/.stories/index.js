@@ -586,7 +586,7 @@ storiesOf('Grouping', module)
           items={getItems(5, 59, "Cat")}
           helperClass={style.stylizedHelper}
           dragLayer={dragLayer}
-          // emulateUpdates
+          emulateUpdates
         />
       </div>
     );

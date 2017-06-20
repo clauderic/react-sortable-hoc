@@ -151,27 +151,26 @@ export default function sortableContainer(WrappedComponent, config = {withRef: f
     }
 
     componentWillReceiveProps(nextProps) {
-      const { items } = this.props;
-      const { items: newItems } = nextProps;
       const { active } = this.manager;
       if (!active) return
+      this.checkActiveIndex(nextProps)
+    }
 
-      const { index, collection } = active;
-
-      if (isEqual(items[index], newItems[index])) return
-      const newIndex = findIndex(newItems, items[index]);
+    checkActiveIndex = (nextProps) => {
+      const { items } = nextProps || this.props;
+      const { index, collection, item } = this.manager.active;
+      const newIndex = findIndex(items, item);
       if (newIndex==-1) {
         this.dragLayer.stopDrag();
         return
       }
       this.manager.active.index = newIndex;
       this.index = newIndex
-
     }
 
     handleStart = e => {
       const p = getOffset(e);
-      const {distance, shouldCancelStart} = this.props;
+      const {distance, shouldCancelStart, items} = this.props;
 
       if (e.button === 2 || shouldCancelStart(e)) {
         return false;
@@ -196,7 +195,7 @@ export default function sortableContainer(WrappedComponent, config = {withRef: f
         )
           return;
 
-        this.manager.active = {index, collection};
+        this.manager.active = {index, collection, item: items[index]};
 
         /*
 				 * Fixes a bug in Firefox where the :active state of anchor tags
@@ -261,17 +260,25 @@ export default function sortableContainer(WrappedComponent, config = {withRef: f
     };
 
     handlePress = e => {
-      const active = this.dragLayer.helper
-        ? this.manager.getActive()
-        : this.dragLayer.startDrag(this.document.body, this, e);
-      if (active) {
+      let activeNode = null;
+      if (this.dragLayer.helper) {
+        if (this.manager.active) {
+          this.checkActiveIndex()
+          activeNode = this.manager.getActive()
+        }
+      } else {
+        activeNode = this.dragLayer.startDrag(this.document.body, this, e);
+      }
+
+
+      if (activeNode) {
         const {
           axis,
           helperClass,
           hideSortableGhost,
           onSortStart,
         } = this.props;
-        const {node, collection} = active;
+        const {node, collection} = activeNode;
         const {index} = node.sortableInfo;
 
         this.index = index;
@@ -511,7 +518,7 @@ export default function sortableContainer(WrappedComponent, config = {withRef: f
           // find closest index in collection
           if(nodes){
             const index = closestRect(p.x, p.y, nodes);
-            this.manager.active = {index, collection};
+            this.manager.active = {index, collection, item: this.props.items[index]};
             this.handlePress(e);
           }
         }

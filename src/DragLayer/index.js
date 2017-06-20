@@ -27,9 +27,9 @@ export default class DragLayer {
 
   startDrag(parent, list, e) {
     const offset = getOffset(e);
-    const active = list.manager.getActive();
+    const activeNode = list.manager.getActive();
 
-    if (active) {
+    if (activeNode) {
       const {
         axis,
         getHelperDimensions,
@@ -37,7 +37,7 @@ export default class DragLayer {
         hideSortableGhost,
         useWindowAsScrollContainer,
       } = list.props;
-      const {node, collection} = active;
+      const {node, collection} = activeNode;
       const {index} = node.sortableInfo;
       const margin = getElementMargin(node);
       const containerBoundingRect = list.container.getBoundingClientRect();
@@ -121,7 +121,7 @@ export default class DragLayer {
           false
         ));
 
-      return active;
+      return activeNode;
     }
     return false;
   }
@@ -208,10 +208,12 @@ export default class DragLayer {
   updateTargetContainer(e) {
     const {pageX, pageY} = this.delta;
     const closest = this.lists[closestRect(pageX, pageY, this.lists.map(l => l.container))];
+    const { item } = this.currentList.manager.active;
+    this.active = item;
     if(closest != this.currentList){
       this.currentList.handleSortEnd(e, closest);
       this.currentList = closest;
-      this.currentList.manager.active = this.currentList.getClosestNode(e);
+      this.currentList.manager.active = { ...this.currentList.getClosestNode(e), item};
       this.currentList.handlePress(e);
       //console.log(this.currentList.active)
     }
