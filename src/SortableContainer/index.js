@@ -365,7 +365,6 @@ export default function sortableContainer(WrappedComponent, config = {withRef: f
       if (typeof onSortEnd === 'function') {
         // get the index in the new list
         if(newList){
-          //this.manager.active = newList.getClosestNode(e);
           this.newIndex = newList.getClosestNode(e).index;
         }
 
@@ -488,7 +487,7 @@ export default function sortableContainer(WrappedComponent, config = {withRef: f
       })
       const index = closestRect(p.x, p.y, closestNodes);
       const collection = closestCollections[index];
-      if (!collection) {
+      if (collection === undefined) {
         return {
           collection,
           index: 0
@@ -497,7 +496,6 @@ export default function sortableContainer(WrappedComponent, config = {withRef: f
       const finalNodes = this.manager.refs[collection].map(n => n.node);
       const finalIndex = finalNodes.indexOf(closestNodes[index]);
       const node = closestNodes[index];
-
       //TODO: add better support for grid
       const rect = node.getBoundingClientRect();
       return {
@@ -528,16 +526,19 @@ export default function sortableContainer(WrappedComponent, config = {withRef: f
     }
 
     animateNodes() {
+      if (!this.axis) return
       const {transitionDuration, hideSortableGhost} = this.props;
       const nodes = this.manager.getOrderedRefs();
       const deltaScroll = {
         left: this.scrollContainer.scrollLeft - this.initialScroll.left,
         top: this.scrollContainer.scrollTop - this.initialScroll.top,
       };
+
       const sortingOffset = {
-        left: this.dragLayer.offsetEdge.left + this.dragLayer.translate.x + deltaScroll.left,
-        top: this.dragLayer.offsetEdge.top + this.dragLayer.translate.y + deltaScroll.top,
+        left: this.dragLayer.offsetEdge.left - this.dragLayer.distanceBetweenContainers.x + this.dragLayer.translate.x + deltaScroll.left,
+        top: this.dragLayer.offsetEdge.top - this.dragLayer.distanceBetweenContainers.y + this.dragLayer.translate.y + deltaScroll.top,
       };
+
       this.newIndex = null;
       for (let i = 0, len = nodes.length; i < len; i++) {
         const {node} = nodes[i];
@@ -589,10 +590,10 @@ export default function sortableContainer(WrappedComponent, config = {withRef: f
             `${vendorPrefix}TransitionDuration`
           ] = `${transitionDuration}ms`;
         }
-
         if (this.axis.x) {
           if (this.axis.y) {
             // Calculations for a grid setup
+
             if (
               index < this.index &&
               (
@@ -652,6 +653,7 @@ export default function sortableContainer(WrappedComponent, config = {withRef: f
               sortingOffset.left <= edgeOffset.left + offset.width
             ) {
               translate.x = this.dragLayer.width + this.dragLayer.marginOffset.x;
+
               if (this.newIndex == null) {
                 this.newIndex = index;
               }
@@ -727,8 +729,8 @@ export default function sortableContainer(WrappedComponent, config = {withRef: f
             };
             this.scrollContainer.scrollTop += offset.top;
             this.scrollContainer.scrollLeft += offset.left;
-            this.dragLayer.translate.x += offset.left;
-            this.dragLayer.translate.y += offset.top;
+            // this.dragLayer.translate.x += offset.left;
+            // this.dragLayer.translate.y += offset.top;
             this.animateNodes();
           },
           5

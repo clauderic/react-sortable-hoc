@@ -7,6 +7,7 @@ import {
 } from '../utils';
 import {
   closestRect,
+  updateDistanceBetweenContainers,
 } from './utils';
 
 export default class DragLayer {
@@ -59,6 +60,10 @@ export default class DragLayer {
       };
       this.offsetEdge = list.getEdgeOffset(node);
       this.initialOffset = offset;
+      this.distanceBetweenContainers = {
+        x: 0,
+        y: 0
+      }
 
       const fields = node.querySelectorAll('input, textarea, select');
       const clonedNode = node.cloneNode(true);
@@ -211,11 +216,21 @@ export default class DragLayer {
     const { item } = this.currentList.manager.active;
     this.active = item;
     if(closest != this.currentList){
+      this.distanceBetweenContainers = updateDistanceBetweenContainers(
+        this.distanceBetweenContainers,
+        closest,
+        this.currentList,
+        {
+          width: this.width,
+          height: this.height
+        }
+      )
       this.currentList.handleSortEnd(e, closest);
       this.currentList = closest;
       this.currentList.manager.active = { ...this.currentList.getClosestNode(e), item};
+      // const activeNode = this.currentList.manager.getActive().node;
+      // this.offsetEdge = this.currentList.getEdgeOffset(activeNode);
       this.currentList.handlePress(e);
-      //console.log(this.currentList.active)
     }
   }
 }

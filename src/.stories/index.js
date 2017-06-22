@@ -562,7 +562,7 @@ storiesOf('Grouping', module)
         <ListWrapper
           component={SortableList}
           axis={'xy'}
-          items={getItems(10, 110, "Cat")}
+          items={getItems(11, 110, "Cat")}
           helperClass={style.stylizedHelper}
           dragLayer={dragLayer}
           className={classNames(style.list, style.stylizedList, style.grid)}
