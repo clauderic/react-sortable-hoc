@@ -17,12 +17,12 @@ import range from 'lodash/range';
 import random from 'lodash/random';
 import classNames from 'classnames';
 
-function getItems(count, height, label="Item") {
+function getItems(count, height, label="Item", value) {
   var heights = [65, 110, 140, 65, 90, 65];
-  return range(count).map(value => {
+  return range(count).map(val => {
     return {
       label,
-      value,
+      value: value || val,
       height: height || heights[random(0, heights.length - 1)],
     };
   });
@@ -110,6 +110,7 @@ class ListWrapper extends Component {
     component: PropTypes.func,
     shouldUseDragHandle: PropTypes.bool,
     dragLayer: PropTypes.object,
+    emulateUpdates: PropTypes.bool
   };
   static defaultProps = {
     className: classNames(style.list, style.stylizedList),
@@ -128,12 +129,12 @@ class ListWrapper extends Component {
   onSortEnd = ({oldIndex, newIndex, newList}) => {
     const {onSortEnd} = this.props;
     const {items} = this.state;
-    
+
     if(newList){
       newList.handleSortSwap(newIndex, {...items[oldIndex]});
       newIndex = -1;
     }
-    
+
     this.setState({
       items: arrayMove(items, oldIndex, newIndex),
       isSorting: false,
@@ -146,16 +147,47 @@ class ListWrapper extends Component {
   onSortSwap = ({index, item}) => {
     const {onSortSwap} = this.props;
     const {items} = this.state;
-    
+
     this.setState({
       items: arrayInsert(items, index, item),
       isSorting: true
     });
-    
+
     if (onSortSwap) {
       onSortSwap(this.refs.component);
     }
   };
+
+  updateTimeoutId = null;
+
+  emulateUpdates = () => {
+    this.setState(({items}) => {
+      const isRemove = ( Math.random() >= 0.5 )
+      const label = (items[0] || {label: 'Animal'}).label
+      const value = +(items.slice(-1)[0] || {value: 0}).value + 1
+      const item = getItems(1,59, label, value)[0]
+      // console.log(items.map(i=>i.value), isRemove ? 'remove: ' : 'add: ', isRemove ? items[0] : item)
+      return {
+        items: isRemove
+          ? arrayMove(items, 0, -1)
+          : arrayInsert(items, items.length, item),
+        isSorting: false
+      }
+    }, ()=> {
+      this.updateTimeoutId = setTimeout(this.emulateUpdates, Math.floor(Math.random()*3000)+2000)
+    });
+  }
+
+  componentDidMount() {
+    if (this.props.emulateUpdates) {
+      this.emulateUpdates()
+    }
+  }
+
+  componentWillUnmount() {
+    clearTimeout(this.updateTimeoutId)
+  }
+
   render() {
     const Component = this.props.component;
     const {items, isSorting} = this.state;
@@ -530,11 +562,31 @@ storiesOf('Grouping', module)
         <ListWrapper
           component={SortableList}
           axis={'xy'}
-          items={getItems(10, 110, "Cat")}
+          items={getItems(11, 110, "Cat")}
           helperClass={style.stylizedHelper}
           dragLayer={dragLayer}
           className={classNames(style.list, style.stylizedList, style.grid)}
           itemClass={classNames(style.stylizedItem, style.gridItem)}
+        />
+      </div>
+    );
+  })
+  .add('Adding / Deleting items', () => {
+    return (
+      <div className={style.rootRow}>
+        <ListWrapper
+          component={SortableList}
+          items={getItems(5, 59, "Dog")}
+          helperClass={style.stylizedHelper}
+          dragLayer={dragLayer}
+          // emulateUpdates
+        />
+        <ListWrapper
+          component={SortableList}
+          items={getItems(5, 59, "Cat")}
+          helperClass={style.stylizedHelper}
+          dragLayer={dragLayer}
+          emulateUpdates
         />
       </div>
     );
