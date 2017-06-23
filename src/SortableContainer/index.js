@@ -281,7 +281,7 @@ export default function sortableContainer(WrappedComponent, config = {withRef: f
           return (field.value = fields[index] && fields[index].value);
         });
 
-        this.helper = this.document.body.appendChild(clonedNode);
+        this.helper = this.scrollContainer.appendChild(clonedNode);
 
         this.helper.style.position = 'fixed';
         this.helper.style.top = `${this.boundingClientRect.top - margin.top}px`;
