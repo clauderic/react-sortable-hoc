@@ -44,7 +44,7 @@ export default function sortableElement(WrappedComponent, config = {withRef: fal
           this.setDraggable(collection, index);
         }
       } else if (this.props.collection !== nextProps.collection) {
-        this.removeDraggable(this.props.collection);
+        this.ref && this.removeDraggable(this.props.collection);
         this.setDraggable(nextProps.collection, nextProps.index);
       }
     }
