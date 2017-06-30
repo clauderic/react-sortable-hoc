@@ -77,10 +77,22 @@
     border-bottom: 0;
 }
 
+.verticalList {
+    display: flex;
+    flex-direction: column;
+    height: 600px;
+    width: 300px;
+}
+
+.verticalItem {
+    height: 100px;
+    flex-shrink: 0;
+}
+
 // Grid
 .grid {
     display: block;
-    width: 130 * 4px;
+    width: 560px;//130 * 4px;
     height: 350px;
     white-space: nowrap;
     border: 0;
@@ -167,6 +179,11 @@
 
 .shrinkedHelper {
     height: 20px !important;
+}
+
+.mergeStyle {
+    border: 1px solid black;
+    background: red;
 }
 
 :global {
