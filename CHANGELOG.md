@@ -1,5 +1,8 @@
 Changelog
 ------------
+### 0.6.4
+Fix: when cloning the element that is being sorted, we no longer update the value of cloned file inputs [#232](https://github.com/clauderic/react-sortable-hoc/pull/232)
+
 ### 0.6.3
 Fixes issues caused by a disabled SortableElement being moved when `distance` is set to a value other than `0`
 
