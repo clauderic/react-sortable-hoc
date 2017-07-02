@@ -144,8 +144,8 @@ export default function sortableContainer(WrappedComponent, config = {withRef: f
 
       this._touched = true;
       this._pos = {
-        x: e.clientX,
-        y: e.clientY,
+        x: e.pageX,
+        y: e.pageY,
       };
 
       const node = closest(e.target, el => el.sortableInfo != null);
@@ -197,8 +197,8 @@ export default function sortableContainer(WrappedComponent, config = {withRef: f
 
       if (!this.state.sorting && this._touched) {
         this._delta = {
-          x: this._pos.x - e.clientX,
-          y: this._pos.y - e.clientY,
+          x: this._pos.x - e.pageX,
+          y: this._pos.y - e.pageY,
         };
         const delta = Math.abs(this._delta.x) + Math.abs(this._delta.y);
 
@@ -269,6 +269,11 @@ export default function sortableContainer(WrappedComponent, config = {withRef: f
         this.initialScroll = {
           top: this.scrollContainer.scrollTop,
           left: this.scrollContainer.scrollLeft,
+        };
+
+        this.initialWindowScroll = {
+          top: window.scrollY,
+          left: window.scrollX,
         };
 
         const fields = node.querySelectorAll('input, textarea, select');
@@ -443,8 +448,8 @@ export default function sortableContainer(WrappedComponent, config = {withRef: f
 
     getOffset(e) {
       return {
-        x: e.touches ? e.touches[0].clientX : e.clientX,
-        y: e.touches ? e.touches[0].clientY : e.clientY,
+        x: e.touches ? e.touches[0].pageX : e.pageX,
+        y: e.touches ? e.touches[0].pageY : e.pageY,
       };
     }
 
@@ -508,11 +513,16 @@ export default function sortableContainer(WrappedComponent, config = {withRef: f
 
     updatePosition(e) {
       const {lockAxis, lockToContainerEdges} = this.props;
+      
       const offset = this.getOffset(e);
       const translate = {
         x: offset.x - this.initialOffset.x,
         y: offset.y - this.initialOffset.y,
       };
+      // Adjust for window scroll
+      translate.y -= (window.scrollY - this.initialWindowScroll.top);
+      translate.x -= (window.scrollX - this.initialWindowScroll.left);
+
       this.translate = translate;
 
       if (lockToContainerEdges) {
@@ -560,6 +570,10 @@ export default function sortableContainer(WrappedComponent, config = {withRef: f
         left: this.offsetEdge.left + this.translate.x + deltaScroll.left,
         top: this.offsetEdge.top + this.translate.y + deltaScroll.top,
       };
+      const scrollDifference = {
+        top: (window.scrollY - this.initialWindowScroll.top),
+        left: (window.scrollX - this.initialWindowScroll.left),
+      };
       this.newIndex = null;
 
       for (let i = 0, len = nodes.length; i < len; i++) {
@@ -571,6 +585,7 @@ export default function sortableContainer(WrappedComponent, config = {withRef: f
           width: this.width > width ? width / 2 : this.width / 2,
           height: this.height > height ? height / 2 : this.height / 2,
         };
+
         const translate = {
           x: 0,
           y: 0,
@@ -619,9 +634,9 @@ export default function sortableContainer(WrappedComponent, config = {withRef: f
             if (
               index < this.index &&
               (
-                (sortingOffset.left - offset.width <= edgeOffset.left &&
-                sortingOffset.top <= edgeOffset.top + offset.height) ||
-                sortingOffset.top + offset.height <= edgeOffset.top
+                ((sortingOffset.left + scrollDifference.left) - offset.width <= edgeOffset.left &&
+                (sortingOffset.top + scrollDifference.top) <= edgeOffset.top + offset.height) ||
+                (sortingOffset.top + scrollDifference.top) + offset.height <= edgeOffset.top
               )
             ) {
               // If the current node is to the left on the same row, or above the node that's being dragged
@@ -643,9 +658,9 @@ export default function sortableContainer(WrappedComponent, config = {withRef: f
             } else if (
               index > this.index &&
               (
-                (sortingOffset.left + offset.width >= edgeOffset.left &&
-                sortingOffset.top + offset.height >= edgeOffset.top) ||
-                sortingOffset.top + offset.height >= edgeOffset.top + height
+                ((sortingOffset.left + scrollDifference.left) + offset.width >= edgeOffset.left &&
+                (sortingOffset.top + scrollDifference.top) + offset.height >= edgeOffset.top) ||
+                (sortingOffset.top + scrollDifference.top) + offset.height >= edgeOffset.top + height
               )
             ) {
               // If the current node is to the right on the same row, or below the node that's being dragged
@@ -666,13 +681,13 @@ export default function sortableContainer(WrappedComponent, config = {withRef: f
           } else {
             if (
               index > this.index &&
-              sortingOffset.left + offset.width >= edgeOffset.left
+              (sortingOffset.left + scrollDifference.left) + offset.width >= edgeOffset.left
             ) {
               translate.x = -(this.width + this.marginOffset.x);
               this.newIndex = index;
             } else if (
               index < this.index &&
-              sortingOffset.left <= edgeOffset.left + offset.width
+              (sortingOffset.left + scrollDifference.left) <= edgeOffset.left + offset.width
             ) {
               translate.x = this.width + this.marginOffset.x;
               if (this.newIndex == null) {
@@ -683,13 +698,13 @@ export default function sortableContainer(WrappedComponent, config = {withRef: f
         } else if (this.axis.y) {
           if (
             index > this.index &&
-            sortingOffset.top + offset.height >= edgeOffset.top
+            (sortingOffset.top + scrollDifference.top) + offset.height >= edgeOffset.top
           ) {
             translate.y = -(this.height + this.marginOffset.y);
             this.newIndex = index;
           } else if (
             index < this.index &&
-            sortingOffset.top <= edgeOffset.top + offset.height
+            (sortingOffset.top + scrollDifference.top) <= edgeOffset.top + offset.height
           ) {
             translate.y = this.height + this.marginOffset.y;
             if (this.newIndex == null) {
