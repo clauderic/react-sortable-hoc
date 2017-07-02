@@ -278,7 +278,9 @@ export default function sortableContainer(WrappedComponent, config = {withRef: f
         ]; // Convert NodeList to Array
 
         clonedFields.forEach((field, index) => {
-          return (field.value = fields[index] && fields[index].value);
+          if (field.type !== 'file' && fields[index]) {		
+            field.value = fields[index].value;
+          }
         });
 
         this.helper = this.document.body.appendChild(clonedNode);
