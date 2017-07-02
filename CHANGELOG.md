@@ -1,5 +1,8 @@
 Changelog
 ------------
+### 0.6.5
+Fixes the position of the sortable helper when the page is scrolled [#213](https://github.com/clauderic/react-sortable-hoc/pull/213)
+
 ### 0.6.4
 Fix: when cloning the element that is being sorted, we no longer update the value of cloned file inputs [#232](https://github.com/clauderic/react-sortable-hoc/pull/232)
 
