@@ -20,7 +20,7 @@ var plugins = {
 }
 
 module.exports = {
-    devtool: (minify) ? 'source-map' : null,
+    devtool: (minify) ? 'source-map' : undefined,
     entry: [
         './src/index'
     ],

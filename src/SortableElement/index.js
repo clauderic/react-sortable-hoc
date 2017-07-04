@@ -81,7 +81,7 @@ export default function sortableElement(WrappedComponent, config = { withRef: fa
     }
 
     render() {
-      const ref = config.withRef ? 'wrappedInstance' : null;
+      const ref = config.withRef ? 'wrappedInstance' : undefined;
 
       return (
         <WrappedComponent

@@ -105,7 +105,7 @@ export default function sortableContainer(WrappedComponent: React.ComponentClass
       distance: 0,
       useWindowAsScrollContainer: false,
       hideSortableGhost: true,
-      contentWindow: typeof window !== 'undefined' ? window : null,
+      contentWindow: typeof window !== 'undefined' ? window : undefined,
       shouldCancelStart: function (e: React.UIEvent<any>) {
         // Cancel sorting if the event target is an `input`, `textarea`, `select` or `option`
         const disabledElements = ['input', 'textarea', 'select', 'option', 'button'];
@@ -312,7 +312,7 @@ export default function sortableContainer(WrappedComponent: React.ComponentClass
     cancel = () => {
       if (!this.state.sorting) {
         clearTimeout(this.pressTimer);
-        this.manager.active = null;
+        this.manager.active = undefined;
       }
     };
 
@@ -486,7 +486,7 @@ export default function sortableContainer(WrappedComponent: React.ComponentClass
         const el = node.node;
 
         // Clear the cached offsetTop / offsetLeft value
-        node.edgeOffset = null;
+        node.edgeOffset = undefined;
 
         // Remove the transforms / transitions
         el.style[`${vendorPrefix}Transform`] = '';
@@ -495,14 +495,14 @@ export default function sortableContainer(WrappedComponent: React.ComponentClass
 
       // Stop autoscroll
       clearInterval(this.autoscrollInterval);
-      this.autoscrollInterval = null;
+      this.autoscrollInterval = undefined;
 
       // Update state
-      this.manager.active = null;
+      this.manager.active = undefined;
 
       this.setState({
         sorting: false,
-        sortingIndex: null,
+        sortingIndex: undefined,
       });
 
       if (typeof onSortEnd === 'function') {
@@ -572,7 +572,7 @@ export default function sortableContainer(WrappedComponent: React.ComponentClass
         const match = /^[+-]?\d*(?:\.\d*)?(px|%)$/.exec(lockOffset);
 
         invariant(
-          match !== null,
+          match !== undefined,
           'lockOffset value should be a number or a string of a ' +
           'number followed by "px" or "%". Given %s',
           lockOffset
@@ -662,7 +662,7 @@ export default function sortableContainer(WrappedComponent: React.ComponentClass
         top: (window.scrollY - this.initialWindowScroll.top),
         left: (window.scrollX - this.initialWindowScroll.left),
       };
-      this.newIndex = null;
+      this.newIndex = undefined;
 
       for (let i = 0, len = nodes.length; i < len; i++) {
         const { node } = nodes[i];
@@ -740,7 +740,7 @@ export default function sortableContainer(WrappedComponent: React.ComponentClass
                 translate.x = nextNode.edgeOffset.left - edgeOffset.left;
                 translate.y = nextNode.edgeOffset.top - edgeOffset.top;
               }
-              if (this.newIndex === null) {
+              if (this.newIndex === undefined) {
                 this.newIndex = index;
               }
             } else if (
@@ -778,7 +778,7 @@ export default function sortableContainer(WrappedComponent: React.ComponentClass
               (sortingOffset.left + scrollDifference.left) <= edgeOffset.left + offset.width
             ) {
               translate.x = this.width + this.marginOffset.x;
-              if (this.newIndex == null) {
+              if (this.newIndex == undefined) {
                 this.newIndex = index;
               }
             }
@@ -795,7 +795,7 @@ export default function sortableContainer(WrappedComponent: React.ComponentClass
             (sortingOffset.top + scrollDifference.top) <= edgeOffset.top + offset.height
           ) {
             translate.y = this.height + this.marginOffset.y;
-            if (this.newIndex == null) {
+            if (this.newIndex == undefined) {
               this.newIndex = index;
             }
           }
@@ -803,7 +803,7 @@ export default function sortableContainer(WrappedComponent: React.ComponentClass
         node.style[`${vendorPrefix}Transform`] = `translate3d(${translate.x}px,${translate.y}px,0)`;
       }
 
-      if (this.newIndex == null) {
+      if (this.newIndex == undefined) {
         this.newIndex = this.index;
       }
     }
@@ -839,7 +839,7 @@ export default function sortableContainer(WrappedComponent: React.ComponentClass
 
       if (this.autoscrollInterval) {
         clearInterval(this.autoscrollInterval);
-        this.autoscrollInterval = null;
+        this.autoscrollInterval = undefined;
         this.isAutoScrolling = false;
       }
 
@@ -871,7 +871,7 @@ export default function sortableContainer(WrappedComponent: React.ComponentClass
     }
 
     render() {
-      const ref = config.withRef ? 'wrappedInstance' : null;
+      const ref = config.withRef ? 'wrappedInstance' : undefined;
 
       return (
         <WrappedComponent

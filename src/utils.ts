@@ -31,7 +31,7 @@ export const vendorPrefix: string = (function () {
   if (typeof window === 'undefined' || typeof document === 'undefined') return ''; // server environment
   // fix for:
   //    https://bugzilla.mozilla.org/show_bug.cgi?id=548397
-  //    window.getComputedStyle() returns null inside an iframe with display: none
+  //    window.getComputedStyle() returns undefined inside an iframe with display: none
   // in this case return an array with a fake mozilla style in it.
   const styles = window.getComputedStyle(document.documentElement, '') || ['-moz-hidden-iframe'];
   const pre = (Array.prototype.slice.call(styles).join('').match(/-(moz|webkit|ms)-/) || ((styles as any).OLink === '' && ['', 'o']))[1];
@@ -44,7 +44,7 @@ export const vendorPrefix: string = (function () {
   }
 })();
 
-export function closest(el: HTMLElement | undefined | null, fn: (t: HTMLElement) => boolean) {
+export function closest(el: HTMLElement | undefined | undefined, fn: (t: HTMLElement) => boolean) {
   while (el) {
     if (fn(el)) return el;
     el = el.parentElement;
