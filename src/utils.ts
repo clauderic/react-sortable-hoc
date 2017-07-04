@@ -1,4 +1,6 @@
 import * as React from 'react';
+import { SortableNode } from './Manager';
+import { SortableHandleNode } from './SortableHandle';
 
 export function arrayMove(arr: any[], previousIndex: number, newIndex: number) {
   const array = arr.slice(0);
@@ -12,11 +14,11 @@ export function arrayMove(arr: any[], previousIndex: number, newIndex: number) {
   return array;
 }
 
-export function omit(obj: {[key: string]: any}, ...keysToOmit: string[]) {
+export function omit(obj: { [key: string]: any }, ...keysToOmit: string[]) {
   return Object.keys(obj).reduce((acc, key) => {
     if (keysToOmit.indexOf(key) === -1) acc[key] = obj[key];
     return acc;
-  }, {} as {[key: string]: any});
+  }, {} as { [key: string]: any });
 }
 
 export const events = {
@@ -42,11 +44,24 @@ export const vendorPrefix: string = (function () {
   }
 })();
 
-export function closest(el: Node | undefined | null, fn: (t: Node) => boolean) {
+export function closest(el: HTMLElement | undefined | null, fn: (t: HTMLElement) => boolean) {
   while (el) {
     if (fn(el)) return el;
-    el = el.parentNode;
+    el = el.parentElement;
   }
+}
+
+/**
+ * A [user-defined type guard][0] for use within typescript
+ * [0]: https://github.com/Microsoft/TypeScript-Handbook/blob/v2.1/pages/Advanced%20Types.md#user-defined-type-guards
+ * @param node HTMLElement to check
+ */
+export function nodeIsSortable(node: any): node is SortableNode {
+  return node && (node as SortableNode).sortableInfo !== undefined;
+}
+
+export function nodeIsSortableHandle(node: any): node is SortableHandleNode {
+  return node && (node as SortableHandleNode).sortableHandle;
 }
 
 export function limit(min: number, max: number, value: number) {

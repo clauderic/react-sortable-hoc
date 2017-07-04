@@ -1,9 +1,10 @@
-import React, { Component } from 'react';
-import PropTypes from 'prop-types';
+// import React, { Component } from 'react';
+import * as React from 'react';
+import * as PropTypes from 'prop-types';
 import { findDOMNode } from 'react-dom';
-import invariant from 'invariant';
+import * as invariant from 'invariant';
 
-import Manager from '../Manager';
+import Manager, { SortableNode } from '../Manager';
 import {
   closest,
   events,
@@ -12,12 +13,70 @@ import {
   getElementMargin,
   provideDisplayName,
   omit,
+  nodeIsSortable,
+  nodeIsSortableHandle
 } from '../utils';
 
+type Axis = 'x' | 'y' | 'z';
+
+// TODO
+interface SortStartHandler extends EventListener { }
+interface SortMoveHandler extends EventListener { }
+interface SortEndHandler extends EventListener { }
+
+
+interface SortableContainerProps {
+  axis?: Axis,
+  distance?: number,
+  lockAxis?: Axis,
+  helperClass?: string,
+  transitionDuration?: number,
+  contentWindow?: Window,
+  onSortStart?: SortStartHandler,
+  onSortMove?: SortMoveHandler,
+  onSortEnd?: SortEndHandler,
+  shouldCancelStart?: any, // TODO
+  pressDelay?: number,
+  pressThreshold?: number,
+  useDragHandle?: boolean,
+  useWindowAsScrollContainer?: boolean,
+  hideSortableGhost?: boolean,
+  lockToContainerEdges?: boolean,
+  lockOffset?: any, // TODO
+  getContainer?: any, // TODO
+  getHelperDimensions?: any, //TODO
+}
+
+interface SortableContainerState {
+  sorting: boolean
+}
+
 // Export Higher Order Sortable Container Component
-export default function sortableContainer(WrappedComponent, config = { withRef: false }) {
-  return class extends Component {
-    constructor(props) {
+export default function sortableContainer(WrappedComponent: React.ComponentClass, config = { withRef: false }) {
+  return class extends React.Component<SortableContainerProps, SortableContainerState> {
+    manager: Manager;
+
+    events: {
+      start: SortStartHandler,
+      move: SortMoveHandler,
+      end: SortEndHandler
+    };
+
+    container: HTMLElement;
+
+    document: Document;
+
+    scrollContainer: HTMLElement;
+
+    contentWindow: Window;
+    pressTimer: number;
+    cancelTimer: number;
+
+    protected _touched: boolean;
+    protected _pos: { x: number, y: number }
+    protected _delta: { x: number, y: number }
+
+    constructor(props: SortableContainerProps) {
       super(props);
       this.manager = new Manager();
       this.events = {
@@ -31,7 +90,9 @@ export default function sortableContainer(WrappedComponent, config = { withRef: 
         'Attempted to set both `pressDelay` and `distance` on SortableContainer, you may only use one or the other, not both at the same time.'
       );
 
-      this.state = {};
+      this.state = {
+        sorting: false
+      };
     }
 
     static displayName = provideDisplayName('sortableList', WrappedComponent);
@@ -45,17 +106,17 @@ export default function sortableContainer(WrappedComponent, config = { withRef: 
       useWindowAsScrollContainer: false,
       hideSortableGhost: true,
       contentWindow: typeof window !== 'undefined' ? window : null,
-      shouldCancelStart: function (e) {
+      shouldCancelStart: function (e: React.UIEvent<any>) {
         // Cancel sorting if the event target is an `input`, `textarea`, `select` or `option`
         const disabledElements = ['input', 'textarea', 'select', 'option', 'button'];
 
-        if (disabledElements.indexOf(e.target.tagName.toLowerCase()) !== -1) {
+        if (disabledElements.indexOf(e.currentTarget.tagName.toLowerCase()) !== -1) {
           return true; // Return true to cancel sorting
         }
       },
       lockToContainerEdges: false,
       lockOffset: '50%',
-      getHelperDimensions: ({ node }) => ({
+      getHelperDimensions: ({ node }: { node: SortableNode }) => ({
         width: node.offsetWidth,
         height: node.offsetHeight,
       }),
@@ -118,9 +179,13 @@ export default function sortableContainer(WrappedComponent, config = { withRef: 
 
       for (const key in this.events) {
         if (this.events.hasOwnProperty(key)) {
-          events[key].forEach(eventName =>
-            this.container.addEventListener(eventName, this.events[key], false)
-          );
+          // explictly check for `start`, `move`, or `end` for
+          // typescript's typeguards
+          if (key === 'start' || key === 'move' || key === 'end') {
+            events[key].forEach(eventName =>
+              this.container.addEventListener(eventName, this.events[key], false)
+            );
+          }
         }
       }
     }
@@ -128,31 +193,42 @@ export default function sortableContainer(WrappedComponent, config = { withRef: 
     componentWillUnmount() {
       for (const key in this.events) {
         if (this.events.hasOwnProperty(key)) {
-          events[key].forEach(eventName =>
-            this.container.removeEventListener(eventName, this.events[key])
-          );
+          // explictly check for `start`, `move`, or `end` for
+          // typescript's typeguards
+          if (key === 'start' || key === 'move' || key === 'end') {
+            events[key].forEach(eventName =>
+              this.container.removeEventListener(eventName, this.events[key])
+            );
+          }
         }
       }
     }
 
-    handleStart = e => {
+    handleStart = (e: MouseEvent | TouchEvent) => {
       const { distance, shouldCancelStart } = this.props;
 
-      if (e.button === 2 || shouldCancelStart(e)) {
+      const target = e.target as HTMLElement;
+
+      if (e instanceof MouseEvent && e.button === 2 || shouldCancelStart(e)) {
         return false;
       }
 
       this._touched = true;
-      this._pos = {
-        x: e.pageX,
-        y: e.pageY,
-      };
+      const pageX = ((e instanceof MouseEvent && e.pageX)
+        || (e instanceof TouchEvent && e.changedTouches[0].pageX)
+        || 0
+      );
+      const pageY = ((e instanceof MouseEvent && e.pageY)
+        || (e instanceof TouchEvent && e.changedTouches[0].pageY)
+        || 0
+      );
+      this._pos = { x: pageX, y: pageY, };
 
-      const node = closest(e.target, el => el.sortableInfo != null);
+      const node = closest(target, el => nodeIsSortable(el));
 
       if (
         node &&
-        node.sortableInfo &&
+        nodeIsSortable(node) &&
         this.nodeIsChild(node) &&
         !this.state.sorting
       ) {
@@ -160,9 +236,10 @@ export default function sortableContainer(WrappedComponent, config = { withRef: 
         const { index, collection } = node.sortableInfo;
 
         if (
-          useDragHandle && !closest(e.target, el => el.sortableHandle != null)
-        )
+          useDragHandle && !closest(target, el => nodeIsSortableHandle(el))
+        ) {
           return;
+        }
 
         this.manager.active = { index, collection };
 
@@ -171,7 +248,7 @@ export default function sortableContainer(WrappedComponent, config = { withRef: 
 				 * prevent subsequent 'mousemove' events from being fired
 				 * (see https://github.com/clauderic/react-sortable-hoc/issues/118)
 				 */
-        if (e.target.tagName.toLowerCase() === 'a') {
+        if (target.tagName.toLowerCase() === 'a') {
           e.preventDefault();
         }
 
@@ -188,23 +265,34 @@ export default function sortableContainer(WrappedComponent, config = { withRef: 
       }
     };
 
-    nodeIsChild = node => {
+    nodeIsChild = (node: SortableNode) => {
       return node.sortableInfo.manager === this.manager;
     };
 
-    handleMove = e => {
+    handleMove = (e: MouseEvent | TouchEvent) => {
+      const target = e.target as HTMLElement;
+
       const { distance, pressThreshold } = this.props;
 
       if (!this.state.sorting && this._touched) {
+        const pageX = ((e instanceof MouseEvent && e.pageX)
+          || (e instanceof TouchEvent && e.changedTouches[0].pageX)
+          || 0
+        );
+        const pageY = ((e instanceof MouseEvent && e.pageY)
+          || (e instanceof TouchEvent && e.changedTouches[0].pageY)
+          || 0
+        );
+
         this._delta = {
-          x: this._pos.x - e.pageX,
-          y: this._pos.y - e.pageY,
+          x: this._pos.x - pageX,
+          y: this._pos.y - pageY,
         };
         const delta = Math.abs(this._delta.x) + Math.abs(this._delta.y);
 
         if (!distance && (!pressThreshold || pressThreshold && delta >= pressThreshold)) {
           clearTimeout(this.cancelTimer);
-          this.cancelTimer = setTimeout(this.cancel, 0);
+          this.cancelTimer = window.setTimeout(this.cancel, 0);
         } else if (distance && delta >= distance && this.manager.isActive()) {
           this.handlePress(e);
         }

@@ -1,17 +1,22 @@
-import React, { Component } from 'react';
+import * as React from 'react';
 import { findDOMNode } from 'react-dom';
-import invariant from 'invariant';
+import * as invariant from 'invariant';
 
 import { provideDisplayName } from '../utils';
 
+export interface SortableHandleNode extends HTMLElement {
+  sortableHandle: true
+}
+
 // Export Higher Order Sortable Element Component
-export default function sortableHandle(WrappedComponent, config = { withRef: false }) {
-  return class extends Component {
-    static displayName = provideDisplayName('sortableHandle', WrappedComponent);
+// TODO: fix WrappedComponent typings
+export default function sortableHandle(WrappedComponent: (props: any) => any, config = { withRef: false }) {
+  return class extends React.Component {
+    static displayName = provideDisplayName('sortableHandle', WrappedComponent as any);
 
     componentDidMount() {
       const node = findDOMNode(this);
-      node.sortableHandle = true;
+      (node as SortableHandleNode).sortableHandle = true;
     }
 
     getWrappedInstance() {
