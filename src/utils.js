@@ -23,7 +23,7 @@ export const events = {
   end: ['touchend', 'touchcancel', 'mouseup'],
 };
 
-export const vendorPrefix = (function() {
+export const vendorPrefix = (function () {
   if (typeof window === 'undefined' || typeof document === 'undefined') return ''; // server environment
   // fix for:
   //    https://bugzilla.mozilla.org/show_bug.cgi?id=548397

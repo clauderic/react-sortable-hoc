@@ -28,7 +28,7 @@ export default class Manager {
     return find(
       this.refs[this.active.collection],
       // eslint-disable-next-line eqeqeq
-      ({node}) => node.sortableInfo.index == this.active.index
+      ({ node }) => node.sortableInfo.index == this.active.index
     );
   }
 
@@ -37,6 +37,6 @@ export default class Manager {
   }
 
   getOrderedRefs(collection = this.active.collection) {
-    return sortBy(this.refs[collection], ({node}) => node.sortableInfo.index);
+    return sortBy(this.refs[collection], ({ node }) => node.sortableInfo.index);
   }
 }

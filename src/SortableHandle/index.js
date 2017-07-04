@@ -1,11 +1,11 @@
-import React, {Component} from 'react';
-import {findDOMNode} from 'react-dom';
+import React, { Component } from 'react';
+import { findDOMNode } from 'react-dom';
 import invariant from 'invariant';
 
-import {provideDisplayName} from '../utils';
+import { provideDisplayName } from '../utils';
 
 // Export Higher Order Sortable Element Component
-export default function sortableHandle(WrappedComponent, config = {withRef: false}) {
+export default function sortableHandle(WrappedComponent, config = { withRef: false }) {
   return class extends Component {
     static displayName = provideDisplayName('sortableHandle', WrappedComponent);
 

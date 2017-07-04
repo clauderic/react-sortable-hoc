@@ -6,4 +6,4 @@ export sortableContainer from './SortableContainer';
 export sortableElement from './SortableElement';
 export sortableHandle from './SortableHandle';
 
-export {arrayMove} from './utils';
+export { arrayMove } from './utils';

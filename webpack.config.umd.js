@@ -46,7 +46,7 @@ module.exports = {
     },
     plugins: (minify) ? plugins.minify : plugins.default,
     resolve: {
-		extensions: ['', '.js', '.jsx', '.scss']
+        extensions: ['', '.js', '.jsx', '.scss']
     },
     module: {
         loaders: [
@@ -57,8 +57,8 @@ module.exports = {
                 include: path.join(__dirname, 'src')
             },
             {
-				test: /(\.scss|\.css)$/,
-				loader: ExtractTextPlugin.extract('style', 'css?-minimize&modules&importLoaders=1&localIdentName=Cal__[name]__[local]!postcss!sass?output=nested'),
+                test: /(\.scss|\.css)$/,
+                loader: ExtractTextPlugin.extract('style', 'css?-minimize&modules&importLoaders=1&localIdentName=Cal__[name]__[local]!postcss!sass?output=nested'),
                 include: path.join(__dirname, 'src')
             }
         ]

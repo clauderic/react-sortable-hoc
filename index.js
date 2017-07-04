@@ -1,11 +1,11 @@
 import 'babel-polyfill';
-import React, {Component} from 'react';
-import {render} from 'react-dom';
-import {SortableContainer, SortableElement, arrayMove} from './src/index';
+import React, { Component } from 'react';
+import { render } from 'react-dom';
+import { SortableContainer, SortableElement, arrayMove } from './src/index';
 import range from 'lodash/range';
 import random from 'lodash/random';
 
-const SortableItem = SortableElement(({height, value}) => (
+const SortableItem = SortableElement(({ height, value }) => (
     <div style={{
         position: 'relative',
         width: '100%',
@@ -21,7 +21,7 @@ const SortableItem = SortableElement(({height, value}) => (
     </div>
 ));
 
-const SortableList = SortableContainer(({items}) => (
+const SortableList = SortableContainer(({ items }) => (
     <div style={{
         width: '80%',
         height: '80vh',
@@ -32,7 +32,7 @@ const SortableList = SortableContainer(({items}) => (
         border: '1px solid #EFEFEF',
         borderRadius: 3
     }}>
-        {items.map(({height, value}, index) => <SortableItem key={`item-${index}`} index={index} value={value} height={height}/>)}
+        {items.map(({ height, value }, index) => <SortableItem key={`item-${index}`} index={index} value={value} height={height} />)}
     </div>
 ));
 
@@ -45,20 +45,20 @@ class Example extends Component {
             };
         })
     };
-    onSortEnd = ({oldIndex, newIndex}) => {
-        let {items} = this.state;
+    onSortEnd = ({ oldIndex, newIndex }) => {
+        let { items } = this.state;
 
         this.setState({
             items: arrayMove(items, oldIndex, newIndex)
         });
     };
     render() {
-        const {items} = this.state;
+        const { items } = this.state;
 
         return <SortableList items={items} onSortEnd={this.onSortEnd} />;
     }
 }
 
 render(<Example />,
-  document.getElementById('root')
+    document.getElementById('root')
 )
