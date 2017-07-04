@@ -316,7 +316,7 @@ export default function sortableContainer(WrappedComponent: React.ComponentClass
       }
     };
 
-    handlePress = e => {
+    handlePress = (e: MouseEvent | TouchEvent) => {
       const active = this.manager.getActive();
 
       if (active) {
@@ -328,7 +328,7 @@ export default function sortableContainer(WrappedComponent: React.ComponentClass
           onSortStart,
           useWindowAsScrollContainer,
         } = this.props;
-        const { node, collection } = active;
+        const { node, collection } = active; // interface doesn't agree here
         const { index } = node.sortableInfo;
         const margin = getElementMargin(node);
 

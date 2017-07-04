@@ -5,18 +5,18 @@ export interface SortableNode extends HTMLElement {
     index: number,
     collection: string,
     manager: Manager,
-  };
+  }
 }
 
 export default class Manager {
-  refs: { [collection: string]: HTMLElement[] };
-  active: { collection: string, index: number };
+  refs: { [collection: string]: SortableNode[] };
+  active: { collection: string, index: number } | undefined;
 
   constructor() {
     this.refs = {};
   }
 
-  add(collection: string, ref: HTMLElement) {
+  add(collection: string, ref: SortableNode) {
     if (!this.refs[collection]) {
       this.refs[collection] = [];
     }
@@ -24,7 +24,7 @@ export default class Manager {
     this.refs[collection].push(ref);
   }
 
-  remove(collection: string, ref: HTMLElement) {
+  remove(collection: string, ref: SortableNode) {
     const index = this.getIndex(collection, ref);
 
     if (index !== -1) {
@@ -37,14 +37,18 @@ export default class Manager {
   }
 
   getActive() {
+    if (this.active === undefined) {
+      return;
+    }
+    const active = this.active;
     return find(
-      this.refs[this.active.collection],
+      this.refs[active.collection],
       // eslint-disable-next-line eqeqeq
-      ({ node }: { node: SortableNode }) => node.sortableInfo.index == this.active.index
+      ({ node }: { node: SortableNode }) => node.sortableInfo.index === active.index
     );
   }
 
-  getIndex(collection: string, ref: HTMLElement) {
+  getIndex(collection: string, ref: SortableNode) {
     return this.refs[collection].indexOf(ref);
   }
 
