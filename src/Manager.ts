@@ -2,16 +2,16 @@ import { find, sortBy } from 'lodash';
 
 export interface SortableNode extends HTMLElement {
   sortableInfo: {
-    index: number,
-    collection: string,
+    index?: number,
+    collection?: string | undefined,
     manager: Manager,
   },
 }
 
 export interface Ref {
   node: SortableNode,
-  collection: string,
-  edgeOffset: { top: number, left: number } | undefined
+  collection?: string,
+  edgeOffset?: { top: number, left: number }
 }
 
 export default class Manager {

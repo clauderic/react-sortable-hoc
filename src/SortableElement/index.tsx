@@ -1,14 +1,25 @@
-import React, { Component } from 'react';
-import PropTypes from 'prop-types';
+import * as React from 'react';
+import * as PropTypes from 'prop-types';
 import { findDOMNode } from 'react-dom';
-import invariant from 'invariant';
+import * as invariant from 'invariant';
+import {SortableNode, Ref} from '../Manager';
 
 import { provideDisplayName, omit } from '../utils';
 
+interface SortableElementProps {
+  collection?: string,
+  disabled?: boolean,
+  index: number
+}
+
 // Export Higher Order Sortable Element Component
-export default function sortableElement(WrappedComponent, config = { withRef: false }) {
-  return class extends Component {
-    static displayName = provideDisplayName('sortableElement', WrappedComponent);
+export default function sortableElement<T>(WrappedComponent: (props: T) => any, config = { withRef: false }) {
+  return class extends React.Component<SortableElementProps & T, undefined> {
+
+    node: SortableNode | undefined;
+    ref: Ref;
+
+    static displayName = provideDisplayName('sortableElement', WrappedComponent as any);
 
     static contextTypes = {
       manager: PropTypes.object.isRequired,
@@ -32,7 +43,7 @@ export default function sortableElement(WrappedComponent, config = { withRef: fa
       }
     }
 
-    componentWillReceiveProps(nextProps) {
+    componentWillReceiveProps(nextProps: Readonly<SortableElementProps & T>) {
       if (this.props.index !== nextProps.index && this.node) {
         this.node.sortableInfo.index = nextProps.index;
       }
@@ -55,8 +66,12 @@ export default function sortableElement(WrappedComponent, config = { withRef: fa
       if (!disabled) this.removeDraggable(collection);
     }
 
-    setDraggable(collection, index) {
-      const node = (this.node = findDOMNode(this));
+    setDraggable(collection?: string | undefined, index?: number) {
+      const node = (this.node = findDOMNode(this as any) as SortableNode);
+
+      if (!node) {
+        return;
+      }
 
       node.sortableInfo = {
         index,
@@ -68,7 +83,7 @@ export default function sortableElement(WrappedComponent, config = { withRef: fa
       this.context.manager.add(collection, this.ref);
     }
 
-    removeDraggable(collection) {
+    removeDraggable(collection?: string) {
       this.context.manager.remove(collection, this.ref);
     }
 

@@ -10,7 +10,7 @@ export interface SortableHandleNode extends HTMLElement {
 
 // Export Higher Order Sortable Element Component
 // TODO: fix WrappedComponent typings
-export default function sortableHandle(WrappedComponent: (props: any) => any, config = { withRef: false }) {
+export default function sortableHandle<T>(WrappedComponent: (props: T) => any, config = { withRef: false }) {
   return class extends React.Component {
     static displayName = provideDisplayName('sortableHandle', WrappedComponent as any);
 
