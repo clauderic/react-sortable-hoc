@@ -4,7 +4,7 @@ import * as PropTypes from 'prop-types';
 import { findDOMNode } from 'react-dom';
 import * as invariant from 'invariant';
 
-import Manager, { SortableNode } from '../Manager';
+import Manager, { SortableNode } from './Manager';
 import {
   closest,
   events,
@@ -15,19 +15,19 @@ import {
   omit,
   nodeIsSortable,
   nodeIsSortableHandle
-} from '../utils';
+} from './utils';
 
 type Axis = 'x' | 'y' | 'z';
 
 // TODO
 interface SortStartHandler {
-  (args: { node: SortableNode, index: number, collection: string }, e: MouseEvent | TouchEvent): void
+  (args: { node: SortableNode, index?: number, collection?: string }, e: MouseEvent | TouchEvent): void
 }
 interface SortMoveHandler {
   (e: MouseEvent | TouchEvent): void
 }
 interface SortEndHandler {
-  (args: { oldIndex: number, newIndex: number, collection: string }, e: MouseEvent | TouchEvent): void
+  (args: { oldIndex: number, newIndex: number, collection?: string }, e: MouseEvent | TouchEvent): void
 }
 
 
@@ -102,7 +102,7 @@ export default function sortableContainer(WrappedComponent: React.ComponentClass
     boundingClientRect: ClientRect;
     containerBoundingRect: ClientRect;
 
-    index: number;
+    index: number | undefined;
     newIndex: number | undefined;
 
     axis: { x: boolean, y: boolean }
@@ -288,6 +288,10 @@ export default function sortableContainer(WrappedComponent: React.ComponentClass
           return;
         }
 
+        if (index === undefined || collection === undefined) {
+          return;
+        }
+
         this.manager.active = { index, collection };
 
         /*
@@ -370,7 +374,7 @@ export default function sortableContainer(WrappedComponent: React.ComponentClass
 
         const axis = this.props.axis || 'y';
 
-        if (!this.manager.active) {
+        if (this.manager.active === undefined) {
           return; // should never happen; for typescript to ensure `this.manager.active` is defined
         }
         const { node, collection } = active; // interface doesn't agree here
@@ -573,7 +577,7 @@ export default function sortableContainer(WrappedComponent: React.ComponentClass
         sortingIndex: undefined,
       });
 
-      if (typeof onSortEnd === 'function' && this.newIndex !== undefined) {
+      if (typeof onSortEnd === 'function' && this.newIndex !== undefined && this.index !== undefined) {
         onSortEnd(
           {
             oldIndex: this.index,
@@ -783,6 +787,10 @@ export default function sortableContainer(WrappedComponent: React.ComponentClass
 
         // one more sanity check for typescript
         if (!(nextNode && nextNode.edgeOffset) || !(prevNode && prevNode.edgeOffset)) {
+          return;
+        }
+
+        if (index !== undefined || this.index !== undefined) {
           return;
         }
 

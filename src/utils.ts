@@ -44,7 +44,7 @@ export const vendorPrefix: string = (function () {
   }
 })();
 
-export function closest(el: HTMLElement | undefined | undefined, fn: (t: HTMLElement) => boolean) {
+export function closest(el: HTMLElement | undefined | null, fn: (t: HTMLElement) => boolean) {
   while (el) {
     if (fn(el)) return el;
     el = el.parentElement;

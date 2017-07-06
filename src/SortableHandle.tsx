@@ -2,7 +2,7 @@ import * as React from 'react';
 import { findDOMNode } from 'react-dom';
 import * as invariant from 'invariant';
 
-import { provideDisplayName } from '../utils';
+import { provideDisplayName } from './utils';
 
 export interface SortableHandleNode extends HTMLElement {
   sortableHandle: true
