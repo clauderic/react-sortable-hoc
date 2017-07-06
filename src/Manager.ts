@@ -5,18 +5,24 @@ export interface SortableNode extends HTMLElement {
     index: number,
     collection: string,
     manager: Manager,
-  }
+  },
+}
+
+export interface Ref {
+  node: SortableNode,
+  collection: string,
+  edgeOffset: { top: number, left: number } | undefined
 }
 
 export default class Manager {
-  refs: { [collection: string]: SortableNode[] };
+  refs: { [collection: string]: Ref[] };
   active: { collection: string, index: number } | undefined;
 
   constructor() {
     this.refs = {};
   }
 
-  add(collection: string, ref: SortableNode) {
+  add(collection: string, ref: Ref) {
     if (!this.refs[collection]) {
       this.refs[collection] = [];
     }
@@ -24,7 +30,7 @@ export default class Manager {
     this.refs[collection].push(ref);
   }
 
-  remove(collection: string, ref: SortableNode) {
+  remove(collection: string, ref: Ref) {
     const index = this.getIndex(collection, ref);
 
     if (index !== -1) {
@@ -44,15 +50,27 @@ export default class Manager {
     return find(
       this.refs[active.collection],
       // eslint-disable-next-line eqeqeq
-      ({ node }: { node: SortableNode }) => node.sortableInfo.index === active.index
+      ({ node }) => node.sortableInfo.index === active.index
     );
   }
 
-  getIndex(collection: string, ref: SortableNode) {
+  getIndex(collection: string, ref: Ref) {
     return this.refs[collection].indexOf(ref);
   }
 
-  getOrderedRefs(collection = this.active.collection) {
-    return sortBy(this.refs[collection], ({ node }: { node: SortableNode }) => node.sortableInfo.index);
+  getOrderedRefs(collection?: string) {// = this.active.collection) {
+    const collectionToUse = (/*if*/ collection === undefined && this.active !== undefined
+      ? this.active.collection
+      : collection
+    );
+
+    if (collectionToUse === undefined) {
+      return;
+    }
+
+    return sortBy(
+      this.refs[collectionToUse],
+      ({ node }) => node.sortableInfo.index
+    );
   }
 }
