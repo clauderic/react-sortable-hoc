@@ -412,7 +412,7 @@ export default function sortableContainer(WrappedComponent, config = {withRef: f
       this.manager.active = null;
 
       this.sorting = false;
-      this.sortingIndex: null;
+      this.sortingIndex = null;
 
       if (typeof onSortEnd === 'function') {
         onSortEnd(
