@@ -83,6 +83,8 @@ export default function sortableElement(WrappedComponent, config = {withRef: fal
     render() {
       const ref = config.withRef ? 'wrappedInstance' : null;
 
+      console.log('SortableElement __validation_test_same_instance:', React.__validation_test_same_instance, 'vs', window.React.__validation_test_same_instance);
+
       return (
         <WrappedComponent
           ref={ref}

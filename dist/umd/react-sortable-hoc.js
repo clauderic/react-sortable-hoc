@@ -9074,6 +9074,8 @@ return /******/ (function(modules) { // webpackBootstrap
 	      value: function render() {
 	        var ref = config.withRef ? 'wrappedInstance' : null;
 
+	        console.log('SortableElement __validation_test_same_instance:', _react2.default.__validation_test_same_instance, 'vs', window.React.__validation_test_same_instance);
+
 	        return _react2.default.createElement(WrappedComponent, (0, _extends3.default)({
 	          ref: ref
 	        }, (0, _utils.omit)(this.props, 'collection', 'disabled', 'index')));
