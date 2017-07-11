@@ -1,5 +1,24 @@
-import _Object$keys from 'babel-runtime/core-js/object/keys';
-export function arrayMove(arr, previousIndex, newIndex) {
+'use strict';
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.vendorPrefix = exports.events = undefined;
+
+var _keys = require('babel-runtime/core-js/object/keys');
+
+var _keys2 = _interopRequireDefault(_keys);
+
+exports.arrayMove = arrayMove;
+exports.omit = omit;
+exports.closest = closest;
+exports.limit = limit;
+exports.getElementMargin = getElementMargin;
+exports.provideDisplayName = provideDisplayName;
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function arrayMove(arr, previousIndex, newIndex) {
   var array = arr.slice(0);
   if (newIndex >= array.length) {
     var k = newIndex - array.length;
@@ -11,24 +30,24 @@ export function arrayMove(arr, previousIndex, newIndex) {
   return array;
 }
 
-export function omit(obj) {
+function omit(obj) {
   for (var _len = arguments.length, keysToOmit = Array(_len > 1 ? _len - 1 : 0), _key = 1; _key < _len; _key++) {
     keysToOmit[_key - 1] = arguments[_key];
   }
 
-  return _Object$keys(obj).reduce(function (acc, key) {
+  return (0, _keys2.default)(obj).reduce(function (acc, key) {
     if (keysToOmit.indexOf(key) === -1) acc[key] = obj[key];
     return acc;
   }, {});
 }
 
-export var events = {
+var events = exports.events = {
   start: ['touchstart', 'mousedown'],
   move: ['touchmove', 'mousemove'],
   end: ['touchend', 'touchcancel', 'mouseup']
 };
 
-export var vendorPrefix = function () {
+var vendorPrefix = exports.vendorPrefix = function () {
   if (typeof window === 'undefined' || typeof document === 'undefined') return ''; // server environment
   // fix for:
   //    https://bugzilla.mozilla.org/show_bug.cgi?id=548397
@@ -45,14 +64,14 @@ export var vendorPrefix = function () {
   }
 }();
 
-export function closest(el, fn) {
+function closest(el, fn) {
   while (el) {
     if (fn(el)) return el;
     el = el.parentNode;
   }
 }
 
-export function limit(min, max, value) {
+function limit(min, max, value) {
   if (value < min) {
     return min;
   }
@@ -69,7 +88,7 @@ function getCSSPixelValue(stringValue) {
   return 0;
 }
 
-export function getElementMargin(element) {
+function getElementMargin(element) {
   var style = window.getComputedStyle(element);
 
   return {
@@ -80,7 +99,7 @@ export function getElementMargin(element) {
   };
 }
 
-export function provideDisplayName(prefix, Component) {
+function provideDisplayName(prefix, Component) {
   var componentName = Component.displayName || Component.name;
 
   return componentName ? prefix + '(' + componentName + ')' : prefix;
