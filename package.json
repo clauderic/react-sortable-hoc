@@ -10,6 +10,7 @@
   "homepage": "https://github.com/clauderic/react-sortable-hoc",
   "main": "dist/commonjs/index.js",
   "jsnext:main": "dist/es6/index.js",
+  "types": "./index.d.ts",
   "license": "MIT",
   "repository": {
     "type": "git",
@@ -46,6 +47,7 @@
     "test": "eslint src/** --ext .js"
   },
   "dependencies": {
+    "@types/react": "*",
     "babel-runtime": "^6.11.6",
     "invariant": "^2.2.1",
     "lodash": "^4.12.0",
