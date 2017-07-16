@@ -228,6 +228,13 @@ export default function sortableContainer(WrappedComponent, config = {withRef: f
       }
     };
 
+    addClass = (node, name) => {
+      const classes = node.className;
+      if (classes.indexOf(name) === -1) {
+        node.className += ' ' + name;
+      }
+    };
+
     handlePress = e => {
       const active = this.manager.getActive();
 
@@ -625,6 +632,7 @@ export default function sortableContainer(WrappedComponent, config = {withRef: f
               this.sortableGhost.style.visibility = 'visible';
               this.sortableGhost.style.opacity = 1;
               this.sortableGhost.style[`${vendorPrefix}Transform`] = `translate3d(${0}px,${0}px,0)`;
+              this.addClass(this.sortableGhost, 'sortable-placeholder');
             }
           }
           continue;
@@ -729,6 +737,7 @@ export default function sortableContainer(WrappedComponent, config = {withRef: f
           this.sortableGhost.style[`${vendorPrefix}Transform`] = `translate3d(${left}px,${top}px,0)`;
           this.sortableGhost.style.visibility = 'visible';
           this.sortableGhost.style.opacity = 1;
+          this.addClass(this.sortableGhost, 'sortable-placeholder');
           ghostDrawn = true;
         }
       }
