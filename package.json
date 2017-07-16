@@ -6,17 +6,16 @@
     "name": "Clauderic Demers",
     "email": "me@ced.io"
   },
-  "user": "clauderic",
-  "homepage": "https://github.com/clauderic/react-sortable-hoc",
+  "homepage": "https://github.com/InterAl/react-sortable-hoc",
   "main": "dist/commonjs/index.js",
   "jsnext:main": "dist/es6/index.js",
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "https://github.com/clauderic/react-sortable-hoc.git"
+    "url": "https://github.com/InterAl/react-sortable-hoc.git"
   },
   "bugs": {
-    "url": "https://github.com/clauderic/react-sortable-hoc/issues"
+    "url": "https://github.com/InterAl/react-sortable-hoc/issues"
   },
   "keywords": [
     "react",

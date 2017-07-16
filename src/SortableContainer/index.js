@@ -574,6 +574,7 @@ export default function sortableContainer(WrappedComponent, config = {withRef: f
         top: (window.pageYOffset - this.initialWindowScroll.top),
         left: (window.pageXOffset - this.initialWindowScroll.left),
       };
+      let ghostDrawn = false;
       this.newIndex = null;
 
       for (let i = 0, len = nodes.length; i < len; i++) {
@@ -609,15 +610,22 @@ export default function sortableContainer(WrappedComponent, config = {withRef: f
 
         // If the node is the one we're currently animating, skip it
         if (index === this.index) {
+          this.sortableGhost = node;
+
           if (hideSortableGhost) {
             /*
-						 * With windowing libraries such as `react-virtualized`, the sortableGhost
-						 * node may change while scrolling down and then back up (or vice-versa),
-						 * so we need to update the reference to the new node just to be safe.
-						 */
-            this.sortableGhost = node;
+             * With windowing libraries such as `react-virtualized`, the sortableGhost
+             * node may change while scrolling down and then back up (or vice-versa),
+             * so we need to update the reference to the new node just to be safe.
+             */
             node.style.visibility = 'hidden';
             node.style.opacity = 0;
+          } else {
+            if (!ghostDrawn) {
+              this.sortableGhost.style.visibility = 'visible';
+              this.sortableGhost.style.opacity = 1;
+              this.sortableGhost.style[`${vendorPrefix}Transform`] = `translate3d(${0}px,${0}px,0)`;
+            }
           }
           continue;
         }
@@ -713,6 +721,16 @@ export default function sortableContainer(WrappedComponent, config = {withRef: f
           }
         }
         node.style[`${vendorPrefix}Transform`] = `translate3d(${translate.x}px,${translate.y}px,0)`;
+
+        if (!hideSortableGhost && this.newIndex === index) {
+          const ghostOffset = this.getEdgeOffset(this.sortableGhost);
+          const left = edgeOffset.left - ghostOffset.left;
+          const top = edgeOffset.top - ghostOffset.top;
+          this.sortableGhost.style[`${vendorPrefix}Transform`] = `translate3d(${left}px,${top}px,0)`;
+          this.sortableGhost.style.visibility = 'visible';
+          this.sortableGhost.style.opacity = 1;
+          ghostDrawn = true;
+        }
       }
 
       if (this.newIndex == null) {
