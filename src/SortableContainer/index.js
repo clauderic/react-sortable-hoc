@@ -235,6 +235,10 @@ export default function sortableContainer(WrappedComponent, config = {withRef: f
       }
     };
 
+    removeClass = (node, name) => {
+      node.className = node.className.replace(new RegExp(' ' + name), '');
+    };
+
     handlePress = e => {
       const active = this.manager.getActive();
 
@@ -397,6 +401,8 @@ export default function sortableContainer(WrappedComponent, config = {withRef: f
       if (hideSortableGhost && this.sortableGhost) {
         this.sortableGhost.style.visibility = '';
         this.sortableGhost.style.opacity = '';
+      } else if (!hideSortableGhost && this.sortableGhost) {
+        this.removeClass(this.sortableGhost, 'sortable-placeholder');
       }
 
       const nodes = this.manager.refs[collection];
