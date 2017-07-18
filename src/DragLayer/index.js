@@ -66,7 +66,9 @@ export default class DragLayer {
       ]; // Convert NodeList to Array
 
       clonedFields.forEach((field, index) => {
-        return field.value = fields[index] && fields[index].value;
+        if (field.type !== 'file' && fields[index]) {		
+          field.value = fields[index].value;
+        }
       });
 
       this.helper = parent.appendChild(clonedNode);
@@ -165,6 +167,10 @@ export default class DragLayer {
       x: offset.x - this.initialOffset.x,
       y: offset.y - this.initialOffset.y,
     };
+    // Adjust for window scroll
+    translate.y -= (window.scrollY - this.currentList.initialWindowScroll.top);
+    translate.x -= (window.scrollX - this.currentList.initialWindowScroll.left);
+    
     this.translate = translate;
     this.delta = offset;
 
