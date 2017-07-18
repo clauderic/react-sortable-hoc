@@ -9,6 +9,15 @@
     align-items: center;
 }
 
+.rootRow {
+    display: flex;
+    height: 100%;
+    box-sizing: border-box;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+}
+
 // Base styles
 .list {
     width: 400px;
@@ -110,24 +119,6 @@
             display: none;
         }
     }
-}
-
-// Group
-.vertGroups {
-    display: flex;
-    height: 100%;
-    box-sizing: border-box;
-    flex-direction: row;
-    justify-content: center;
-    align-items: center;
-}
-
-.sizedA {
-    flex: 3;
-}
-
-.sizedB {
-    flex: 1;
 }
 
 // Nested

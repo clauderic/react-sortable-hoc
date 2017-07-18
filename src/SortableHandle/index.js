@@ -24,11 +24,7 @@ export default function sortableHandle(WrappedComponent, config = {withRef: fals
 
     render() {
       const ref = config.withRef ? 'wrappedInstance' : null;
-<<<<<<< HEAD
 
-=======
-      
->>>>>>> Enforce consistent linting
       return <WrappedComponent ref={ref} {...this.props} />;
     }
   };

@@ -1,12 +1,22 @@
 export function arrayMove(arr, previousIndex, newIndex) {
   const array = arr.slice(0);
-  if (newIndex >= array.length) {
-    let k = newIndex - array.length;
-    while (k-- + 1) {
-      array.push(undefined);
+  if(newIndex === -1){
+    array.splice(previousIndex, 1);
+  } else {
+    if (newIndex >= array.length) {
+      let k = newIndex - array.length;
+      while (k-- + 1) {
+        array.push(undefined);
+      }
     }
+    array.splice(newIndex, 0, array.splice(previousIndex, 1)[0]);
   }
-  array.splice(newIndex, 0, array.splice(previousIndex, 1)[0]);
+  return array;
+}
+
+export function arrayInsert(arr, index, item) {
+  const array = arr.slice(0);
+  array.splice(index, 0, item);
   return array;
 }
 
@@ -23,7 +33,6 @@ export const events = {
   end: ['touchend', 'touchcancel', 'mouseup'],
 };
 
-<<<<<<< HEAD
 export const vendorPrefix = (function() {
   if (typeof window === 'undefined' || typeof document === 'undefined') return ''; // server environment
   // fix for:
@@ -33,25 +42,6 @@ export const vendorPrefix = (function() {
   const styles = window.getComputedStyle(document.documentElement, '') || ['-moz-hidden-iframe'];
   const pre = (Array.prototype.slice.call(styles).join('').match(/-(moz|webkit|ms)-/) || (styles.OLink === '' && ['', 'o']))[1];
 
-=======
-
-export const vendorPrefix = (function() {
-  if (typeof window === 'undefined' || typeof document === 'undefined') {
-    return ''; // server environment
-  }
-
-  // fix for:
-  //    https://bugzilla.mozilla.org/show_bug.cgi?id=548397
-  //    window.getComputedStyle() returns null inside an iframe with display: none
-  // in this case return an array with a fake mozilla style in it.
-  const styles = window.getComputedStyle(document.documentElement, '') || ['-moz-hidden-iframe'];
-  const pre = (Array.prototype.slice
-    .call(styles)
-    .join('')
-    .match(/-(moz|webkit|ms)-/) ||
-    styles.OLink === '' && ['', 'o'])[1];
-
->>>>>>> Enforce consistent linting
   switch (pre) {
     case 'ms':
       return 'ms';
@@ -59,6 +49,16 @@ export const vendorPrefix = (function() {
       return pre && pre.length ? pre[0].toUpperCase() + pre.substr(1) : '';
   }
 })();
+  
+export function getOffset(e) {
+  const event = e.touches ? e.touches[0] : e;
+  return {
+    x: event.clientX,
+    y: event.clientY,
+    pageX: event.pageX,
+    pageY: event.pageY,
+  };
+}
 
 export function closest(el, fn) {
   while (el) {
@@ -67,37 +67,7 @@ export function closest(el, fn) {
   }
 }
 
-export function closestChild(el, fn) {
-  el = [].concat(el);
-  // search siblings
-  const found = el.find(fn) || false;
-  if (el.length === 0 || found) return found;
-  // search children of siblings
-  const childList = [].concat.apply([], el.map(e => Array.from(e.childNodes)));
-  return closestChild(childList, fn);
-}
-
-<<<<<<< HEAD
-export function limit(min, max, value) {
-  if (value < min) {
-    return min;
-  }
-  if (value > max) {
-    return max;
-  }
-  return value;
-=======
 export function clamp(value, min, max) {
-<<<<<<< HEAD
-    if (value < min) {
-        return min;
-    }
-    if (value > max) {
-        return max;
-    }
-    return value;
->>>>>>> Refactoring
-=======
   if (value < min) {
     return min;
   }
@@ -105,7 +75,6 @@ export function clamp(value, min, max) {
     return max;
   }
   return value;
->>>>>>> Enforce consistent linting
 }
 
 function getCSSPixelValue(stringValue) {
