@@ -1,6 +1,6 @@
 import * as React from 'react';
-import { SortableNode } from './Manager';
-import { SortableHandleNode } from './SortableHandle';
+import {SortableNode} from './Manager';
+import {SortableHandleNode} from './SortableHandle';
 
 export function arrayMove(arr: any[], previousIndex: number, newIndex: number) {
   const array = arr.slice(0);
@@ -14,11 +14,11 @@ export function arrayMove(arr: any[], previousIndex: number, newIndex: number) {
   return array;
 }
 
-export function omit(obj: { [key: string]: any }, ...keysToOmit: string[]) {
+export function omit(obj: {[key: string]: any}, ...keysToOmit: string[]) {
   return Object.keys(obj).reduce((acc, key) => {
     if (keysToOmit.indexOf(key) === -1) acc[key] = obj[key];
     return acc;
-  }, {} as { [key: string]: any });
+  }, {} as {[key: string]: any});
 }
 
 export const events = {
@@ -27,14 +27,21 @@ export const events = {
   end: ['touchend', 'touchcancel', 'mouseup'],
 };
 
-export const vendorPrefix: string = (function () {
-  if (typeof window === 'undefined' || typeof document === 'undefined') return ''; // server environment
+export const vendorPrefix: string = (function() {
+  if (typeof window === 'undefined' || typeof document === 'undefined')
+    return ''; // server environment
   // fix for:
   //    https://bugzilla.mozilla.org/show_bug.cgi?id=548397
   //    window.getComputedStyle() returns undefined inside an iframe with display: none
   // in this case return an array with a fake mozilla style in it.
-  const styles = window.getComputedStyle(document.documentElement, '') || ['-moz-hidden-iframe'];
-  const pre = (Array.prototype.slice.call(styles).join('').match(/-(moz|webkit|ms)-/) || ((styles as any).OLink === '' && ['', 'o']))[1];
+  const styles = window.getComputedStyle(document.documentElement, '') || [
+    '-moz-hidden-iframe',
+  ];
+  const pre = (Array.prototype.slice
+    .call(styles)
+    .join('')
+    .match(/-(moz|webkit|ms)-/) ||
+    ((styles as any).OLink === '' && ['', 'o']))[1];
 
   switch (pre) {
     case 'ms':
@@ -44,7 +51,10 @@ export const vendorPrefix: string = (function () {
   }
 })();
 
-export function closest(el: HTMLElement | undefined | null, fn: (t: HTMLElement) => boolean) {
+export function closest(
+  el: HTMLElement | undefined | null,
+  fn: (t: HTMLElement) => boolean
+) {
   while (el) {
     if (fn(el)) return el;
     el = el.parentElement;
@@ -92,7 +102,10 @@ export function getElementMargin(element: HTMLElement) {
   };
 }
 
-export function provideDisplayName(prefix: string, Component: React.ComponentClass) {
+export function provideDisplayName(
+  prefix: string,
+  Component: React.ComponentClass | React.StatelessComponent
+) {
   const componentName = Component.displayName || Component.name;
 
   return componentName ? `${prefix}(${componentName})` : prefix;

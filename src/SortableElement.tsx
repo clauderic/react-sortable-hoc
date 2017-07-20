@@ -1,10 +1,10 @@
 import * as React from 'react';
 import * as PropTypes from 'prop-types';
-import { findDOMNode } from 'react-dom';
+import {findDOMNode} from 'react-dom';
 import * as invariant from 'invariant';
-import {SortableNode, Ref} from './Manager';
+import {Collection, SortableNode, Ref} from './Manager';
 
-import { provideDisplayName, omit } from './utils';
+import {provideDisplayName, omit} from './utils';
 
 interface SortableElementProps {
   collection?: string,

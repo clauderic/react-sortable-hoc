@@ -1,4 +1,4 @@
-import { find, sortBy } from 'lodash';
+import {find, sortBy} from 'lodash';
 
 export interface SortableNode extends HTMLElement {
   sortableInfo: {
