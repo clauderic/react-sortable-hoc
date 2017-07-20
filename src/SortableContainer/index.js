@@ -272,8 +272,8 @@ export default function sortableContainer(WrappedComponent, config = {withRef: f
         };
 
         this.initialWindowScroll = {
-          top: window.scrollY,
-          left: window.scrollX,
+          top: (window.scrollY || window.pageYOffset),
+          left: (window.scrollX || window.pageXOffset),
         };
 
         const fields = node.querySelectorAll('input, textarea, select');
@@ -520,8 +520,8 @@ export default function sortableContainer(WrappedComponent, config = {withRef: f
         y: offset.y - this.initialOffset.y,
       };
       // Adjust for window scroll
-      translate.y -= (window.scrollY - this.initialWindowScroll.top) || window.pageYOffset;
-      translate.x -= (window.scrollX - this.initialWindowScroll.left) || window.pageXOffset;
+      translate.y -= ((window.scrollY || window.pageYOffset) - this.initialWindowScroll.top);
+      translate.x -= ((window.scrollX ||  window.pageXOffset)- this.initialWindowScroll.left);
 
       this.translate = translate;
 
@@ -571,8 +571,8 @@ export default function sortableContainer(WrappedComponent, config = {withRef: f
         top: this.offsetEdge.top + this.translate.y + deltaScroll.top,
       };
       const scrollDifference = {
-        top: (window.scrollY - this.initialWindowScroll.top) || window.pageYOffset,
-        left: (window.scrollX - this.initialWindowScroll.left) || window.pageXOffset,
+        top: ((window.scrollY || window.pageYOffset) - this.initialWindowScroll.top),
+        left: ((window.scrollX || window.pageXOffset) - this.initialWindowScroll.left),
       };
       this.newIndex = null;
 
