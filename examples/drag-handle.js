@@ -1,5 +1,5 @@
-import React, {Component} from 'react';
-import {render} from 'react-dom';
+import React, { Component } from 'react';
+import { render } from 'react-dom';
 import {
   SortableContainer,
   SortableElement,
@@ -9,7 +9,7 @@ import {
 
 const DragHandle = SortableHandle(() => <span>::</span>); // This can be any component you want
 
-const SortableItem = SortableElement(({value}) => {
+const SortableItem = SortableElement(({ value }) => {
   return (
     <li>
       <DragHandle />
@@ -18,7 +18,7 @@ const SortableItem = SortableElement(({value}) => {
   );
 });
 
-const SortableList = SortableContainer(({items}) => {
+const SortableList = SortableContainer(({ items }) => {
   return (
     <ul>
       {items.map((value, index) => (
@@ -32,15 +32,15 @@ class SortableComponent extends Component {
   state = {
     items: ['Item 1', 'Item 2', 'Item 3', 'Item 4', 'Item 5', 'Item 6'],
   };
-  onSortEnd = ({oldIndex, newIndex}) => {
-    let {items} = this.state;
+  onSortEnd = ({ oldIndex, newIndex }) => {
+    let { items } = this.state;
 
     this.setState({
       items: arrayMove(items, oldIndex, newIndex),
     });
   };
   render() {
-    let {items} = this.state;
+    let { items } = this.state;
 
     return <SortableList items={items} onSortEnd={this.onSortEnd} useDragHandle={true} />;
   }

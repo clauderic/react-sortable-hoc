@@ -1,9 +1,9 @@
-import React, {Component} from 'react';
+import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import ReactDOM from 'react-dom';
-import {storiesOf} from '@kadira/storybook';
+import { storiesOf } from '@kadira/storybook';
 import style from './Storybook.scss';
-import {SortableContainer, SortableElement, SortableHandle, arrayMove} from '../index';
+import { SortableContainer, SortableElement, SortableHandle, arrayMove } from '../index';
 import VirtualList from 'react-tiny-virtual-list';
 import {
   defaultTableRowRenderer,
@@ -54,7 +54,7 @@ const SortableList = SortableContainer(({
 }) => {
   return (
     <div className={className}>
-      {items.map(({value, height}, index) => (
+      {items.map(({ value, height }, index) => (
         <Item
           key={`item-${value}`}
           className={itemClass}
@@ -87,7 +87,7 @@ const Category = SortableElement(props => {
 });
 
 class ListWrapper extends Component {
-  constructor({items}) {
+  constructor({ items }) {
     super();
     this.state = {
       items,
@@ -112,18 +112,18 @@ class ListWrapper extends Component {
     height: 600,
   };
   onSortStart = () => {
-    const {onSortStart} = this.props;
-    this.setState({isSorting: true});
+    const { onSortStart } = this.props;
+    this.setState({ isSorting: true });
 
     if (onSortStart) {
       onSortStart(this.refs.component);
     }
   };
-  onSortEnd = ({oldIndex, newIndex}) => {
-    const {onSortEnd} = this.props;
-    const {items} = this.state;
+  onSortEnd = ({ oldIndex, newIndex }) => {
+    const { onSortEnd } = this.props;
+    const { items } = this.state;
 
-    this.setState({items: arrayMove(items, oldIndex, newIndex), isSorting: false});
+    this.setState({ items: arrayMove(items, oldIndex, newIndex), isSorting: false });
 
     if (onSortEnd) {
       onSortEnd(this.refs.component);
@@ -131,7 +131,7 @@ class ListWrapper extends Component {
   };
   render() {
     const Component = this.props.component;
-    const {items, isSorting} = this.state;
+    const { items, isSorting } = this.state;
     const props = {
       isSorting,
       items,
@@ -160,8 +160,8 @@ const SortableVirtualList = SortableContainer(({
       className={className}
       itemSize={index => items[index].height}
       estimatedItemSize={itemHeight}
-      renderItem={({index, style}) => {
-        const {value, height} = items[index];
+      renderItem={({ index, style }) => {
+        const { value, height } = items[index];
         return (
           <Item
             key={value}
@@ -195,10 +195,10 @@ class VirtualizedListWrapper extends Component {
       <List
         ref="vs"
         className={className}
-        rowHeight={({index}) => items[index].height}
+        rowHeight={({ index }) => items[index].height}
         estimatedRowSize={itemHeight}
-        rowRenderer={({index, style}) => {
-          const {value, height} = items[index];
+        rowRenderer={({ index, style }) => {
+          const { value, height } = items[index];
           return (
             <Item
               key={value}
@@ -218,8 +218,8 @@ class VirtualizedListWrapper extends Component {
   }
 }
 
-const SortableVirtualizedList = SortableContainer(VirtualizedListWrapper, {withRef: true});
-const SortableTable = SortableContainer(Table, {withRef: true});
+const SortableVirtualizedList = SortableContainer(VirtualizedListWrapper, { withRef: true });
+const SortableTable = SortableContainer(Table, { withRef: true });
 const SortableRowRenderer = SortableElement(defaultTableRowRenderer);
 
 class TableWrapper extends Component {
@@ -255,7 +255,7 @@ class TableWrapper extends Component {
         onSortEnd={onSortEnd}
         rowClassName={itemClass}
         rowCount={items.length}
-        rowGetter={({index}) => items[index]}
+        rowGetter={({ index }) => items[index]}
         rowHeight={itemHeight}
         rowRenderer={props => <SortableRowRenderer {...props} />}
         width={width}
@@ -276,9 +276,9 @@ const SortableInfiniteList = SortableContainer(({
     <Infinite
       className={className}
       containerHeight={600}
-      elementHeight={items.map(({height}) => height)}
+      elementHeight={items.map(({ height }) => height)}
     >
-      {items.map(({value, height}, index) => (
+      {items.map(({ value, height }, index) => (
         <Item
           key={`item-${index}`}
           className={itemClass}
@@ -300,7 +300,7 @@ const ShrinkingSortableList = SortableContainer(({
 }) => {
   return (
     <div className={className}>
-      {items.map(({value, height}, index) => (
+      {items.map(({ value, height }, index) => (
         <Item
           key={`item-${value}`}
           className={itemClass}
@@ -364,7 +364,7 @@ storiesOf('Basic Configuration', module)
     );
   })
   .add('Elements that shrink', () => {
-    const getHelperDimensions = ({node}) => ({height: 20, width: node.offsetWidth});
+    const getHelperDimensions = ({ node }) => ({ height: 20, width: node.offsetWidth });
     return (
       <div className={style.root}>
         <ListWrapper

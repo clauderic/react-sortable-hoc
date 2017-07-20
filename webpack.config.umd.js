@@ -20,7 +20,7 @@ var plugins = {
 }
 
 module.exports = {
-    devtool: (minify) ? 'source-map' : null,
+    devtool: (minify) ? 'source-map' : undefined,
     entry: [
         './src/index'
     ],
@@ -46,19 +46,19 @@ module.exports = {
     },
     plugins: (minify) ? plugins.minify : plugins.default,
     resolve: {
-		extensions: ['', '.js', '.jsx', '.scss']
+        extensions: ['', '.js', '.jsx', '.scss', '.ts', '.tsx']
     },
     module: {
         loaders: [
             {
-                test: /\.jsx?$/,
-                loaders: ['babel'],
+                test: /\.tsx?$/,
+                loaders: ['awesome-typescript-loader'],
                 exclude: /node_modules/,
                 include: path.join(__dirname, 'src')
             },
             {
-				test: /(\.scss|\.css)$/,
-				loader: ExtractTextPlugin.extract('style', 'css?-minimize&modules&importLoaders=1&localIdentName=Cal__[name]__[local]!postcss!sass?output=nested'),
+                test: /(\.scss|\.css)$/,
+                loader: ExtractTextPlugin.extract('style', 'css?-minimize&modules&importLoaders=1&localIdentName=Cal__[name]__[local]!postcss!sass?output=nested'),
                 include: path.join(__dirname, 'src')
             }
         ]
