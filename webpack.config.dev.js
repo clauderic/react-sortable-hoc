@@ -6,26 +6,23 @@ var DashboardPlugin = require('webpack-dashboard/plugin');
 
 module.exports = {
   devtool: 'cheap-module-eval-source-map',
-  entry: [
-    'webpack-hot-middleware/client',
-    './index'
-  ],
+  entry: ['webpack-hot-middleware/client', './index'],
   output: {
     path: path.join(__dirname, 'dist'),
     filename: 'bundle.js',
-    publicPath: '/static/'
+    publicPath: '/static/',
   },
   plugins: [
     new DashboardPlugin(),
     new HtmlWebpackPlugin({
       template: './index.html',
-      inject: 'body' // Inject all scripts into the body
+      inject: 'body', // Inject all scripts into the body
     }),
     new webpack.optimize.OccurenceOrderPlugin(),
-    new webpack.HotModuleReplacementPlugin()
+    new webpack.HotModuleReplacementPlugin(),
   ],
   resolve: {
-    extensions: ['', '.js', '.jsx', '.scss', '.ts', '.tsx']
+    extensions: ['', '.js', '.jsx', '.scss', '.ts', '.tsx'],
   },
   module: {
     loaders: [
@@ -33,17 +30,20 @@ module.exports = {
         test: /\.tsx?$/,
         loaders: ['awesome-typescript-loader'],
         exclude: /node_modules/,
-        include: __dirnames
+        include: path.join(__dirname),
       },
       {
         test: /(\.scss)$/,
-        loaders: ['style', 'css?sourceMap&modules&importLoaders=1&localIdentName=Cal__[name]__[local]!postcss!sass?sourceMap']
+        loaders: [
+          'style',
+          'css?sourceMap&modules&importLoaders=1&localIdentName=Cal__[name]__[local]!postcss!sass?sourceMap',
+        ],
       },
       {
         test: /(\.css)$/,
-        loaders: ['style', 'css']
-      }
-    ]
+        loaders: ['style', 'css'],
+      },
+    ],
   },
-  postcss: [autoprefixer]
-}
+  postcss: [autoprefixer],
+};
