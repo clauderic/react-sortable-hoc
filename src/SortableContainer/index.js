@@ -520,8 +520,8 @@ export default function sortableContainer(WrappedComponent, config = {withRef: f
         y: offset.y - this.initialOffset.y,
       };
       // Adjust for window scroll
-      translate.y -= ((window.scrollY || window.pageYOffset) - this.initialWindowScroll.top);
-      translate.x -= ((window.scrollX ||  window.pageXOffset)- this.initialWindowScroll.left);
+      translate.y -= (window.pageYOffset - this.initialWindowScroll.top);
+      translate.x -= (window.pageXOffset - this.initialWindowScroll.left);
 
       this.translate = translate;
 
@@ -571,8 +571,8 @@ export default function sortableContainer(WrappedComponent, config = {withRef: f
         top: this.offsetEdge.top + this.translate.y + deltaScroll.top,
       };
       const scrollDifference = {
-        top: ((window.scrollY || window.pageYOffset) - this.initialWindowScroll.top),
-        left: ((window.scrollX || window.pageXOffset) - this.initialWindowScroll.left),
+        top: (window.pageYOffset - this.initialWindowScroll.top),
+        left: (window.pageXOffset - this.initialWindowScroll.left),
       };
       this.newIndex = null;
 
