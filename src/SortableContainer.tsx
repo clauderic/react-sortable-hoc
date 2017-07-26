@@ -257,8 +257,10 @@ export default function sortableContainer<T>(
       this.scrollContainer = useWindowAsScrollContainer
         ? this.document.body
         : this.container;
-      this.contentWindow =
-        typeof contentWindow === 'function' ? contentWindow() : contentWindow;
+
+      this.contentWindow = typeof contentWindow === 'function'
+        ? contentWindow()
+        : contentWindow;
 
       for (const key in this.events) {
         if (this.events.hasOwnProperty(key)) {
@@ -393,7 +395,7 @@ export default function sortableContainer<T>(
       }
     };
 
-    handlePress = (e: MouseEvent | TouchEvent) => {
+    handlePress = (event: MouseEvent | TouchEvent) => {
       const active = this.manager.getActive();
 
       if (active) {
@@ -516,7 +518,7 @@ export default function sortableContainer<T>(
         }
 
         this.listenerNode =
-          e instanceof TouchEvent
+          event instanceof TouchEvent
             ? node
             : this.contentWindow.document.documentElement;
 
@@ -545,20 +547,20 @@ export default function sortableContainer<T>(
       }
     };
 
-    handleSortMove = (e: MouseEvent | TouchEvent) => {
+    handleSortMove = (event: MouseEvent | TouchEvent) => {
       const {onSortMove} = this.props;
 
        // Prevent scrolling on mobile
       e.preventDefault();
 
-      this.updatePosition(e);
-      this.animateNodes();
+      this.updatePosition(event);
+      this.animatventNodes();
       this.autoscroll();
 
-      if (onSortMove) onSortMove(e);
+      if (onSortMove) onSortMove(event);
     };
 
-    handleSortEnd = (e: MouseEvent | TouchEvent) => {
+    handleSortEnd = (event: MouseEvent | TouchEvent) => {
       const {hideSortableGhost, onSortEnd} = this.props;
       if (!this.manager.active) {
         return;
@@ -622,7 +624,7 @@ export default function sortableContainer<T>(
             newIndex: this.newIndex,
             collection,
           },
-          e
+          event
         );
       }
 
