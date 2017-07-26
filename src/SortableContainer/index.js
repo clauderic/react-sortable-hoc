@@ -272,8 +272,8 @@ export default function sortableContainer(WrappedComponent, config = {withRef: f
         };
 
         this.initialWindowScroll = {
-          top: (window.scrollY || window.pageYOffset),
-          left: (window.scrollX || window.pageXOffset),
+          top: window.pageYOffset,
+          left: window.pageXOffset,
         };
 
         const fields = node.querySelectorAll('input, textarea, select');
