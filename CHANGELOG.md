@@ -1,5 +1,8 @@
 Changelog
 ------------
+### 0.6.6
+Fixes an issue with Internet Explorer 11 introduced in `0.6.5` [#248](https://github.com/clauderic/react-sortable-hoc/pull/248). Thanks [@humiston](https://github.com/humiston)!
+
 ### 0.6.5
 Fixes the position of the sortable helper when the page is scrolled [#213](https://github.com/clauderic/react-sortable-hoc/pull/213)
 
