@@ -272,8 +272,8 @@ export default function sortableContainer(WrappedComponent, config = {withRef: f
         };
 
         this.initialWindowScroll = {
-          top: window.scrollY,
-          left: window.scrollX,
+          top: window.pageYOffset,
+          left: window.pageXOffset,
         };
 
         const fields = node.querySelectorAll('input, textarea, select');
@@ -283,7 +283,7 @@ export default function sortableContainer(WrappedComponent, config = {withRef: f
         ]; // Convert NodeList to Array
 
         clonedFields.forEach((field, index) => {
-          if (field.type !== 'file' && fields[index]) {		
+          if (field.type !== 'file' && fields[index]) {
             field.value = fields[index].value;
           }
         });
@@ -513,15 +513,15 @@ export default function sortableContainer(WrappedComponent, config = {withRef: f
 
     updatePosition(e) {
       const {lockAxis, lockToContainerEdges} = this.props;
-      
+
       const offset = this.getOffset(e);
       const translate = {
         x: offset.x - this.initialOffset.x,
         y: offset.y - this.initialOffset.y,
       };
       // Adjust for window scroll
-      translate.y -= (window.scrollY - this.initialWindowScroll.top);
-      translate.x -= (window.scrollX - this.initialWindowScroll.left);
+      translate.y -= (window.pageYOffset - this.initialWindowScroll.top);
+      translate.x -= (window.pageXOffset - this.initialWindowScroll.left);
 
       this.translate = translate;
 
@@ -571,8 +571,8 @@ export default function sortableContainer(WrappedComponent, config = {withRef: f
         top: this.offsetEdge.top + this.translate.y + deltaScroll.top,
       };
       const scrollDifference = {
-        top: (window.scrollY - this.initialWindowScroll.top),
-        left: (window.scrollX - this.initialWindowScroll.left),
+        top: (window.pageYOffset - this.initialWindowScroll.top),
+        left: (window.pageXOffset - this.initialWindowScroll.left),
       };
       this.newIndex = null;
 
