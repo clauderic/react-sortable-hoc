@@ -4,6 +4,7 @@ import ReactDOM from 'react-dom';
 import {storiesOf} from '@kadira/storybook';
 import style from './Storybook.scss';
 import {SortableContainer, SortableElement, SortableHandle, arrayInsert, arrayMove, DragLayer} from '../index';
+import MultipleColumnsWithScrollbar from './MultipleColumnsWithScrollbarExample';
 import VirtualList from 'react-tiny-virtual-list';
 import {
   defaultTableRowRenderer,
@@ -588,6 +589,13 @@ storiesOf('Grouping', module)
           dragLayer={dragLayer}
           emulateUpdates
         />
+      </div>
+    );
+  })
+  .add('Multiple Coluns with srollbar', () => {
+    return (
+      <div className={style.rootRow}>
+        <MultipleColumnsWithScrollbar />
       </div>
     );
   })

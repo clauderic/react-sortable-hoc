@@ -552,7 +552,6 @@ export default function sortableContainer(
         left: this.scrollContainer.scrollLeft - this.initialScroll.left,
         top: this.scrollContainer.scrollTop - this.initialScroll.top,
       };
-
       const sortingOffset = {
         left: this.dragLayer.offsetEdge.left -
           this.dragLayer.distanceBetweenContainers.x +
