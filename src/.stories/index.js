@@ -400,6 +400,7 @@ storiesOf('Basic Configuration', module)
           helperClass={style.stylizedHelper}
           className={classNames(style.list, style.stylizedList, style.grid)}
           itemClass={classNames(style.stylizedItem, style.gridItem)}
+          hideSortableGhost={false}
         />
       </div>
     );

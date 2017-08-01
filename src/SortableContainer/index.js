@@ -228,6 +228,17 @@ export default function sortableContainer(WrappedComponent, config = {withRef: f
       }
     };
 
+    addClass = (node, name) => {
+      const classes = node.className;
+      if (classes.indexOf(name) === -1) {
+        node.className += ' ' + name;
+      }
+    };
+
+    removeClass = (node, name) => {
+      node.className = node.className.replace(new RegExp(' ' + name), '');
+    };
+
     handlePress = e => {
       const active = this.manager.getActive();
 
@@ -390,6 +401,8 @@ export default function sortableContainer(WrappedComponent, config = {withRef: f
       if (hideSortableGhost && this.sortableGhost) {
         this.sortableGhost.style.visibility = '';
         this.sortableGhost.style.opacity = '';
+      } else if (!hideSortableGhost && this.sortableGhost) {
+        this.removeClass(this.sortableGhost, 'sortable-placeholder');
       }
 
       const nodes = this.manager.refs[collection];
@@ -574,6 +587,7 @@ export default function sortableContainer(WrappedComponent, config = {withRef: f
         top: (window.pageYOffset - this.initialWindowScroll.top),
         left: (window.pageXOffset - this.initialWindowScroll.left),
       };
+      let ghostDrawn = false;
       this.newIndex = null;
 
       for (let i = 0, len = nodes.length; i < len; i++) {
@@ -609,15 +623,23 @@ export default function sortableContainer(WrappedComponent, config = {withRef: f
 
         // If the node is the one we're currently animating, skip it
         if (index === this.index) {
+          this.sortableGhost = node;
+
           if (hideSortableGhost) {
             /*
-						 * With windowing libraries such as `react-virtualized`, the sortableGhost
-						 * node may change while scrolling down and then back up (or vice-versa),
-						 * so we need to update the reference to the new node just to be safe.
-						 */
-            this.sortableGhost = node;
+             * With windowing libraries such as `react-virtualized`, the sortableGhost
+             * node may change while scrolling down and then back up (or vice-versa),
+             * so we need to update the reference to the new node just to be safe.
+             */
             node.style.visibility = 'hidden';
             node.style.opacity = 0;
+          } else {
+            if (!ghostDrawn) {
+              this.sortableGhost.style.visibility = 'visible';
+              this.sortableGhost.style.opacity = 1;
+              this.sortableGhost.style[`${vendorPrefix}Transform`] = `translate3d(${0}px,${0}px,0)`;
+              this.addClass(this.sortableGhost, 'sortable-placeholder');
+            }
           }
           continue;
         }
@@ -644,7 +666,7 @@ export default function sortableContainer(WrappedComponent, config = {withRef: f
               translate.x = this.width + this.marginOffset.x;
               if (
                 edgeOffset.left + translate.x >
-                this.containerBoundingRect.width - offset.width
+                this.containerBoundingRect.width - width
               ) {
                 // If it moves passed the right bounds, then animate it to the first position of the next row.
                 // We just use the offset of the next node to calculate where to move, because that node's original position
@@ -713,6 +735,17 @@ export default function sortableContainer(WrappedComponent, config = {withRef: f
           }
         }
         node.style[`${vendorPrefix}Transform`] = `translate3d(${translate.x}px,${translate.y}px,0)`;
+
+        if (!hideSortableGhost && this.newIndex === index) {
+          const ghostOffset = this.getEdgeOffset(this.sortableGhost);
+          const left = edgeOffset.left - ghostOffset.left;
+          const top = edgeOffset.top - ghostOffset.top;
+          this.sortableGhost.style[`${vendorPrefix}Transform`] = `translate3d(${left}px,${top}px,0)`;
+          this.sortableGhost.style.visibility = 'visible';
+          this.sortableGhost.style.opacity = 1;
+          this.addClass(this.sortableGhost, 'sortable-placeholder');
+          ghostDrawn = true;
+        }
       }
 
       if (this.newIndex == null) {
