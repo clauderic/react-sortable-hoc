@@ -44,7 +44,6 @@ export default function sortableContainer(WrappedComponent, config = {withRef: f
       distance: 0,
       useWindowAsScrollContainer: false,
       hideSortableGhost: true,
-      contentWindow: typeof window !== 'undefined' ? window : null,
       shouldCancelStart: function(e) {
         // Cancel sorting if the event target is an `input`, `textarea`, `select` or `option`
         const disabledElements = ['input', 'textarea', 'select', 'option', 'button'];
@@ -100,10 +99,16 @@ export default function sortableContainer(WrappedComponent, config = {withRef: f
 
     componentDidMount() {
       const {
-        contentWindow,
         getContainer,
         useWindowAsScrollContainer,
       } = this.props;
+
+      /*
+       *  Set our own default rather than using defaultProps because Jest
+       *  snapshots will serialize window, causing a RangeError
+       *  https://github.com/clauderic/react-sortable-hoc/issues/249
+       */
+      const contentWindow = this.props.contentWindow || window;
 
       this.container = typeof getContainer === 'function'
         ? getContainer(this.getWrappedInstance())
