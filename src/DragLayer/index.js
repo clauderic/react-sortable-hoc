@@ -22,6 +22,37 @@ export default class DragLayer {
     }
   }
 
+  setTranslateBoundaries(containerBoundingRect, list) {
+    const { useWindowAsScrollContainer } = list.props;
+
+    this.minTranslate = {};
+    this.maxTranslate = {};
+    if (this.axis.x) {
+      this.minTranslate.x = (useWindowAsScrollContainer
+        ? 0
+        : containerBoundingRect.left) -
+        this.boundingClientRect.left -
+        this.width / 2;
+      this.maxTranslate.x = (useWindowAsScrollContainer
+        ? list.contentWindow.innerWidth
+        : containerBoundingRect.left + containerBoundingRect.width) -
+        this.boundingClientRect.left -
+        this.width / 2;
+    }
+    if (this.axis.y) {
+      this.minTranslate.y = (useWindowAsScrollContainer
+        ? 0
+        : containerBoundingRect.top) -
+        this.boundingClientRect.top -
+        this.height / 2;
+      this.maxTranslate.y = (useWindowAsScrollContainer
+        ? list.contentWindow.innerHeight
+        : containerBoundingRect.top + containerBoundingRect.height) -
+        this.boundingClientRect.top -
+        this.height / 2;
+    }
+  }
+
   startDrag(parent, list, e) {
     const offset = getOffset(e);
     const activeNode = list.manager.getActive();
@@ -30,7 +61,6 @@ export default class DragLayer {
       const {
         axis,
         getHelperDimensions,
-        useWindowAsScrollContainer,
       } = list.props;
       const {node, collection} = activeNode;
       const {index} = node.sortableInfo;
@@ -82,32 +112,7 @@ export default class DragLayer {
       this.helper.style.boxSizing = 'border-box';
       this.helper.style.pointerEvents = 'none';
 
-      this.minTranslate = {};
-      this.maxTranslate = {};
-      if (this.axis.x) {
-        this.minTranslate.x = (useWindowAsScrollContainer
-          ? 0
-          : containerBoundingRect.left) -
-          this.boundingClientRect.left -
-          this.width / 2;
-        this.maxTranslate.x = (useWindowAsScrollContainer
-          ? list.contentWindow.innerWidth
-          : containerBoundingRect.left + containerBoundingRect.width) -
-          this.boundingClientRect.left -
-          this.width / 2;
-      }
-      if (this.axis.y) {
-        this.minTranslate.y = (useWindowAsScrollContainer
-          ? 0
-          : containerBoundingRect.top) -
-          this.boundingClientRect.top -
-          this.height / 2;
-        this.maxTranslate.y = (useWindowAsScrollContainer
-          ? list.contentWindow.innerHeight
-          : containerBoundingRect.top + containerBoundingRect.height) -
-          this.boundingClientRect.top -
-          this.height / 2;
-      }
+      this.setTranslateBoundaries(containerBoundingRect, list);
 
       this.listenerNode = e.touches ? node : list.contentWindow;
       events.move.forEach(eventName =>
@@ -230,6 +235,10 @@ export default class DragLayer {
       );
       this.currentList.handleSortEnd(e, closest);
       this.currentList = closest;
+      this.setTranslateBoundaries(
+        closest.container.getBoundingClientRect(),
+        closest,
+      )
       this.currentList.manager.active = {
         ...this.currentList.getClosestNode(e),
         item,
