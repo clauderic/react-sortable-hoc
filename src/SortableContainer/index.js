@@ -552,6 +552,15 @@ export default function sortableContainer(
         left: this.scrollContainer.scrollLeft - this.initialScroll.left,
         top: this.scrollContainer.scrollTop - this.initialScroll.top,
       };
+
+      // if the scroll delta has changed, and we switch containers, we
+      // need to deduct that change from the distance between containers
+      // so that the new calculated value will be correct.
+      this.dragLayer.distanceBetweenContainers.y -= deltaScroll.top;
+      this.initialScroll.top = this.scrollContainer.scrollTop;
+      this.dragLayer.distanceBetweenContainers.x -= deltaScroll.left;
+      this.initialScroll.left = this.scrollContainer.scrollLeft;
+
       const sortingOffset = {
         left: this.dragLayer.offsetEdge.left -
           this.dragLayer.distanceBetweenContainers.x +
