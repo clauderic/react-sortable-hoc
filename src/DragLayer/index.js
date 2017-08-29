@@ -238,7 +238,7 @@ export default class DragLayer {
       this.setTranslateBoundaries(
         closest.container.getBoundingClientRect(),
         closest,
-      )
+      );
       this.currentList.manager.active = {
         ...this.currentList.getClosestNode(e),
         item,
