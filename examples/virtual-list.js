@@ -13,7 +13,7 @@ const SortableItem = SortableElement(({value}) => {
 
 class VirtualList extends Component {
   render() {
-    let {items} = this.props;
+    const {items} = this.props;
 
     return (
       <List
@@ -22,7 +22,7 @@ class VirtualList extends Component {
         }}
         rowHeight={({index}) => items[index].height}
         rowRenderer={({index}) => {
-          let {value} = items[index];
+          const {value} = items[index];
           return <SortableItem index={index} value={value} />;
         }}
         rowCount={items.length}
@@ -53,21 +53,21 @@ class SortableComponent extends Component {
   };
   onSortEnd = ({oldIndex, newIndex}) => {
     if (oldIndex !== newIndex) {
-      let {items} = this.state;
+      const {items} = this.state;
 
       this.setState({
         items: arrayMove(items, oldIndex, newIndex),
       });
 
       // We need to inform React Virtualized that the items have changed heights
-      let instance = this.SortableList.getWrappedInstance();
+      const instance = this.SortableList.getWrappedInstance();
 
       instance.List.recomputeRowHeights();
       instance.forceUpdate();
     }
   };
   render() {
-    let {items} = this.state;
+    const {items} = this.state;
 
     return (
       <SortableList 

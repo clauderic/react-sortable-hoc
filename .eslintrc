@@ -15,6 +15,7 @@
         ],
         "allowSamePrecedence": true
       }
-    ]
+    ],
+    "quotes": ["error", "single"]
   }
 }

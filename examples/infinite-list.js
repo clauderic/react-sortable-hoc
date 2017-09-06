@@ -33,14 +33,14 @@ class SortableComponent extends Component {
     ],
   };
   onSortEnd = ({oldIndex, newIndex}) => {
-    let {items} = this.state;
+    const {items} = this.state;
 
     this.setState({
       items: arrayMove(items, oldIndex, newIndex),
     });
   };
   render() {
-    let {items} = this.state;
+    const {items} = this.state;
 
     return <SortableList items={items} onSortEnd={this.onSortEnd} />;
   }
