@@ -566,7 +566,7 @@ export default function sortableContainer(WrappedComponent, config = {withRef: f
     }
 
     animateNodes() {
-      const {transitionDuration, hideSortableGhost} = this.props;
+      const {transitionDuration, hideSortableGhost,onSortOver} = this.props;
       const nodes = this.manager.getOrderedRefs();
       const deltaScroll = {
         left: this.scrollContainer.scrollLeft - this.initialScroll.left,
@@ -580,6 +580,7 @@ export default function sortableContainer(WrappedComponent, config = {withRef: f
         top: (window.pageYOffset - this.initialWindowScroll.top),
         left: (window.pageXOffset - this.initialWindowScroll.left),
       };
+      const prevIndex = this.newIndex;
       this.newIndex = null;
 
       for (let i = 0, len = nodes.length; i < len; i++) {
@@ -719,6 +720,14 @@ export default function sortableContainer(WrappedComponent, config = {withRef: f
           }
         }
         node.style[`${vendorPrefix}Transform`] = `translate3d(${translate.x}px,${translate.y}px,0)`;
+      }
+
+      if (this.newIndex !== prevIndex) {
+        onSortOver({
+          newIndex: this.newIndex,
+          oldIndex: prevIndex,
+          collection: this.manager.active.collection,
+        });
       }
 
       if (this.newIndex == null) {
