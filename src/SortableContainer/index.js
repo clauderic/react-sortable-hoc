@@ -722,10 +722,10 @@ export default function sortableContainer(WrappedComponent, config = {withRef: f
         node.style[`${vendorPrefix}Transform`] = `translate3d(${translate.x}px,${translate.y}px,0)`;
       }
 
-      if (this.newIndex !== prevIndex) {
+      if (onSortOver && this.newIndex != null && this.newIndex !== prevIndex) {
         onSortOver({
           newIndex: this.newIndex,
-          oldIndex: prevIndex,
+          oldIndex: this.index,
           collection: this.manager.active.collection,
         });
       }
