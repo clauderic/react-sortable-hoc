@@ -115,7 +115,7 @@ export default function sortableContainer(WrappedComponent, config = {withRef: f
         : findDOMNode(this);
       this.document = this.container.ownerDocument || document;
       this.scrollContainer = useWindowAsScrollContainer
-        ? this.document.body
+        ? this.document.documentElement
         : this.container;
       this.contentWindow = typeof contentWindow === 'function'
         ? contentWindow()
