@@ -114,17 +114,30 @@ export default function sortableContainer(WrappedComponent, config = {withRef: f
         ? getContainer(this.getWrappedInstance())
         : findDOMNode(this);
       this.document = this.container.ownerDocument || document;
+
+      /*
+       * The property scrollTop is present in both documentElement and body in
+       * Chrome and Opera, but it is only writeable in documentElement. Since
+       * we manually scroll by setting scrollTop, we need to use the writeable
+       * copy of the property.
+       */
       this.scrollContainer = useWindowAsScrollContainer
-        ? this.document.documentElement
+        ? ('scrollTop' in this.document.documentElement 
+          ? this.document.documentElement 
+          : this.document.body)
         : this.container;
       this.contentWindow = typeof contentWindow === 'function'
         ? contentWindow()
         : contentWindow;
 
+      /*
+       * Turn on passive events to eliminate console warnings in Chrome for new option.
+       * see handleSortMove method for more.
+       */
       for (const key in this.events) {
         if (this.events.hasOwnProperty(key)) {
           events[key].forEach(eventName =>
-            this.container.addEventListener(eventName, this.events[key], false)
+            this.container.addEventListener(eventName, this.events[key], {passive: true})
           );
         }
       }
@@ -345,13 +358,13 @@ export default function sortableContainer(WrappedComponent, config = {withRef: f
           this.listenerNode.addEventListener(
             eventName,
             this.handleSortMove,
-            false
+            {passive: true}
           ));
         events.end.forEach(eventName =>
           this.listenerNode.addEventListener(
             eventName,
             this.handleSortEnd,
-            false
+            {passive: true}
           ));
 
         this.setState({
@@ -365,7 +378,16 @@ export default function sortableContainer(WrappedComponent, config = {withRef: f
 
     handleSortMove = e => {
       const {onSortMove} = this.props;
-      e.preventDefault(); // Prevent scrolling on mobile
+      /*
+       * We cannot use preventDefault in a passive event. A side effect is that
+       * text is selected up or down the page while dragging until dragging ends.
+       * To eliminate it, we must manually unselect text.
+       */
+       if (document.selection) {
+         document.selection.empty()
+       } else {
+         window.getSelection().removeAllRanges()
+       }
 
       this.updatePosition(e);
       this.animateNodes();
