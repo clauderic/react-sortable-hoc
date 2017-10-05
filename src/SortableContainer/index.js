@@ -383,11 +383,11 @@ export default function sortableContainer(WrappedComponent, config = {withRef: f
        * text is selected up or down the page while dragging until dragging ends.
        * To eliminate it, we must manually unselect text.
        */
-       if (document.selection) {
-         document.selection.empty()
-       } else {
-         window.getSelection().removeAllRanges()
-       }
+      if (document.selection) {
+        document.selection.empty();
+      } else {
+        window.getSelection().removeAllRanges();
+      }
 
       this.updatePosition(e);
       this.animateNodes();
