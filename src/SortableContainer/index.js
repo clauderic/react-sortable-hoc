@@ -130,14 +130,10 @@ export default function sortableContainer(WrappedComponent, config = {withRef: f
         ? contentWindow()
         : contentWindow;
 
-      /*
-       * Turn on passive events to eliminate console warnings in Chrome for new option.
-       * see handleSortMove method for more.
-       */
       for (const key in this.events) {
         if (this.events.hasOwnProperty(key)) {
           events[key].forEach(eventName =>
-            this.container.addEventListener(eventName, this.events[key], {passive: true})
+            this.container.addEventListener(eventName, this.events[key], false)
           );
         }
       }
@@ -358,13 +354,13 @@ export default function sortableContainer(WrappedComponent, config = {withRef: f
           this.listenerNode.addEventListener(
             eventName,
             this.handleSortMove,
-            {passive: true}
+            false
           ));
         events.end.forEach(eventName =>
           this.listenerNode.addEventListener(
             eventName,
             this.handleSortEnd,
-            {passive: true}
+            false
           ));
 
         this.setState({
@@ -378,16 +374,7 @@ export default function sortableContainer(WrappedComponent, config = {withRef: f
 
     handleSortMove = e => {
       const {onSortMove} = this.props;
-      /*
-       * We cannot use preventDefault in a passive event. A side effect is that
-       * text is selected up or down the page while dragging until dragging ends.
-       * To eliminate it, we must manually unselect text.
-       */
-      if (document.selection) {
-        document.selection.empty();
-      } else {
-        window.getSelection().removeAllRanges();
-      }
+      e.preventDefault();
 
       this.updatePosition(e);
       this.animateNodes();
