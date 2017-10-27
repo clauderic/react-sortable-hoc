@@ -1,5 +1,5 @@
-import find from 'lodash/find';
-import sortBy from 'lodash/sortBy';
+import find from 'ramda/src/find';
+import sortBy from 'ramda/src/sortBy';
 
 export default class Manager {
   refs = {};
@@ -26,10 +26,9 @@ export default class Manager {
 
   getActive() {
     return find(
-      this.refs[this.active.collection],
       // eslint-disable-next-line eqeqeq
       ({node}) => node.sortableInfo.index == this.active.index
-    );
+    )(this.refs[this.active.collection]);
   }
 
   getIndex(collection, ref) {
@@ -37,6 +36,6 @@ export default class Manager {
   }
 
   getOrderedRefs(collection = this.active.collection) {
-    return sortBy(this.refs[collection], ({node}) => node.sortableInfo.index);
+    return sortBy(({node}) => node.sortableInfo.index)(this.refs[collection]);
   }
 }
