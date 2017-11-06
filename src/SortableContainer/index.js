@@ -144,6 +144,13 @@ export default function sortableContainer(WrappedComponent, config = {withRef: f
         }
       }
     }
+    componentWillUpdate(nextProps, nextState) {
+      if (this.cleanupTimeout) {
+        clearTimeout(this.cleanupTimeout);
+        this.cleanupTimeout = null;
+        this.performCleanup();
+      }
+    }
 
     handleStart = e => {
       const {distance, shouldCancelStart} = this.props;
@@ -177,10 +184,10 @@ export default function sortableContainer(WrappedComponent, config = {withRef: f
         this.manager.active = {index, collection};
 
         /*
-				 * Fixes a bug in Firefox where the :active state of anchor tags
-				 * prevent subsequent 'mousemove' events from being fired
-				 * (see https://github.com/clauderic/react-sortable-hoc/issues/118)
-				 */
+         * Fixes a bug in Firefox where the :active state of anchor tags
+         * prevent subsequent 'mousemove' events from being fired
+         * (see https://github.com/clauderic/react-sortable-hoc/issues/118)
+         */
         if (e.target.tagName.toLowerCase() === 'a') {
           e.preventDefault();
         }
@@ -380,7 +387,7 @@ export default function sortableContainer(WrappedComponent, config = {withRef: f
     };
 
     handleSortEnd = e => {
-      const {hideSortableGhost, onSortEnd} = this.props;
+      const {transitionDuration, onSortEnd} = this.props;
       const {collection} = this.manager.active;
 
       // Remove the event listeners if the node is still in the DOM
@@ -394,33 +401,38 @@ export default function sortableContainer(WrappedComponent, config = {withRef: f
           this.listenerNode.removeEventListener(eventName, this.handleSortEnd));
       }
 
-      // Remove the helper from the DOM
-      this.helper.parentNode.removeChild(this.helper);
+      this.updatePosition(e); // Make sure we have the right position for the helper
 
-      if (hideSortableGhost && this.sortableGhost) {
-        this.sortableGhost.style.visibility = '';
-        this.sortableGhost.style.opacity = '';
+      // For now, transition the helper to a position over the ghost.
+      if (transitionDuration) {
+        this.helper.style[`${vendorPrefix}TransitionDuration`] = `${transitionDuration}ms`;
+
+        const helperStart = this.helper.getBoundingClientRect();
+        const helperDestination = this.sortableGhost.getBoundingClientRect();
+        this.helper.style[`${vendorPrefix}Transform`] = `translate3d(${
+          helperDestination.left - (helperStart.left - this.translate.x)
+        }px,${
+          helperDestination.top - (helperStart.top - this.translate.y)
+        }px,0)`;
       }
 
-      const nodes = this.manager.refs[collection];
-      for (let i = 0, len = nodes.length; i < len; i++) {
-        const node = nodes[i];
-        const el = node.node;
+      // Remove helper after a transition back to place from the DOM
+      setTimeout((helper => {
+        if (this.props.hideSortableGhost && this.sortableGhost) {
+          this.sortableGhost.style[`${vendorPrefix}Transform`] = '';
+          this.sortableGhost.style[`${vendorPrefix}TransitionDuration`] = '';
+          this.sortableGhost.style.visibility = '';
+          this.sortableGhost.style.opacity = '';
+        }
+        helper.parentNode.removeChild(helper);
+      }).bind(this, this.helper), transitionDuration);
 
-        // Clear the cached offsetTop / offsetLeft value
-        node.edgeOffset = null;
-
-        // Remove the transforms / transitions
-        el.style[`${vendorPrefix}Transform`] = '';
-        el.style[`${vendorPrefix}TransitionDuration`] = '';
-      }
+      // This function might be pre-empted if the parent calls a re-render quickly.
+      this.cleanupTimeout = setTimeout(this.performCleanup, transitionDuration);
 
       // Stop autoscroll
       clearInterval(this.autoscrollInterval);
       this.autoscrollInterval = null;
-
-      // Update state
-      this.manager.active = null;
 
       this.setState({
         sorting: false,
@@ -440,7 +452,24 @@ export default function sortableContainer(WrappedComponent, config = {withRef: f
 
       this._touched = false;
     };
+    performCleanup = () => {
+      if (!this.manager.active) return;
+      if (this.cleanupTimeout) this.cleanupTimeout = null;
 
+      // Remove styles as part of this cleanup (will be called before rerendering)
+      this.manager.refs[this.manager.active.collection].forEach((node) =>{
+        node.edgeOffset = null;
+
+        if (node.node === this.sortableGhost)
+          return; // For the ghost node, we'll do it when we remove the helper
+
+        node.node.style[`${vendorPrefix}Transform`] = '';
+        node.node.style[`${vendorPrefix}TransitionDuration`] = '';
+      });
+
+      // Update manager state
+      this.manager.active = null;
+    };
     getEdgeOffset(node, offset = {top: 0, left: 0}) {
       // Get the actual offsetTop / offsetLeft value, no matter how deep the node is nested
       if (node) {
@@ -596,7 +625,17 @@ export default function sortableContainer(WrappedComponent, config = {withRef: f
         top: (window.pageYOffset - this.initialWindowScroll.top),
         left: (window.pageXOffset - this.initialWindowScroll.left),
       };
+
+      const ghostOffset = nodes[this.index].edgeOffset ||
+                (nodes[this.index].edgeOffset = this.getEdgeOffset(nodes[this.index].node));
+
+      const ghostTranslate = {
+        x: 0,
+        y: 0,
+      };
+
       const prevIndex = this.newIndex;
+
       this.newIndex = null;
 
       for (let i = 0, len = nodes.length; i < len; i++) {
@@ -604,6 +643,7 @@ export default function sortableContainer(WrappedComponent, config = {withRef: f
         const index = node.sortableInfo.index;
         const width = node.offsetWidth;
         const height = node.offsetHeight;
+        const margin = getElementMargin(node);
         const offset = {
           width: this.width > width ? width / 2 : this.width / 2,
           height: this.height > height ? height / 2 : this.height / 2,
@@ -634,10 +674,10 @@ export default function sortableContainer(WrappedComponent, config = {withRef: f
         if (index === this.index) {
           if (hideSortableGhost) {
             /*
-						 * With windowing libraries such as `react-virtualized`, the sortableGhost
-						 * node may change while scrolling down and then back up (or vice-versa),
-						 * so we need to update the reference to the new node just to be safe.
-						 */
+             * With windowing libraries such as `react-virtualized`, the sortableGhost
+             * node may change while scrolling down and then back up (or vice-versa),
+             * so we need to update the reference to the new node just to be safe.
+             */
             this.sortableGhost = node;
             node.style.visibility = 'hidden';
             node.style.opacity = 0;
@@ -677,6 +717,8 @@ export default function sortableContainer(WrappedComponent, config = {withRef: f
               }
               if (this.newIndex === null) {
                 this.newIndex = index;
+                ghostTranslate.x = edgeOffset.left - ghostOffset.left + this.margin.left - margin.left;
+                ghostTranslate.y = edgeOffset.top - ghostOffset.top + this.margin.left - margin.left;
               }
             } else if (
               index > this.index &&
@@ -700,6 +742,8 @@ export default function sortableContainer(WrappedComponent, config = {withRef: f
                 translate.y = prevNode.edgeOffset.top - edgeOffset.top;
               }
               this.newIndex = index;
+              ghostTranslate.x = edgeOffset.left - ghostOffset.left;
+              ghostTranslate.y = edgeOffset.top - ghostOffset.top;
             }
           } else {
             if (
@@ -708,6 +752,7 @@ export default function sortableContainer(WrappedComponent, config = {withRef: f
             ) {
               translate.x = -(this.width + this.marginOffset.x);
               this.newIndex = index;
+              ghostTranslate.x = edgeOffset.left - ghostOffset.left + node.offsetWidth + translate.x;
             } else if (
               index < this.index &&
               (sortingOffset.left + windowScrollDelta.left) <= edgeOffset.left + offset.width
@@ -715,6 +760,7 @@ export default function sortableContainer(WrappedComponent, config = {withRef: f
               translate.x = this.width + this.marginOffset.x;
               if (this.newIndex == null) {
                 this.newIndex = index;
+                ghostTranslate.x = edgeOffset.left - ghostOffset.left;
               }
             }
           }
@@ -725,6 +771,7 @@ export default function sortableContainer(WrappedComponent, config = {withRef: f
           ) {
             translate.y = -(this.height + this.marginOffset.y);
             this.newIndex = index;
+            ghostTranslate.y = edgeOffset.top - ghostOffset.top + node.offsetHeight + translate.y;
           } else if (
             index < this.index &&
             (sortingOffset.top + windowScrollDelta.top) <= edgeOffset.top + offset.height
@@ -732,6 +779,7 @@ export default function sortableContainer(WrappedComponent, config = {withRef: f
             translate.y = this.height + this.marginOffset.y;
             if (this.newIndex == null) {
               this.newIndex = index;
+              ghostTranslate.y = edgeOffset.top - ghostOffset.top;
             }
           }
         }
@@ -742,6 +790,10 @@ export default function sortableContainer(WrappedComponent, config = {withRef: f
         this.newIndex = this.index;
       }
 
+      if (this.sortableGhost) {
+        this.sortableGhost.style[`${vendorPrefix}Transform`] =
+                `translate3d(${ghostTranslate.x}px,${ghostTranslate.y}px,0)`;
+      }
       if (onSortOver && this.newIndex !== prevIndex) {
         onSortOver({
           newIndex: this.newIndex,
