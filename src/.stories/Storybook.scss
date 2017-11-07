@@ -72,11 +72,18 @@
     flex-shrink: 0;
     align-items: center;
     justify-content: center;
-    width: 200px;
+    width: 100px;
     border-right: 1px solid #EFEFEF;
     border-bottom: 0;
 }
-
+.verticalMargins {
+    margin-top: 5px;
+    margin-bottom: 10px;
+}
+.horizontalMargins {
+    margin-left: 5px;
+    margin-right: 15px;
+}
 // Grid
 .grid {
     display: block;

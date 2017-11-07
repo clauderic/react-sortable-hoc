@@ -482,6 +482,32 @@ storiesOf('Customization', module)
       </div>
     );
   })
+  .add('Horizontal with Margins', () => {
+    return (
+      <div className={style.root}>
+        <ListWrapper
+          component={SortableList}
+          axis={'x'}
+          items={getItems(50, 300)}
+          helperClass={style.stylizedHelper}
+          className={classNames(style.list, style.stylizedList, style.horizontalList)}
+          itemClass={classNames(style.stylizedItem, style.horizontalItem, style.horizontalMargins)}
+        />
+      </div>
+    );
+  })
+  .add('Vertical with Margins', () => {
+    return (
+      <div className={style.root}>
+        <ListWrapper
+          component={SortableList}
+          items={getItems(50, 59)}
+          helperClass={style.stylizedHelper}
+          itemClass={classNames(style.item, style.stylizedItem, style.verticalMargins)}
+        />
+      </div>
+    );
+  })
   .add('Transition duration', () => {
     return (
       <div className={style.root}>

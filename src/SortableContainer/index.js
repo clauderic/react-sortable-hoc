@@ -752,7 +752,7 @@ export default function sortableContainer(WrappedComponent, config = {withRef: f
             ) {
               translate.x = -(this.width + this.marginOffset.x);
               this.newIndex = index;
-              ghostTranslate.x = edgeOffset.left - ghostOffset.left + node.offsetWidth + translate.x;
+              ghostTranslate.x = edgeOffset.left - ghostOffset.left + node.offsetWidth - this.width;
             } else if (
               index < this.index &&
               (sortingOffset.left + windowScrollDelta.left) <= edgeOffset.left + offset.width
@@ -771,7 +771,7 @@ export default function sortableContainer(WrappedComponent, config = {withRef: f
           ) {
             translate.y = -(this.height + this.marginOffset.y);
             this.newIndex = index;
-            ghostTranslate.y = edgeOffset.top - ghostOffset.top + node.offsetHeight + translate.y;
+            ghostTranslate.y = edgeOffset.top - ghostOffset.top + node.offsetHeight - this.height;
           } else if (
             index < this.index &&
             (sortingOffset.top + windowScrollDelta.top) <= edgeOffset.top + offset.height
