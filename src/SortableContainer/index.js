@@ -71,7 +71,10 @@ export default function sortableContainer(WrappedComponent, config = {withRef: f
       onSortMove: PropTypes.func,
       onSortEnd: PropTypes.func,
       shouldCancelStart: PropTypes.func,
-      pressDelay: PropTypes.number,
+      pressDelay: PropTypes.oneOfType([
+        PropTypes.number,
+        PropTypes.func,
+      ]),
       useDragHandle: PropTypes.bool,
       useWindowAsScrollContainer: PropTypes.bool,
       hideSortableGhost: PropTypes.bool,
@@ -181,12 +184,21 @@ export default function sortableContainer(WrappedComponent, config = {withRef: f
         }
 
         if (!distance) {
-          if (this.props.pressDelay === 0) {
+          const pressDelay = typeof this.props.pressDelay === 'function'
+            ? this.props.pressDelay(e)
+            : this.props.pressDelay;
+
+          invariant(
+            typeof pressDelay === 'number',
+            'pressDelay prop of SortableContainer should return a Number when passed as a function'
+          );
+
+          if (pressDelay === 0) {
             this.handlePress(e);
           } else {
             this.pressTimer = setTimeout(
               () => this.handlePress(e),
-              this.props.pressDelay
+              pressDelay
             );
           }
         }
