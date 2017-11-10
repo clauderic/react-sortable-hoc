@@ -104,7 +104,7 @@ class ListWrapper extends Component {
     onSortEnd: PropTypes.func,
     component: PropTypes.func,
     shouldUseDragHandle: PropTypes.bool,
-    ghostParent: PropTypes.object,
+    ghostParent: PropTypes.instanceOf(Element),
   };
   static defaultProps = {
     className: classNames(style.list, style.stylizedList),
