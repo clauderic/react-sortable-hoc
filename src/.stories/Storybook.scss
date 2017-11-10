@@ -140,6 +140,16 @@
     color: #333;
 }
 
+// Custom Parent
+.customParent {
+  display: flex;
+  height: 100%;
+  box-sizing: border-box;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
 
 // Helper styles
 .helper {

@@ -104,6 +104,7 @@ class ListWrapper extends Component {
     onSortEnd: PropTypes.func,
     component: PropTypes.func,
     shouldUseDragHandle: PropTypes.bool,
+    ghostParent: PropTypes.object,
   };
   static defaultProps = {
     className: classNames(style.list, style.stylizedList),
@@ -465,6 +466,37 @@ storiesOf('Advanced', module)
         useWindowAsScrollContainer={true}
         helperClass={style.stylizedHelper}
       />
+    );
+  })
+  .add('Custom ghost parent', () => {
+    class CustomParent extends Component {
+      static defaultProps = {
+        className: classNames(style.customParent),
+      }
+      state = {
+        isMounted: false
+      }
+      getRef = (el) => {
+        this.customParentRef = el
+        this.setState({ isMounted: true })
+      }
+      render() {
+        return (
+          <div {...this.props} ref={this.getRef}>
+            {!this.state.isMounted ? null : (
+              <ListWrapper
+                component={SortableList}
+                items={getItems(50, 59)}
+                helperClass={style.stylizedHelper}
+                ghostParent={this.customParentRef}
+              />
+            )}
+          </div>
+        )
+      }
+    }
+    return (
+      <CustomParent />
     );
   });
 

@@ -43,6 +43,7 @@ export default function sortableContainer(WrappedComponent, config = {withRef: f
       pressThreshold: 5,
       distance: 0,
       useWindowAsScrollContainer: false,
+      ghostParent: false,
       hideSortableGhost: true,
       shouldCancelStart: function(e) {
         // Cancel sorting if the event target is an `input`, `textarea`, `select` or `option`
@@ -74,6 +75,10 @@ export default function sortableContainer(WrappedComponent, config = {withRef: f
       pressDelay: PropTypes.number,
       useDragHandle: PropTypes.bool,
       useWindowAsScrollContainer: PropTypes.bool,
+      ghostParent: PropTypes.oneOfType([
+        PropTypes.bool,
+        PropTypes.instanceOf(Element),
+      ]),
       hideSortableGhost: PropTypes.bool,
       lockToContainerEdges: PropTypes.bool,
       lockOffset: PropTypes.oneOfType([
@@ -244,6 +249,7 @@ export default function sortableContainer(WrappedComponent, config = {withRef: f
           hideSortableGhost,
           onSortStart,
           useWindowAsScrollContainer,
+          ghostParent,
         } = this.props;
         const {node, collection} = active;
         const {index} = node.sortableInfo;
@@ -293,7 +299,8 @@ export default function sortableContainer(WrappedComponent, config = {withRef: f
           }
         });
 
-        this.helper = this.document.body.appendChild(clonedNode);
+        const ghostParentElement = ghostParent || this.document.body;
+        this.helper = ghostParentElement.appendChild(clonedNode);
 
         this.helper.style.position = 'fixed';
         this.helper.style.top = `${this.boundingClientRect.top - margin.top}px`;
