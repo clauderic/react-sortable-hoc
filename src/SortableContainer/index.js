@@ -83,6 +83,7 @@ export default function sortableContainer(WrappedComponent, config = {withRef: f
           PropTypes.oneOfType([PropTypes.number, PropTypes.string])
         ),
       ]),
+      translatableSelector: PropTypes.string,
       getContainer: PropTypes.func,
       getHelperDimensions: PropTypes.func,
     };
@@ -406,8 +407,16 @@ export default function sortableContainer(WrappedComponent, config = {withRef: f
         node.edgeOffset = null;
 
         // Remove the transforms / transitions
-        el.style[`${vendorPrefix}Transform`] = '';
-        el.style[`${vendorPrefix}TransitionDuration`] = '';
+        if (this.props.translatableSelector) {
+          const els = el.querySelectorAll(this.props.translatableSelector);
+          for (let j = 0, jlen = els.length; j < jlen; j++) {
+            els[j].style[`${vendorPrefix}Transform`] = '';
+            els[j].style[`${vendorPrefix}TransitionDuration`] = '';
+          }
+        } else {
+          el.style[`${vendorPrefix}Transform`] = '';
+          el.style[`${vendorPrefix}TransitionDuration`] = '';
+        }
       }
 
       // Stop autoscroll
@@ -628,9 +637,14 @@ export default function sortableContainer(WrappedComponent, config = {withRef: f
         }
 
         if (transitionDuration) {
-          node.style[
-            `${vendorPrefix}TransitionDuration`
-          ] = `${transitionDuration}ms`;
+          if (this.props.translatableSelector) {
+            const els = node.querySelectorAll(this.props.translatableSelector);
+            for (let j = 0, jlen = els.length; j < jlen; j++) {
+              els[j].style[`${vendorPrefix}TransitionDuration`] = `${transitionDuration}ms`;
+            }
+          } else {
+            node.style[`${vendorPrefix}TransitionDuration`] = `${transitionDuration}ms`;
+          }
         }
 
         if (this.axis.x) {
@@ -717,7 +731,14 @@ export default function sortableContainer(WrappedComponent, config = {withRef: f
             }
           }
         }
-        node.style[`${vendorPrefix}Transform`] = `translate3d(${translate.x}px,${translate.y}px,0)`;
+        if (this.props.translatableSelector) {
+          const els = node.querySelectorAll(this.props.translatableSelector);
+          for (let j = 0, jlen = els.length; j < jlen; j++) {
+            els[j].style[`${vendorPrefix}Transform`] = `translate3d(${translate.x}px,${translate.y}px,0)`;
+          }
+        } else {
+          node.style[`${vendorPrefix}Transform`] = `translate3d(${translate.x}px,${translate.y}px,0)`;
+        }
       }
 
       if (this.newIndex == null) {
