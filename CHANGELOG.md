@@ -1,5 +1,20 @@
 Changelog
 ------------
+### 0.6.8
+Update react and react-dom peerdependency requirements for React 16+ [#283](https://github.com/clauderic/react-sortable-hoc/pull/283). Thanks [@jnsdls](https://github.com/jnsdls)!
+
+### 0.6.7
+Fixes issues with Jest Snapshot testing trying to serialize the `window` object and running out of memory [#249](https://github.com/clauderic/react-sortable-hoc/issues/249). Thanks [@cameronmcefee](https://github.com/cameronmcefee)!
+
+### 0.6.6
+Fixes an issue with Internet Explorer 11 introduced in `0.6.5` [#248](https://github.com/clauderic/react-sortable-hoc/pull/248). Thanks [@humiston](https://github.com/humiston)!
+
+### 0.6.5
+Fixes the position of the sortable helper when the page is scrolled [#213](https://github.com/clauderic/react-sortable-hoc/pull/213)
+
+### 0.6.4
+Fix: when cloning the element that is being sorted, we no longer update the value of cloned file inputs [#232](https://github.com/clauderic/react-sortable-hoc/pull/232)
+
 ### 0.6.3
 Fixes issues caused by a disabled SortableElement being moved when `distance` is set to a value other than `0`
 
