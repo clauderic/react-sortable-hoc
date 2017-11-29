@@ -2,6 +2,7 @@ import React, {Component} from 'react';
 import PropTypes from 'prop-types';
 import {findDOMNode} from 'react-dom';
 import invariant from 'invariant';
+import omit from 'lodash/omit';
 
 import Manager from '../Manager';
 import {
@@ -11,7 +12,6 @@ import {
   limit,
   getElementMargin,
   provideDisplayName,
-  omit,
 } from '../utils';
 
 // Export Higher Order Sortable Container Component

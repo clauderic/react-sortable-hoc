@@ -43,7 +43,7 @@
     "clean:es6": "rimraf dist/es6",
     "clean:commonjs": "rimraf dist/commonjs",
     "storybook": "start-storybook -p 9001",
-    "test": "eslint src/** --ext .js"
+    "test": "eslint src/** --ext .js && mocha --require babel-register"
   },
   "dependencies": {
     "babel-runtime": "^6.11.6",
@@ -88,6 +88,7 @@
     "extract-text-webpack-plugin": "^1.0.1",
     "html-webpack-plugin": "^2.16.1",
     "isparta-loader": "^2.0.0",
+    "mocha": "^4.0.1",
     "node-libs-browser": "^0.5.2",
     "node-sass": "^3.7.0",
     "postcss-loader": "^0.9.1",
