@@ -281,14 +281,19 @@ export default function sortableContainer(WrappedComponent, config = {withRef: f
           left: window.pageXOffset,
         };
 
-        const fields = node.querySelectorAll('input, textarea, select');
+        const fields = node.querySelectorAll('input, textarea, select, canvas');
         const clonedNode = node.cloneNode(true);
         const clonedFields = [
-          ...clonedNode.querySelectorAll('input, textarea, select'),
+          ...clonedNode.querySelectorAll('input, textarea, select, canvas'),
         ]; // Convert NodeList to Array
 
         clonedFields.forEach((field, index) => {
-          if (field.type !== 'file' && fields[index]) {
+          if (field.tagName === 'CANVAS') {
+            if (fields[index].tagName === 'CANVAS') {
+              const destCtx = field.getContext('2d');
+              destCtx.drawImage(fields[index], 0, 0);
+            }
+          } else if (field.type !== 'file' && fields[index]) {
             field.value = fields[index].value;
           }
         });
