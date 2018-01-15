@@ -9,8 +9,6 @@
 
 ### Examples available here: <a href="#">http://clauderic.github.io/react-sortable-hoc/</a>
 
-<a href="https://app.codesponsor.io/link/oN9PDWZz8fQcbh9sxpDEUvD5/clauderic/react-sortable-hoc" rel="nofollow"><img src="https://app.codesponsor.io/embed/oN9PDWZz8fQcbh9sxpDEUvD5/clauderic/react-sortable-hoc.svg" style="width: 888px; height: 68px;" alt="Sponsor" /></a>
-
 Features
 ---------------
 * **Higher Order Components** – Integrates with your existing components
