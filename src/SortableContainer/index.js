@@ -114,8 +114,17 @@ export default function sortableContainer(WrappedComponent, config = {withRef: f
         ? getContainer(this.getWrappedInstance())
         : findDOMNode(this);
       this.document = this.container.ownerDocument || document;
+
+      /*
+       * The property scrollTop is present in both documentElement and body in
+       * Chrome and Opera, but it is only writeable in documentElement. Since
+       * we manually scroll by setting scrollTop, we need to use the writeable
+       * copy of the property.
+       */
       this.scrollContainer = useWindowAsScrollContainer
-        ? this.document.body
+        ? ('scrollTop' in this.document.documentElement 
+          ? this.document.documentElement 
+          : this.document.body)
         : this.container;
       this.contentWindow = typeof contentWindow === 'function'
         ? contentWindow()
@@ -365,7 +374,7 @@ export default function sortableContainer(WrappedComponent, config = {withRef: f
 
     handleSortMove = e => {
       const {onSortMove} = this.props;
-      e.preventDefault(); // Prevent scrolling on mobile
+      e.preventDefault();
 
       this.updatePosition(e);
       this.animateNodes();
