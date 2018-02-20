@@ -68,6 +68,7 @@ export default function sortableContainer(WrappedComponent, config = {withRef: f
       helperClass: PropTypes.string,
       transitionDuration: PropTypes.number,
       contentWindow: PropTypes.any,
+      container: PropTypes.any,
       onSortStart: PropTypes.func,
       onSortMove: PropTypes.func,
       onSortEnd: PropTypes.func,
@@ -110,9 +111,10 @@ export default function sortableContainer(WrappedComponent, config = {withRef: f
        *  https://github.com/clauderic/react-sortable-hoc/issues/249
        */
 
-      this.container = typeof getContainer === 'function'
-        ? getContainer(this.getWrappedInstance())
-        : findDOMNode(this);
+      this.container = this.props.container ? this.props.container :
+        typeof getContainer === 'function' ?
+          getContainer(this.getWrappedInstance())
+          : findDOMNode(this);
       this.document = this.container.ownerDocument || document;
 
       const contentWindow = this.props.contentWindow || this.document.defaultView || window;
@@ -120,9 +122,9 @@ export default function sortableContainer(WrappedComponent, config = {withRef: f
       this.contentWindow = typeof contentWindow === 'function'
         ? contentWindow()
         : contentWindow;
-      this.scrollContainer = useWindowAsScrollContainer
-        ? this.document.scrollingElement || this.document.documentElement
-        : this.container;
+      this.scrollContainer = useWindowAsScrollContainer ?
+        this.document.scrollingElement || this.document.documentElement :
+        this.container;
 
       for (const key in this.events) {
         if (this.events.hasOwnProperty(key)) {
@@ -273,8 +275,8 @@ export default function sortableContainer(WrappedComponent, config = {withRef: f
         this.offsetEdge = this.getEdgeOffset(node);
         this.initialOffset = this.getOffset(e);
         this.initialScroll = {
-          top: this.container.scrollTop,
-          left: this.container.scrollLeft,
+          top: this.scrollContainer.scrollTop,
+          left: this.scrollContainer.scrollLeft,
         };
 
         this.initialWindowScroll = {
@@ -591,8 +593,8 @@ export default function sortableContainer(WrappedComponent, config = {withRef: f
       const {transitionDuration, hideSortableGhost} = this.props;
       const nodes = this.manager.getOrderedRefs();
       const containerScrollDelta = {
-        left: this.container.scrollLeft - this.initialScroll.left,
-        top: this.container.scrollTop - this.initialScroll.top,
+        left: this.scrollContainer.scrollLeft - this.initialScroll.left,
+        top: this.scrollContainer.scrollTop - this.initialScroll.top,
       };
       const sortingOffset = {
         left: this.offsetEdge.left + this.translate.x + containerScrollDelta.left,
