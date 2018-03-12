@@ -454,10 +454,22 @@ export default function sortableContainer(WrappedComponent, config = {withRef: f
     }
 
     getOffset(e) {
-      return {
-        x: e.touches ? e.touches[0].pageX : e.pageX,
-        y: e.touches ? e.touches[0].pageY : e.pageY,
-      };
+      if (e.touches && e.touches.length) {
+        return {
+          x: e.touches[0].pageX,
+          y: e.touches[0].pageY,
+        };
+      } else if (e.changedTouches && e.changedTouches.length) {
+        return {
+          x: e.changedTouches[0].pageX,
+          y: e.changedTouches[0].pageY,
+        };
+      } else {
+        return {
+          x: e.pageX,
+          y: e.pageY,
+        };
+      }
     }
 
     getLockPixelOffsets() {
