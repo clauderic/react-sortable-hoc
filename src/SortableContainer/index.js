@@ -55,8 +55,8 @@ export default function sortableContainer(WrappedComponent, config = {withRef: f
       lockToContainerEdges: false,
       lockOffset: '50%',
       getHelperDimensions: ({node}) => ({
-        width: node.offsetWidth,
-        height: node.offsetHeight,
+        width: node.getBoundingClientRect().width,
+        height: node.getBoundingClientRect().height,
       }),
     };
 
@@ -584,8 +584,8 @@ export default function sortableContainer(WrappedComponent, config = {withRef: f
       for (let i = 0, len = nodes.length; i < len; i++) {
         const {node} = nodes[i];
         const index = node.sortableInfo.index;
-        const width = node.offsetWidth;
-        const height = node.offsetHeight;
+        const width = node.getBoundingClientRect().width;
+        const height = node.getBoundingClientRect().height;
         const offset = {
           width: this.width > width ? width / 2 : this.width / 2,
           height: this.height > height ? height / 2 : this.height / 2,

@@ -364,7 +364,7 @@ storiesOf('Basic Configuration', module)
     );
   })
   .add('Elements that shrink', () => {
-    const getHelperDimensions = ({node}) => ({height: 20, width: node.offsetWidth});
+    const getHelperDimensions = ({node}) => ({height: 20, width: node.getBoundingClientRect().width});
     return (
       <div className={style.root}>
         <ListWrapper
