@@ -10,6 +10,7 @@ import {
   vendorPrefix,
   limit,
   getElementMargin,
+  getEventTarget,
   provideDisplayName,
   omit,
 } from '../utils';
@@ -48,7 +49,7 @@ export default function sortableContainer(WrappedComponent, config = {withRef: f
         // Cancel sorting if the event target is an `input`, `textarea`, `select` or `option`
         const disabledElements = ['input', 'textarea', 'select', 'option', 'button'];
 
-        if (disabledElements.indexOf(e.target.tagName.toLowerCase()) !== -1) {
+        if (disabledElements.indexOf(getEventTarget(e).tagName.toLowerCase()) !== -1) {
           return true; // Return true to cancel sorting
         }
       },
@@ -153,7 +154,7 @@ export default function sortableContainer(WrappedComponent, config = {withRef: f
         y: e.pageY,
       };
 
-      const node = closest(e.target, el => el.sortableInfo != null);
+      const node = closest(getEventTarget(e), el => el.sortableInfo != null);
 
       if (
         node &&
@@ -165,7 +166,7 @@ export default function sortableContainer(WrappedComponent, config = {withRef: f
         const {index, collection} = node.sortableInfo;
 
         if (
-          useDragHandle && !closest(e.target, el => el.sortableHandle != null)
+          useDragHandle && !closest(getEventTarget(e), el => el.sortableHandle != null)
         )
           return;
 
@@ -176,7 +177,7 @@ export default function sortableContainer(WrappedComponent, config = {withRef: f
 				 * prevent subsequent 'mousemove' events from being fired
 				 * (see https://github.com/clauderic/react-sortable-hoc/issues/118)
 				 */
-        if (e.target.tagName.toLowerCase() === 'a') {
+        if (getEventTarget(e).tagName.toLowerCase() === 'a') {
           e.preventDefault();
         }
 

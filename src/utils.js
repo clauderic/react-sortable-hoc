@@ -80,3 +80,14 @@ export function provideDisplayName(prefix, Component) {
 
   return componentName ? `${prefix}(${componentName})` : prefix;
 }
+
+export function getEventTarget(event) {
+  let target = event.target;
+  // Fix for IE11 SVG <use> issue: https://github.com/clauderic/react-sortable-hoc/issues/342#issuecomment-374160819
+  if (target.correspondingUseElement) {
+    target = target.correspondingUseElement;
+  }
+  return target;
+}
+
+
