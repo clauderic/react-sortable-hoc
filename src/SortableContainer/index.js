@@ -365,13 +365,24 @@ export default function sortableContainer(WrappedComponent, config = {withRef: f
 
     handleSortMove = e => {
       const {onSortMove} = this.props;
+      const {collection} = this.manager.active;
+
       e.preventDefault(); // Prevent scrolling on mobile
 
       this.updatePosition(e);
       this.animateNodes();
       this.autoscroll();
 
-      if (onSortMove) onSortMove(e);
+      if (typeof onSortMove === 'function') {
+        onSortMove(
+          {
+            oldIndex: this.index,
+            newIndex: this.newIndex,
+            collection,
+          },
+          e
+        );
+      }
     };
 
     handleSortEnd = e => {
