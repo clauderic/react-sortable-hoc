@@ -337,7 +337,16 @@ export default function sortableContainer(WrappedComponent, config = {withRef: f
         }
 
         if (helperClass) {
-          this.helper.classList.add(...helperClass.split(' '));
+          const classNames = helperClass.split(' ');
+
+          /*
+           * Fixes a bug where the helperClass isn't applied to currently active element (like in IE)
+           * Each className has to be added one by one
+           * (see https://github.com/clauderic/react-sortable-hoc/issues/254)
+           */
+          for(let i = 0; i < classNames.length; i++) {
+            this.helper.classList.add(classNames[i]);
+          }
         }
 
         this.listenerNode = e.touches ? node : this.contentWindow;
