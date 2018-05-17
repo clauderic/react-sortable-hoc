@@ -48,7 +48,6 @@
   "dependencies": {
     "babel-runtime": "^6.11.6",
     "invariant": "^2.2.1",
-    "lodash": "^4.12.0",
     "prop-types": "^15.5.7"
   },
   "peerDependencies": {
@@ -102,6 +101,7 @@
     "react-tiny-virtual-list": "^2.0.1",
     "react-virtualized": "^9.2.2",
     "redux": "^3.5.2",
+    "lodash": "^4.12.0",
     "rimraf": "^2.5.2",
     "sass-loader": "^3.2.0",
     "stack-source-map": "^1.0.4",
