@@ -69,6 +69,7 @@ export default function sortableContainer(WrappedComponent, config = {withRef: f
       contentWindow: PropTypes.any,
       onSortStart: PropTypes.func,
       onSortMove: PropTypes.func,
+      onSortOver: PropTypes.func,
       onSortEnd: PropTypes.func,
       shouldCancelStart: PropTypes.func,
       pressDelay: PropTypes.number,
@@ -565,7 +566,7 @@ export default function sortableContainer(WrappedComponent, config = {withRef: f
     }
 
     animateNodes() {
-      const {transitionDuration, hideSortableGhost} = this.props;
+      const {transitionDuration, hideSortableGhost, onSortOver} = this.props;
       const nodes = this.manager.getOrderedRefs();
       const deltaScroll = {
         left: this.scrollContainer.scrollLeft - this.initialScroll.left,
@@ -579,6 +580,7 @@ export default function sortableContainer(WrappedComponent, config = {withRef: f
         top: (window.pageYOffset - this.initialWindowScroll.top),
         left: (window.pageXOffset - this.initialWindowScroll.left),
       };
+      const prevIndex = this.newIndex;
       this.newIndex = null;
 
       for (let i = 0, len = nodes.length; i < len; i++) {
@@ -722,6 +724,15 @@ export default function sortableContainer(WrappedComponent, config = {withRef: f
 
       if (this.newIndex == null) {
         this.newIndex = this.index;
+      }
+
+      if (onSortOver && this.newIndex !== prevIndex) {
+        onSortOver({
+          newIndex: this.newIndex,
+          oldIndex: prevIndex,
+          index: this.index,
+          collection: this.manager.active.collection,
+        });
       }
     }
 
