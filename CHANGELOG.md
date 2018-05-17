@@ -1,5 +1,10 @@
 Changelog
 ------------
+### 0.7.0
+- [Breaking change] Removed lodash dependency. For users wishing to support Internet Explorer, a [polyfill](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/find#Polyfill) for Array.prototype.find will be required
+- Added `onSortOver` prop that gets invoked when sorting over an element [#278](https://github.com/clauderic/react-sortable-hoc/pull/278)
+- Fix `useWindowAsScrollContainer` [#306](https://github.com/clauderic/react-sortable-hoc/pull/306)
+
 ### 0.6.8
 Update react and react-dom peerdependency requirements for React 16+ [#283](https://github.com/clauderic/react-sortable-hoc/pull/283). Thanks [@jnsdls](https://github.com/jnsdls)!
 

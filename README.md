@@ -171,7 +171,7 @@ const SortableList = SortableContainer(({items}) => {
 
 Dependencies
 ------------
-React Sortable List has very few dependencies. It depends on `invariant` and a handful of `lodash` helpers. It has the following peerDependencies: `react`, `react-dom`
+React Sortable HOC only depends on [invariant](https://github.com/zertosh/invariant). It has the following peerDependencies: `react`, `react-dom`
 
 Reporting Issues
 ----------------
