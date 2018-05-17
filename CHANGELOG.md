@@ -1,5 +1,8 @@
 Changelog
 ------------
+### 0.6.8
+Update react and react-dom peerdependency requirements for React 16+ [#283](https://github.com/clauderic/react-sortable-hoc/pull/283). Thanks [@jnsdls](https://github.com/jnsdls)!
+
 ### 0.6.7
 Fixes issues with Jest Snapshot testing trying to serialize the `window` object and running out of memory [#249](https://github.com/clauderic/react-sortable-hoc/issues/249). Thanks [@cameronmcefee](https://github.com/cameronmcefee)!
 

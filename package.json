@@ -1,6 +1,6 @@
 {
   "name": "react-sortable-hoc",
-  "version": "0.6.7",
+  "version": "0.6.8",
   "description": "Set of higher-order components to turn any list into a sortable, touch-friendly, animated list",
   "author": {
     "name": "Clauderic Demers",
@@ -52,8 +52,8 @@
     "prop-types": "^15.5.7"
   },
   "peerDependencies": {
-    "react": "^0.14.0 || ^15.0.0",
-    "react-dom": "^0.14.0 || ^15.0.0"
+    "react": "^0.14.0 || ^15.0.0 || ^16.0.0",
+    "react-dom": "^0.14.0 || ^15.0.0 || ^16.0.0"
   },
   "devDependencies": {
     "@kadira/storybook": "^1.36.0",
