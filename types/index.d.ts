@@ -88,10 +88,4 @@ export function SortableElement<P>(wrappedComponent: WrappedComponent<P>, config
 
 export function SortableHandle<P>(wrappedComponent: WrappedComponent<P>, config?: Config): React.ComponentClass<P>;
 
-export const sortableContainer = SortableContainer;
-
-export const sortableElement = SortableElement;
-
-export const sortableHandle = SortableHandle;
-
 export function arrayMove<T>(collection: T[], previousIndex: number, newIndex: number): T[];
