@@ -1,5 +1,8 @@
 Changelog
 ------------
+### 0.7.2
+- Fix issues with TypeScript type definitions
+
 ### 0.7.1
 - Provide TypeScript type definitions out of the box [#377](https://github.com/clauderic/react-sortable-hoc/pull/377)
 - Fix potential issues with calling `removeEventListeners` on `componentWillUnmount` if the container node has already unmounted [#376](https://github.com/clauderic/react-sortable-hoc/pull/376)
