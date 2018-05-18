@@ -134,11 +134,13 @@ export default function sortableContainer(WrappedComponent, config = {withRef: f
     }
 
     componentWillUnmount() {
-      for (const key in this.events) {
-        if (this.events.hasOwnProperty(key)) {
-          events[key].forEach(eventName =>
-            this.container.removeEventListener(eventName, this.events[key])
-          );
+      if (this.container) {
+        for (const key in this.events) {
+          if (this.events.hasOwnProperty(key)) {
+            events[key].forEach(eventName =>
+              this.container.removeEventListener(eventName, this.events[key])
+            );
+          }
         }
       }
     }
