@@ -32,6 +32,7 @@ export default function sortableContainer(WrappedComponent, config = {withRef: f
       );
 
       this.state = {};
+      this.sorting = false;
     }
 
     static displayName = provideDisplayName('sortableList', WrappedComponent);
@@ -164,7 +165,7 @@ export default function sortableContainer(WrappedComponent, config = {withRef: f
         node &&
         node.sortableInfo &&
         this.nodeIsChild(node) &&
-        !this.state.sorting
+        !this.sorting
       ) {
         const {useDragHandle} = this.props;
         const {index, collection} = node.sortableInfo;
@@ -205,7 +206,7 @@ export default function sortableContainer(WrappedComponent, config = {withRef: f
     handleMove = e => {
       const {distance, pressThreshold} = this.props;
 
-      if (!this.state.sorting && this._touched) {
+      if (!this.sorting && this._touched) {
         this._delta = {
           x: this._pos.x - e.pageX,
           y: this._pos.y - e.pageY,
@@ -232,7 +233,7 @@ export default function sortableContainer(WrappedComponent, config = {withRef: f
     };
 
     cancel = () => {
-      if (!this.state.sorting) {
+      if (!this.sorting) {
         clearTimeout(this.pressTimer);
         this.manager.active = null;
       }
@@ -359,10 +360,8 @@ export default function sortableContainer(WrappedComponent, config = {withRef: f
             false
           ));
 
-        this.setState({
-          sorting: true,
-          sortingIndex: index,
-        });
+        this.sorting = true;
+        this.sortingIndex = index;
 
         if (onSortStart) onSortStart({node, index, collection}, e);
       }
@@ -422,10 +421,8 @@ export default function sortableContainer(WrappedComponent, config = {withRef: f
       // Update state
       this.manager.active = null;
 
-      this.setState({
-        sorting: false,
-        sortingIndex: null,
-      });
+      this.sorting = false;
+      this.sortingIndex = null;
 
       if (typeof onSortEnd === 'function') {
         onSortEnd(
