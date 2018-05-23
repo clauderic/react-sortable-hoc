@@ -12,6 +12,7 @@ import {
   getElementMargin,
   provideDisplayName,
   omit,
+  cloneNodeComputedStyles,
 } from '../utils';
 
 // Export Higher Order Sortable Container Component
@@ -44,6 +45,7 @@ export default function sortableContainer(WrappedComponent, config = {withRef: f
       distance: 0,
       useWindowAsScrollContainer: false,
       hideSortableGhost: true,
+      cloneComputedStyles: false,
       shouldCancelStart: function(e) {
         // Cancel sorting if the event target is an `input`, `textarea`, `select` or `option`
         const disabledElements = ['input', 'textarea', 'select', 'option', 'button'];
@@ -77,6 +79,7 @@ export default function sortableContainer(WrappedComponent, config = {withRef: f
       useWindowAsScrollContainer: PropTypes.bool,
       hideSortableGhost: PropTypes.bool,
       lockToContainerEdges: PropTypes.bool,
+      cloneComputedStyles: PropTypes.bool,
       lockOffset: PropTypes.oneOfType([
         PropTypes.number,
         PropTypes.string,
@@ -249,6 +252,7 @@ export default function sortableContainer(WrappedComponent, config = {withRef: f
           hideSortableGhost,
           onSortStart,
           useWindowAsScrollContainer,
+          cloneComputedStyles,
         } = this.props;
         const {node, collection} = active;
         const {index} = node.sortableInfo;
@@ -297,6 +301,10 @@ export default function sortableContainer(WrappedComponent, config = {withRef: f
             field.value = fields[index].value;
           }
         });
+
+        if (cloneComputedStyles) {
+          cloneNodeComputedStyles(node, clonedNode);
+        }
 
         this.helper = this.document.body.appendChild(clonedNode);
 

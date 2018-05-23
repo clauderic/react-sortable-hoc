@@ -80,3 +80,17 @@ export function provideDisplayName(prefix, Component) {
 
   return componentName ? `${prefix}(${componentName})` : prefix;
 }
+
+export function cloneNodeComputedStyles(source, target) {
+  if (typeof window === 'undefined' || typeof document === 'undefined') return; // server environment
+
+  const styles = window.getComputedStyle(source);
+
+  [...styles].forEach(property =>
+    target.style[property] = styles.getPropertyValue(property)
+  );
+
+  [...source.children].forEach((child, index) =>
+    cloneNodeComputedStyles(child, target.children[index])
+  );
+}
