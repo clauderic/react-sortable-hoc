@@ -1,6 +1,6 @@
 {
   "name": "react-sortable-hoc",
-  "version": "0.7.2",
+  "version": "0.7.3",
   "description": "Set of higher-order components to turn any list into a sortable, touch-friendly, animated list",
   "author": {
     "name": "Clauderic Demers",

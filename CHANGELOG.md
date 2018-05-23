@@ -1,5 +1,8 @@
 Changelog
 ------------
+### 0.7.3
+- Fix issues with distance and pressThreshold props on mobile [#378](https://github.com/clauderic/react-sortable-hoc/pull/378)
+
 ### 0.7.2
 - Fix issues with TypeScript type definitions
 
