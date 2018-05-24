@@ -1,5 +1,8 @@
 Changelog
 ------------
+### 0.7.4
+- Fix typo in getLockPixelOffset helper
+
 ### 0.7.3
 - Fix issues with distance and pressThreshold props on mobile [#378](https://github.com/clauderic/react-sortable-hoc/pull/378)
 
