@@ -1,5 +1,8 @@
 Changelog
 ------------
+### 0.8.0
+- Allow `getContainer` to return a promise. This is useful when the container node is rendered by a parent component, since `componentDidMount` fires backwards (from child to parent) [#155](https://github.com/clauderic/react-sortable-hoc/pull/155/)
+
 ### 0.7.4
 - Fix typo in getLockPixelOffset helper
 
