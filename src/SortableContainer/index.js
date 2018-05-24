@@ -463,8 +463,8 @@ export default function sortableContainer(WrappedComponent, config = {withRef: f
       const [minLockOffset, maxLockOffset] = offsets;
 
       return [
-        getLockPixelOffset({offset: minLockOffset, width, height}),
-        getLockPixelOffset({offset: maxLockOffset, width, height}),
+        getLockPixelOffset({lockOffset: minLockOffset, width, height}),
+        getLockPixelOffset({lockOffset: maxLockOffset, width, height}),
       ];
     }
 
