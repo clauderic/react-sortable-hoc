@@ -1,6 +1,6 @@
 {
   "name": "react-sortable-hoc",
-  "version": "0.5.0",
+  "version": "0.7.4",
   "description": "Set of higher-order components to turn any list into a sortable, touch-friendly, animated list",
   "author": {
     "name": "Clauderic Demers",
@@ -10,6 +10,7 @@
   "homepage": "https://github.com/clauderic/react-sortable-hoc",
   "main": "dist/commonjs/index.js",
   "jsnext:main": "dist/es6/index.js",
+  "types": "types/index.d.ts",
   "license": "MIT",
   "repository": {
     "type": "git",
@@ -48,11 +49,11 @@
   "dependencies": {
     "babel-runtime": "^6.11.6",
     "invariant": "^2.2.1",
-    "lodash": "^4.12.0"
+    "prop-types": "^15.5.7"
   },
   "peerDependencies": {
-    "react": "^0.14.0 || ^15.0.0",
-    "react-dom": "^0.14.0 || ^15.0.0"
+    "react": "^0.14.0 || ^15.0.0 || ^16.0.0",
+    "react-dom": "^0.14.0 || ^15.0.0 || ^16.0.0"
   },
   "devDependencies": {
     "@kadira/storybook": "^1.36.0",
@@ -60,7 +61,7 @@
     "autoprefixer": "^6.3.6",
     "babel-cli": "^6.9.0",
     "babel-core": "^6.3.15",
-    "babel-eslint": "^6.0.4",
+    "babel-eslint": "^7.1.1",
     "babel-loader": "^6.2.0",
     "babel-plugin-css-modules-transform": "^0.1.0",
     "babel-plugin-transform-object-assign": "^6.8.0",
@@ -77,9 +78,12 @@
     "classnames": "^2.2.5",
     "cross-env": "^1.0.7",
     "css-loader": "^0.23.1",
-    "eslint": "^2.10.1",
-    "eslint-config-xo-react": "^0.7.0",
-    "eslint-plugin-react": "^5.1.1",
+    "eslint": "^3.16.1",
+    "eslint-config-react-app": "^0.6.1",
+    "eslint-plugin-flowtype": "^2.21.0",
+    "eslint-plugin-import": "^2.0.1",
+    "eslint-plugin-jsx-a11y": "^4.0.0",
+    "eslint-plugin-react": "^6.4.1",
     "express": "^4.13.3",
     "extract-text-webpack-plugin": "^1.0.1",
     "html-webpack-plugin": "^2.16.1",
@@ -89,14 +93,16 @@
     "postcss-loader": "^0.9.1",
     "qs": "^6.2.0",
     "raw-loader": "^0.5.1",
-    "react": "^15.2.1",
+    "react": "^15.4.2",
     "react-addons-pure-render-mixin": "^15.0.2",
     "react-addons-shallow-compare": "^15.1.0",
     "react-addons-test-utils": "^15.1.0",
-    "react-dom": "^15.2.1",
+    "react-dom": "^15.4.2",
     "react-infinite": "^0.9.2",
-    "react-virtualized": "^7.15.1",
+    "react-tiny-virtual-list": "^2.0.1",
+    "react-virtualized": "^9.2.2",
     "redux": "^3.5.2",
+    "lodash": "^4.12.0",
     "rimraf": "^2.5.2",
     "sass-loader": "^3.2.0",
     "stack-source-map": "^1.0.4",

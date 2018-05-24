@@ -748,7 +748,7 @@ export default function sortableContainer(WrappedComponent, config = {withRef: f
         config.withRef,
         'To access the wrapped instance, you need to pass in {withRef: true} as the second argument of the SortableContainer() call'
       );
-
+      
       return this.refs.wrappedInstance;
     }
 

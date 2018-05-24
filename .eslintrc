@@ -1,20 +1,21 @@
 {
-    "parser": "babel-eslint",
-    "env": {
-        "node": true,
-        "browser": true,
-        "es6": true,
-        "mocha": true
-    },
-    "parserOptions": {
-        "ecmaFeatures": {
-            "experimentalObjectRestSpread": true,
-            "jsx": true
-        },
-        "sourceType": "module"
-    },
-    "plugins": [
-        "react"
+  "extends": "react-app",
+  "rules": {
+    "prefer-const": ["error"],
+    "comma-dangle": ["error", "always-multiline"],
+    "indent": ["error", 2, {"SwitchCase": 1}],
+    "semi": ["error", "always"],
+    "no-mixed-operators": [
+      "warn",
+      {
+        "groups": [
+          ['&', '|', '^', '~', '<<', '>>', '>>>'],
+          ['==', '!=', '===', '!==', '>', '>=', '<', '<='],
+          ['in', 'instanceof']
+        ],
+        "allowSamePrecedence": true
+      }
     ],
-    "extends": ["eslint:recommended", "plugin:react/recommended"]
+    "quotes": ["error", "single"]
+  }
 }

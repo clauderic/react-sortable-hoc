@@ -1,32 +1,45 @@
-import find from 'lodash/find';
-import sortBy from 'lodash/sortBy';
-
 export default class Manager {
-	refs = {};
+  refs = {};
 
-	add(collection, ref) {
-		if (!this.refs[collection]) this.refs[collection] = [];
+  add(collection, ref) {
+    if (!this.refs[collection]) {
+      this.refs[collection] = [];
+    }
 
-		this.refs[collection].push(ref);
-	}
+    this.refs[collection].push(ref);
+  }
 
-	remove(collection, ref) {
-		const index = this.getIndex(collection, ref);
+  remove(collection, ref) {
+    const index = this.getIndex(collection, ref);
 
-		if (index !== -1) {
-			this.refs[collection].splice(index, 1);
-		}
-	}
+    if (index !== -1) {
+      this.refs[collection].splice(index, 1);
+    }
+  }
 
-	getActive() {
-		return find(this.refs[this.active.collection], ({node}) => node.sortableInfo.index == this.active.index);
-	}
+  isActive() {
+    return this.active;
+  }
 
-	getIndex(collection, ref) {
-		return this.refs[collection].indexOf(ref);
-	}
+  getActive() {
+    return this.refs[this.active.collection].find(
+      // eslint-disable-next-line eqeqeq
+      ({node}) => node.sortableInfo.index == this.active.index
+    );
+  }
 
-	getOrderedRefs(collection = this.active.collection) {
-		return sortBy(this.refs[collection], ({node}) => node.sortableInfo.index);
-	}
+  getIndex(collection, ref) {
+    return this.refs[collection].indexOf(ref);
+  }
+
+  getOrderedRefs(collection = this.active.collection) {
+    return this.refs[collection].sort(sortByIndex);
+  }
+}
+
+function sortByIndex(
+  {node: {sortableInfo: {index: index1}}},
+  {node: {sortableInfo: {index: index2}}}
+) {
+  return (index1 - index2);
 }

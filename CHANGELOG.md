@@ -1,5 +1,50 @@
 Changelog
 ------------
+### 0.7.4
+- Fix typo in getLockPixelOffset helper
+
+### 0.7.3
+- Fix issues with distance and pressThreshold props on mobile [#378](https://github.com/clauderic/react-sortable-hoc/pull/378)
+
+### 0.7.2
+- Fix issues with TypeScript type definitions
+
+### 0.7.1
+- Provide TypeScript type definitions out of the box [#377](https://github.com/clauderic/react-sortable-hoc/pull/377)
+- Fix potential issues with calling `removeEventListeners` on `componentWillUnmount` if the container node has already unmounted [#376](https://github.com/clauderic/react-sortable-hoc/pull/376)
+
+### 0.7.0
+- [Breaking change] Removed lodash dependency. For users wishing to support Internet Explorer, a [polyfill](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/find#Polyfill) for Array.prototype.find will be required
+- Added `onSortOver` prop that gets invoked when sorting over an element [#278](https://github.com/clauderic/react-sortable-hoc/pull/278)
+- Fix `useWindowAsScrollContainer` [#306](https://github.com/clauderic/react-sortable-hoc/pull/306)
+
+### 0.6.8
+Update react and react-dom peerdependency requirements for React 16+ [#283](https://github.com/clauderic/react-sortable-hoc/pull/283). Thanks [@jnsdls](https://github.com/jnsdls)!
+
+### 0.6.7
+Fixes issues with Jest Snapshot testing trying to serialize the `window` object and running out of memory [#249](https://github.com/clauderic/react-sortable-hoc/issues/249). Thanks [@cameronmcefee](https://github.com/cameronmcefee)!
+
+### 0.6.6
+Fixes an issue with Internet Explorer 11 introduced in `0.6.5` [#248](https://github.com/clauderic/react-sortable-hoc/pull/248). Thanks [@humiston](https://github.com/humiston)!
+
+### 0.6.5
+Fixes the position of the sortable helper when the page is scrolled [#213](https://github.com/clauderic/react-sortable-hoc/pull/213)
+
+### 0.6.4
+Fix: when cloning the element that is being sorted, we no longer update the value of cloned file inputs [#232](https://github.com/clauderic/react-sortable-hoc/pull/232)
+
+### 0.6.3
+Fixes issues caused by a disabled SortableElement being moved when `distance` is set to a value other than `0`
+
+### 0.6.2
+Use `prop-types` package for PropType validation for compatibility with React ^15.5
+
+### 0.6.1
+Tweak: default to `pointerEvents: none` on sortable helper, this way the underlying view can still be scrolled using the trackpad/mousewheel while sorting [#160](https://github.com/clauderic/react-sortable-hoc/pull/160)
+
+### 0.6.0
+Feature: added `pressThreshold` prop to make `pressDelay` fault tolerant [#159](https://github.com/clauderic/react-sortable-hoc/pull/159)
+
 ### 0.5.0
 Tweak: `button` elements are now included in the default `shouldCancelStart` implementation [#142](https://github.com/clauderic/react-sortable-hoc/pull/142).
 Fix: Omit `getHelperDimensions` before passing down props in `SortableContainer`
