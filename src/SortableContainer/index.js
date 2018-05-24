@@ -103,7 +103,6 @@ export default function sortableContainer(WrappedComponent, config = {withRef: f
 
     componentDidMount() {
       const {
-        getContainer,
         useWindowAsScrollContainer,
       } = this.props;
 
@@ -113,27 +112,29 @@ export default function sortableContainer(WrappedComponent, config = {withRef: f
        *  https://github.com/clauderic/react-sortable-hoc/issues/249
        */
 
-      this.container = typeof getContainer === 'function'
-        ? getContainer(this.getWrappedInstance())
-        : findDOMNode(this);
-      this.document = this.container.ownerDocument || document;
+      const container = this.getContainer();
 
-      const contentWindow = this.props.contentWindow || this.document.defaultView || window;
+      Promise.resolve(container).then((containerNode) => {
+        this.container = containerNode;
+        this.document = this.container.ownerDocument || document;
 
-      this.contentWindow = typeof contentWindow === 'function'
-        ? contentWindow()
-        : contentWindow;
-      this.scrollContainer = useWindowAsScrollContainer
-        ? this.document.scrollingElement || this.document.documentElement
-        : this.container;
+        const contentWindow = this.props.contentWindow || this.document.defaultView || window;
 
-      for (const key in this.events) {
-        if (this.events.hasOwnProperty(key)) {
-          events[key].forEach(eventName =>
-            this.container.addEventListener(eventName, this.events[key], false)
-          );
+        this.contentWindow = typeof contentWindow === 'function'
+          ? contentWindow()
+          : contentWindow;
+        this.scrollContainer = useWindowAsScrollContainer
+          ? this.document.scrollingElement || this.document.documentElement
+          : this.container;
+
+        for (const key in this.events) {
+          if (this.events.hasOwnProperty(key)) {
+            events[key].forEach(eventName =>
+              this.container.addEventListener(eventName, this.events[key], false)
+            );
+          }
         }
-      }
+      });
     }
 
     componentWillUnmount() {
@@ -747,7 +748,18 @@ export default function sortableContainer(WrappedComponent, config = {withRef: f
         config.withRef,
         'To access the wrapped instance, you need to pass in {withRef: true} as the second argument of the SortableContainer() call'
       );
+      
       return this.refs.wrappedInstance;
+    }
+
+    getContainer() {
+      const {getContainer} = this.props;
+
+      if (typeof getContainer !== 'function') {
+        return findDOMNode(this);
+      }
+
+      return getContainer(config.withRef ? this.getWrappedInstance() : undefined);
     }
 
     render() {
