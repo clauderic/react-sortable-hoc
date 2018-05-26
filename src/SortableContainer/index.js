@@ -403,6 +403,18 @@ export default function sortableContainer(WrappedComponent, config = {withRef: f
 
       this.updatePosition(e); // Make sure we have the right position for the helper
 
+      // This function might be pre-empted if the parent calls a re-render quickly.
+      this.cleanupTimeout = setTimeout(this.performCleanup, transitionDuration);
+
+      // Remove helper after a transition back to place from the DOM
+      setTimeout((helper => {
+        if (this.props.hideSortableGhost) {
+          this.sortableGhost.style.visibility = '';
+          this.sortableGhost.style.opacity = '';
+        }
+        helper.parentNode.removeChild(helper);
+      }).bind(this, this.helper), transitionDuration*2);
+
       // For now, transition the helper to a position over the ghost.
       if (transitionDuration) {
         this.helper.style[`${vendorPrefix}TransitionDuration`] = `${transitionDuration}ms`;
@@ -415,22 +427,6 @@ export default function sortableContainer(WrappedComponent, config = {withRef: f
           helperDestination.top - (helperStart.top - this.translate.y)
         }px,0)`;
       }
-
-      // Remove helper after a transition back to place from the DOM
-      setTimeout((helper => {
-        if (this.sortableGhost) {
-          this.sortableGhost.style[`${vendorPrefix}Transform`] = '';
-          this.sortableGhost.style[`${vendorPrefix}TransitionDuration`] = '';
-          if (this.props.hideSortableGhost) {
-            this.sortableGhost.style.visibility = '';
-            this.sortableGhost.style.opacity = '';
-          }
-        }
-        helper.parentNode.removeChild(helper);
-      }).bind(this, this.helper), transitionDuration);
-
-      // This function might be pre-empted if the parent calls a re-render quickly.
-      this.cleanupTimeout = setTimeout(this.performCleanup, transitionDuration);
 
       // Stop autoscroll
       clearInterval(this.autoscrollInterval);
@@ -452,6 +448,12 @@ export default function sortableContainer(WrappedComponent, config = {withRef: f
         );
       }
 
+      if (this.sortableGhost) { // remove transform off of the ghost AFTER onSortEnd is called.
+        this.sortableGhost.style[`${vendorPrefix}Transform`] = '';
+        this.sortableGhost.style[`${vendorPrefix}TransitionDuration`] = '';
+      }
+
+
       this._touched = false;
     };
     performCleanup = () => {
@@ -462,9 +464,11 @@ export default function sortableContainer(WrappedComponent, config = {withRef: f
       this.manager.refs[this.manager.active.collection].forEach((node) =>{
         node.edgeOffset = null;
 
-        if (node.node === this.sortableGhost)
+        node.node.style.zIndex = '';
+        if (node.node === this.sortableGhost) {
+          console.log(node.node)
           return; // For the ghost node, we'll do it when we remove the helper
-
+        }
         node.node.style[`${vendorPrefix}Transform`] = '';
         node.node.style[`${vendorPrefix}TransitionDuration`] = '';
       });
@@ -672,8 +676,16 @@ export default function sortableContainer(WrappedComponent, config = {withRef: f
           nextNode.edgeOffset = this.getEdgeOffset(nextNode.node);
         }
 
+        if (transitionDuration) {
+          node.style[
+            `${vendorPrefix}TransitionDuration`
+          ] = `${transitionDuration}ms`;
+        }
+
+        node.style.zIndex = '1';
         // If the node is the one we're currently animating, skip it
         if (index === this.index) {
+          node.style.zIndex = '0';
           if (hideSortableGhost) {
             /*
              * With windowing libraries such as `react-virtualized`, the sortableGhost
@@ -685,12 +697,6 @@ export default function sortableContainer(WrappedComponent, config = {withRef: f
             node.style.opacity = 0;
           }
           continue;
-        }
-
-        if (transitionDuration) {
-          node.style[
-            `${vendorPrefix}TransitionDuration`
-          ] = `${transitionDuration}ms`;
         }
 
         if (this.axis.x) {
