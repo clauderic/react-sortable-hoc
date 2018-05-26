@@ -315,8 +315,8 @@ export default function sortableContainer(WrappedComponent, config = {withRef: f
         this.helper.style.boxSizing = 'border-box';
         this.helper.style.pointerEvents = 'none';
 
+        this.sortableGhost = node;
         if (hideSortableGhost) {
-          this.sortableGhost = node;
           node.style.visibility = 'hidden';
           node.style.opacity = 0;
         }
