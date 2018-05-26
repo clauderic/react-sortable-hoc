@@ -418,11 +418,13 @@ export default function sortableContainer(WrappedComponent, config = {withRef: f
 
       // Remove helper after a transition back to place from the DOM
       setTimeout((helper => {
-        if (this.props.hideSortableGhost && this.sortableGhost) {
+        if (this.sortableGhost) {
           this.sortableGhost.style[`${vendorPrefix}Transform`] = '';
           this.sortableGhost.style[`${vendorPrefix}TransitionDuration`] = '';
-          this.sortableGhost.style.visibility = '';
-          this.sortableGhost.style.opacity = '';
+          if (this.props.hideSortableGhost) {
+            this.sortableGhost.style.visibility = '';
+            this.sortableGhost.style.opacity = '';
+          }
         }
         helper.parentNode.removeChild(helper);
       }).bind(this, this.helper), transitionDuration);
