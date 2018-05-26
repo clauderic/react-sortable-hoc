@@ -476,7 +476,6 @@ export default function sortableContainer(WrappedComponent, config = {withRef: f
 
         node.node.style.zIndex = '';
         if (node.node === this.sortableGhost) {
-          console.log(node.node)
           return; // For the ghost node, we'll do it when we remove the helper
         }
         node.node.style[`${vendorPrefix}Transform`] = '';
