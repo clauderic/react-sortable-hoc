@@ -407,7 +407,7 @@ export default function sortableContainer(WrappedComponent, config = {withRef: f
           this.listenerNode.removeEventListener(eventName, this.handleSortEnd));
       }
 
-      this.updatePosition(e); // Make sure we have the right position for the helper
+      this.updatePosition(event); // Make sure we have the right position for the helper
 
       // This function might be pre-empted if the parent calls a re-render quickly.
       this.cleanupTimeout = setTimeout(this.performCleanup, transitionDuration);
@@ -423,6 +423,10 @@ export default function sortableContainer(WrappedComponent, config = {withRef: f
 
       // For now, transition the helper to a position over the ghost.
       if (transitionDuration) {
+        if (this.sortableGhost) {
+          // remove transition off of the ghost BEFORE repositioning helper
+          this.sortableGhost.style[`${vendorPrefix}TransitionDuration`] = '';
+        }
         this.helper.style[`${vendorPrefix}TransitionDuration`] = `${transitionDuration}ms`;
 
         const helperStart = this.helper.getBoundingClientRect();
@@ -454,9 +458,9 @@ export default function sortableContainer(WrappedComponent, config = {withRef: f
         );
       }
 
-      if (this.sortableGhost) { // remove transform off of the ghost AFTER onSortEnd is called.
+      if (this.sortableGhost) {
+        // remove transform off of the ghost AFTER onSortEnd is called.
         this.sortableGhost.style[`${vendorPrefix}Transform`] = '';
-        this.sortableGhost.style[`${vendorPrefix}TransitionDuration`] = '';
       }
 
 
