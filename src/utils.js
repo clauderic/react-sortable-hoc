@@ -102,6 +102,14 @@ export function getPosition(event) {
   }
 }
 
+export function isTouchEvent(event) {
+  return (
+    event instanceof TouchEvent ||
+    event.touches && event.touches.length ||
+    event.changedTouches && event.changedTouches.length
+  );
+}
+
 export function getEdgeOffset(node, parent, offset = {top: 0, left: 0}) {
   // Get the actual offsetTop / offsetLeft value, no matter how deep the node is nested
   if (node) {

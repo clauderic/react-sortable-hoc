@@ -13,6 +13,7 @@ import {
   getElementMargin,
   getLockPixelOffset,
   getPosition,
+  isTouchEvent,
   provideDisplayName,
   omit,
 } from '../utils';
@@ -182,7 +183,7 @@ export default function sortableContainer(WrappedComponent, config = {withRef: f
 				 * prevent subsequent 'mousemove' events from being fired
 				 * (see https://github.com/clauderic/react-sortable-hoc/issues/118)
 				 */
-        if (event.target.tagName.toLowerCase() === 'a') {
+        if (!isTouchEvent(event) && event.target.tagName.toLowerCase() === 'a') {
           event.preventDefault();
         }
 
@@ -748,7 +749,7 @@ export default function sortableContainer(WrappedComponent, config = {withRef: f
         config.withRef,
         'To access the wrapped instance, you need to pass in {withRef: true} as the second argument of the SortableContainer() call'
       );
-      
+
       return this.refs.wrappedInstance;
     }
 
