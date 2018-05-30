@@ -1,6 +1,6 @@
 Changelog
 ------------
-### 0.8.2
+### 0.8.3
 - Fix: TouchEvent is undefined in certain browsers, such as Safari [#382](https://github.com/clauderic/react-sortable-hoc/issues/382)
 
 ### 0.8.1
