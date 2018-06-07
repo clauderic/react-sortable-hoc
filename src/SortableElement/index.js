@@ -2,8 +2,9 @@ import React, {Component} from 'react';
 import PropTypes from 'prop-types';
 import {findDOMNode} from 'react-dom';
 import invariant from 'invariant';
+import omit from 'lodash/omit';
 
-import {provideDisplayName, omit} from '../utils';
+import {provideDisplayName} from '../utils';
 
 // Export Higher Order Sortable Element Component
 export default function sortableElement(WrappedComponent, config = {withRef: false}) {

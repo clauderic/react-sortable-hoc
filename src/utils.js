@@ -1,22 +1,15 @@
 import invariant from 'invariant';
 
 export function arrayMove(arr, previousIndex, newIndex) {
-  const array = arr.slice(0);
+  const array = [...arr];
   if (newIndex >= array.length) {
     let k = newIndex - array.length;
     while (k-- + 1) {
       array.push(undefined);
     }
   }
-  array.splice(newIndex, 0, array.splice(previousIndex, 1)[0]);
+  [array[previousIndex], array[newIndex]] = [array[newIndex], array[previousIndex]];  // swap
   return array;
-}
-
-export function omit(obj, ...keysToOmit) {
-  return Object.keys(obj).reduce((acc, key) => {
-    if (keysToOmit.indexOf(key) === -1) acc[key] = obj[key];
-    return acc;
-  }, {});
 }
 
 export const events = {
@@ -49,14 +42,16 @@ export function closest(el, fn) {
   }
 }
 
+/**
+ * Returns a number whose value is limited to the given range.
+ *
+ * @param {Number} min The lower boundary of the output range
+ * @param {Number} max The upper boundary of the output range
+ * @returns A number in the range [min, max]
+ * @type Number
+ */
 export function limit(min, max, value) {
-  if (value < min) {
-    return min;
-  }
-  if (value > max) {
-    return max;
-  }
-  return value;
+  return Math.min(Math.max(value, min), max);
 }
 
 function getCSSPixelValue(stringValue) {
