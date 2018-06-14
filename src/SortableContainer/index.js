@@ -399,12 +399,6 @@ export default function sortableContainer(WrappedComponent, config = {withRef: f
       const {hideSortableGhost, onSortEnd} = this.props;
       const {collection} = this.manager.active;
 
-      // Remove the move handler if there's a frame that hasn't run yet.
-      if (window.cancelAnimationFrame && this.sortMoveAF){
-        window.cancelAnimationFrame(this.sortMoveAF);
-        this.sortMoveAF = null;
-      }
-
       // Remove the event listeners if the node is still in the DOM
       if (this.listenerNode) {
         events.move.forEach(eventName =>
