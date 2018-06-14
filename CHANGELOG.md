@@ -1,5 +1,33 @@
 Changelog
 ------------
+### 0.8.3
+- Fix: TouchEvent is undefined in certain browsers, such as Safari [#382](https://github.com/clauderic/react-sortable-hoc/issues/382)
+
+### 0.8.1
+- Fix scrolling issues on mobile with anchor tag elements [#380](https://github.com/clauderic/react-sortable-hoc/pull/380)
+- Update TypeScript type definition for ContainerGetter to accept Promises that return HTMLElements
+
+### 0.8.0
+- Allow `getContainer` to return a promise. This is useful when the container node is rendered by a parent component, since `componentDidMount` fires backwards (from child to parent) [#155](https://github.com/clauderic/react-sortable-hoc/pull/155/)
+
+### 0.7.4
+- Fix typo in getLockPixelOffset helper
+
+### 0.7.3
+- Fix issues with distance and pressThreshold props on mobile [#378](https://github.com/clauderic/react-sortable-hoc/pull/378)
+
+### 0.7.2
+- Fix issues with TypeScript type definitions
+
+### 0.7.1
+- Provide TypeScript type definitions out of the box [#377](https://github.com/clauderic/react-sortable-hoc/pull/377)
+- Fix potential issues with calling `removeEventListeners` on `componentWillUnmount` if the container node has already unmounted [#376](https://github.com/clauderic/react-sortable-hoc/pull/376)
+
+### 0.7.0
+- [Breaking change] Removed lodash dependency. For users wishing to support Internet Explorer, a [polyfill](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/find#Polyfill) for Array.prototype.find will be required
+- Added `onSortOver` prop that gets invoked when sorting over an element [#278](https://github.com/clauderic/react-sortable-hoc/pull/278)
+- Fix `useWindowAsScrollContainer` [#306](https://github.com/clauderic/react-sortable-hoc/pull/306)
+
 ### 0.6.8
 Update react and react-dom peerdependency requirements for React 16+ [#283](https://github.com/clauderic/react-sortable-hoc/pull/283). Thanks [@jnsdls](https://github.com/jnsdls)!
 
