@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {render} from 'react-dom';
+import ReactDOM from 'react-dom';
 import {
   SortableContainer,
   SortableElement,
@@ -46,4 +46,4 @@ class SortableComponent extends Component {
   }
 }
 
-render(<SortableComponent />, document.getElementById('root'));
+ReactDOM.render(<SortableComponent />, document.getElementById('root'));

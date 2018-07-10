@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {render} from 'react-dom';
+import ReactDOM from 'react-dom';
 import {Table, Column} from 'react-virtualized';
 import {SortableContainer, SortableElement, arrayMove} from 'react-sortable-hoc';
 import 'react-virtualized/styles.css';
@@ -73,4 +73,4 @@ class TableWithSortableColumns extends Component {
   }
 }
 
-render(<TableWithSortableColumns />, document.getElementById('root'));
+ReactDOM.render(<TableWithSortableColumns />, document.getElementById('root'));

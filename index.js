@@ -1,6 +1,6 @@
 import 'babel-polyfill';
 import React, {Component} from 'react';
-import {render} from 'react-dom';
+import ReactDOM from 'react-dom';
 import {SortableContainer, SortableElement, arrayMove} from './src/index';
 import range from 'lodash/range';
 import random from 'lodash/random';
@@ -59,6 +59,6 @@ class Example extends Component {
     }
 }
 
-render(<Example />,
+ReactDOM.render(<Example />,
   document.getElementById('root')
 )
