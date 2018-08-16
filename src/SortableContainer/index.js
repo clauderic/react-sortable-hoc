@@ -248,6 +248,7 @@ export default function sortableContainer(WrappedComponent, config = {withRef: f
         const {
           axis,
           getHelperDimensions,
+          getHelperMountLocation,
           helperClass,
           hideSortableGhost,
           onSortStart,
@@ -301,7 +302,11 @@ export default function sortableContainer(WrappedComponent, config = {withRef: f
           }
         });
 
-        this.helper = this.document.body.appendChild(clonedNode);
+        this.helper = (
+          getHelperMountLocation ?
+          getHelperMountLocation() :
+          this.document.body
+        ).appendChild(clonedNode);
 
         this.helper.style.position = 'fixed';
         this.helper.style.top = `${this.boundingClientRect.top - margin.top}px`;
