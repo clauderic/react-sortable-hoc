@@ -56,15 +56,13 @@ const SortableItem = SortableElement(({value}) =>
   <li>{value}</li>
 );
 
-const SortableList = SortableContainer(({items}) => {
-  return (
-    <ul>
-      {items.map((value, index) => (
-        <SortableItem key={`item-${index}`} index={index} value={value} />
-      ))}
-    </ul>
-  );
-});
+const SortableList = SortableContainer(({items}) =>
+  <ul>
+    {items.map((value, index) =>
+      <SortableItem key={`item-${index}`} index={index} value={value} />
+    )}
+  </ul>
+);
 
 class SortableComponent extends Component {
   state = {
@@ -153,20 +151,18 @@ const SortableItem = SortableElement(({value, sortIndex}) =>
   <li>{value} - #{sortIndex}</li>
 );
 
-const SortableList = SortableContainer(({items}) => {
-  return (
-    <ul>
-      {items.map((value, index) => (
-        <SortableItem
-          key={`item-${index}`}
-          index={index}
-          sortIndex={index}
-          value={value}
-        />
-      ))}
-    </ul>
-  );
-});
+const SortableList = SortableContainer(({items}) =>
+  <ul>
+    {items.map((value, index) =>
+      <SortableItem
+        key={`item-${index}`}
+        index={index}
+        sortIndex={index}
+        value={value}
+      />
+    )}
+  </ul>
+);
 ```
 
 Dependencies
