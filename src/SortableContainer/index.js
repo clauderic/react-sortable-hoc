@@ -289,6 +289,7 @@ export default function sortableContainer(WrappedComponent, config = {withRef: f
           left: window.pageXOffset,
         };
 
+        const canvases = node.querySelectorAll('canvas');
         const fields = node.querySelectorAll('input, textarea, select');
         const clonedNode = node.cloneNode(true);
         const clonedFields = [
@@ -299,6 +300,16 @@ export default function sortableContainer(WrappedComponent, config = {withRef: f
           if (field.type !== 'file' && fields[index]) {
             field.value = fields[index].value;
           }
+        });
+
+        const clonedCanvases = [
+          ...clonedNode.querySelectorAll('canvas'),
+        ]; // Convert NodeList to Array
+
+        clonedCanvases.forEach((clonedCanvas, index) => {
+          const oldCanvas = canvases[index];
+          var clonedCanvasCtx = clonedCanvas.getContext('2d');
+          clonedCanvasCtx.drawImage(oldCanvas, 0, 0);
         });
 
         this.helper = this.document.body.appendChild(clonedNode);
