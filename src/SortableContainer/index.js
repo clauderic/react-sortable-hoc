@@ -552,6 +552,7 @@ export default function sortableContainer(WrappedComponent, config = {withRef: f
           y: 0,
         };
         let {edgeOffset} = nodes[i];
+        let scale = 1;
 
         // If we haven't cached the node's offsetTop / offsetLeft value
         if (!edgeOffset) {
@@ -612,6 +613,7 @@ export default function sortableContainer(WrappedComponent, config = {withRef: f
                 // is exactly where we want to go
                 translate.x = nextNode.edgeOffset.left - edgeOffset.left;
                 translate.y = nextNode.edgeOffset.top - edgeOffset.top;
+                scale = nextNode.node.offsetWidth/node.offsetWidth;
               }
               if (this.newIndex === null) {
                 this.newIndex = index;
@@ -636,6 +638,7 @@ export default function sortableContainer(WrappedComponent, config = {withRef: f
                 // is exactly where we want to go
                 translate.x = prevNode.edgeOffset.left - edgeOffset.left;
                 translate.y = prevNode.edgeOffset.top - edgeOffset.top;
+                scale = prevNode.node.offsetWidth/node.offsetWidth;
               }
               this.newIndex = index;
             }
@@ -673,7 +676,7 @@ export default function sortableContainer(WrappedComponent, config = {withRef: f
             }
           }
         }
-        node.style[`${vendorPrefix}Transform`] = `translate3d(${translate.x}px,${translate.y}px,0)`;
+        node.style[`${vendorPrefix}Transform`] = `translate3d(${translate.x}px,${translate.y}px,0) scale(${scale})`;
       }
 
       if (this.newIndex == null) {
