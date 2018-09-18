@@ -543,8 +543,8 @@ export default function sortableContainer(WrappedComponent, config = {withRef: f
         const width = node.offsetWidth;
         const height = node.offsetHeight;
         const offset = {
-          width: this.width > width ? width / 2 : this.width / 2,
-          height: this.height > height ? height / 2 : this.height / 2,
+          width: this.width > width ? this.width / 2 : width / 2,
+          height: this.height > height ? this.height / 2 : height / 2,
         };
 
         const translate = {
@@ -605,13 +605,13 @@ export default function sortableContainer(WrappedComponent, config = {withRef: f
               translate.x = this.width + this.marginOffset.x;
               if (
                 edgeOffset.left + translate.x >
-                this.containerBoundingRect.width - offset.width
+                this.containerBoundingRect.width - offset.width*2
               ) {
                 // If it moves passed the right bounds, then animate it to the first position of the next row.
                 // We just use the offset of the next node to calculate where to move, because that node's original position
                 // is exactly where we want to go
                 translate.x = nextNode.edgeOffset.left - edgeOffset.left;
-                translate.y = nextNode.edgeOffset.top - edgeOffset.top;
+                translate.y = (nextNode.edgeOffset.top+(nextNode.node.offsetHeight/2)) - (edgeOffset.top+(node.offsetHeight/2));
               }
               if (this.newIndex === null) {
                 this.newIndex = index;
@@ -629,13 +629,13 @@ export default function sortableContainer(WrappedComponent, config = {withRef: f
               translate.x = -(this.width + this.marginOffset.x);
               if (
                 edgeOffset.left + translate.x <
-                this.containerBoundingRect.left + offset.width
+                this.containerBoundingRect.left + offset.width*2
               ) {
                 // If it moves passed the left bounds, then animate it to the last position of the previous row.
                 // We just use the offset of the previous node to calculate where to move, because that node's original position
                 // is exactly where we want to go
                 translate.x = prevNode.edgeOffset.left - edgeOffset.left;
-                translate.y = prevNode.edgeOffset.top - edgeOffset.top;
+                translate.y = (prevNode.edgeOffset.top+(prevNode.node.offsetHeight/2)) - (edgeOffset.top+(node.offsetHeight/2));
               }
               this.newIndex = index;
             }
