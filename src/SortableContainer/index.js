@@ -540,11 +540,10 @@ export default function sortableContainer(WrappedComponent, config = {withRef: f
       for (let i = 0, len = nodes.length; i < len; i++) {
         const {node} = nodes[i];
         const index = node.sortableInfo.index;
-        const width = node.offsetWidth;
         const height = node.offsetHeight;
         const offset = {
-          width: this.width > width ? width / 2 : this.width / 2,
-          height: this.height > height ? height / 2 : this.height / 2,
+          width: this.width / 2,
+          height: this.height / 2,
         };
 
         const translate = {

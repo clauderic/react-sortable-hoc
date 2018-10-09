@@ -1,3 +1,8 @@
+# @adrianhelvik/react-sortable-hoc
+
+This is a fork of react-sortable-hoc by clauderic as the repo isn't frequently maintained.
+I have purposefully not changed more things than necessary.
+
 # React Sortable (HOC)
 > A set of higher-order components to turn any list into an animated, touch-friendly, sortable list.
 
