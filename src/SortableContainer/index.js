@@ -301,7 +301,13 @@ export default function sortableContainer(WrappedComponent, config = {withRef: f
           }
         });
 
-        this.helper = this.document.body.appendChild(clonedNode);
+        this.helper = (
+          document.fullscreenElement ||
+          document.webkitFullscreenElement ||
+          document.mozFullScreenElement ||
+          document.msFullscreenElement ||
+          this.document.body
+        ).appendChild(clonedNode);
 
         this.helper.style.position = 'fixed';
         this.helper.style.top = `${this.boundingClientRect.top - margin.top}px`;
