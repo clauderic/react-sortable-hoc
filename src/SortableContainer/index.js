@@ -255,8 +255,12 @@ export default function sortableContainer(WrappedComponent, config = {withRef: f
         } = this.props;
         const {node, collection} = active;
         const {index} = node.sortableInfo;
-        const margin = getElementMargin(node);
 
+        if (helperClass) {
+          node.classList.add(...helperClass.split(' '));
+        }
+
+        const margin = getElementMargin(node);
         const containerBoundingRect = this.container.getBoundingClientRect();
         const dimensions = getHelperDimensions({index, node, collection});
 
@@ -344,10 +348,6 @@ export default function sortableContainer(WrappedComponent, config = {withRef: f
             this.height / 2;
         }
 
-        if (helperClass) {
-          this.helper.classList.add(...helperClass.split(' '));
-        }
-
         this.listenerNode = event.touches ? node : this.contentWindow;
         events.move.forEach(eventName =>
           this.listenerNode.addEventListener(
@@ -387,8 +387,13 @@ export default function sortableContainer(WrappedComponent, config = {withRef: f
     };
 
     handleSortEnd = event => {
-      const {hideSortableGhost, onSortEnd} = this.props;
+      const {hideSortableGhost, onSortEnd, helperClass} = this.props;
       const {collection} = this.manager.active;
+
+      const active = this.manager.getActive();
+      if (active && helperClass) {
+        active.node.classList.remove(...helperClass.split(' '));
+      }
 
       // Remove the event listeners if the node is still in the DOM
       if (this.listenerNode) {
