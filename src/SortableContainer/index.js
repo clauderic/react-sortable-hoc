@@ -230,8 +230,10 @@ export default function sortableContainer(WrappedComponent, config = {withRef: f
     };
 
     cancel = () => {
-      const { distance } = this.props;
-      if (!this.state.sorting) {
+      const {distance} = this.props;
+      const {sorting} = this.state;
+
+      if (!sorting) {
         if (!distance) {
           clearTimeout(this.pressTimer);
         }
