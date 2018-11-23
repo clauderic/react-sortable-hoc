@@ -1,5 +1,8 @@
 Changelog
 ------------
+### 0.8.4
+- Fix a bug when you use SortableHandle and distance prop [#447](https://github.com/clauderic/react-sortable-hoc/pull/447)
+
 ### 0.8.3
 - Fix: TouchEvent is undefined in certain browsers, such as Safari [#382](https://github.com/clauderic/react-sortable-hoc/issues/382)
 
