@@ -225,18 +225,18 @@ export default function sortableContainer(WrappedComponent, config = {withRef: f
     };
 
     handleEnd = () => {
-      const {distance} = this.props;
-
       this._touched = false;
-
-      if (!distance) {
-        this.cancel();
-      }
+      this.cancel();
     };
 
     cancel = () => {
-      if (!this.state.sorting) {
-        clearTimeout(this.pressTimer);
+      const {distance} = this.props;
+      const {sorting} = this.state;
+
+      if (!sorting) {
+        if (!distance) {
+          clearTimeout(this.pressTimer);
+        }
         this.manager.active = null;
       }
     };
