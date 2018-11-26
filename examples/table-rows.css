@@ -1,0 +1,24 @@
+table {
+    -webkit-user-select: none;
+    width: 80%;
+    height: 80vh;
+    maxWidth: 500px;
+    margin: 0 auto;
+    /* `border-collapse: collapsed` means the table, rather than the cells, own the borders */
+    border-collapse: separate;
+    border-spacing: 0;
+    background-color: #f3f3f3;
+    border: 1px solid #EFEFEF;
+}
+tbody { /* intentionally unstyled */ }
+tr { /* intentionally unstyled */ }
+tr td {
+    /* intentionally not a child of table */
+    border: 1px solid #EFEFEF;
+    background-color: white;
+    padding: 10px;
+    width: 100%;
+}
+/* manually collapsing borders */
+tr + tr td { border-top-width: 0; }
+td + td { border-left: 0; }
