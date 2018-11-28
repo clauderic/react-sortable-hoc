@@ -8,6 +8,7 @@ import VirtualList from 'react-tiny-virtual-list';
 import {
   defaultTableRowRenderer,
   Column,
+  Grid,
   Table,
   List,
 } from 'react-virtualized';
@@ -218,7 +219,55 @@ class VirtualizedListWrapper extends Component {
   }
 }
 
+class VirtualizedGridWrapper extends Component {
+  render() {
+    const {
+      className,
+      items,
+      height,
+      width,
+      itemHeight,
+      itemClass,
+    } = this.props;
+
+    const COLUMN_COUNT = 3;
+    const length = items.length;
+    const rowCount = Math.ceil(length / COLUMN_COUNT);
+
+    return (
+      <Grid
+        axis="xy"
+        cellRenderer={({columnIndex, key, rowIndex, style}) => {
+          const datumIndex = (rowIndex * COLUMN_COUNT) + columnIndex;
+
+          const {value, height} = items[datumIndex];
+          return (
+            <Item
+              className={itemClass}
+              columnIndex={columnIndex}
+              height={height}
+              index={datumIndex}
+              key={key}
+              style={style}
+              value={value}
+            />
+          );
+        }}
+        className={className}
+        columnCount={COLUMN_COUNT}
+        columnWidth={130}
+        rowCount={rowCount}
+        rowHeight={itemHeight}
+        width={width}
+        height={height}
+      />
+    );
+  }
+}
+
 const SortableVirtualizedList = SortableContainer(VirtualizedListWrapper, {withRef: true});
+const SortableVirtualizedGrid = SortableContainer(VirtualizedGridWrapper, {withRef: true});
+
 const SortableTable = SortableContainer(Table, {withRef: true});
 const SortableRowRenderer = SortableElement(defaultTableRowRenderer);
 
@@ -396,7 +445,7 @@ storiesOf('Basic Configuration', module)
         <ListWrapper
           component={SortableList}
           axis={'xy'}
-          items={getItems(10, 110)}
+          items={getItems(50, 110)}
           helperClass={style.stylizedHelper}
           className={classNames(style.list, style.stylizedList, style.grid)}
           itemClass={classNames(style.stylizedItem, style.gridItem)}
@@ -562,6 +611,22 @@ storiesOf('react-virtualized', module)
             vs.recomputeRowHeights();
             instance.forceUpdate();
           }}
+        />
+      </div>
+    );
+  })
+  .add('Virtualized Grid', () => {
+    return (
+      <div className={style.root}>
+        <ListWrapper
+          axis={'xy'}
+          className={classNames(style.list, style.stylizedList, style.grid)}
+          component={SortableVirtualizedGrid}
+          helperClass={style.stylizedHelper}
+          items={getItems(500, 110)}
+          itemClass={classNames(style.stylizedItem, style.gridItem)}
+          itemHeight={110}
+          width={420}
         />
       </div>
     );
