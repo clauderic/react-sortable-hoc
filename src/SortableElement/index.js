@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import PropTypes from 'prop-types';
-import {findDOMNode} from 'react-dom';
+import ReactDOM from 'react-dom';
 import invariant from 'invariant';
 
 import {provideDisplayName, omit} from '../utils';
@@ -56,7 +56,7 @@ export default function sortableElement(WrappedComponent, config = {withRef: fal
     }
 
     setDraggable(collection, index) {
-      const node = (this.node = findDOMNode(this));
+      const node = (this.node = ReactDOM.findDOMNode(this));
 
       node.sortableInfo = {
         index,

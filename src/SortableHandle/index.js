@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {findDOMNode} from 'react-dom';
+import ReactDOM from 'react-dom';
 import invariant from 'invariant';
 
 import {provideDisplayName} from '../utils';
@@ -10,7 +10,7 @@ export default function sortableHandle(WrappedComponent, config = {withRef: fals
     static displayName = provideDisplayName('sortableHandle', WrappedComponent);
 
     componentDidMount() {
-      const node = findDOMNode(this);
+      const node = ReactDOM.findDOMNode(this);
       node.sortableHandle = true;
     }
 

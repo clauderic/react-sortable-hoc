@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {render} from 'react-dom';
+import ReactDOM from 'react-dom';
 import {SortableContainer, SortableElement, arrayMove} from 'react-sortable-hoc';
 
 const SortableItem = SortableElement(({value}) => <li>{value}</li>);
@@ -28,4 +28,4 @@ class SortableComponent extends Component {
   }
 }
 
-render(<SortableComponent />, document.getElementById('root'));
+ReactDOM.render(<SortableComponent />, document.getElementById('root'));

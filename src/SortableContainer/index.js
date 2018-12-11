@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import PropTypes from 'prop-types';
-import {findDOMNode} from 'react-dom';
+import ReactDOM from 'react-dom';
 import invariant from 'invariant';
 
 import Manager from '../Manager';
@@ -757,7 +757,7 @@ export default function sortableContainer(WrappedComponent, config = {withRef: f
       const {getContainer} = this.props;
 
       if (typeof getContainer !== 'function') {
-        return findDOMNode(this);
+        return ReactDOM.findDOMNode(this);
       }
 
       return getContainer(config.withRef ? this.getWrappedInstance() : undefined);

@@ -49,7 +49,7 @@ Usage
 
 ```js
 import React, {Component} from 'react';
-import {render} from 'react-dom';
+import ReactDOM from 'react-dom';
 import {SortableContainer, SortableElement, arrayMove} from 'react-sortable-hoc';
 
 const SortableItem = SortableElement(({value}) =>
@@ -80,7 +80,7 @@ class SortableComponent extends Component {
   }
 }
 
-render(<SortableComponent/>, document.getElementById('root'));
+ReactDOM.render(<SortableComponent/>, document.getElementById('root'));
 ```
 That's it! React Sortable does not come with any styles by default, since it's meant to enhance your existing components.
 
