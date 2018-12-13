@@ -705,16 +705,30 @@ export default function sortableContainer(WrappedComponent, config = {withRef: f
         y: 10,
       };
 
-      if (translate.y >= this.maxTranslate.y - this.height / 2) {
+      const {
+        scrollTop,
+        scrollLeft,
+        scrollHeight,
+        scrollWidth,
+        offsetHeight,
+        offsetWidth,
+      } = this.scrollContainer;
+
+      const isTop = scrollTop === 0;
+      const isBottom = scrollHeight - scrollTop - offsetHeight === 0;
+      const isLeft = scrollLeft === 0;
+      const isRight = scrollWidth - scrollLeft - offsetWidth === 0;
+
+      if (translate.y >= this.maxTranslate.y - this.height / 2 && !isBottom) {
         direction.y = 1; // Scroll Down
         speed.y = acceleration.y * Math.abs((this.maxTranslate.y - this.height / 2 - translate.y) / this.height);
-      } else if (translate.x >= this.maxTranslate.x - this.width / 2) {
+      } else if (translate.x >= this.maxTranslate.x - this.width / 2 && !isRight) {
         direction.x = 1; // Scroll Right
         speed.x = acceleration.x * Math.abs((this.maxTranslate.x - this.width / 2 - translate.x) / this.width);
-      } else if (translate.y <= this.minTranslate.y + this.height / 2) {
+      } else if (translate.y <= this.minTranslate.y + this.height / 2 && !isTop) {
         direction.y = -1; // Scroll Up
         speed.y = acceleration.y * Math.abs((translate.y - this.height / 2 - this.minTranslate.y) / this.height);
-      } else if (translate.x <= this.minTranslate.x + this.width / 2) {
+      } else if (translate.x <= this.minTranslate.x + this.width / 2 && !isLeft) {
         direction.x = -1; // Scroll Left
         speed.x = acceleration.x * Math.abs((translate.x - this.width / 2 - this.minTranslate.x) / this.width);
       }
