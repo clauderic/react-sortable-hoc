@@ -55,6 +55,7 @@ export interface SortableContainerProps {
   pressThreshold?: number;
   distance?: number;
   shouldCancelStart?: (event: SortEvent | SortEventWithTag) => boolean;
+  beforeSortStart?: SortStartHandler;
   onSortStart?: SortStartHandler;
   onSortMove?: SortMoveHandler;
   onSortEnd?: SortEndHandler;
