@@ -41,6 +41,7 @@ export default function sortableContainer(WrappedComponent, config = {withRef: f
     static displayName = provideDisplayName('sortableList', WrappedComponent);
 
     static defaultProps = {
+      rtl: false,
       axis: 'y',
       transitionDuration: 300,
       pressDelay: 0,
@@ -65,6 +66,7 @@ export default function sortableContainer(WrappedComponent, config = {withRef: f
     };
 
     static propTypes = {
+      rtl: PropTypes.bool,
       axis: PropTypes.oneOf(['x', 'y', 'xy']),
       distance: PropTypes.number,
       lockAxis: PropTypes.string,
@@ -520,7 +522,7 @@ export default function sortableContainer(WrappedComponent, config = {withRef: f
     }
 
     animateNodes() {
-      const {transitionDuration, hideSortableGhost, onSortOver} = this.props;
+      const {transitionDuration, hideSortableGhost, onSortOver, rtl} = this.props;
       const nodes = this.manager.getOrderedRefs();
       const containerScrollDelta = {
         left: this.container.scrollLeft - this.initialScroll.left,
@@ -593,10 +595,16 @@ export default function sortableContainer(WrappedComponent, config = {withRef: f
           if (this.axis.y) {
             // Calculations for a grid setup
             if (
-              index < this.index &&
+              !rtl && index < this.index &&
               (
                 ((sortingOffset.left + windowScrollDelta.left) - offset.width <= edgeOffset.left &&
-                (sortingOffset.top + windowScrollDelta.top) <= edgeOffset.top + offset.height) ||
+                  (sortingOffset.top + windowScrollDelta.top) <= edgeOffset.top + offset.height) ||
+                (sortingOffset.top + windowScrollDelta.top) + offset.height <= edgeOffset.top
+              ) ||
+              rtl && index < this.index &&
+              (
+                ((sortingOffset.left + windowScrollDelta.left) + offset.width >= edgeOffset.left &&
+                  (sortingOffset.top + windowScrollDelta.top) <= edgeOffset.top + offset.height) ||
                 (sortingOffset.top + windowScrollDelta.top) + offset.height <= edgeOffset.top
               )
             ) {
@@ -604,8 +612,10 @@ export default function sortableContainer(WrappedComponent, config = {withRef: f
               // then move it to the right
               translate.x = this.width + this.marginOffset.x;
               if (
-                edgeOffset.left + translate.x >
-                this.containerBoundingRect.width - offset.width
+                !rtl && edgeOffset.left + translate.x >
+                this.containerBoundingRect.width - offset.width ||
+                rtl && edgeOffset.left + translate.x >
+                this.containerBoundingRect.left - offset.width
               ) {
                 // If it moves passed the right bounds, then animate it to the first position of the next row.
                 // We just use the offset of the next node to calculate where to move, because that node's original position
@@ -617,19 +627,27 @@ export default function sortableContainer(WrappedComponent, config = {withRef: f
                 this.newIndex = index;
               }
             } else if (
-              index > this.index &&
+              !rtl && index > this.index &&
               (
                 ((sortingOffset.left + windowScrollDelta.left) + offset.width >= edgeOffset.left &&
-                (sortingOffset.top + windowScrollDelta.top) + offset.height >= edgeOffset.top) ||
+                  (sortingOffset.top + windowScrollDelta.top) + offset.height >= edgeOffset.top) ||
+                (sortingOffset.top + windowScrollDelta.top) + offset.height >= edgeOffset.top + height
+              ) ||
+              rtl && index > this.index &&
+              (
+                ((sortingOffset.left + windowScrollDelta.left) <= edgeOffset.left + offset.width &&
+                  (sortingOffset.top + windowScrollDelta.top) + offset.height >= edgeOffset.top) ||
                 (sortingOffset.top + windowScrollDelta.top) + offset.height >= edgeOffset.top + height
               )
             ) {
               // If the current node is to the right on the same row, or below the node that's being dragged
               // then move it to the left
-              translate.x = -(this.width + this.marginOffset.x);
+              translate.x = !rtl ? -(this.width + this.marginOffset.x) : this.width + this.marginOffset.x;
               if (
-                edgeOffset.left + translate.x <
-                this.containerBoundingRect.left + offset.width
+                !rtl && edgeOffset.left + translate.x <
+                this.containerBoundingRect.left + offset.width ||
+                rtl && edgeOffset.left - translate.x <
+                this.containerBoundingRect.width - offset.width
               ) {
                 // If it moves passed the left bounds, then animate it to the last position of the previous row.
                 // We just use the offset of the previous node to calculate where to move, because that node's original position
@@ -641,19 +659,17 @@ export default function sortableContainer(WrappedComponent, config = {withRef: f
             }
           } else {
             if (
-              index > this.index &&
+              (!rtl && index > this.index || rtl && index < this.index) &&
               (sortingOffset.left + windowScrollDelta.left) + offset.width >= edgeOffset.left
             ) {
               translate.x = -(this.width + this.marginOffset.x);
-              this.newIndex = index;
+              !rtl || (rtl && this.newIndex == null) && (this.newIndex = index);
             } else if (
-              index < this.index &&
+              (!rtl && index < this.index || rtl && index > this.index) &&
               (sortingOffset.left + windowScrollDelta.left) <= edgeOffset.left + offset.width
             ) {
               translate.x = this.width + this.marginOffset.x;
-              if (this.newIndex == null) {
-                this.newIndex = index;
-              }
+              (!rtl && this.newIndex == null) || rtl && (this.newIndex = index);
             }
           }
         } else if (this.axis.y) {
@@ -771,6 +787,7 @@ export default function sortableContainer(WrappedComponent, config = {withRef: f
           ref={ref}
           {...omit(
             this.props,
+            'rtl',
             'contentWindow',
             'useWindowAsScrollContainer',
             'distance',
