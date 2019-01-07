@@ -19,7 +19,7 @@ import classNames from 'classnames';
 
 function getItems(count, height) {
   var heights = [65, 110, 140, 65, 90, 65];
-  return range(count).map(value => {
+  return range(count).map((value) => {
     return {
       value,
       height: height || heights[random(0, heights.length - 1)],
@@ -29,7 +29,7 @@ function getItems(count, height) {
 
 const Handle = SortableHandle(() => <div className={style.handle} />);
 
-const Item = SortableElement(props => {
+const Item = SortableElement((props) => {
   return (
     <div
       className={props.className}
@@ -62,10 +62,10 @@ const SortableList = SortableContainer(
         ))}
       </div>
     );
-  }
+  },
 );
 
-const Category = SortableElement(props => {
+const Category = SortableElement((props) => {
   return (
     <div className={style.category}>
       <div className={style.categoryHeader}>
@@ -150,7 +150,7 @@ const SortableVirtualList = SortableContainer(
     return (
       <VirtualList
         className={className}
-        itemSize={index => items[index].height}
+        itemSize={(index) => items[index].height}
         estimatedItemSize={itemHeight}
         renderItem={({index, style}) => {
           const {value, height} = items[index];
@@ -170,7 +170,7 @@ const SortableVirtualList = SortableContainer(
         height={height}
       />
     );
-  }
+  },
 );
 
 // Function components cannot have refs, so we'll be using a class for React Virtualized
@@ -235,7 +235,7 @@ class TableWrapper extends Component {
 
     return (
       <SortableTable
-        getContainer={wrappedInstance =>
+        getContainer={(wrappedInstance) =>
           ReactDOM.findDOMNode(wrappedInstance.Grid)
         }
         gridClassName={className}
@@ -247,7 +247,7 @@ class TableWrapper extends Component {
         rowCount={items.length}
         rowGetter={({index}) => items[index]}
         rowHeight={itemHeight}
-        rowRenderer={props => <SortableRowRenderer {...props} />}
+        rowRenderer={(props) => <SortableRowRenderer {...props} />}
         width={width}
       >
         <Column label="Index" dataKey="value" width={100} />
@@ -276,7 +276,7 @@ const SortableInfiniteList = SortableContainer(
         ))}
       </Infinite>
     );
-  }
+  },
 );
 
 const ShrinkingSortableList = SortableContainer(
@@ -295,7 +295,7 @@ const ShrinkingSortableList = SortableContainer(
         ))}
       </div>
     );
-  }
+  },
 );
 
 const NestedSortableList = SortableContainer(
@@ -307,7 +307,7 @@ const NestedSortableList = SortableContainer(
         ))}
       </div>
     );
-  }
+  },
 );
 
 storiesOf('Basic Configuration', module)
@@ -372,7 +372,7 @@ storiesOf('Basic Configuration', module)
           className={classNames(
             style.list,
             style.stylizedList,
-            style.horizontalList
+            style.horizontalList,
           )}
           itemClass={classNames(style.stylizedItem, style.horizontalItem)}
         />
@@ -543,7 +543,7 @@ storiesOf('react-virtualized', module)
           items={getItems(500)}
           itemHeight={89}
           helperClass={style.stylizedHelper}
-          onSortEnd={ref => {
+          onSortEnd={(ref) => {
             // We need to inform React Virtualized that the item heights have changed
             const instance = ref.getWrappedInstance();
             const vs = instance.refs.vs;

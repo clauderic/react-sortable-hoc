@@ -1,7 +1,9 @@
 import invariant from 'invariant';
 
-// Will be deprecated soon. Consumers should install array-move in their project instead
 export function arrayMove(array, from, to) {
+  // Will be deprecated soon. Consumers should install 'array-move' instead
+  // https://www.npmjs.com/package/array-move
+
   array = array.slice();
   array.splice(to < 0 ? array.length + to : to, 0, array.splice(from, 1)[0]);
 
@@ -63,19 +65,14 @@ export function closest(el, fn) {
 }
 
 export function limit(min, max, value) {
-  if (value < min) {
-    return min;
-  }
-  if (value > max) {
-    return max;
-  }
-  return value;
+  return Math.max(min, Math.min(value, max));
 }
 
-function getCSSPixelValue(stringValue) {
+function getPixelValue(stringValue) {
   if (stringValue.substr(-2) === 'px') {
     return parseFloat(stringValue);
   }
+
   return 0;
 }
 
@@ -83,10 +80,10 @@ export function getElementMargin(element) {
   const style = window.getComputedStyle(element);
 
   return {
-    top: getCSSPixelValue(style.marginTop),
-    right: getCSSPixelValue(style.marginRight),
-    bottom: getCSSPixelValue(style.marginBottom),
-    left: getCSSPixelValue(style.marginLeft),
+    top: getPixelValue(style.marginTop),
+    right: getPixelValue(style.marginRight),
+    bottom: getPixelValue(style.marginBottom),
+    left: getPixelValue(style.marginLeft),
   };
 }
 
