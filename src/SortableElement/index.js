@@ -1,14 +1,19 @@
-import React, {Component} from 'react';
+import * as React from 'react';
 import PropTypes from 'prop-types';
 import {findDOMNode} from 'react-dom';
 import invariant from 'invariant';
 
 import {provideDisplayName, omit} from '../utils';
 
-// Export Higher Order Sortable Element Component
-export default function sortableElement(WrappedComponent, config = {withRef: false}) {
-  return class extends Component {
-    static displayName = provideDisplayName('sortableElement', WrappedComponent);
+export default function sortableElement(
+  WrappedComponent,
+  config = {withRef: false},
+) {
+  return class WithSortableElement extends React.Component {
+    static displayName = provideDisplayName(
+      'sortableElement',
+      WrappedComponent,
+    );
 
     static contextTypes = {
       manager: PropTypes.object.isRequired,
@@ -36,6 +41,7 @@ export default function sortableElement(WrappedComponent, config = {withRef: fal
       if (this.props.index !== nextProps.index && this.node) {
         this.node.sortableInfo.index = nextProps.index;
       }
+
       if (this.props.disabled !== nextProps.disabled) {
         const {collection, disabled, index} = nextProps;
         if (disabled) {
@@ -52,11 +58,13 @@ export default function sortableElement(WrappedComponent, config = {withRef: fal
     componentWillUnmount() {
       const {collection, disabled} = this.props;
 
-      if (!disabled) this.removeDraggable(collection);
+      if (!disabled) {
+        this.removeDraggable(collection);
+      }
     }
 
     setDraggable(collection, index) {
-      const node = (this.node = findDOMNode(this));
+      const node = findDOMNode(this);
 
       node.sortableInfo = {
         index,
@@ -64,6 +72,7 @@ export default function sortableElement(WrappedComponent, config = {withRef: fal
         manager: this.context.manager,
       };
 
+      this.node = node;
       this.ref = {node};
       this.context.manager.add(collection, this.ref);
     }
@@ -75,7 +84,7 @@ export default function sortableElement(WrappedComponent, config = {withRef: fal
     getWrappedInstance() {
       invariant(
         config.withRef,
-        'To access the wrapped instance, you need to pass in {withRef: true} as the second argument of the SortableElement() call'
+        'To access the wrapped instance, you need to pass in {withRef: true} as the second argument of the SortableElement() call',
       );
       return this.refs.wrappedInstance;
     }

@@ -1,7 +1,11 @@
 import React, {Component} from 'react';
 import {render} from 'react-dom';
 import {Table, Column} from 'react-virtualized';
-import {SortableContainer, SortableElement, arrayMove} from 'react-sortable-hoc';
+import {
+  SortableContainer,
+  SortableElement,
+  arrayMove,
+} from 'react-sortable-hoc';
 import 'react-virtualized/styles.css';
 
 const ROW_HEIGHT = 30;
@@ -16,9 +20,7 @@ const SortableHeaderRowRenderer = SortableContainer(
   ({className, columns, style}) => (
     <div className={className} role="row" style={style}>
       {React.Children.map(columns, (column, index) => (
-        <SortableHeader index={index}>
-          {column}
-        </SortableHeader>
+        <SortableHeader index={index}>{column}</SortableHeader>
       ))}
     </div>
   )
@@ -47,7 +49,7 @@ class TableWithSortableColumns extends Component {
     return (
       <Table
         width={COL_WIDTH * rows.length}
-        height={HEADER_ROW_HEIGHT + (ROW_HEIGHT * rows.length)}
+        height={HEADER_ROW_HEIGHT + ROW_HEIGHT * rows.length}
         headerHeight={ROW_HEIGHT}
         rowHeight={ROW_HEIGHT}
         rowCount={rows.length}
@@ -62,11 +64,7 @@ class TableWithSortableColumns extends Component {
         )}
       >
         {cols.map(col => (
-          <Column
-            {...col}
-            key={col.dataKey}
-            width={COL_WIDTH}
-          />
+          <Column {...col} key={col.dataKey} width={COL_WIDTH} />
         ))}
       </Table>
     );

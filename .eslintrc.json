@@ -1,0 +1,21 @@
+{
+  "extends": ["plugin:shopify/react"],
+  "rules": {
+    "no-lonely-if": "off",
+    "no-undefined": "off",
+    "no-param-reassign": "off",
+    "no-mixed-operators": "off",
+    "no-misleading-character-class": "off",
+    "require-atomic-updates": "off",
+    "prefer-object-spread": "off",
+    "lines-around-comment": "off",
+    "function-paren-newline": "off",
+    "promise/catch-or-return": "off",
+    "react/forbid-prop-types": "off",
+    "react/jsx-filename-extension": "off",
+    "react/no-unused-prop-types": "off",
+    "shopify/binary-assignment-parens": "off",
+    "react/no-string-refs": 1,
+    "react/no-deprecated": 1
+  }
+}
