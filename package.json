@@ -43,7 +43,6 @@
     "release": "standard-version"
   },
   "dependencies": {
-    "array-move": "^1.0.0",
     "invariant": "^2.2.1",
     "prop-types": "^15.5.7"
   },

@@ -1,5 +1,13 @@
 import invariant from 'invariant';
 
+// Will be deprecated soon. Consumers should install array-move in their project instead
+export function arrayMove(array, from, to) {
+  array = array.slice();
+  array.splice(to < 0 ? array.length + to : to, 0, array.splice(from, 1)[0]);
+
+  return array;
+}
+
 export function omit(obj, ...keysToOmit) {
   return Object.keys(obj).reduce((acc, key) => {
     if (keysToOmit.indexOf(key) === -1) {

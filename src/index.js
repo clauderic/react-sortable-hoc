@@ -6,5 +6,4 @@ export {default as sortableContainer} from './SortableContainer';
 export {default as sortableElement} from './SortableElement';
 export {default as sortableHandle} from './SortableHandle';
 
-// Will be deprecated soon. Consumers should install array-move in their project
-export {default as arrayMove} from 'array-move';
+export {arrayMove} from './utils';
