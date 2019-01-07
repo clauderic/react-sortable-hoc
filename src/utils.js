@@ -1,20 +1,11 @@
 import invariant from 'invariant';
 
-export function arrayMove(arr, previousIndex, newIndex) {
-  const array = arr.slice(0);
-  if (newIndex >= array.length) {
-    let k = newIndex - array.length;
-    while (k-- + 1) {
-      array.push(undefined);
-    }
-  }
-  array.splice(newIndex, 0, array.splice(previousIndex, 1)[0]);
-  return array;
-}
-
 export function omit(obj, ...keysToOmit) {
   return Object.keys(obj).reduce((acc, key) => {
-    if (keysToOmit.indexOf(key) === -1) acc[key] = obj[key];
+    if (keysToOmit.indexOf(key) === -1) {
+      acc[key] = obj[key];
+    }
+
     return acc;
   }, {});
 }
@@ -53,9 +44,14 @@ export const vendorPrefix = (function() {
 
 export function closest(el, fn) {
   while (el) {
-    if (fn(el)) return el;
+    if (fn(el)) {
+      return el;
+    }
+
     el = el.parentNode;
   }
+
+  return null;
 }
 
 export function limit(min, max, value) {
@@ -119,19 +115,21 @@ export function isTouchEvent(event) {
 }
 
 export function getEdgeOffset(node, parent, offset = {top: 0, left: 0}) {
-  // Get the actual offsetTop / offsetLeft value, no matter how deep the node is nested
-  if (node) {
-    const nodeOffset = {
-      top: offset.top + node.offsetTop,
-      left: offset.left + node.offsetLeft,
-    };
-
-    if (node.parentNode !== parent) {
-      return getEdgeOffset(node.parentNode, parent, nodeOffset);
-    } else {
-      return nodeOffset;
-    }
+  if (!node) {
+    return undefined;
   }
+
+  // Get the actual offsetTop / offsetLeft value, no matter how deep the node is nested
+  const nodeOffset = {
+    top: offset.top + node.offsetTop,
+    left: offset.left + node.offsetLeft,
+  };
+
+  if (node.parentNode === parent) {
+    return nodeOffset;
+  }
+
+  return getEdgeOffset(node.parentNode, parent, nodeOffset);
 }
 
 export function getLockPixelOffset({lockOffset, width, height}) {
@@ -146,17 +144,18 @@ export function getLockPixelOffset({lockOffset, width, height}) {
       match !== null,
       'lockOffset value should be a number or a string of a ' +
         'number followed by "px" or "%". Given %s',
-      lockOffset
+      lockOffset,
     );
 
-    offsetX = offsetY = parseFloat(lockOffset);
+    offsetX = parseFloat(lockOffset);
+    offsetY = parseFloat(lockOffset);
     unit = match[1];
   }
 
   invariant(
     isFinite(offsetX) && isFinite(offsetY),
     'lockOffset value should be a finite. Given %s',
-    lockOffset
+    lockOffset,
   );
 
   if (unit === '%') {

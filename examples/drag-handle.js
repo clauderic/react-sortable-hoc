@@ -4,10 +4,11 @@ import {
   SortableContainer,
   SortableElement,
   SortableHandle,
-  arrayMove,
 } from 'react-sortable-hoc';
+import arrayMove from 'array-move';
 
-const DragHandle = SortableHandle(() => <span>::</span>); // This can be any component you want
+// This can be any component you want
+const DragHandle = SortableHandle(() => <span>::</span>);
 
 const SortableItem = SortableElement(({value}) => {
   return (

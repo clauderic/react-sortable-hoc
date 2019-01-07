@@ -7,12 +7,12 @@ import {provideDisplayName, omit} from '../utils';
 
 export default function sortableElement(
   WrappedComponent,
-  config = {withRef: false}
+  config = {withRef: false},
 ) {
   return class WithSortableElement extends React.Component {
     static displayName = provideDisplayName(
       'sortableElement',
-      WrappedComponent
+      WrappedComponent,
     );
 
     static contextTypes = {
@@ -41,6 +41,7 @@ export default function sortableElement(
       if (this.props.index !== nextProps.index && this.node) {
         this.node.sortableInfo.index = nextProps.index;
       }
+
       if (this.props.disabled !== nextProps.disabled) {
         const {collection, disabled, index} = nextProps;
         if (disabled) {
@@ -57,11 +58,13 @@ export default function sortableElement(
     componentWillUnmount() {
       const {collection, disabled} = this.props;
 
-      if (!disabled) this.removeDraggable(collection);
+      if (!disabled) {
+        this.removeDraggable(collection);
+      }
     }
 
     setDraggable(collection, index) {
-      const node = (this.node = findDOMNode(this));
+      const node = findDOMNode(this);
 
       node.sortableInfo = {
         index,
@@ -69,6 +72,7 @@ export default function sortableElement(
         manager: this.context.manager,
       };
 
+      this.node = node;
       this.ref = {node};
       this.context.manager.add(collection, this.ref);
     }
@@ -80,7 +84,7 @@ export default function sortableElement(
     getWrappedInstance() {
       invariant(
         config.withRef,
-        'To access the wrapped instance, you need to pass in {withRef: true} as the second argument of the SortableElement() call'
+        'To access the wrapped instance, you need to pass in {withRef: true} as the second argument of the SortableElement() call',
       );
       return this.refs.wrappedInstance;
     }
