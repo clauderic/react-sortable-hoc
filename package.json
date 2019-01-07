@@ -40,7 +40,7 @@
     "start": "start-storybook -p 9001 -c .storybook",
     "build": "microbundle --name SortableHOC --no-compress --jsx React.createElement",
     "test": "eslint src/** --ext .js --quiet",
-    "release": "standard-version"
+    "release": "npm run build && standard-version --no-verify && npm publish"
   },
   "husky": {
     "hooks": {
