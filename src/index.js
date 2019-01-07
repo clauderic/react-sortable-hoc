@@ -1,9 +1,9 @@
-export SortableContainer from './SortableContainer';
-export SortableElement from './SortableElement';
-export SortableHandle from './SortableHandle';
+export {default as SortableContainer} from './SortableContainer';
+export {default as SortableElement} from './SortableElement';
+export {default as SortableHandle} from './SortableHandle';
 
-export sortableContainer from './SortableContainer';
-export sortableElement from './SortableElement';
-export sortableHandle from './SortableHandle';
+export {default as sortableContainer} from './SortableContainer';
+export {default as sortableElement} from './SortableElement';
+export {default as sortableHandle} from './SortableHandle';
 
 export {arrayMove} from './utils';

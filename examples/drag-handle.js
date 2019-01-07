@@ -42,7 +42,13 @@ class SortableComponent extends Component {
   render() {
     const {items} = this.state;
 
-    return <SortableList items={items} onSortEnd={this.onSortEnd} useDragHandle={true} />;
+    return (
+      <SortableList
+        items={items}
+        onSortEnd={this.onSortEnd}
+        useDragHandle={true}
+      />
+    );
   }
 }
 

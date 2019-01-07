@@ -1,183 +1,187 @@
 @import url(https://fonts.googleapis.com/css?family=Montserrat:400);
 
 .root {
-    display: flex;
-    height: 100%;
-    box-sizing: border-box;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
+  display: flex;
+  height: 100%;
+  box-sizing: border-box;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
 }
 
 // Base styles
 .list {
-    width: 400px;
-    height: 600px;
-    overflow: auto;
-    -webkit-overflow-scrolling: touch;
-    border: 1px solid #999;
+  width: 400px;
+  height: 600px;
+  overflow: auto;
+  -webkit-overflow-scrolling: touch;
+  border: 1px solid #999;
 }
 
 .item {
-    position: relative;
-    border-bottom: 1px solid #999;
+  position: relative;
+  border-bottom: 1px solid #999;
 }
 
 // Stylized
 .stylizedList {
-    position: relative;
-    z-index: 0;
-    background-color: #F3F3F3;
-    border: 1px solid #EFEFEF;
-    border-radius: 3px;
-    outline: none;
+  position: relative;
+  z-index: 0;
+  background-color: #f3f3f3;
+  border: 1px solid #efefef;
+  border-radius: 3px;
+  outline: none;
 }
 .stylizedItem {
-    display: flex;
-    align-items: center;
-    width: 100%;
-    padding: 0 20px;
-    background-color: #FFF;
-    border-bottom: 1px solid #EFEFEF;
-    box-sizing: border-box;
-    user-select: none;
+  display: flex;
+  align-items: center;
+  width: 100%;
+  padding: 0 20px;
+  background-color: #fff;
+  border-bottom: 1px solid #efefef;
+  box-sizing: border-box;
+  user-select: none;
 
-    color: #333;
-    font-weight: 400;
+  color: #333;
+  font-weight: 400;
 }
 
 // Drag handle
 .handle {
-    display: block;
-    width: 18px;
-    height: 18px;
-    background-image: url('data:image/svg+xml;charset=utf-8,<svg xmlns="http://www.w3.org/2000/svg" width="50" height="50" viewBox="0 0 50 50"><path d="M 0 7.5 L 0 12.5 L 50 12.5 L 50 7.5 L 0 7.5 z M 0 22.5 L 0 27.5 L 50 27.5 L 50 22.5 L 0 22.5 z M 0 37.5 L 0 42.5 L 50 42.5 L 50 37.5 L 0 37.5 z" color="#000"></path></svg>');
-    background-size: contain;
-    background-repeat: no-repeat;
-    opacity: 0.25;
-    margin-right: 20px;
-    cursor: row-resize;
+  display: block;
+  width: 18px;
+  height: 18px;
+  background-image: url('data:image/svg+xml;charset=utf-8,<svg xmlns="http://www.w3.org/2000/svg" width="50" height="50" viewBox="0 0 50 50"><path d="M 0 7.5 L 0 12.5 L 50 12.5 L 50 7.5 L 0 7.5 z M 0 22.5 L 0 27.5 L 50 27.5 L 50 22.5 L 0 22.5 z M 0 37.5 L 0 42.5 L 50 42.5 L 50 37.5 L 0 37.5 z" color="#000"></path></svg>');
+  background-size: contain;
+  background-repeat: no-repeat;
+  opacity: 0.25;
+  margin-right: 20px;
+  cursor: row-resize;
 }
 
 // Horizontal list
 .horizontalList {
-    display: flex;
-    width: 600px;
-    height: 300px;
-    white-space: nowrap;
+  display: flex;
+  width: 600px;
+  height: 300px;
+  white-space: nowrap;
 }
 
 .horizontalItem {
-    display: flex;
-    flex-shrink: 0;
-    align-items: center;
-    justify-content: center;
-    width: 200px;
-    border-right: 1px solid #EFEFEF;
-    border-bottom: 0;
+  display: flex;
+  flex-shrink: 0;
+  align-items: center;
+  justify-content: center;
+  width: 200px;
+  border-right: 1px solid #efefef;
+  border-bottom: 0;
 }
 
 // Grid
 .grid {
-    display: block;
-    width: 130 * 4px;
-    height: 350px;
-    white-space: nowrap;
-    border: 0;
-    background-color: transparent;
+  display: block;
+  width: 130 * 4px;
+  height: 350px;
+  white-space: nowrap;
+  border: 0;
+  background-color: transparent;
 }
 
 .gridItem {
-    float: left;
-    width: 130px;
-    padding: 8px;
-    background: transparent;
-    border: 0;
+  float: left;
+  width: 130px;
+  padding: 8px;
+  background: transparent;
+  border: 0;
 
-    .wrapper {
-        display: flex;
-        align-items: center;
-        justify-content: center;
+  .wrapper {
+    display: flex;
+    align-items: center;
+    justify-content: center;
 
-        width: 100%;
-        height: 100%;
-        background: #FFF;
-        border: 1px solid #EFEFEF;
+    width: 100%;
+    height: 100%;
+    background: #fff;
+    border: 1px solid #efefef;
 
-        font-size: 28px;
+    font-size: 28px;
 
-        span {
-            display: none;
-        }
+    span {
+      display: none;
     }
+  }
 }
 
 // Nested
 .category {
+  height: auto;
+
+  .categoryHeader {
+    display: flex;
+    flex-flow: row nowrap;
+    align-items: center;
+    padding: 10px 14px;
+    background: #f9f9f9;
+    border-bottom: 1px solid #efefef;
+    user-select: none;
+  }
+
+  .categoryList {
     height: auto;
-
-    .categoryHeader {
-        display: flex;
-        flex-flow: row nowrap;
-        align-items: center;
-        padding: 10px 14px;
-        background: #F9F9F9;
-        border-bottom: 1px solid #EFEFEF;
-    }
-
-    .categoryList {
-        height: auto;
-    }
+  }
 }
 
 // Divider
 .divider {
-    padding: 10px 20px;
-    background: #F9F9F9;
-    border-bottom: 1px solid #EFEFEF;
-    text-transform: uppercase;
-    font-size: 14px;
-    color: #333;
+  padding: 10px 20px;
+  background: #f9f9f9;
+  border-bottom: 1px solid #efefef;
+  text-transform: uppercase;
+  font-size: 14px;
+  color: #333;
 }
-
 
 // Helper styles
 .helper {
-    box-shadow: 0 5px 5px -5px rgba(0,0,0,0.2), 0 -5px 5px -5px rgba(0,0,0,0.2);
+  box-shadow: 0 5px 5px -5px rgba(0, 0, 0, 0.2),
+    0 -5px 5px -5px rgba(0, 0, 0, 0.2);
 }
 .stylizedHelper {
-    box-shadow: 0 5px 5px -5px rgba(0,0,0,0.2), 0 -5px 5px -5px rgba(0,0,0,0.2);
-    background-color: rgba(255,255,255,0.8);
-    cursor: row-resize;
+  box-shadow: 0 5px 5px -5px rgba(0, 0, 0, 0.2),
+    0 -5px 5px -5px rgba(0, 0, 0, 0.2);
+  background-color: rgba(255, 255, 255, 0.8);
+  cursor: row-resize;
 
-    &.horizontalItem {
-        cursor: col-resize;
-    }
-    &.gridItem {
-        background-color: transparent;
-        white-space: nowrap;
-        box-shadow: none;
+  &.horizontalItem {
+    cursor: col-resize;
+  }
+  &.gridItem {
+    background-color: transparent;
+    white-space: nowrap;
+    box-shadow: none;
 
-        .wrapper {
-            background-color: rgba(255,255,255,0.8);
-            box-shadow: 0 0 7px rgba(0,0,0,0.15)
-        }
+    .wrapper {
+      background-color: rgba(255, 255, 255, 0.8);
+      box-shadow: 0 0 7px rgba(0, 0, 0, 0.15);
     }
+  }
 }
 
 .shrinkedHelper {
-    height: 20px !important;
+  height: 20px !important;
 }
 
 :global {
-    body {
-        font-family: 'Montserrat', 'Helvetica Neue', 'Helvetica', arial, sans-serif;
-        -webkit-font-smoothing: antialiased;
-        -moz-osx-font-smoothing: grayscale;
-        background-color: rgba(#F4F5F9, 0.7);
-    }
-    html, body, #root {
-        height: 100%;
-        margin: 0;
-    }
+  body {
+    font-family: 'Montserrat', 'Helvetica Neue', 'Helvetica', arial, sans-serif;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    background-color: rgba(#f4f5f9, 0.7);
+  }
+  html,
+  body,
+  #root {
+    height: 100%;
+    margin: 0;
+  }
 }

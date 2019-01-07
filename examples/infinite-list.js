@@ -1,21 +1,29 @@
 import React, {Component} from 'react';
 import {render} from 'react-dom';
-import {SortableContainer, SortableElement, arrayMove} from 'react-sortable-hoc';
+import {
+  SortableContainer,
+  SortableElement,
+  arrayMove,
+} from 'react-sortable-hoc';
 import Infinite from 'react-infinite';
 
 const SortableItem = SortableElement(({height, value}) => {
-  return (
-    <li style={{height}}>
-      {value}
-    </li>
-  );
+  return <li style={{height}}>{value}</li>;
 });
 
 const SortableList = SortableContainer(({items}) => {
   return (
-    <Infinite containerHeight={600} elementHeight={items.map(({height}) => height)}>
+    <Infinite
+      containerHeight={600}
+      elementHeight={items.map(({height}) => height)}
+    >
       {items.map(({value, height}, index) => (
-        <SortableItem key={`item-${index}`} index={index} value={value} height={height} />
+        <SortableItem
+          key={`item-${index}`}
+          index={index}
+          value={value}
+          height={height}
+        />
       ))}
     </Infinite>
   );

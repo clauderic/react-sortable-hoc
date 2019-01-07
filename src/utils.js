@@ -26,13 +26,22 @@ export const events = {
 };
 
 export const vendorPrefix = (function() {
-  if (typeof window === 'undefined' || typeof document === 'undefined') return ''; // server environment
-  // fix for:
-  //    https://bugzilla.mozilla.org/show_bug.cgi?id=548397
-  //    window.getComputedStyle() returns null inside an iframe with display: none
+  if (typeof window === 'undefined' || typeof document === 'undefined') {
+    // Server environment
+    return '';
+  }
+
+  // fix for: https://bugzilla.mozilla.org/show_bug.cgi?id=548397
+  // window.getComputedStyle() returns null inside an iframe with display: none
   // in this case return an array with a fake mozilla style in it.
-  const styles = window.getComputedStyle(document.documentElement, '') || ['-moz-hidden-iframe'];
-  const pre = (Array.prototype.slice.call(styles).join('').match(/-(moz|webkit|ms)-/) || (styles.OLink === '' && ['', 'o']))[1];
+  const styles = window.getComputedStyle(document.documentElement, '') || [
+    '-moz-hidden-iframe',
+  ];
+  const pre = (Array.prototype.slice
+    .call(styles)
+    .join('')
+    .match(/-(moz|webkit|ms)-/) ||
+    (styles.OLink === '' && ['', 'o']))[1];
 
   switch (pre) {
     case 'ms':
@@ -104,8 +113,8 @@ export function getPosition(event) {
 
 export function isTouchEvent(event) {
   return (
-    event.touches && event.touches.length ||
-    event.changedTouches && event.changedTouches.length
+    (event.touches && event.touches.length) ||
+    (event.changedTouches && event.changedTouches.length)
   );
 }
 
@@ -125,7 +134,6 @@ export function getEdgeOffset(node, parent, offset = {top: 0, left: 0}) {
   }
 }
 
-
 export function getLockPixelOffset({lockOffset, width, height}) {
   let offsetX = lockOffset;
   let offsetY = lockOffset;
@@ -141,7 +149,7 @@ export function getLockPixelOffset({lockOffset, width, height}) {
       lockOffset
     );
 
-    offsetX = (offsetY = parseFloat(lockOffset));
+    offsetX = offsetY = parseFloat(lockOffset);
     unit = match[1];
   }
 
@@ -152,8 +160,8 @@ export function getLockPixelOffset({lockOffset, width, height}) {
   );
 
   if (unit === '%') {
-    offsetX = offsetX * width / 100;
-    offsetY = offsetY * height / 100;
+    offsetX = (offsetX * width) / 100;
+    offsetY = (offsetY * height) / 100;
   }
 
   return {

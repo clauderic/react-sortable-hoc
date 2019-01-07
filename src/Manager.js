@@ -38,8 +38,16 @@ export default class Manager {
 }
 
 function sortByIndex(
-  {node: {sortableInfo: {index: index1}}},
-  {node: {sortableInfo: {index: index2}}}
+  {
+    node: {
+      sortableInfo: {index: index1},
+    },
+  },
+  {
+    node: {
+      sortableInfo: {index: index2},
+    },
+  }
 ) {
-  return (index1 - index2);
+  return index1 - index2;
 }

@@ -1,14 +1,19 @@
-import React, {Component} from 'react';
+import * as React from 'react';
 import PropTypes from 'prop-types';
 import {findDOMNode} from 'react-dom';
 import invariant from 'invariant';
 
 import {provideDisplayName, omit} from '../utils';
 
-// Export Higher Order Sortable Element Component
-export default function sortableElement(WrappedComponent, config = {withRef: false}) {
-  return class extends Component {
-    static displayName = provideDisplayName('sortableElement', WrappedComponent);
+export default function sortableElement(
+  WrappedComponent,
+  config = {withRef: false}
+) {
+  return class WithSortableElement extends React.Component {
+    static displayName = provideDisplayName(
+      'sortableElement',
+      WrappedComponent
+    );
 
     static contextTypes = {
       manager: PropTypes.object.isRequired,
