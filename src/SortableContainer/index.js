@@ -84,6 +84,7 @@ export default function sortableContainer(
       helperClass: PropTypes.string,
       transitionDuration: PropTypes.number,
       contentWindow: PropTypes.any,
+      updateBeforeSortStart: PropTypes.func,
       onSortStart: PropTypes.func,
       onSortMove: PropTypes.func,
       onSortOver: PropTypes.func,
@@ -228,7 +229,11 @@ export default function sortableContainer(
     handleMove = (event) => {
       const {distance, pressThreshold} = this.props;
 
-      if (!this.state.sorting && this._touched) {
+      if (
+        !this.state.sorting &&
+        this._touched &&
+        !this._awaitingUpdateBeforeSortStart
+      ) {
         const position = getPosition(event);
         const delta = {
           x: this._pos.x - position.x,
@@ -272,7 +277,7 @@ export default function sortableContainer(
       }
     };
 
-    handlePress = (event) => {
+    handlePress = async (event) => {
       const active = this.manager.getActive();
 
       if (active) {
@@ -281,11 +286,24 @@ export default function sortableContainer(
           getHelperDimensions,
           helperClass,
           hideSortableGhost,
+          updateBeforeSortStart,
           onSortStart,
           useWindowAsScrollContainer,
         } = this.props;
+
         const {node, collection} = active;
         const {index} = node.sortableInfo;
+
+        if (typeof updateBeforeSortStart === 'function') {
+          this._awaitingUpdateBeforeSortStart = true;
+
+          try {
+            await updateBeforeSortStart({node, index, collection}, event);
+          } finally {
+            this._awaitingUpdateBeforeSortStart = false;
+          }
+        }
+
         const margin = getElementMargin(node);
 
         const containerBoundingRect = this.container.getBoundingClientRect();
@@ -845,6 +863,7 @@ export default function sortableContainer(
             'pressDelay',
             'pressThreshold',
             'shouldCancelStart',
+            'updateBeforeSortStart',
             'onSortStart',
             'onSortMove',
             'onSortEnd',
