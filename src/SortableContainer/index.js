@@ -49,6 +49,7 @@ export default function sortableContainer(
       pressThreshold: 5,
       distance: 0,
       useWindowAsScrollContainer: false,
+      useContainerAsSortableHelperParent: false,
       hideSortableGhost: true,
       shouldCancelStart(event) {
         // Cancel sorting if the event target is an `input`, `textarea`, `select` or `option`
@@ -94,6 +95,7 @@ export default function sortableContainer(
       pressThreshold: PropTypes.number,
       useDragHandle: PropTypes.bool,
       useWindowAsScrollContainer: PropTypes.bool,
+      useContainerAsSortableHelperParent: PropTypes.bool,
       hideSortableGhost: PropTypes.bool,
       lockToContainerEdges: PropTypes.bool,
       lockOffset: PropTypes.oneOfType([
@@ -289,6 +291,7 @@ export default function sortableContainer(
           updateBeforeSortStart,
           onSortStart,
           useWindowAsScrollContainer,
+          useContainerAsSortableHelperParent,
         } = this.props;
 
         const {node, collection} = active;
@@ -350,7 +353,8 @@ export default function sortableContainer(
           }
         });
 
-        this.helper = this.document.body.appendChild(clonedNode);
+        const helperParent = useContainerAsSortableHelperParent ? this.container : this.document.body;
+        this.helper = helperParent.appendChild(clonedNode);
 
         this.helper.style.position = 'fixed';
         this.helper.style.top = `${this.boundingClientRect.top - margin.top}px`;
