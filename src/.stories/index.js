@@ -65,6 +65,26 @@ const SortableList = SortableContainer(
   },
 );
 
+class SortableListWithCustomContainer extends React.Component {
+  state = {
+    container: null,
+  };
+
+  render() {
+    const {container} = this.state;
+
+    return (
+      <div id="CustomHelperContainer" ref={this.setContainerNode}>
+        <SortableList {...this.props} helperContainer={container} />
+      </div>
+    );
+  }
+
+  setContainerNode = (node) => {
+    this.setState({container: node});
+  };
+}
+
 const Category = SortableElement((props) => {
   return (
     <div className={style.category}>
@@ -84,13 +104,11 @@ const Category = SortableElement((props) => {
 });
 
 class ListWrapper extends Component {
-  constructor({items}) {
-    super();
-    this.state = {
-      items,
-      isSorting: false,
-    };
-  }
+  state = {
+    items: this.props.items,
+    isSorting: false,
+  };
+
   static propTypes = {
     items: PropTypes.array,
     className: PropTypes.string,
@@ -102,12 +120,14 @@ class ListWrapper extends Component {
     component: PropTypes.func,
     shouldUseDragHandle: PropTypes.bool,
   };
+
   static defaultProps = {
     className: classNames(style.list, style.stylizedList),
     itemClass: classNames(style.item, style.stylizedItem),
     width: 400,
     height: 600,
   };
+
   onSortStart = () => {
     const {onSortStart} = this.props;
     this.setState({isSorting: true});
@@ -116,6 +136,7 @@ class ListWrapper extends Component {
       onSortStart(this.refs.component);
     }
   };
+
   onSortEnd = ({oldIndex, newIndex}) => {
     const {onSortEnd} = this.props;
     const {items} = this.state;
@@ -129,6 +150,7 @@ class ListWrapper extends Component {
       onSortEnd(this.refs.component);
     }
   };
+
   render() {
     const Component = this.props.component;
     const {items, isSorting} = this.state;
@@ -452,6 +474,15 @@ storiesOf('Advanced', module)
         items={getItems(50, 59)}
         className=""
         useWindowAsScrollContainer={true}
+        helperClass={style.stylizedHelper}
+      />
+    );
+  })
+  .add('Custom sortable helper container', () => {
+    return (
+      <ListWrapper
+        component={SortableListWithCustomContainer}
+        items={getItems(50, 59)}
         helperClass={style.stylizedHelper}
       />
     );

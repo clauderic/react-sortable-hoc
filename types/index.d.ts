@@ -69,6 +69,7 @@ export interface SortableContainerProps {
   lockOffset?: Offset | [Offset, Offset];
   getContainer?: ContainerGetter;
   getHelperDimensions?: (sort: SortStart) => Dimensions;
+  helperContainer?: HTMLElement;
 }
 
 export interface SortableElementProps {
