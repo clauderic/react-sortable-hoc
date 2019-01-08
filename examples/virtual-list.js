@@ -1,14 +1,14 @@
 import React, {Component} from 'react';
 import {render} from 'react-dom';
-import {SortableContainer, SortableElement, arrayMove} from 'react-sortable-hoc';
+import {
+  SortableContainer,
+  SortableElement,
+  arrayMove,
+} from 'react-sortable-hoc';
 import {List} from 'react-virtualized';
 
 const SortableItem = SortableElement(({value}) => {
-  return (
-    <li>
-      {value}
-    </li>
-  );
+  return <li>{value}</li>;
 });
 
 class VirtualList extends Component {
@@ -70,7 +70,7 @@ class SortableComponent extends Component {
     const {items} = this.state;
 
     return (
-      <SortableList 
+      <SortableList
         ref={(instance) => {
           this.SortableList = instance;
         }}

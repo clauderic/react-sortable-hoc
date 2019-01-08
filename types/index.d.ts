@@ -27,8 +27,8 @@ export type SortEvent = React.MouseEvent<any> | React.TouchEvent<any>;
 
 export type SortEventWithTag = SortEvent & {
   target: {
-    tagName: string
-  }
+    tagName: string;
+  };
 };
 
 export type SortStartHandler = (sort: SortStart, event: SortEvent) => void;
@@ -39,7 +39,9 @@ export type SortEndHandler = (sort: SortEnd, event: SortEvent) => void;
 
 export type SortOverHandler = (sort: SortOver, event: SortEvent) => void;
 
-export type ContainerGetter = (element: React.ReactElement<any>) => HTMLElement | Promise<HTMLElement>;
+export type ContainerGetter = (
+  element: React.ReactElement<any>,
+) => HTMLElement | Promise<HTMLElement>;
 
 export interface Dimensions {
   width: number;
@@ -55,6 +57,7 @@ export interface SortableContainerProps {
   pressThreshold?: number;
   distance?: number;
   shouldCancelStart?: (event: SortEvent | SortEventWithTag) => boolean;
+  updateBeforeSortStart?: SortStartHandler;
   onSortStart?: SortStartHandler;
   onSortMove?: SortMoveHandler;
   onSortEnd?: SortEndHandler;
@@ -66,6 +69,7 @@ export interface SortableContainerProps {
   lockOffset?: Offset | [Offset, Offset];
   getContainer?: ContainerGetter;
   getHelperDimensions?: (sort: SortStart) => Dimensions;
+  helperContainer?: HTMLElement;
 }
 
 export interface SortableElementProps {
@@ -80,12 +84,27 @@ export interface Config {
 
 export type WrappedComponentFactory<P> = (props: P) => JSX.Element;
 
-export type WrappedComponent<P> = React.ComponentClass<P> | WrappedComponentFactory<P>;
+export type WrappedComponent<P> =
+  | React.ComponentClass<P>
+  | WrappedComponentFactory<P>;
 
-export function SortableContainer<P>(wrappedComponent: WrappedComponent<P>, config?: Config): React.ComponentClass<P & SortableContainerProps>;
+export function SortableContainer<P>(
+  wrappedComponent: WrappedComponent<P>,
+  config?: Config,
+): React.ComponentClass<P & SortableContainerProps>;
 
-export function SortableElement<P>(wrappedComponent: WrappedComponent<P>, config?: Config): React.ComponentClass<P & SortableElementProps>;
+export function SortableElement<P>(
+  wrappedComponent: WrappedComponent<P>,
+  config?: Config,
+): React.ComponentClass<P & SortableElementProps>;
 
-export function SortableHandle<P>(wrappedComponent: WrappedComponent<P>, config?: Config): React.ComponentClass<P>;
+export function SortableHandle<P>(
+  wrappedComponent: WrappedComponent<P>,
+  config?: Config,
+): React.ComponentClass<P>;
 
-export function arrayMove<T>(collection: T[], previousIndex: number, newIndex: number): T[];
+export function arrayMove<T>(
+  collection: T[],
+  previousIndex: number,
+  newIndex: number,
+): T[];
