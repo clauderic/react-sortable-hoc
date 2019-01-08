@@ -190,7 +190,11 @@ export default function sortableContainer(
         !this.state.sorting
       ) {
         const {useDragHandle} = this.props;
-        const {index, collection} = node.sortableInfo;
+        const {index, collection, disabled} = node.sortableInfo;
+
+        if (disabled) {
+          return;
+        }
 
         if (
           useDragHandle &&
@@ -596,7 +600,7 @@ export default function sortableContainer(
 
       for (let i = 0, len = nodes.length; i < len; i++) {
         const {node} = nodes[i];
-        const index = node.sortableInfo.index;
+        const {index} = node.sortableInfo;
         const width = node.offsetWidth;
         const height = node.offsetHeight;
         const offset = {
