@@ -10,10 +10,6 @@ All notable changes to this project will be documented in this file. See [standa
 
 - helperContainer PropType definition broke server-side rendering ([#471](https://github.com/clauderic/react-sortable-hoc/issues/471)) ([c0eef97](https://github.com/clauderic/react-sortable-hoc/commit/c0eef97))
 
-### Features
-
-- added helperContainer prop ([286eff4](https://github.com/clauderic/react-sortable-hoc/commit/286eff4))
-
 <a name="1.2.0"></a>
 
 ## [1.2.0](https://github.com/clauderic/react-sortable-hoc/compare/v1.1.0...v1.2.0) (2019-01-08)
