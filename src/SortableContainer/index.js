@@ -105,7 +105,10 @@ export default function sortableContainer(
       ]),
       getContainer: PropTypes.func,
       getHelperDimensions: PropTypes.func,
-      helperContainer: PropTypes.instanceOf(HTMLElement),
+      helperContainer:
+        typeof HTMLElement === 'undefined'
+          ? PropTypes.any
+          : PropTypes.instanceOf(HTMLElement),
     };
 
     static childContextTypes = {
