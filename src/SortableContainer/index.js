@@ -105,6 +105,7 @@ export default function sortableContainer(
       ]),
       getContainer: PropTypes.func,
       getHelperDimensions: PropTypes.func,
+      helperContainer: PropTypes.instanceOf(HTMLElement),
     };
 
     static childContextTypes = {
@@ -350,7 +351,7 @@ export default function sortableContainer(
           }
         });
 
-        this.helper = this.document.body.appendChild(clonedNode);
+        this.helper = this.helperContainer.appendChild(clonedNode);
 
         this.helper.style.position = 'fixed';
         this.helper.style.top = `${this.boundingClientRect.top - margin.top}px`;
@@ -876,6 +877,10 @@ export default function sortableContainer(
           )}
         />
       );
+    }
+
+    get helperContainer() {
+      return this.props.helperContainer || this.document.body;
     }
   };
 }
