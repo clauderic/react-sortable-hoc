@@ -2,9 +2,17 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+<a name="1.3.1"></a>
+
+## [1.3.1](https://github.com/clauderic/react-sortable-hoc/compare/v1.3.0...v1.3.1) (2019-01-09)
+
+### Bug Fixes
+
+- Fix CommonJS and UMD builds, `babel-plugin-transform-async-to-promises` was injecting non-transpiled ES6 into the final bundle (`const`) ([#474](https://github.com/clauderic/react-sortable-hoc/issues/474))
+
 <a name="1.3.0"></a>
 
-## [1.3.0](https://github.com/clauderic/react-sortable-hoc/compare/v1.1.0...v1.3.0) (2019-01-08)
+## [1.3.0](https://github.com/clauderic/react-sortable-hoc/compare/v1.2.0...v1.3.0) (2019-01-08)
 
 ### Bug Fixes
 
