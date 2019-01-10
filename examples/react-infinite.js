@@ -1,17 +1,14 @@
 import React, {Component} from 'react';
 import {render} from 'react-dom';
-import {
-  SortableContainer,
-  SortableElement,
-  arrayMove,
-} from 'react-sortable-hoc';
+import {sortableContainer, sortableElement} from 'react-sortable-hoc';
+import arrayMove from 'array-move';
 import Infinite from 'react-infinite';
 
-const SortableItem = SortableElement(({height, value}) => {
+const SortableItem = sortableElement(({height, value}) => {
   return <li style={{height}}>{value}</li>;
 });
 
-const SortableList = SortableContainer(({items}) => {
+const SortableInfiniteList = sortableContainer(({items}) => {
   return (
     <Infinite
       containerHeight={600}
@@ -29,7 +26,7 @@ const SortableList = SortableContainer(({items}) => {
   );
 });
 
-class SortableComponent extends Component {
+class App extends Component {
   state = {
     items: [
       {value: 'Item 1', height: 89},
@@ -40,18 +37,18 @@ class SortableComponent extends Component {
       {value: 'Item 6', height: 150},
     ],
   };
-  onSortEnd = ({oldIndex, newIndex}) => {
-    const {items} = this.state;
 
-    this.setState({
+  onSortEnd = ({oldIndex, newIndex}) => {
+    this.setState(({items}) => ({
       items: arrayMove(items, oldIndex, newIndex),
-    });
+    }));
   };
+
   render() {
     const {items} = this.state;
 
-    return <SortableList items={items} onSortEnd={this.onSortEnd} />;
+    return <SortableInfiniteList items={items} onSortEnd={this.onSortEnd} />;
   }
 }
 
-render(<SortableComponent />, document.getElementById('root'));
+render(<App />, document.getElementById('root'));
