@@ -1,5 +1,7 @@
 {
   "rules": {
-    "import/no-unresolved": "off"
+    "import/no-unresolved": "off",
+    "react/prop-types": "off",
+    "react/no-array-index-key": "off"
   }
 }
