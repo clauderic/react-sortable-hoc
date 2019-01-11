@@ -6,7 +6,7 @@
 [![npm downloads](https://img.shields.io/npm/dm/react-sortable-hoc.svg)](https://www.npmjs.com/package/react-sortable-hoc)
 [![license](https://img.shields.io/github/license/mashape/apistatus.svg?maxAge=2592000)](https://github.com/clauderic/react-sortable-hoc/blob/master/LICENSE)
 [![Gitter](https://badges.gitter.im/clauderic/react-sortable-hoc.svg)](https://gitter.im/clauderic/react-sortable-hoc)
-![gzip size](http://img.badgesize.io/https://npmcdn.com/react-sortable-hoc/dist/umd/react-sortable-hoc.min.js?compression=gzip)
+![gzip size](http://img.badgesize.io/https://npmcdn.com/react-sortable-hoc/dist/react-sortable-hoc.umd.min.js?compression=gzip)
 
 ### Examples available here: <a href="#">http://clauderic.github.io/react-sortable-hoc/</a>
 
@@ -137,11 +137,11 @@ Examples: `10` (which is the same as `"10px"`), `"50%"`
 
 ### Running Examples
 
-In root folder:
+In root folder, run the following commands to launch React Storybook:
 
 ```
-	$ npm install
-	$ npm run storybook
+$ npm install
+$ npm start
 ```
 
 ### Grid support

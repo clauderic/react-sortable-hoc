@@ -1,56 +1,47 @@
 import React, {Component} from 'react';
 import {render} from 'react-dom';
 import {
-  SortableContainer,
-  SortableElement,
-  SortableHandle,
+  sortableContainer,
+  sortableElement,
+  sortableHandle,
 } from 'react-sortable-hoc';
 import arrayMove from 'array-move';
 
-// This can be any component you want
-const DragHandle = SortableHandle(() => <span>::</span>);
+const DragHandle = sortableHandle(() => <span>::</span>);
 
-const SortableItem = SortableElement(({value}) => {
-  return (
-    <li>
-      <DragHandle />
-      {value}
-    </li>
-  );
+const SortableItem = sortableElement(({value}) => (
+  <li>
+    <DragHandle />
+    {value}
+  </li>
+));
+
+const SortableContainer = sortableContainer(({children}) => {
+  return <ul>{children}</ul>;
 });
 
-const SortableList = SortableContainer(({items}) => {
-  return (
-    <ul>
-      {items.map((value, index) => (
-        <SortableItem key={`item-${index}`} index={index} value={value} />
-      ))}
-    </ul>
-  );
-});
-
-class SortableComponent extends Component {
+class App extends Component {
   state = {
     items: ['Item 1', 'Item 2', 'Item 3', 'Item 4', 'Item 5', 'Item 6'],
   };
-  onSortEnd = ({oldIndex, newIndex}) => {
-    const {items} = this.state;
 
-    this.setState({
+  onSortEnd = ({oldIndex, newIndex}) => {
+    this.setState(({items}) => ({
       items: arrayMove(items, oldIndex, newIndex),
-    });
+    }));
   };
+
   render() {
     const {items} = this.state;
 
     return (
-      <SortableList
-        items={items}
-        onSortEnd={this.onSortEnd}
-        useDragHandle={true}
-      />
+      <SortableContainer onSortEnd={this.onSortEnd} useDragHandle>
+        {items.map((value, index) => (
+          <SortableItem key={`item-${index}`} index={index} value={value} />
+        ))}
+      </SortableContainer>
     );
   }
 }
 
-render(<SortableComponent />, document.getElementById('root'));
+render(<App />, document.getElementById('root'));
