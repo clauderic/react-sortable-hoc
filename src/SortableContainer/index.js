@@ -83,6 +83,7 @@ export default function sortableContainer(
       lockAxis: PropTypes.string,
       helperClass: PropTypes.string,
       transitionDuration: PropTypes.number,
+      disableAnimation: PropTypes.bool,
       contentWindow: PropTypes.any,
       updateBeforeSortStart: PropTypes.func,
       onSortStart: PropTypes.func,
@@ -576,7 +577,12 @@ export default function sortableContainer(
     }
 
     animateNodes() {
-      const {transitionDuration, hideSortableGhost, onSortOver} = this.props;
+      const {
+        transitionDuration,
+        hideSortableGhost,
+        onSortOver,
+        disableAnimation,
+      } = this.props;
       const nodes = this.manager.getOrderedRefs();
       const containerScrollDelta = {
         left: this.container.scrollLeft - this.initialScroll.left,
@@ -738,9 +744,12 @@ export default function sortableContainer(
             }
           }
         }
-        node.style[`${vendorPrefix}Transform`] = `translate3d(${
-          translate.x
-        }px,${translate.y}px,0)`;
+
+        if (!disableAnimation) {
+          node.style[`${vendorPrefix}Transform`] = `translate3d(${
+            translate.x
+          }px,${translate.y}px,0)`;
+        }
       }
 
       if (this.newIndex == null) {
@@ -863,6 +872,7 @@ export default function sortableContainer(
             'helperClass',
             'hideSortableGhost',
             'transitionDuration',
+            'disableAnimation',
             'useDragHandle',
             'pressDelay',
             'pressThreshold',
