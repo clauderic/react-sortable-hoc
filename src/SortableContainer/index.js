@@ -75,6 +75,7 @@ export default function sortableContainer(
         width: node.offsetWidth,
         height: node.offsetHeight,
       }),
+      disableAutoscroll: false,
     };
 
     static propTypes = {
@@ -109,6 +110,7 @@ export default function sortableContainer(
         typeof HTMLElement === 'undefined'
           ? PropTypes.any
           : PropTypes.instanceOf(HTMLElement),
+      disableAutoscroll: PropTypes.bool,
     };
 
     static childContextTypes = {
@@ -758,6 +760,12 @@ export default function sortableContainer(
     }
 
     autoscroll = () => {
+      const {disableAutoscroll} = this.props;
+
+      if (disableAutoscroll) {
+        return;
+      }
+
       const translate = this.translate;
       const direction = {
         x: 0,
