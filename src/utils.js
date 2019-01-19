@@ -147,7 +147,7 @@ export function getContainerGridGap(element) {
     };
   }
 
-  return { x: 0, y: 0 };
+  return {x: 0, y: 0};
 }
 
 export function getLockPixelOffset({lockOffset, width, height}) {
