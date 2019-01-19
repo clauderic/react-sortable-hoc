@@ -137,6 +137,19 @@ export function getEdgeOffset(node, parent, offset = {top: 0, left: 0}) {
   return getEdgeOffset(node.parentNode, parent, nodeOffset);
 }
 
+export function getContainerGridGap(element) {
+  const style = window.getComputedStyle(element);
+
+  if (style.display === 'grid') {
+    return {
+      x: getPixelValue(style.gridColumnGap),
+      y: getPixelValue(style.gridRowGap),
+    };
+  }
+
+  return { x: 0, y: 0 };
+}
+
 export function getLockPixelOffset({lockOffset, width, height}) {
   let offsetX = lockOffset;
   let offsetY = lockOffset;
