@@ -11,6 +11,7 @@ import {
   closest,
   events,
   getScrollingParent,
+  getContainerGridGap,
   getEdgeOffset,
   getElementMargin,
   getLockPixelOffsets,
@@ -260,16 +261,18 @@ export default function sortableContainer(
         // Need to get the latest value for `index` in case it changes during `updateBeforeSortStart`
         const {index} = node.sortableInfo;
         const margin = getElementMargin(node);
+        const gridGap = getContainerGridGap(this.container);
         const containerBoundingRect = this.scrollContainer.getBoundingClientRect();
-        const dimensions = getHelperDimensions({collection, index, node});
+        const dimensions = getHelperDimensions({index, node, collection});
 
         this.node = node;
         this.margin = margin;
+        this.gridGap = gridGap;
         this.width = dimensions.width;
         this.height = dimensions.height;
         this.marginOffset = {
-          x: this.margin.left + this.margin.right,
-          y: Math.max(this.margin.top, this.margin.bottom),
+          x: this.margin.left + this.margin.right + this.gridGap.x,
+          y: Math.max(this.margin.top, this.margin.bottom, this.gridGap.y),
         };
         this.boundingClientRect = node.getBoundingClientRect();
         this.containerBoundingRect = containerBoundingRect;
