@@ -2,6 +2,14 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+<a name="1.5.0"></a>
+
+# [1.5.0](https://github.com/clauderic/react-sortable-hoc/compare/v1.4.0...v1.5.0) (2019-01-22)
+
+### Features
+
+- allow helperContainer prop to be a function returning an HTMLElement ([f4a9b4a](https://github.com/clauderic/react-sortable-hoc/commit/f4a9b4a))
+
 <a name="1.4.0"></a>
 
 # [1.4.0](https://github.com/clauderic/react-sortable-hoc/compare/v1.3.0...v1.4.0) (2019-01-10)
