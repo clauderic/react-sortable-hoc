@@ -105,10 +105,12 @@ export default function sortableContainer(
       ]),
       getContainer: PropTypes.func,
       getHelperDimensions: PropTypes.func,
-      helperContainer:
+      helperContainer: PropTypes.oneOfType(
+        PropTypes.func,
         typeof HTMLElement === 'undefined'
           ? PropTypes.any
           : PropTypes.instanceOf(HTMLElement),
+      ),
     };
 
     static childContextTypes = {
@@ -883,6 +885,12 @@ export default function sortableContainer(
     }
 
     get helperContainer() {
+      const {helperContainer} = this.props;
+
+      if (typeof helperContainer === 'function') {
+        return helperContainer();
+      }
+
       return this.props.helperContainer || this.document.body;
     }
   };
