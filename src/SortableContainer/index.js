@@ -105,12 +105,12 @@ export default function sortableContainer(
       ]),
       getContainer: PropTypes.func,
       getHelperDimensions: PropTypes.func,
-      helperContainer: PropTypes.oneOfType(
+      helperContainer: PropTypes.oneOfType([
         PropTypes.func,
         typeof HTMLElement === 'undefined'
           ? PropTypes.any
           : PropTypes.instanceOf(HTMLElement),
-      ),
+      ]),
     };
 
     static childContextTypes = {
