@@ -879,6 +879,7 @@ export default function sortableContainer(
             'lockToContainerEdges',
             'getContainer',
             'getHelperDimensions',
+            'helperContainer',
           )}
         />
       );
