@@ -2,6 +2,14 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+<a name="1.5.3"></a>
+
+## [1.5.3](https://github.com/clauderic/react-sortable-hoc/compare/v1.1.0...v1.5.3) (2019-01-25)
+
+### Bug Fixes
+
+- omit spreading helperContainer prop on WrappedComponent ([#497](https://github.com/clauderic/react-sortable-hoc/issues/497)) ([12bafdf](https://github.com/clauderic/react-sortable-hoc/commit/12bafdf))
+
 <a name="1.5.2"></a>
 
 ## [1.5.2](https://github.com/clauderic/react-sortable-hoc/compare/v1.5.1...v1.5.2) (2019-01-22)
