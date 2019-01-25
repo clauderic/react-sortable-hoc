@@ -2,6 +2,25 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+<a name="1.5.3"></a>
+## [1.5.3](https://github.com/clauderic/react-sortable-hoc/compare/v1.1.0...v1.5.3) (2019-01-25)
+
+
+### Bug Fixes
+
+* helperContainer PropType definition broke server-side rendering ([#471](https://github.com/clauderic/react-sortable-hoc/issues/471)) ([c0eef97](https://github.com/clauderic/react-sortable-hoc/commit/c0eef97))
+* invalid helperContainer PropType definition ([#493](https://github.com/clauderic/react-sortable-hoc/issues/493)) ([dc1d18f](https://github.com/clauderic/react-sortable-hoc/commit/dc1d18f))
+* omit spreading helperContainer prop ([#497](https://github.com/clauderic/react-sortable-hoc/issues/497)) ([12bafdf](https://github.com/clauderic/react-sortable-hoc/commit/12bafdf))
+* update helperContainer prop type definition ([#491](https://github.com/clauderic/react-sortable-hoc/issues/491)) ([fd30383](https://github.com/clauderic/react-sortable-hoc/commit/fd30383))
+
+
+### Features
+
+* added helperContainer prop ([286eff4](https://github.com/clauderic/react-sortable-hoc/commit/286eff4))
+* allow helperContainer prop to be a function returning an HTMLElement ([#489](https://github.com/clauderic/react-sortable-hoc/issues/489)) ([f4a9b4a](https://github.com/clauderic/react-sortable-hoc/commit/f4a9b4a))
+
+
+
 <a name="1.5.2"></a>
 
 ## [1.5.2](https://github.com/clauderic/react-sortable-hoc/compare/v1.5.1...v1.5.2) (2019-01-22)
