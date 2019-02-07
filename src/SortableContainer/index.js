@@ -75,6 +75,7 @@ export default function sortableContainer(
         width: node.offsetWidth,
         height: node.offsetHeight,
       }),
+      disableAutoscroll: false,
     };
 
     static propTypes = {
@@ -111,6 +112,7 @@ export default function sortableContainer(
           ? PropTypes.any
           : PropTypes.instanceOf(HTMLElement),
       ]),
+      disableAutoscroll: PropTypes.bool,
     };
 
     static childContextTypes = {
@@ -764,6 +766,12 @@ export default function sortableContainer(
     }
 
     autoscroll = () => {
+      const {disableAutoscroll} = this.props;
+
+      if (disableAutoscroll) {
+        return;
+      }
+
       const translate = this.translate;
       const direction = {
         x: 0,
@@ -800,7 +808,10 @@ export default function sortableContainer(
           Math.abs(
             (this.maxTranslate.y - this.height / 2 - translate.y) / this.height,
           );
-      } else if (translate.x >= this.maxTranslate.x - this.width / 2 && !isRight) {
+      } else if (
+        translate.x >= this.maxTranslate.x - this.width / 2 &&
+        !isRight
+      ) {
         // Scroll Right
         direction.x = 1;
         speed.x =
@@ -808,7 +819,10 @@ export default function sortableContainer(
           Math.abs(
             (this.maxTranslate.x - this.width / 2 - translate.x) / this.width,
           );
-      } else if (translate.y <= this.minTranslate.y + this.height / 2 && !isTop) {
+      } else if (
+        translate.y <= this.minTranslate.y + this.height / 2 &&
+        !isTop
+      ) {
         // Scroll Up
         direction.y = -1;
         speed.y =
@@ -816,7 +830,10 @@ export default function sortableContainer(
           Math.abs(
             (translate.y - this.height / 2 - this.minTranslate.y) / this.height,
           );
-      } else if (translate.x <= this.minTranslate.x + this.width / 2 && !isLeft) {
+      } else if (
+        translate.x <= this.minTranslate.x + this.width / 2 &&
+        !isLeft
+      ) {
         // Scroll Left
         direction.x = -1;
         speed.x =
