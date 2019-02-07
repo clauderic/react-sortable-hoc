@@ -2,6 +2,14 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+<a name="1.6.0"></a>
+
+# [1.6.0](https://github.com/clauderic/react-sortable-hoc/compare/v1.5.3...v1.6.0) (2019-02-07)
+
+### Features
+
+- Add disableAutoscroll prop ([#484](https://github.com/clauderic/react-sortable-hoc/issues/484)) ([7845e76](https://github.com/clauderic/react-sortable-hoc/commit/7845e76))
+
 <a name="1.5.4"></a>
 
 ## [1.5.4](https://github.com/clauderic/react-sortable-hoc/compare/v1.5.3...v1.5.4) (2019-02-07)
