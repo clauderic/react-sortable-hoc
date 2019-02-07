@@ -774,7 +774,21 @@ export default function sortableContainer(
         y: 10,
       };
 
-      if (translate.y >= this.maxTranslate.y - this.height / 2) {
+      const {
+        scrollTop,
+        scrollLeft,
+        scrollHeight,
+        scrollWidth,
+        clientHeight,
+        clientWidth,
+      } = this.scrollContainer;
+
+      const isTop = scrollTop === 0;
+      const isBottom = scrollHeight - scrollTop - clientHeight === 0;
+      const isLeft = scrollLeft === 0;
+      const isRight = scrollWidth - scrollLeft - clientWidth === 0;
+
+      if (translate.y >= this.maxTranslate.y - this.height / 2 && !isBottom) {
         // Scroll Down
         direction.y = 1;
         speed.y =
@@ -782,7 +796,7 @@ export default function sortableContainer(
           Math.abs(
             (this.maxTranslate.y - this.height / 2 - translate.y) / this.height,
           );
-      } else if (translate.x >= this.maxTranslate.x - this.width / 2) {
+      } else if (translate.x >= this.maxTranslate.x - this.width / 2 && !isRight) {
         // Scroll Right
         direction.x = 1;
         speed.x =
@@ -790,7 +804,7 @@ export default function sortableContainer(
           Math.abs(
             (this.maxTranslate.x - this.width / 2 - translate.x) / this.width,
           );
-      } else if (translate.y <= this.minTranslate.y + this.height / 2) {
+      } else if (translate.y <= this.minTranslate.y + this.height / 2 && !isTop) {
         // Scroll Up
         direction.y = -1;
         speed.y =
@@ -798,7 +812,7 @@ export default function sortableContainer(
           Math.abs(
             (translate.y - this.height / 2 - this.minTranslate.y) / this.height,
           );
-      } else if (translate.x <= this.minTranslate.x + this.width / 2) {
+      } else if (translate.x <= this.minTranslate.x + this.width / 2 && !isLeft) {
         // Scroll Left
         direction.x = -1;
         speed.x =
