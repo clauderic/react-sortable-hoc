@@ -2,6 +2,47 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+<a name="1.5.4"></a>
+
+## [1.5.4](https://github.com/clauderic/react-sortable-hoc/compare/v1.5.3...v1.5.4) (2019-02-07)
+
+### Bug Fixes
+
+- overflow bug while dragging an item upwards in a grid ([1a2c87e](https://github.com/clauderic/react-sortable-hoc/commit/1a2c87e))
+- virtualized collection grid bug ([a57975c](https://github.com/clauderic/react-sortable-hoc/commit/a57975c))
+
+<a name="1.5.3"></a>
+
+## [1.5.3](https://github.com/clauderic/react-sortable-hoc/compare/v1.1.0...v1.5.3) (2019-01-25)
+
+### Bug Fixes
+
+- omit spreading helperContainer prop on WrappedComponent ([#497](https://github.com/clauderic/react-sortable-hoc/issues/497)) ([12bafdf](https://github.com/clauderic/react-sortable-hoc/commit/12bafdf))
+
+<a name="1.5.2"></a>
+
+## [1.5.2](https://github.com/clauderic/react-sortable-hoc/compare/v1.5.1...v1.5.2) (2019-01-22)
+
+### Bug Fixes
+
+- invalid helperContainer PropType definition ([#493](https://github.com/clauderic/react-sortable-hoc/issues/493)) ([dc1d18f](https://github.com/clauderic/react-sortable-hoc/commit/dc1d18f))
+
+<a name="1.5.1"></a>
+
+## [1.5.1](https://github.com/clauderic/react-sortable-hoc/compare/v1.5.0...v1.5.1) (2019-01-22)
+
+### Bug Fixes
+
+- update helperContainer prop type definition ([#491](https://github.com/clauderic/react-sortable-hoc/issues/491)) ([fd30383](https://github.com/clauderic/react-sortable-hoc/commit/fd30383))
+
+<a name="1.5.0"></a>
+
+# [1.5.0](https://github.com/clauderic/react-sortable-hoc/compare/v1.4.0...v1.5.0) (2019-01-22)
+
+### Features
+
+- allow helperContainer prop to be a function returning an HTMLElement ([f4a9b4a](https://github.com/clauderic/react-sortable-hoc/commit/f4a9b4a))
+
 <a name="1.4.0"></a>
 
 # [1.4.0](https://github.com/clauderic/react-sortable-hoc/compare/v1.3.0...v1.4.0) (2019-01-10)

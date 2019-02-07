@@ -106,10 +106,12 @@ export default function sortableContainer(
       ]),
       getContainer: PropTypes.func,
       getHelperDimensions: PropTypes.func,
-      helperContainer:
+      helperContainer: PropTypes.oneOfType([
+        PropTypes.func,
         typeof HTMLElement === 'undefined'
           ? PropTypes.any
           : PropTypes.instanceOf(HTMLElement),
+      ]),
       disableAutoscroll: PropTypes.bool,
     };
 
@@ -671,8 +673,10 @@ export default function sortableContainer(
                 // If it moves passed the right bounds, then animate it to the first position of the next row.
                 // We just use the offset of the next node to calculate where to move, because that node's original position
                 // is exactly where we want to go
-                translate.x = nextNode.edgeOffset.left - edgeOffset.left;
-                translate.y = nextNode.edgeOffset.top - edgeOffset.top;
+                if (nextNode) {
+                  translate.x = nextNode.edgeOffset.left - edgeOffset.left;
+                  translate.y = nextNode.edgeOffset.top - edgeOffset.top;
+                }
               }
               if (this.newIndex === null) {
                 this.newIndex = index;
@@ -696,8 +700,10 @@ export default function sortableContainer(
                 // If it moves passed the left bounds, then animate it to the last position of the previous row.
                 // We just use the offset of the previous node to calculate where to move, because that node's original position
                 // is exactly where we want to go
-                translate.x = prevNode.edgeOffset.left - edgeOffset.left;
-                translate.y = prevNode.edgeOffset.top - edgeOffset.top;
+                if (prevNode) {
+                  translate.x = prevNode.edgeOffset.left - edgeOffset.left;
+                  translate.y = prevNode.edgeOffset.top - edgeOffset.top;
+                }
               }
               this.newIndex = index;
             }
@@ -780,7 +786,21 @@ export default function sortableContainer(
         y: 10,
       };
 
-      if (translate.y >= this.maxTranslate.y - this.height / 2) {
+      const {
+        scrollTop,
+        scrollLeft,
+        scrollHeight,
+        scrollWidth,
+        clientHeight,
+        clientWidth,
+      } = this.scrollContainer;
+
+      const isTop = scrollTop === 0;
+      const isBottom = scrollHeight - scrollTop - clientHeight === 0;
+      const isLeft = scrollLeft === 0;
+      const isRight = scrollWidth - scrollLeft - clientWidth === 0;
+
+      if (translate.y >= this.maxTranslate.y - this.height / 2 && !isBottom) {
         // Scroll Down
         direction.y = 1;
         speed.y =
@@ -788,7 +808,10 @@ export default function sortableContainer(
           Math.abs(
             (this.maxTranslate.y - this.height / 2 - translate.y) / this.height,
           );
-      } else if (translate.x >= this.maxTranslate.x - this.width / 2) {
+      } else if (
+        translate.x >= this.maxTranslate.x - this.width / 2 &&
+        !isRight
+      ) {
         // Scroll Right
         direction.x = 1;
         speed.x =
@@ -796,7 +819,10 @@ export default function sortableContainer(
           Math.abs(
             (this.maxTranslate.x - this.width / 2 - translate.x) / this.width,
           );
-      } else if (translate.y <= this.minTranslate.y + this.height / 2) {
+      } else if (
+        translate.y <= this.minTranslate.y + this.height / 2 &&
+        !isTop
+      ) {
         // Scroll Up
         direction.y = -1;
         speed.y =
@@ -804,7 +830,10 @@ export default function sortableContainer(
           Math.abs(
             (translate.y - this.height / 2 - this.minTranslate.y) / this.height,
           );
-      } else if (translate.x <= this.minTranslate.x + this.width / 2) {
+      } else if (
+        translate.x <= this.minTranslate.x + this.width / 2 &&
+        !isLeft
+      ) {
         // Scroll Left
         direction.x = -1;
         speed.x =
@@ -885,12 +914,19 @@ export default function sortableContainer(
             'lockToContainerEdges',
             'getContainer',
             'getHelperDimensions',
+            'helperContainer',
           )}
         />
       );
     }
 
     get helperContainer() {
+      const {helperContainer} = this.props;
+
+      if (typeof helperContainer === 'function') {
+        return helperContainer();
+      }
+
       return this.props.helperContainer || this.document.body;
     }
   };
