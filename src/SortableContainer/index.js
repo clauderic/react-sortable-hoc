@@ -915,6 +915,7 @@ export default function sortableContainer(
             'getContainer',
             'getHelperDimensions',
             'helperContainer',
+            'disableAutoscroll',
           )}
         />
       );
