@@ -2,8 +2,8 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
-<a name="1.6.1"></a>
-## [1.6.1](https://github.com/clauderic/react-sortable-hoc/compare/v1.1.0...v1.6.1) (2019-02-11)
+<a name="1.7.0"></a>
+# [1.7.0](https://github.com/clauderic/react-sortable-hoc/compare/v1.1.0...v1.7.0) (2019-03-06)
 
 
 ### Bug Fixes
@@ -14,6 +14,7 @@ All notable changes to this project will be documented in this file. See [standa
 * omit spreading helperContainer prop ([#497](https://github.com/clauderic/react-sortable-hoc/issues/497)) ([12bafdf](https://github.com/clauderic/react-sortable-hoc/commit/12bafdf))
 * overflow bug while dragging an item upwards in a grid ([1a2c87e](https://github.com/clauderic/react-sortable-hoc/commit/1a2c87e))
 * update helperContainer prop type definition ([#491](https://github.com/clauderic/react-sortable-hoc/issues/491)) ([fd30383](https://github.com/clauderic/react-sortable-hoc/commit/fd30383))
+* updated the behaviour of disabled elements ([bd3d041](https://github.com/clauderic/react-sortable-hoc/commit/bd3d041))
 * virtualized collection grid bug ([a57975c](https://github.com/clauderic/react-sortable-hoc/commit/a57975c))
 
 
@@ -23,6 +24,15 @@ All notable changes to this project will be documented in this file. See [standa
 * added helperContainer prop ([286eff4](https://github.com/clauderic/react-sortable-hoc/commit/286eff4))
 * allow helperContainer prop to be a function returning an HTMLElement ([#489](https://github.com/clauderic/react-sortable-hoc/issues/489)) ([f4a9b4a](https://github.com/clauderic/react-sortable-hoc/commit/f4a9b4a))
 
+
+
+<a name="1.6.1"></a>
+## [1.6.1](https://github.com/clauderic/react-sortable-hoc/compare/v1.6.0...v1.6.1) (2019-02-11)
+
+
+### Bug Fixes
+
+* omit disableAutoscroll prop ([#502](https://github.com/clauderic/react-sortable-hoc/issues/502)) ([e994e73](https://github.com/clauderic/react-sortable-hoc/commit/e994e73))
 
 
 <a name="1.6.0"></a>
