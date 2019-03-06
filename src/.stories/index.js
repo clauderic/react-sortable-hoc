@@ -32,7 +32,10 @@ const Handle = SortableHandle(() => <div className={style.handle} />);
 const Item = SortableElement((props) => {
   return (
     <div
-      className={props.className}
+      className={classNames(
+        props.className,
+        props.isDisabled && style.disabled,
+      )}
       style={{
         height: props.height,
         ...props.style,
@@ -47,19 +50,25 @@ const Item = SortableElement((props) => {
 });
 
 const SortableList = SortableContainer(
-  ({className, items, itemClass, shouldUseDragHandle}) => {
+  ({className, items, disabledItems = [], itemClass, shouldUseDragHandle}) => {
     return (
       <div className={className}>
-        {items.map(({value, height}, index) => (
-          <Item
-            key={`item-${value}`}
-            className={itemClass}
-            index={index}
-            value={value}
-            height={height}
-            shouldUseDragHandle={shouldUseDragHandle}
-          />
-        ))}
+        {items.map(({value, height}, index) => {
+          const disabled = disabledItems.includes(value);
+
+          return (
+            <Item
+              key={`item-${value}`}
+              disabled={disabled}
+              isDisabled={disabled}
+              className={itemClass}
+              index={index}
+              value={value}
+              height={height}
+              shouldUseDragHandle={shouldUseDragHandle}
+            />
+          );
+        })}
       </div>
     );
   },
@@ -119,6 +128,7 @@ class ListWrapper extends Component {
     onSortEnd: PropTypes.func,
     component: PropTypes.func,
     shouldUseDragHandle: PropTypes.bool,
+    disabledItems: PropTypes.arrayOf(PropTypes.string),
   };
 
   static defaultProps = {
@@ -367,6 +377,18 @@ storiesOf('Basic Configuration', module)
       </div>
     );
   })
+  .add('Disabled items', () => {
+    return (
+      <div className={style.root}>
+        <ListWrapper
+          component={SortableList}
+          items={getItems(10, 59)}
+          helperClass={style.stylizedHelper}
+          disabledItems={[2, 3, 7]}
+        />
+      </div>
+    );
+  })
   .add('Elements that shrink', () => {
     const getHelperDimensions = ({node}) => ({
       height: 20,
@@ -480,11 +502,13 @@ storiesOf('Advanced', module)
   })
   .add('Custom sortable helper container', () => {
     return (
-      <ListWrapper
-        component={SortableListWithCustomContainer}
-        items={getItems(50, 59)}
-        helperClass={style.stylizedHelper}
-      />
+      <div className={style.root}>
+        <ListWrapper
+          component={SortableListWithCustomContainer}
+          items={getItems(50, 59)}
+          helperClass={style.stylizedHelper}
+        />
+      </div>
     );
   });
 

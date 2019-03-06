@@ -46,6 +46,11 @@
   font-weight: 400;
 }
 
+.disabled {
+  cursor: not-allowed;
+  opacity: 0.5;
+}
+
 // Drag handle
 .handle {
   display: block;
