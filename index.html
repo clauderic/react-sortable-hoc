@@ -12,9 +12,42 @@
     <meta property="og:url" content="http://clauderic.github.io/react-infinite-calendar/" />
     <meta property="og:type" content="website" />
     <meta property="og:title" content="React Sortable HOC" />
-    <meta property="og:description" content="Infinite scrolling date-picker built with React, with localization, themes, keyboard support, and more." />
-    <link href="data:image/x-icon;base64,AAABAAEAEBAAAAEAIABoBAAAFgAAACgAAAAQAAAAIAAAAAEAIAAAAAAAAAQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAC/2/X/AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAFIz0/wAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACCx/v8AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAARV93fyaT9f8t7v7/JpT4/0Vfd38AAAAAR6Dw/wAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAGZH8/wAAAAAAAAAAAAAAACC3/v8AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACuQ6P8AAAAAAAAAAAAAAAAs5/7/GJf4/wAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAADr8/v/AAAAAAAAAAAkw///MPr9/zD1/v8ulPD/AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAXGt6f6vQ9P8ik/j/K+P+/zD6/f8w+P7/J83//ziY7/86WXd/c3h9fwAAAAAAAAAAAAAAAAAAAAAqUHN/AAAAAAAAAAAAAAAAAAAAAAAAAAAs6v7/Hqr7/wAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAFZH7/wAAAAAAAAAAAAAAAAAAAAAAAAAAIbv+/wAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABVZ3p/GJb8/yzr/v8Ujvn/bnV9fwAAAAAAAAAAAAAAADyd9P8AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAWjvf/AAAAAAAAAAAAAAAAAAAAAAAAAABmcXx/AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAOll3fwAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA//8AAPv/AAD7/wAA+/8AAPG/AAD7vwAA+58AAPsPAAD8BwAA/58AAO+/AADHvwAA7/8AAP//AAD//wAA//8AAA==" rel="icon" type="image/x-icon" />
+    <meta property="og:description" content="Set of higher-order components to turn any list into a sortable, touch-friendly, animated list." />
+    <link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="favicon-16x16.png">
+    <link rel="manifest" href="site.webmanifest">
+    <link rel="mask-icon" href="safari-pinned-tab.svg" color="#5bbad5">
+    <meta name="msapplication-TileColor" content="#da532c">
+    <meta name="theme-color" content="#ffffff">
     <link rel="stylesheet" href="styles.css" />
+    <style>
+      .Showcase__Sidebar__header > a:first-child {
+        display: block;
+        background-image: url(https://d12c9k59mfk1gc.cloudfront.net/items/1T3k3f1s0v3K283t2W1s/react-sortable-hoc.svg);
+        background-repeat: no-repeat;
+        background-size: contain;
+        text-indent: -10000px;
+        overflow: hidden;
+        width: 200px;
+        height: 40px;
+        margin-top: 7px;
+      }
+
+      .Showcase__Sidebar__root .Showcase__Sidebar__nav {
+        width: 350px;
+      }
+
+      @media (max-width: 800px) {
+        .Showcase__Sidebar__root .Showcase__Sidebar__nav {
+          margin-left: -350px;
+        }
+        .Showcase__Sidebar__root.Showcase__Sidebar__visible .Showcase__Sidebar__nav {
+          -webkit-transform: translate3d(350px,0,0);
+          transform: translate3d(350px,0,0);
+        }
+      }
+    </style>
 </head>
 <body>
     <div id="root"></div>
