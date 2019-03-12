@@ -174,24 +174,22 @@ export function getLockPixelOffset({lockOffset, width, height}) {
   };
 }
 
-export function getScrollingParent(el) {
-  try {
-    const {
-      overflow,
-      overflowX,
-      overflowY,
-    } = window.getComputedStyle(el);
+function isScrollable(el) {
+  const computedStyle = window.getComputedStyle(el);
+  const overflowRegex = /(auto|scroll)/;
+  const properties = ['overflow', 'overflowX', 'overflowY'];
 
-    if (
-      overflow === 'auto' || overflow === 'scroll' ||
-      overflowX === 'auto' || overflowX === 'scroll' ||
-      overflowY === 'auto' || overflowY === 'scroll'
-    ) {
-      return el;
-    } else {
-      return getScrollingParent(el.parentNode);
-    }
-  } catch (err) {
+  return properties.find((property) =>
+    overflowRegex.test(computedStyle[property]),
+  );
+}
+
+export function getScrollingParent(el) {
+  if (!el) {
     return null;
+  } else if (isScrollable(el)) {
+    return el;
+  } else {
+    return getScrollingParent(el.parentNode);
   }
 }
