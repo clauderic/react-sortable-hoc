@@ -1,4 +1,4 @@
-# React Sortable (HOC)
+# <img src="https://user-images.githubusercontent.com/1416436/54170652-dfd59d80-444d-11e9-9c51-658638c0454b.png" width="400" alt="React Sortable HOC" />
 
 > A set of higher-order components to turn any list into an animated, touch-friendly, sortable list.
 
