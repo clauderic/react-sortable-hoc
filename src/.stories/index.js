@@ -10,8 +10,9 @@ import {
   arrayMove,
 } from '../index';
 import VirtualList from 'react-tiny-virtual-list';
+import {FixedSizeList, VariableSizeList} from 'react-window';
 import {defaultTableRowRenderer, Column, Table, List} from 'react-virtualized';
-import 'react-virtualized/styles.css';
+import '!style-loader!css-loader!react-virtualized/styles.css';
 import Infinite from 'react-infinite';
 import range from 'lodash/range';
 import random from 'lodash/random';
@@ -27,7 +28,16 @@ function getItems(count, height) {
   });
 }
 
-const Handle = SortableHandle(() => <div className={style.handle} />);
+const Handle = SortableHandle(() => (
+  <div className={style.handle}>
+    <svg viewBox="0 0 50 50">
+      <path
+        d="M 0 7.5 L 0 12.5 L 50 12.5 L 50 7.5 L 0 7.5 z M 0 22.5 L 0 27.5 L 50 27.5 L 50 22.5 L 0 22.5 z M 0 37.5 L 0 42.5 L 50 42.5 L 50 37.5 L 0 37.5 z"
+        color="#000"
+      />
+    </svg>
+  </div>
+));
 
 const Item = SortableElement((props) => {
   return (
@@ -177,8 +187,48 @@ class ListWrapper extends Component {
   }
 }
 
+const SortableReactWindow = (Component) =>
+  SortableContainer(
+    class ReactWindowList extends React.Component {
+      render() {
+        const {className, items, itemHeight, height, width} = this.props;
+
+        return (
+          <Component
+            ref="VirtualList"
+            className={className}
+            itemSize={
+              itemHeight == null ? (index) => items[index].height : itemHeight
+            }
+            itemCount={items.length}
+            width={width}
+            height={height}
+            children={this.renderRow}
+          />
+        );
+      }
+
+      renderRow = ({index, style}) => {
+        const {items, itemClass} = this.props;
+        const {value, height} = items[index];
+
+        return (
+          <Item
+            key={value}
+            index={index}
+            className={itemClass}
+            value={value}
+            height={height}
+            style={style}
+          />
+        );
+      };
+    },
+    {withRef: true},
+  );
+
 const SortableVirtualList = SortableContainer(
-  ({className, items, height, width, itemHeight, itemClass, sortingIndex}) => {
+  ({className, items, height, width, itemHeight, itemClass}) => {
     return (
       <VirtualList
         className={className}
@@ -211,7 +261,7 @@ class VirtualizedListWrapper extends Component {
     const {className, items, height, width, itemHeight, itemClass} = this.props;
     return (
       <List
-        ref="vs"
+        ref="VirtualList"
         className={className}
         rowHeight={({index}) => items[index].height}
         estimatedRowSize={itemHeight}
@@ -342,8 +392,8 @@ const NestedSortableList = SortableContainer(
   },
 );
 
-storiesOf('Basic Configuration', module)
-  .add('Basic usage', () => {
+storiesOf('General | Layout / Vertical list', module)
+  .add('Basic setup', () => {
     return (
       <div className={style.root}>
         <ListWrapper
@@ -354,85 +404,13 @@ storiesOf('Basic Configuration', module)
       </div>
     );
   })
-  .add('Drag handle', () => {
-    return (
-      <div className={style.root}>
-        <ListWrapper
-          component={SortableList}
-          shouldUseDragHandle={true}
-          items={getItems(50, 59)}
-          helperClass={style.stylizedHelper}
-        />
-      </div>
-    );
-  })
-  .add('Elements of varying heights', () => {
+  .add('Variable heights', () => {
     return (
       <div className={style.root}>
         <ListWrapper
           component={SortableList}
           items={getItems(50)}
           helperClass={style.stylizedHelper}
-        />
-      </div>
-    );
-  })
-  .add('Disabled items', () => {
-    return (
-      <div className={style.root}>
-        <ListWrapper
-          component={SortableList}
-          items={getItems(10, 59)}
-          helperClass={style.stylizedHelper}
-          disabledItems={[2, 3, 7]}
-        />
-      </div>
-    );
-  })
-  .add('Elements that shrink', () => {
-    const getHelperDimensions = ({node}) => ({
-      height: 20,
-      width: node.offsetWidth,
-    });
-    return (
-      <div className={style.root}>
-        <ListWrapper
-          component={ShrinkingSortableList}
-          items={getItems(50)}
-          helperClass={style.shrinkedHelper}
-          getHelperDimensions={getHelperDimensions}
-        />
-      </div>
-    );
-  })
-  .add('Horizontal', () => {
-    return (
-      <div className={style.root}>
-        <ListWrapper
-          component={SortableList}
-          axis={'x'}
-          items={getItems(50, 300)}
-          helperClass={style.stylizedHelper}
-          className={classNames(
-            style.list,
-            style.stylizedList,
-            style.horizontalList,
-          )}
-          itemClass={classNames(style.stylizedItem, style.horizontalItem)}
-        />
-      </div>
-    );
-  })
-  .add('Grid', () => {
-    return (
-      <div className={style.root}>
-        <ListWrapper
-          component={SortableList}
-          axis={'xy'}
-          items={getItems(10, 110)}
-          helperClass={style.stylizedHelper}
-          className={classNames(style.list, style.stylizedList, style.grid)}
-          itemClass={classNames(style.stylizedItem, style.gridItem)}
         />
       </div>
     );
@@ -450,7 +428,68 @@ storiesOf('Basic Configuration', module)
     );
   });
 
-storiesOf('Advanced', module)
+storiesOf('General | Layout / Horizontal list', module).add(
+  'Basic setup',
+  () => {
+    return (
+      <div className={style.root}>
+        <ListWrapper
+          component={SortableList}
+          axis={'x'}
+          items={getItems(50, 300)}
+          helperClass={style.stylizedHelper}
+          className={classNames(
+            style.list,
+            style.stylizedList,
+            style.horizontalList,
+          )}
+          itemClass={classNames(style.stylizedItem, style.horizontalItem)}
+        />
+      </div>
+    );
+  },
+);
+
+storiesOf('General | Layout / Grid', module).add('Basic setup', () => {
+  return (
+    <div className={style.root}>
+      <ListWrapper
+        component={SortableList}
+        axis={'xy'}
+        items={getItems(10, 110)}
+        helperClass={style.stylizedHelper}
+        className={classNames(style.list, style.stylizedList, style.grid)}
+        itemClass={classNames(style.stylizedItem, style.gridItem)}
+      />
+    </div>
+  );
+});
+
+storiesOf('General | Configuration / Options', module)
+  .add('Drag handle', () => {
+    return (
+      <div className={style.root}>
+        <ListWrapper
+          component={SortableList}
+          shouldUseDragHandle={true}
+          items={getItems(50, 59)}
+          helperClass={style.stylizedHelper}
+        />
+      </div>
+    );
+  })
+  .add('Disabled items', () => {
+    return (
+      <div className={style.root}>
+        <ListWrapper
+          component={SortableList}
+          items={getItems(10, 59)}
+          helperClass={style.stylizedHelper}
+          disabledItems={[2, 3, 7]}
+        />
+      </div>
+    );
+  })
   .add('Press delay (200ms)', () => {
     return (
       <div className={style.root}>
@@ -512,7 +551,7 @@ storiesOf('Advanced', module)
     );
   });
 
-storiesOf('Customization', module)
+storiesOf('General | Configuration / Customization', module)
   .add('Minimal styling', () => {
     return (
       <div className={style.root}>
@@ -551,8 +590,8 @@ storiesOf('Customization', module)
     );
   });
 
-storiesOf('react-tiny-virtual-list', module)
-  .add('Basic usage', () => {
+storiesOf('Other | Virtualization libraries / react-tiny-virtual-list', module)
+  .add('Basic setup', () => {
     return (
       <div className={style.root}>
         <ListWrapper
@@ -564,7 +603,7 @@ storiesOf('react-tiny-virtual-list', module)
       </div>
     );
   })
-  .add('Elements of varying heights', () => {
+  .add('Variable heights', () => {
     return (
       <div className={style.root}>
         <ListWrapper
@@ -577,8 +616,40 @@ storiesOf('react-tiny-virtual-list', module)
     );
   });
 
-storiesOf('react-virtualized', module)
-  .add('Basic usage', () => {
+storiesOf('Other | Virtualization libraries / react-window', module)
+  .add('Basic setup', () => {
+    return (
+      <div className={style.root}>
+        <ListWrapper
+          component={SortableReactWindow(FixedSizeList)}
+          items={getItems(500, 59)}
+          itemHeight={59}
+          helperClass={style.stylizedHelper}
+        />
+      </div>
+    );
+  })
+  .add('Variable heights', () => {
+    return (
+      <div className={style.root}>
+        <ListWrapper
+          component={SortableReactWindow(VariableSizeList)}
+          items={getItems(500)}
+          helperClass={style.stylizedHelper}
+          onSortEnd={(ref) => {
+            // We need to inform React Virtualized that the item heights have changed
+            const instance = ref.getWrappedInstance();
+            const list = instance.refs.VirtualList;
+
+            list.resetAfterIndex(0);
+          }}
+        />
+      </div>
+    );
+  });
+
+storiesOf('Other | Virtualization libraries / react-virtualized', module)
+  .add('Basic setup', () => {
     return (
       <div className={style.root}>
         <ListWrapper
@@ -590,7 +661,7 @@ storiesOf('react-virtualized', module)
       </div>
     );
   })
-  .add('Elements of varying heights', () => {
+  .add('Variable heights', () => {
     return (
       <div className={style.root}>
         <ListWrapper
@@ -601,16 +672,16 @@ storiesOf('react-virtualized', module)
           onSortEnd={(ref) => {
             // We need to inform React Virtualized that the item heights have changed
             const instance = ref.getWrappedInstance();
-            const vs = instance.refs.vs;
+            const list = instance.refs.VirtualList;
 
-            vs.recomputeRowHeights();
+            list.recomputeRowHeights();
             instance.forceUpdate();
           }}
         />
       </div>
     );
   })
-  .add('Table usage', () => {
+  .add('Table', () => {
     return (
       <div className={style.root}>
         <ListWrapper
@@ -623,8 +694,8 @@ storiesOf('react-virtualized', module)
     );
   });
 
-storiesOf('react-infinite', module)
-  .add('Basic usage', () => {
+storiesOf('Other | Virtualization libraries / react-infinite', module)
+  .add('Basic setup', () => {
     return (
       <div className={style.root}>
         <ListWrapper
@@ -635,7 +706,7 @@ storiesOf('react-infinite', module)
       </div>
     );
   })
-  .add('Elements of varying heights', () => {
+  .add('Variable heights', () => {
     return (
       <div className={style.root}>
         <ListWrapper
@@ -646,3 +717,23 @@ storiesOf('react-infinite', module)
       </div>
     );
   });
+
+storiesOf('Stress Test | Re-rendering before sorting', module).add(
+  'Elements that shrink',
+  () => {
+    const getHelperDimensions = ({node}) => ({
+      height: 20,
+      width: node.offsetWidth,
+    });
+    return (
+      <div className={style.root}>
+        <ListWrapper
+          component={ShrinkingSortableList}
+          items={getItems(50)}
+          helperClass={style.shrinkedHelper}
+          getHelperDimensions={getHelperDimensions}
+        />
+      </div>
+    );
+  },
+);

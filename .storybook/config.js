@@ -1,13 +1,12 @@
-import {addDecorator, configure} from '@storybook/react';
-import {withOptions} from '@storybook/addon-options';
+import {addParameters, configure} from '@storybook/react';
+import theme from './theme';
 
-addDecorator(
-  withOptions({
-    name: 'React Sortable HOC',
-    url: 'https://github.com/clauderic/react-sortable-hoc',
+addParameters({
+  options: {
     showAddonPanel: false,
-  })
-);
+    theme,
+  },
+});
 
 function loadStories() {
   require('../src/.stories/index.js');
