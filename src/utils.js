@@ -173,3 +173,18 @@ export function getLockPixelOffset({lockOffset, width, height}) {
     y: offsetY,
   };
 }
+
+export function getScrollingParent(el) {
+  let overflow;
+  try {
+    overflow = window.getComputedStyle(el).overflow;
+  } catch (err) {
+    return null;
+  }
+
+  if (overflow === 'auto' || overflow === 'scroll') {
+    return el;
+  } else {
+    return getScrollingParent(el.parentNode);
+  }
+}

@@ -16,6 +16,7 @@ import {
   isTouchEvent,
   provideDisplayName,
   omit,
+  getScrollingParent,
 } from '../utils';
 
 export default function sortableContainer(
@@ -145,9 +146,10 @@ export default function sortableContainer(
 
         this.contentWindow =
           typeof contentWindow === 'function' ? contentWindow() : contentWindow;
+
         this.scrollContainer = useWindowAsScrollContainer
           ? this.document.scrollingElement || this.document.documentElement
-          : this.container;
+          : getScrollingParent(this.container) || this.container;
 
         for (const key in this.events) {
           if (this.events.hasOwnProperty(key)) {
@@ -318,7 +320,7 @@ export default function sortableContainer(
 
         const margin = getElementMargin(node);
 
-        const containerBoundingRect = this.container.getBoundingClientRect();
+        const containerBoundingRect = this.scrollContainer.getBoundingClientRect();
         const dimensions = getHelperDimensions({index, node, collection});
 
         this.node = node;
@@ -341,8 +343,8 @@ export default function sortableContainer(
         this.offsetEdge = getEdgeOffset(node, this.container);
         this.initialOffset = getPosition(event);
         this.initialScroll = {
-          top: this.container.scrollTop,
-          left: this.container.scrollLeft,
+          top: this.scrollContainer.scrollTop,
+          left: this.scrollContainer.scrollLeft,
         };
 
         this.initialWindowScroll = {
@@ -587,8 +589,8 @@ export default function sortableContainer(
       const {transitionDuration, hideSortableGhost, onSortOver} = this.props;
       const nodes = this.manager.getOrderedRefs();
       const containerScrollDelta = {
-        left: this.container.scrollLeft - this.initialScroll.left,
-        top: this.container.scrollTop - this.initialScroll.top,
+        left: this.scrollContainer.scrollLeft - this.initialScroll.left,
+        top: this.scrollContainer.scrollTop - this.initialScroll.top,
       };
       const sortingOffset = {
         left:
