@@ -1,6 +1,7 @@
 {
   "extends": ["plugin:shopify/react"],
   "rules": {
+    "no-process-env": "off",
     "no-lonely-if": "off",
     "no-undefined": "off",
     "no-param-reassign": "off",
