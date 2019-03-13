@@ -518,7 +518,6 @@ storiesOf('General | Configuration / Options', module)
           items={getItems(50)}
           helperClass={style.stylizedHelper}
           lockAxis={'y'}
-          lockToContainerEdges={true}
           lockOffset={['0%', '100%']}
         />
       </div>
