@@ -59,9 +59,9 @@ export default function sortableElement(
       const node = findDOMNode(this);
 
       node.sortableInfo = {
-        index,
         collection,
         disabled,
+        index,
         manager: this.context.manager,
       };
 

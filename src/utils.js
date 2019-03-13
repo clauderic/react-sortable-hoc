@@ -31,9 +31,9 @@ export function omit(obj, ...keysToOmit) {
 }
 
 export const events = {
-  start: ['touchstart', 'mousedown'],
-  move: ['touchmove', 'mousemove'],
   end: ['touchend', 'touchcancel', 'mouseup'],
+  move: ['touchmove', 'mousemove'],
+  start: ['touchstart', 'mousedown'],
 };
 
 export const vendorPrefix = (function() {
@@ -61,6 +61,22 @@ export const vendorPrefix = (function() {
       return pre && pre.length ? pre[0].toUpperCase() + pre.substr(1) : '';
   }
 })();
+
+export function setInlineStyles(node, styles) {
+  Object.keys(styles).forEach((key) => {
+    node.style[key] = styles[key];
+  });
+}
+
+export function setTranslate3d(node, translate) {
+  node.style[`${vendorPrefix}Transform`] =
+    translate == null ? '' : `translate3d(${translate.x}px,${translate.y}px,0)`;
+}
+
+export function setTransitionDuration(node, duration) {
+  node.style[`${vendorPrefix}TransitionDuration`] =
+    duration == null ? '' : `${duration}ms`;
+}
 
 export function closest(el, fn) {
   while (el) {
@@ -90,10 +106,10 @@ export function getElementMargin(element) {
   const style = window.getComputedStyle(element);
 
   return {
-    top: getPixelValue(style.marginTop),
-    right: getPixelValue(style.marginRight),
     bottom: getPixelValue(style.marginBottom),
     left: getPixelValue(style.marginLeft),
+    right: getPixelValue(style.marginRight),
+    top: getPixelValue(style.marginTop),
   };
 }
 
@@ -129,15 +145,15 @@ export function isTouchEvent(event) {
   );
 }
 
-export function getEdgeOffset(node, parent, offset = {top: 0, left: 0}) {
+export function getEdgeOffset(node, parent, offset = {left: 0, top: 0}) {
   if (!node) {
     return undefined;
   }
 
   // Get the actual offsetTop / offsetLeft value, no matter how deep the node is nested
   const nodeOffset = {
-    top: offset.top + node.offsetTop,
     left: offset.left + node.offsetLeft,
+    top: offset.top + node.offsetTop,
   };
 
   if (node.parentNode === parent) {
@@ -147,7 +163,7 @@ export function getEdgeOffset(node, parent, offset = {top: 0, left: 0}) {
   return getEdgeOffset(node.parentNode, parent, nodeOffset);
 }
 
-export function getLockPixelOffset({lockOffset, width, height}) {
+function getLockPixelOffset({lockOffset, width, height}) {
   let offsetX = lockOffset;
   let offsetY = lockOffset;
   let unit = 'px';
@@ -182,6 +198,26 @@ export function getLockPixelOffset({lockOffset, width, height}) {
     x: offsetX,
     y: offsetY,
   };
+}
+
+export function getLockPixelOffsets({height, width, lockOffset}) {
+  const offsets = Array.isArray(lockOffset)
+    ? lockOffset
+    : [lockOffset, lockOffset];
+
+  invariant(
+    offsets.length === 2,
+    'lockOffset prop of SortableContainer should be a single ' +
+      'value or an array of exactly two values. Given %s',
+    lockOffset,
+  );
+
+  const [minLockOffset, maxLockOffset] = offsets;
+
+  return [
+    getLockPixelOffset({height, lockOffset: minLockOffset, width}),
+    getLockPixelOffset({height, lockOffset: maxLockOffset, width}),
+  ];
 }
 
 function isScrollable(el) {
