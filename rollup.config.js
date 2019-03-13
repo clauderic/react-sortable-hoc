@@ -1,3 +1,4 @@
+import replace from 'rollup-plugin-replace';
 import resolve from 'rollup-plugin-node-resolve';
 import commonjs from 'rollup-plugin-commonjs';
 import babel from 'rollup-plugin-babel';
@@ -52,6 +53,11 @@ const umdConfig = ({minify} = {}) => ({
         targets: {browsers: ['last 2 versions', 'safari >= 7']},
       }),
     ),
+    replace({
+      'process.env.NODE_ENV': JSON.stringify(
+        minify ? 'production' : 'development',
+      ),
+    }),
     commonjs(),
     minify && uglify(),
     filesize(),
