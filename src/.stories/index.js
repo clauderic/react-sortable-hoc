@@ -620,6 +620,13 @@ storiesOf('Other | Virtualization libraries / react-window', module)
           items={getItems(500, 59)}
           itemHeight={59}
           helperClass={style.stylizedHelper}
+          onSortEnd={(ref) => {
+            // We need to inform React Window that the order of the items has changed
+            const instance = ref.getWrappedInstance();
+            const list = instance.refs.VirtualList;
+
+            list.forceUpdate();
+          }}
         />
       </div>
     );
@@ -632,7 +639,7 @@ storiesOf('Other | Virtualization libraries / react-window', module)
           items={getItems(500)}
           helperClass={style.stylizedHelper}
           onSortEnd={(ref) => {
-            // We need to inform React Virtualized that the item heights have changed
+            // We need to inform React Window that the item heights have changed
             const instance = ref.getWrappedInstance();
             const list = instance.refs.VirtualList;
 
