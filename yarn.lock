@@ -2003,6 +2003,11 @@ array-map@~0.0.0:
   resolved "https://registry.yarnpkg.com/array-map/-/array-map-0.0.0.tgz#88a2bab73d1cf7bcd5c1b118a003f66f665fa662"
   integrity sha1-iKK6tz0c97zVwbEYoAP2b2ZfpmI=
 
+array-move@^1.0.0:
+  version "1.0.0"
+  resolved "https://registry.yarnpkg.com/array-move/-/array-move-1.0.0.tgz#ec5de472cab0b9db3e50963fd71476ba477a6583"
+  integrity sha1-7F3kcsqwuds+UJY/1xR2ukd6ZYM=
+
 array-reduce@~0.0.0:
   version "0.0.0"
   resolved "https://registry.yarnpkg.com/array-reduce/-/array-reduce-0.0.0.tgz#173899d3ffd1c7d9383e4479525dbe278cab5f2b"

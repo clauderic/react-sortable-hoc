@@ -66,6 +66,7 @@
     "@storybook/addon-options": "^5.0.1",
     "@storybook/react": "^5.0.1",
     "@storybook/theming": "^5.0.1",
+    "array-move": "^1.0.0",
     "autoprefixer": "^6.3.6",
     "babel-loader": "^8.0.5",
     "babel-plugin-transform-async-to-promises": "^0.8.4",

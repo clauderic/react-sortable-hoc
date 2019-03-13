@@ -3,12 +3,8 @@ import PropTypes from 'prop-types';
 import ReactDOM from 'react-dom';
 import {storiesOf} from '@storybook/react';
 import style from './Storybook.scss';
-import {
-  SortableContainer,
-  SortableElement,
-  SortableHandle,
-  arrayMove,
-} from '../index';
+import {SortableContainer, SortableElement, SortableHandle} from '../index';
+import arrayMove from 'array-move';
 import VirtualList from 'react-tiny-virtual-list';
 import {FixedSizeList, VariableSizeList} from 'react-window';
 import {defaultTableRowRenderer, Column, Table, List} from 'react-virtualized';
