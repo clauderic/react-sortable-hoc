@@ -31,3 +31,7 @@ export default function sortableHandle(
     }
   };
 }
+
+export function isSortableHandle(node) {
+  return node.sortableHandle != null;
+}

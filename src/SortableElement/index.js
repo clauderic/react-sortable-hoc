@@ -5,6 +5,14 @@ import invariant from 'invariant';
 
 import {provideDisplayName, omit} from '../utils';
 
+const propTypes = {
+  index: PropTypes.number.isRequired,
+  collection: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
+  disabled: PropTypes.bool,
+};
+
+const omittedProps = Object.keys(propTypes);
+
 export default function sortableElement(
   WrappedComponent,
   config = {withRef: false},
@@ -19,11 +27,7 @@ export default function sortableElement(
       manager: PropTypes.object.isRequired,
     };
 
-    static propTypes = {
-      index: PropTypes.number.isRequired,
-      collection: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
-      disabled: PropTypes.bool,
-    };
+    static propTypes = propTypes;
 
     static defaultProps = {
       collection: 0,
@@ -59,9 +63,9 @@ export default function sortableElement(
       const node = findDOMNode(this);
 
       node.sortableInfo = {
-        index,
         collection,
         disabled,
+        index,
         manager: this.context.manager,
       };
 
@@ -86,12 +90,7 @@ export default function sortableElement(
     render() {
       const ref = config.withRef ? 'wrappedInstance' : null;
 
-      return (
-        <WrappedComponent
-          ref={ref}
-          {...omit(this.props, 'collection', 'disabled', 'index')}
-        />
-      );
+      return <WrappedComponent ref={ref} {...omit(this.props, omittedProps)} />;
     }
   };
 }
