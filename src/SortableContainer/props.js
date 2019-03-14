@@ -56,6 +56,8 @@ export const defaultProps = {
   useWindowAsScrollContainer: false,
 };
 
+export const omittedProps = Object.keys(propTypes);
+
 export function validateProps(props) {
   invariant(
     !(props.distance && props.pressDelay),

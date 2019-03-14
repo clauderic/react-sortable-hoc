@@ -24,7 +24,7 @@ import {
 } from '../utils';
 
 import AutoScroller from '../AutoScroller';
-import {defaultProps, propTypes, validateProps} from './props';
+import {defaultProps, omittedProps, propTypes, validateProps} from './props';
 
 export default function sortableContainer(
   WrappedComponent,
@@ -728,36 +728,7 @@ export default function sortableContainer(
     render() {
       const ref = config.withRef ? 'wrappedInstance' : null;
 
-      return (
-        <WrappedComponent
-          ref={ref}
-          {...omit(
-            this.props,
-            'contentWindow',
-            'useWindowAsScrollContainer',
-            'distance',
-            'helperClass',
-            'hideSortableGhost',
-            'transitionDuration',
-            'useDragHandle',
-            'pressDelay',
-            'pressThreshold',
-            'shouldCancelStart',
-            'updateBeforeSortStart',
-            'onSortStart',
-            'onSortMove',
-            'onSortEnd',
-            'axis',
-            'lockAxis',
-            'lockOffset',
-            'lockToContainerEdges',
-            'getContainer',
-            'getHelperDimensions',
-            'helperContainer',
-            'disableAutoscroll',
-          )}
-        />
-      );
+      return <WrappedComponent ref={ref} {...omit(this.props, omittedProps)} />;
     }
 
     get helperContainer() {
