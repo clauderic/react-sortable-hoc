@@ -14,6 +14,8 @@ import range from 'lodash/range';
 import random from 'lodash/random';
 import classNames from 'classnames';
 
+import GroupedItems from './grouping-items';
+
 function getItems(count, height) {
   var heights = [65, 110, 140, 65, 90, 65];
   return range(count).map((value) => {
@@ -585,7 +587,10 @@ storiesOf('General | Configuration / Customization', module)
     );
   });
 
-storiesOf('Other | Virtualization libraries / react-tiny-virtual-list', module)
+storiesOf(
+  'Advanced examples | Virtualization libraries / react-tiny-virtual-list',
+  module,
+)
   .add('Basic setup', () => {
     return (
       <div className={style.root}>
@@ -611,7 +616,7 @@ storiesOf('Other | Virtualization libraries / react-tiny-virtual-list', module)
     );
   });
 
-storiesOf('Other | Virtualization libraries / react-window', module)
+storiesOf('Advanced examples | Virtualization libraries / react-window', module)
   .add('Basic setup', () => {
     return (
       <div className={style.root}>
@@ -650,7 +655,10 @@ storiesOf('Other | Virtualization libraries / react-window', module)
     );
   });
 
-storiesOf('Other | Virtualization libraries / react-virtualized', module)
+storiesOf(
+  'Advanced examples | Virtualization libraries / react-virtualized',
+  module,
+)
   .add('Basic setup', () => {
     return (
       <div className={style.root}>
@@ -696,7 +704,10 @@ storiesOf('Other | Virtualization libraries / react-virtualized', module)
     );
   });
 
-storiesOf('Other | Virtualization libraries / react-infinite', module)
+storiesOf(
+  'Advanced examples | Virtualization libraries / react-infinite',
+  module,
+)
   .add('Basic setup', () => {
     return (
       <div className={style.root}>
@@ -720,9 +731,13 @@ storiesOf('Other | Virtualization libraries / react-infinite', module)
     );
   });
 
-storiesOf('Stress Test | Re-rendering before sorting', module).add(
-  'Elements that shrink',
-  () => {
+storiesOf('Advanced examples | Re-rendering before sorting', module)
+  .add('Grouping items', () => (
+    <div className={style.root}>
+      <GroupedItems />
+    </div>
+  ))
+  .add('Elements that shrink', () => {
     const getHelperDimensions = ({node}) => ({
       height: 20,
       width: node.offsetWidth,
@@ -737,5 +752,4 @@ storiesOf('Stress Test | Re-rendering before sorting', module).add(
         />
       </div>
     );
-  },
-);
+  });

@@ -1,0 +1,69 @@
+$color: #333;
+$white: #fff;
+$backgroundColor: $white;
+
+$boxShadow: 0 5px 5px -5px rgba(0, 0, 0, 0.2);
+
+$fontWeight-regular: 400;
+$fontWeight-bold: 600;
+
+$borderRadius: 3px;
+$borderWidth: 1px;
+$borderColor: #efefef;
+
+$selectedColor: $white;
+$selectedBackgroundColor: #759fff;
+$selectedBorderColor: #5e83d6;
+
+$badgeColor: $white;
+$badgeBackgroundColor: #f75959;
+$badgeBorderColor: #da4553;
+
+.Item {
+  display: flex;
+  align-items: center;
+  width: 100%;
+  padding: 20px;
+  background-color: $backgroundColor;
+  border-top: $borderWidth solid #efefef;
+  box-sizing: border-box;
+  user-select: none;
+
+  color: $color;
+  font-weight: $fontWeight-regular;
+
+  &:first-child {
+    border-top: none;
+  }
+
+  &.selected {
+    background: $selectedBackgroundColor;
+    border: 1px solid $selectedBorderColor;
+    color: $selectedColor;
+    font-weight: $fontWeight-bold;
+
+    & + .Item {
+      border-top: none;
+    }
+  }
+
+  &.dragging {
+    border-radius: $borderRadius;
+    border: $borderWidth solid #efefef;
+    box-shadow: $boxShadow;
+  }
+}
+
+.Badge {
+  position: absolute;
+  top: -8px;
+  right: -8px;
+  padding: 0.35em 0.5em;
+  border-radius: 0.3rem;
+
+  color: $badgeColor;
+  font-size: 0.8em;
+  font-weight: $fontWeight-bold;
+  background-color: $badgeBackgroundColor;
+  border: $borderWidth solid $badgeBorderColor;
+}
