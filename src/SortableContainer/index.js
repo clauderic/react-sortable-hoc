@@ -226,18 +226,20 @@ export default function sortableContainer(
         } = this.props;
 
         const {node, collection} = active;
-        const {index} = node.sortableInfo;
 
         if (typeof updateBeforeSortStart === 'function') {
           this._awaitingUpdateBeforeSortStart = true;
 
           try {
+            const {index} = node.sortableInfo;
             await updateBeforeSortStart({collection, index, node}, event);
           } finally {
             this._awaitingUpdateBeforeSortStart = false;
           }
         }
 
+        // Need to get the latest value for `index` in case it changes during `updateBeforeSortStart`
+        const {index} = node.sortableInfo;
         const margin = getElementMargin(node);
         const containerBoundingRect = this.scrollContainer.getBoundingClientRect();
         const dimensions = getHelperDimensions({collection, index, node});
