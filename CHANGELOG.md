@@ -2,6 +2,36 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+<a name="1.8.0"></a>
+# [1.8.0](https://github.com/clauderic/react-sortable-hoc/compare/v1.1.0...v1.8.0) (2019-03-18)
+
+
+### Bug Fixes
+
+* added prop-types to peerDependencies ([0e855c5](https://github.com/clauderic/react-sortable-hoc/commit/0e855c5))
+* copy canvas content into cloned node ([43ad122](https://github.com/clauderic/react-sortable-hoc/commit/43ad122))
+* get updated index after updateBeforeSortStart ([4471a0a](https://github.com/clauderic/react-sortable-hoc/commit/4471a0a))
+* helperContainer PropType definition broke server-side rendering ([#471](https://github.com/clauderic/react-sortable-hoc/issues/471)) ([c0eef97](https://github.com/clauderic/react-sortable-hoc/commit/c0eef97))
+* invalid helperContainer PropType definition ([#493](https://github.com/clauderic/react-sortable-hoc/issues/493)) ([dc1d18f](https://github.com/clauderic/react-sortable-hoc/commit/dc1d18f))
+* lock axis story should not use lockToContainerEdges ([db1d3a9](https://github.com/clauderic/react-sortable-hoc/commit/db1d3a9))
+* omit disableAutoscroll prop ([#502](https://github.com/clauderic/react-sortable-hoc/issues/502)) ([e994e73](https://github.com/clauderic/react-sortable-hoc/commit/e994e73))
+* omit spreading helperContainer prop ([#497](https://github.com/clauderic/react-sortable-hoc/issues/497)) ([12bafdf](https://github.com/clauderic/react-sortable-hoc/commit/12bafdf))
+* overflow bug while dragging an item upwards in a grid ([1a2c87e](https://github.com/clauderic/react-sortable-hoc/commit/1a2c87e))
+* replace process.env.NODE_ENV in UMD builds ([16135df](https://github.com/clauderic/react-sortable-hoc/commit/16135df))
+* update helperContainer prop type definition ([#491](https://github.com/clauderic/react-sortable-hoc/issues/491)) ([fd30383](https://github.com/clauderic/react-sortable-hoc/commit/fd30383))
+* updated the behaviour of disabled elements ([bd3d041](https://github.com/clauderic/react-sortable-hoc/commit/bd3d041))
+* virtualized collection grid bug ([a57975c](https://github.com/clauderic/react-sortable-hoc/commit/a57975c))
+
+
+### Features
+
+* Add disableAutoscroll prop ([#484](https://github.com/clauderic/react-sortable-hoc/issues/484)) ([7845e76](https://github.com/clauderic/react-sortable-hoc/commit/7845e76))
+* added helperContainer prop ([286eff4](https://github.com/clauderic/react-sortable-hoc/commit/286eff4))
+* allow helperContainer prop to be a function returning an HTMLElement ([#489](https://github.com/clauderic/react-sortable-hoc/issues/489)) ([f4a9b4a](https://github.com/clauderic/react-sortable-hoc/commit/f4a9b4a))
+* Detect scroll container automatically ([#507](https://github.com/clauderic/react-sortable-hoc/issues/507)) ([6572921](https://github.com/clauderic/react-sortable-hoc/commit/6572921))
+
+
+
 <a name="1.7.1"></a>
 
 ## [1.7.1](https://github.com/clauderic/react-sortable-hoc/compare/v1.1.0...v1.7.1) (2019-03-06)
