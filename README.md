@@ -186,7 +186,9 @@ React Sortable HOC only depends on [invariant](https://github.com/zertosh/invari
 
 ## Reporting Issues
 
-If believe you've found an issue, please [report it](https://github.com/clauderic/react-sortable-hoc/issues) along with any relevant details to reproduce it. The easiest way to do so is to fork this [jsfiddle](https://jsfiddle.net/clauderic/6r7r2cva/).
+If believe you've found an issue, please [report it](https://github.com/clauderic/react-sortable-hoc/issues) along with any relevant details to reproduce it. The easiest way to do so is to fork the `react-sortable-hoc` basic setup sandbox on  [CodeSandbox](https://codesandbox.io/s/o104x95y86):
+
+[![Edit o104x95y86](https://codesandbox.io/static/img/play-codesandbox.svg)](https://codesandbox.io/s/o104x95y86)
 
 ## Asking for help
 
