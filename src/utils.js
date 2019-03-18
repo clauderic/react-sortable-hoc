@@ -239,3 +239,13 @@ export function getScrollingParent(el) {
     return getScrollingParent(el.parentNode);
   }
 }
+
+export const NodeType = {
+  Anchor: 'A',
+  Button: 'BUTTON',
+  Canvas: 'CANVAS',
+  Input: 'INPUT',
+  Option: 'OPTION',
+  Textarea: 'TEXTAREA',
+  Select: 'SELECT',
+};
