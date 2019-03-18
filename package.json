@@ -65,7 +65,7 @@
     "@babel/preset-env": "^7.2.3",
     "@babel/preset-react": "^7.0.0",
     "@storybook/addon-options": "^5.0.1",
-    "@storybook/react": "^5.0.1",
+    "@storybook/react": "^5.0.2",
     "@storybook/theming": "^5.0.1",
     "array-move": "^1.0.0",
     "autoprefixer": "^6.3.6",
