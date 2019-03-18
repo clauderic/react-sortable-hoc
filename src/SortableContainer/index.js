@@ -768,16 +768,15 @@ export default function sortableContainer(
     }
 
     handleKeyDown = (event) => {
-      const {keyCode} = event;
-      const {shouldCancelStart} = this.props;
+      const {keyCode, target} = event;
+      const {shouldCancelStart, useDragHandle} = this.props;
+
+      const isValidSortingTarget = useDragHandle ? isSortableHandle(target) : target.sortableInfo;
 
       if (
         shouldCancelStart(event) ||
         (this.manager.active && !this.manager.active.isKeySorting) ||
-        (!this.manager.active &&
-          (keyCode !== KEYCODE.SPACE ||
-            !closest(event.target, (el) => el.sortableInfo != null)
-        ))
+        (!this.manager.active && (keyCode !== KEYCODE.SPACE || !isValidSortingTarget))
       ) {
         return;
       }
