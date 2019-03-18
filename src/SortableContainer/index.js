@@ -284,7 +284,7 @@ export default function sortableContainer(
 
           if (field.tagName === NodeType.Canvas) {
             const destCtx = field.getContext('2d');
-            destCtx.drawImage(fields[index], 0, 0);
+            destCtx.drawImage(fields[i], 0, 0);
           }
         });
 
