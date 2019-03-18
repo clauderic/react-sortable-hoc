@@ -271,15 +271,20 @@ export default function sortableContainer(
           top: window.pageYOffset,
         };
 
-        const fields = node.querySelectorAll('input, textarea, select');
+        const fields = node.querySelectorAll('input, textarea, select, canvas');
         const clonedNode = node.cloneNode(true);
         const clonedFields = [
-          ...clonedNode.querySelectorAll('input, textarea, select'),
+          ...clonedNode.querySelectorAll('input, textarea, select, canvas'),
         ];
 
         clonedFields.forEach((field, i) => {
           if (field.type !== 'file' && fields[index]) {
             field.value = fields[i].value;
+          }
+
+          if (field.tagName === NodeType.Canvas) {
+            const destCtx = field.getContext('2d');
+            destCtx.drawImage(fields[index], 0, 0);
           }
         });
 
