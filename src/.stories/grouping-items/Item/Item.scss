@@ -28,6 +28,7 @@ $badgeBorderColor: #da4553;
   border-top: $borderWidth solid #efefef;
   box-sizing: border-box;
   user-select: none;
+  outline: none;
 
   color: $color;
   font-weight: $fontWeight-regular;
@@ -51,6 +52,10 @@ $badgeBorderColor: #da4553;
     border-radius: $borderRadius;
     border: $borderWidth solid #efefef;
     box-shadow: $boxShadow;
+  }
+
+  &:focus {
+    border: 2px solid lightsteelblue
   }
 }
 

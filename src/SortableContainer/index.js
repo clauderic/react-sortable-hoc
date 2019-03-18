@@ -774,9 +774,8 @@ export default function sortableContainer(
       const isValidSortingTarget = useDragHandle ? isSortableHandle(target) : target.sortableInfo;
 
       if (
-        shouldCancelStart(event) ||
         (this.manager.active && !this.manager.active.isKeySorting) ||
-        (!this.manager.active && (keyCode !== KEYCODE.SPACE || !isValidSortingTarget))
+        (!this.manager.active && (keyCode !== KEYCODE.SPACE || shouldCancelStart(event) || !isValidSortingTarget))
       ) {
         return;
       }

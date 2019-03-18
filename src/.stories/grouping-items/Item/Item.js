@@ -16,6 +16,7 @@ function Item(props) {
         dragging && styles.dragging,
       )}
       onClick={() => onClick(value)}
+      tabIndex={0}
     >
       Item {value}
       {shouldRenderItemCountBadge ? <Badge count={selectedItemsCount} /> : null}
