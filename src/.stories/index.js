@@ -27,8 +27,8 @@ function getItems(count, height) {
   });
 }
 
-const Handle = SortableHandle(() => (
-  <div className={style.handle}>
+const Handle = SortableHandle(({tabIndex}) => (
+  <div className={style.handle} tabIndex={tabIndex}>
     <svg viewBox="0 0 50 50">
       <path
         d="M 0 7.5 L 0 12.5 L 50 12.5 L 50 7.5 L 0 7.5 z M 0 22.5 L 0 27.5 L 50 27.5 L 50 22.5 L 0 22.5 z M 0 37.5 L 0 42.5 L 50 42.5 L 50 37.5 L 0 37.5 z"
@@ -38,21 +38,34 @@ const Handle = SortableHandle(() => (
   </div>
 ));
 
-const Item = SortableElement((props) => {
+const Item = SortableElement(({
+  tabbable,
+  className,
+  isDisabled,
+  height,
+  style: propStyle,
+  shouldUseDragHandle,
+  value
+}) => {
+  const isTabbable = tabbable && !isDisabled;
+  const bodyTabIndex = isTabbable && !shouldUseDragHandle ? 0 : -1;
+  const handleTabIndex = isTabbable && shouldUseDragHandle ? 0 : -1;
+
   return (
     <div
       className={classNames(
-        props.className,
-        props.isDisabled && style.disabled,
+        className,
+        isDisabled && style.disabled,
       )}
       style={{
-        height: props.height,
-        ...props.style,
+        height,
+        ...propStyle,
       }}
+      tabIndex={bodyTabIndex}
     >
-      {props.shouldUseDragHandle && <Handle />}
+      {shouldUseDragHandle && <Handle tabIndex={handleTabIndex} />}
       <div className={style.wrapper}>
-        <span>Item</span> {props.value}
+        <span>Item</span> {value}
       </div>
     </div>
   );
@@ -67,6 +80,7 @@ const SortableList = SortableContainer(
 
           return (
             <Item
+              tabbable
               key={`item-${value}`}
               disabled={disabled}
               isDisabled={disabled}
@@ -104,11 +118,13 @@ class SortableListWithCustomContainer extends React.Component {
 }
 
 const Category = SortableElement((props) => {
+  const tabIndex = props.tabbable ? 0 : -1;
+
   return (
     <div className={style.category}>
       <div className={style.categoryHeader}>
         <Handle />
-        <span>Category {props.value}</span>
+        <span tabIndex={tabIndex}>Category {props.value}</span>
       </div>
       <ListWrapper
         component={SortableList}
@@ -213,6 +229,7 @@ const SortableReactWindow = (Component) =>
 
         return (
           <Item
+            tabbable
             key={value}
             index={index}
             className={itemClass}
@@ -237,6 +254,7 @@ const SortableVirtualList = SortableContainer(
           const {value, height} = items[index];
           return (
             <Item
+              tabbable
               key={value}
               index={index}
               className={itemClass}
@@ -268,6 +286,7 @@ class VirtualizedListWrapper extends Component {
           const {value, height} = items[index];
           return (
             <Item
+              tabbable
               key={value}
               index={index}
               className={itemClass}
@@ -345,9 +364,13 @@ const SortableInfiniteList = SortableContainer(
         className={className}
         containerHeight={600}
         elementHeight={items.map(({height}) => height)}
+        // for react-infinite, a larger preload is better for keyboard sorting
+        preloadBatchSize={Infinite.containerHeightScaleFactor(2)}
+        preloadAdditionalHeight={Infinite.containerHeightScaleFactor(2)}
       >
         {items.map(({value, height}, index) => (
           <Item
+            tabbable
             key={`item-${index}`}
             className={itemClass}
             index={index}
@@ -366,6 +389,7 @@ const ShrinkingSortableList = SortableContainer(
       <div className={className}>
         {items.map(({value, height}, index) => (
           <Item
+            tabbable
             key={`item-${value}`}
             className={itemClass}
             index={index}
@@ -384,7 +408,7 @@ const NestedSortableList = SortableContainer(
     return (
       <div className={className}>
         {items.map((value, index) => (
-          <Category key={`category-${value}`} index={index} value={value} />
+          <Category tabbable key={`category-${value}`} index={index} value={value} />
         ))}
       </div>
     );

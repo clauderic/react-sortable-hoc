@@ -41,9 +41,14 @@
   border-bottom: 1px solid #efefef;
   box-sizing: border-box;
   user-select: none;
+  outline: none;
 
   color: #333;
   font-weight: 400;
+
+  &:focus {
+    border: 2px solid lightsteelblue
+  }
 }
 
 .disabled {
@@ -52,6 +57,15 @@
 }
 
 // Drag handle
+.handleWrapper {
+  width: 18px;
+  height: 18px;
+  outline: none;
+
+  &:focus {
+    outline: 4px solid lightsteelblue
+  }
+}
 .handle {
   display: block;
   width: 18px;

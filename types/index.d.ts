@@ -8,6 +8,7 @@ export interface SortStart {
   node: Element;
   index: number;
   collection: Offset;
+  isKeySorting: boolean;
 }
 
 export interface SortOver {
@@ -21,6 +22,7 @@ export interface SortEnd {
   oldIndex: number;
   newIndex: number;
   collection: Offset;
+  isKeySorting: boolean;
 }
 
 export type SortEvent = React.MouseEvent<any> | React.TouchEvent<any>;
