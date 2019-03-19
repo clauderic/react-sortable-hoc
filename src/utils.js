@@ -231,7 +231,7 @@ function isScrollable(el) {
 }
 
 export function getScrollingParent(el) {
-  if (!el) {
+  if (!(el instanceof HTMLElement)) {
     return null;
   } else if (isScrollable(el)) {
     return el;
