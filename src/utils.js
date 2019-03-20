@@ -261,6 +261,12 @@ export function cloneNode(node) {
       field.value = fields[i].value;
     }
 
+    // Fixes an issue with original radio buttons losing their value once the
+    // clone is inserted in the DOM, as radio button `name` attributes must be unique
+    if (field.type === 'radio' && field.name) {
+      field.name = `__sortableClone__${field.name}`;
+    }
+
     if (field.tagName === NodeType.Canvas) {
       const destCtx = field.getContext('2d');
       destCtx.drawImage(fields[i], 0, 0);
