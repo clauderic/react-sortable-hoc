@@ -502,20 +502,14 @@ export default function sortableContainer(
 
     animateNodes() {
       const {transitionDuration, hideSortableGhost, onSortOver} = this.props;
+      const {containerScrollDelta, windowScrollDelta} = this;
       const nodes = this.manager.getOrderedRefs();
-      const containerScrollDelta = {
-        left: this.scrollContainer.scrollLeft - this.initialScroll.left,
-        top: this.scrollContainer.scrollTop - this.initialScroll.top,
-      };
       const sortingOffset = {
         left:
           this.offsetEdge.left + this.translate.x + containerScrollDelta.left,
         top: this.offsetEdge.top + this.translate.y + containerScrollDelta.top,
       };
-      const windowScrollDelta = {
-        left: window.pageXOffset - this.initialWindowScroll.left,
-        top: window.pageYOffset - this.initialWindowScroll.top,
-      };
+
       const prevIndex = this.newIndex;
       this.newIndex = null;
 
@@ -744,6 +738,26 @@ export default function sortableContainer(
       }
 
       return this.props.helperContainer || this.document.body;
+    }
+
+    get containerScrollDelta() {
+      const {useWindowAsScrollContainer} = this.props;
+
+      if (useWindowAsScrollContainer) {
+        return {left: 0, top: 0};
+      }
+
+      return {
+        left: this.scrollContainer.scrollLeft - this.initialScroll.left,
+        top: this.scrollContainer.scrollTop - this.initialScroll.top,
+      };
+    }
+
+    get windowScrollDelta() {
+      return {
+        left: this.contentWindow.pageXOffset - this.initialWindowScroll.left,
+        top: this.contentWindow.pageYOffset - this.initialWindowScroll.top,
+      };
     }
   };
 }
