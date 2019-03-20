@@ -2,6 +2,21 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+<a name="1.8.3"></a>
+
+## [1.8.3](https://github.com/clauderic/react-sortable-hoc/compare/v1.8.2...v1.8.3) (2019-03-20)
+
+### Bug Fixes
+
+- issue with windowAsScrollContainer and translation offsets ([0391e62](https://github.com/clauderic/react-sortable-hoc/commit/0391e62))
+
+### Features
+
+- Add disableAutoscroll prop ([#484](https://github.com/clauderic/react-sortable-hoc/issues/484)) ([7845e76](https://github.com/clauderic/react-sortable-hoc/commit/7845e76))
+- added helperContainer prop ([286eff4](https://github.com/clauderic/react-sortable-hoc/commit/286eff4))
+- allow helperContainer prop to be a function returning an HTMLElement ([#489](https://github.com/clauderic/react-sortable-hoc/issues/489)) ([f4a9b4a](https://github.com/clauderic/react-sortable-hoc/commit/f4a9b4a))
+- Detect scroll container automatically ([#507](https://github.com/clauderic/react-sortable-hoc/issues/507)) ([6572921](https://github.com/clauderic/react-sortable-hoc/commit/6572921))
+
 <a name="1.8.2"></a>
 
 ## [1.8.2](https://github.com/clauderic/react-sortable-hoc/compare/v1.8.1...v1.8.2) (2019-03-19)
