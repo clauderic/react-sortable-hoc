@@ -19,6 +19,10 @@
 - **Horizontal lists, vertical lists, or a grid** ↔ ↕ ⤡
 - **Touch support** 👌
 
+## Why should I use this?
+
+There are already a number of great Drag & Drop libraries out there (for instance, [react-dnd](https://github.com/gaearon/react-dnd/) is fantastic). If those libraries fit your needs, you should definitely give them a try first. However, most of those libraries rely on the HTML5 Drag & Drop API, which has some severe limitations. For instance, things rapidly become tricky if you need to support touch devices, if you need to lock dragging to an axis, or want to animate the nodes as they're being sorted. React Sortable HOC aims to provide a simple set of higher-order components to fill those gaps. If you're looking for a dead-simple, mobile-friendly way to add sortable functionality to your lists, then you're in the right place.
+
 ## Installation
 
 Using [npm](https://www.npmjs.com/package/react-sortable-hoc):
@@ -81,16 +85,20 @@ class SortableComponent extends Component {
 
 render(<SortableComponent />, document.getElementById('root'));
 ```
-
+Note the usage of the mandatory **index** prop.
 That's it! React Sortable does not come with any styles by default, since it's meant to enhance your existing components.
 
 More code examples are available [here](https://github.com/clauderic/react-sortable-hoc/blob/master/examples/).
 
-## Why should I use this?
-
-There are already a number of great Drag & Drop libraries out there (for instance, [react-dnd](https://github.com/gaearon/react-dnd/) is fantastic). If those libraries fit your needs, you should definitely give them a try first. However, most of those libraries rely on the HTML5 Drag & Drop API, which has some severe limitations. For instance, things rapidly become tricky if you need to support touch devices, if you need to lock dragging to an axis, or want to animate the nodes as they're being sorted. React Sortable HOC aims to provide a simple set of higher-order components to fill those gaps. If you're looking for a dead-simple, mobile-friendly way to add sortable functionality to your lists, then you're in the right place.
-
 ### Prop Types
+
+#### SortableElement HOC
+
+| Property   | Type             | Default | Required? | Description                                                                                                                                                                                                                               |
+| :--------- | :--------------- | :------ | :-------: | :---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| **index  | Number           |         |     ✓     | This is the element's sortableIndex within it's collection. This prop is required.**                                                                                                                                                        |
+| collection | Number or String | `0`     |           | The collection the element is part of. This is useful if you have multiple groups of sortable elements within the same `SortableContainer`. [Example](http://clauderic.github.io/react-sortable-hoc/#/basic-configuration/multiple-lists) |
+| disabled   | Boolean          | `false` |           | Whether the element should be sortable or not                                                                                                                                                                                             |
 
 #### SortableContainer HOC
 
@@ -122,13 +130,6 @@ There are already a number of great Drag & Drop libraries out there (for instanc
 \* `OffsetValue` can either be a finite `Number` or a `String` made up of a number and a unit (`px` or `%`).
 Examples: `10` (which is the same as `"10px"`), `"50%"`
 
-#### SortableElement HOC
-
-| Property   | Type             | Default | Required? | Description                                                                                                                                                                                                                               |
-| :--------- | :--------------- | :------ | :-------: | :---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| index      | Number           |         |     ✓     | This is the element's sortableIndex within it's collection. This prop is required.                                                                                                                                                        |
-| collection | Number or String | `0`     |           | The collection the element is part of. This is useful if you have multiple groups of sortable elements within the same `SortableContainer`. [Example](http://clauderic.github.io/react-sortable-hoc/#/basic-configuration/multiple-lists) |
-| disabled   | Boolean          | `false` |           | Whether the element should be sortable or not                                                                                                                                                                                             |
 
 ## FAQ
 
