@@ -249,3 +249,23 @@ export const NodeType = {
   Textarea: 'TEXTAREA',
   Select: 'SELECT',
 };
+
+export function cloneNode(node) {
+  const selector = 'input, textarea, select, canvas, [contenteditable]';
+  const fields = node.querySelectorAll(selector);
+  const clonedNode = node.cloneNode(true);
+  const clonedFields = [...clonedNode.querySelectorAll(selector)];
+
+  clonedFields.forEach((field, i) => {
+    if (field.type !== 'file') {
+      field.value = fields[i].value;
+    }
+
+    if (field.tagName === NodeType.Canvas) {
+      const destCtx = field.getContext('2d');
+      destCtx.drawImage(fields[i], 0, 0);
+    }
+  });
+
+  return clonedNode;
+}

@@ -7,6 +7,7 @@ import Manager from '../Manager';
 import {isSortableHandle} from '../SortableHandle';
 
 import {
+  cloneNode,
   closest,
   events,
   getScrollingParent,
@@ -271,24 +272,7 @@ export default function sortableContainer(
           top: window.pageYOffset,
         };
 
-        const fields = node.querySelectorAll('input, textarea, select, canvas');
-        const clonedNode = node.cloneNode(true);
-        const clonedFields = [
-          ...clonedNode.querySelectorAll('input, textarea, select, canvas'),
-        ];
-
-        clonedFields.forEach((field, i) => {
-          if (field.type !== 'file' && fields[index]) {
-            field.value = fields[i].value;
-          }
-
-          if (field.tagName === NodeType.Canvas) {
-            const destCtx = field.getContext('2d');
-            destCtx.drawImage(fields[i], 0, 0);
-          }
-        });
-
-        this.helper = this.helperContainer.appendChild(clonedNode);
+        this.helper = this.helperContainer.appendChild(cloneNode(node));
 
         setInlineStyles(this.helper, {
           boxSizing: 'border-box',
