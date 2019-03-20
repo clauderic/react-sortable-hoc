@@ -1,8 +1,8 @@
-import {NodeType} from '../utils';
+import {NodeType, closest} from '../utils';
 
 export default function defaultShouldCancelStart(event) {
   // Cancel sorting if the event target is an `input`, `textarea`, `select` or `option`
-  const disabledElements = [
+  const interactiveElements = [
     NodeType.Input,
     NodeType.Textarea,
     NodeType.Select,
@@ -10,8 +10,12 @@ export default function defaultShouldCancelStart(event) {
     NodeType.Button,
   ];
 
-  if (disabledElements.indexOf(event.target.tagName) !== -1) {
+  if (interactiveElements.indexOf(event.target.tagName) !== -1) {
     // Return true to cancel sorting
+    return true;
+  }
+
+  if (closest(event.target, (el) => el.contentEditable === 'true')) {
     return true;
   }
 
