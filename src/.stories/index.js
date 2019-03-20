@@ -15,6 +15,7 @@ import random from 'lodash/random';
 import classNames from 'classnames';
 
 import GroupedItems from './grouping-items';
+import InteractiveElements from './interactive-elements-stress-test';
 
 function getItems(count, height) {
   var heights = [65, 110, 140, 65, 90, 65];
@@ -753,3 +754,12 @@ storiesOf('Advanced examples | Re-rendering before sorting', module)
       </div>
     );
   });
+
+storiesOf('Stress Testing | Nested elements', module).add(
+  'Interactive elements',
+  () => (
+    <div className={style.root}>
+      <InteractiveElements />
+    </div>
+  ),
+);

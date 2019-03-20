@@ -1,0 +1,45 @@
+$color: #333;
+$white: #fff;
+$backgroundColor: $white;
+
+$boxShadow: 0 5px 5px -5px rgba(0, 0, 0, 0.2);
+
+$fontWeight-regular: 400;
+$fontWeight-bold: 600;
+
+$borderRadius: 3px;
+$borderWidth: 1px;
+$borderColor: #efefef;
+
+.root {
+  display: block;
+  width: 250px;
+  padding: 20px;
+  background-color: $backgroundColor;
+  border-bottom: $borderWidth solid #efefef;
+  box-sizing: border-box;
+  user-select: none;
+
+  color: $color;
+  font-family: sans-serif;
+  font-weight: $fontWeight-regular;
+
+  > * {
+    display: block;
+    width: 100%;
+    font-size: 14px;
+  }
+
+  > input,
+  > textarea {
+    padding: 5px;
+    border: 1px solid #e0e0e0;
+    box-sizing: border-box;
+  }
+
+  label {
+    input {
+      margin-right: 0.5em;
+    }
+  }
+}
