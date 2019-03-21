@@ -10,7 +10,7 @@ export default class Manager {
   }
 
   remove(collection, ref) {
-    const index = this.getIndex(collection, ref);
+    const index = this.findIndex(collection, ref);
 
     if (index !== -1) {
       this.refs[collection].splice(index, 1);
@@ -22,13 +22,17 @@ export default class Manager {
   }
 
   getActive() {
-    return this.refs[this.active.collection].find(
+    return this.nodeAtIndex(this.active.index);
+  }
+
+  nodeAtIndex(index, collection = this.active.collection) {
+    return this.refs[collection].find(
       // eslint-disable-next-line eqeqeq
-      ({node}) => node.sortableInfo.index == this.active.index,
+      ({node}) => node.sortableInfo.index == index,
     );
   }
 
-  getIndex(collection, ref) {
+  findIndex(collection, ref) {
     return this.refs[collection].indexOf(ref);
   }
 

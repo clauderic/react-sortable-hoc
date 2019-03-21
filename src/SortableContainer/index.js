@@ -267,7 +267,6 @@ export default function sortableContainer(
           left: this.scrollContainer.scrollLeft,
           top: this.scrollContainer.scrollTop,
         };
-
         this.initialWindowScroll = {
           left: window.pageXOffset,
           top: window.pageYOffset,
@@ -673,22 +672,17 @@ export default function sortableContainer(
       return new Promise((resolve) => {
         const {dropAnimationDuration, dropAnimationEasing} = this.props;
         const {containerScrollDelta, windowScrollDelta} = this;
-        const nodes = this.manager.getRefs();
-        const {edgeOffset: oldOffset, node: oldNode} = nodes[this.index];
-        const {edgeOffset: newOffset, node: newNode} = nodes[this.newIndex];
+        const oldOffset = this.offsetEdge;
+        const {edgeOffset: newOffset, node: newNode} = this.manager.nodeAtIndex(
+          this.newIndex,
+        );
         const deltaX =
           this.newIndex > this.index
-            ? newOffset.left -
-              oldNode.offsetWidth +
-              newNode.offsetWidth -
-              oldOffset.left
+            ? newOffset.left - this.width + newNode.offsetWidth - oldOffset.left
             : newOffset.left - oldOffset.left;
         const deltaY =
           this.newIndex > this.index
-            ? newOffset.top -
-              oldNode.offsetHeight +
-              newNode.offsetHeight -
-              oldOffset.top
+            ? newOffset.top - this.height + newNode.offsetHeight - oldOffset.top
             : newOffset.top - oldOffset.top;
 
         setTranslate3d(this.helper, {
