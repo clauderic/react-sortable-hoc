@@ -78,6 +78,10 @@ export function setTransitionDuration(node, duration) {
     duration == null ? '' : `${duration}ms`;
 }
 
+export function setTransition(node, transition) {
+  node.style[`${vendorPrefix}Transition`] = transition;
+}
+
 export function closest(el, fn) {
   while (el) {
     if (fn(el)) {
