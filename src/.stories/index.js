@@ -575,6 +575,18 @@ storiesOf('General | Configuration / Customization', module)
       </div>
     );
   })
+  .add('Disable drop animation', () => {
+    return (
+      <div className={style.root}>
+        <ListWrapper
+          component={SortableList}
+          items={getItems(50, 59)}
+          dropAnimationDuration={0}
+          helperClass={style.stylizedHelper}
+        />
+      </div>
+    );
+  })
   .add('Disable transitions', () => {
     return (
       <div className={style.root}>
