@@ -51,6 +51,10 @@
   opacity: 0.5;
 }
 
+.isRtl {
+  direction: rtl;
+}
+
 // Drag handle
 .handle {
   display: block;
@@ -81,7 +85,8 @@
 
 // Grid
 .grid {
-  display: block;
+  display: flex;
+  flex-wrap: wrap;
   width: 130 * 4px;
   height: 350px;
   white-space: nowrap;
@@ -90,7 +95,6 @@
 }
 
 .gridItem {
-  float: left;
   width: 130px;
   padding: 8px;
   background: transparent;

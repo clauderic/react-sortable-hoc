@@ -7,7 +7,7 @@ import {SortableContainer, SortableElement, SortableHandle} from '../index';
 import arrayMove from 'array-move';
 import VirtualList from 'react-tiny-virtual-list';
 import {FixedSizeList, VariableSizeList} from 'react-window';
-import {defaultTableRowRenderer, Column, Table, List} from 'react-virtualized';
+import {Column, defaultTableRowRenderer, List, Table} from 'react-virtualized';
 import '!style-loader!css-loader!react-virtualized/styles.css';
 import Infinite from 'react-infinite';
 import range from 'lodash/range';
@@ -137,6 +137,7 @@ class ListWrapper extends Component {
     onSortEnd: PropTypes.func,
     component: PropTypes.func,
     shouldUseDragHandle: PropTypes.bool,
+    rtl: PropTypes.bool,
     disabledItems: PropTypes.arrayOf(PropTypes.string),
   };
 
@@ -427,9 +428,8 @@ storiesOf('General | Layout / Vertical list', module)
     );
   });
 
-storiesOf('General | Layout / Horizontal list', module).add(
-  'Basic setup',
-  () => {
+storiesOf('General | Layout / Horizontal list', module)
+  .add('Basic setup', () => {
     return (
       <div className={style.root}>
         <ListWrapper
@@ -446,23 +446,63 @@ storiesOf('General | Layout / Horizontal list', module).add(
         />
       </div>
     );
-  },
-);
+  })
+  .add('Basic setup - RTL', () => {
+    return (
+      <div className={style.root}>
+        <ListWrapper
+          component={SortableList}
+          axis={'x'}
+          rtl={true}
+          items={getItems(50, 300)}
+          helperClass={style.stylizedHelper}
+          className={classNames(
+            style.list,
+            style.stylizedList,
+            style.horizontalList,
+            style.isRtl,
+          )}
+          itemClass={classNames(style.stylizedItem, style.horizontalItem)}
+        />
+      </div>
+    );
+  });
 
-storiesOf('General | Layout / Grid', module).add('Basic setup', () => {
-  return (
-    <div className={style.root}>
-      <ListWrapper
-        component={SortableList}
-        axis={'xy'}
-        items={getItems(10, 110)}
-        helperClass={style.stylizedHelper}
-        className={classNames(style.list, style.stylizedList, style.grid)}
-        itemClass={classNames(style.stylizedItem, style.gridItem)}
-      />
-    </div>
-  );
-});
+storiesOf('General | Layout / Grid', module)
+  .add('Basic setup', () => {
+    return (
+      <div className={style.root}>
+        <ListWrapper
+          component={SortableList}
+          axis={'xy'}
+          items={getItems(10, 110)}
+          helperClass={style.stylizedHelper}
+          className={classNames(style.list, style.stylizedList, style.grid)}
+          itemClass={classNames(style.stylizedItem, style.gridItem)}
+        />
+      </div>
+    );
+  })
+  .add('Basic setup - RTL', () => {
+    return (
+      <div className={style.root}>
+        <ListWrapper
+          component={SortableList}
+          axis={'xy'}
+          rtl={true}
+          items={getItems(10, 110)}
+          helperClass={style.stylizedHelper}
+          className={classNames(
+            style.list,
+            style.stylizedList,
+            style.grid,
+            style.isRtl,
+          )}
+          itemClass={classNames(style.stylizedItem, style.gridItem)}
+        />
+      </div>
+    );
+  });
 
 storiesOf('General | Configuration / Options', module)
   .add('Drag handle', () => {

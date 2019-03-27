@@ -10,11 +10,11 @@ import {
   cloneNode,
   closest,
   events,
-  getScrollingParent,
   getEdgeOffset,
   getElementMargin,
   getLockPixelOffsets,
   getPosition,
+  getScrollingParent,
   isTouchEvent,
   limit,
   NodeType,
@@ -485,7 +485,12 @@ export default function sortableContainer(
     }
 
     animateNodes() {
-      const {transitionDuration, hideSortableGhost, onSortOver} = this.props;
+      const {
+        transitionDuration,
+        hideSortableGhost,
+        onSortOver,
+        rtl,
+      } = this.props;
       const {containerScrollDelta, windowScrollDelta} = this;
       const nodes = this.manager.getOrderedRefs();
       const sortingOffset = {
@@ -556,8 +561,12 @@ export default function sortableContainer(
             // Calculations for a grid setup
             if (
               index < this.index &&
-              ((sortingOffset.left + windowScrollDelta.left - offset.width <=
-                edgeOffset.left &&
+              ((((!rtl &&
+                sortingOffset.left + windowScrollDelta.left - offset.width <=
+                  edgeOffset.left) ||
+                (rtl &&
+                  sortingOffset.left + windowScrollDelta.left + offset.width >=
+                    edgeOffset.left)) &&
                 sortingOffset.top + windowScrollDelta.top <=
                   edgeOffset.top + offset.height) ||
                 sortingOffset.top + windowScrollDelta.top + offset.height <=
@@ -567,8 +576,12 @@ export default function sortableContainer(
               // then move it to the right
               translate.x = this.width + this.marginOffset.x;
               if (
-                edgeOffset.left + translate.x >
-                this.containerBoundingRect.width - offset.width
+                (!rtl &&
+                  edgeOffset.left + translate.x >
+                    this.containerBoundingRect.width - offset.width) ||
+                (rtl &&
+                  edgeOffset.left + translate.x >
+                    this.containerBoundingRect.left - offset.width)
               ) {
                 // If it moves passed the right bounds, then animate it to the first position of the next row.
                 // We just use the offset of the next node to calculate where to move, because that node's original position
@@ -583,8 +596,12 @@ export default function sortableContainer(
               }
             } else if (
               index > this.index &&
-              ((sortingOffset.left + windowScrollDelta.left + offset.width >=
-                edgeOffset.left &&
+              ((((!rtl &&
+                sortingOffset.left + windowScrollDelta.left + offset.width >=
+                  edgeOffset.left) ||
+                (rtl &&
+                  sortingOffset.left + windowScrollDelta.left <=
+                    edgeOffset.left + offset.width)) &&
                 sortingOffset.top + windowScrollDelta.top + offset.height >=
                   edgeOffset.top) ||
                 sortingOffset.top + windowScrollDelta.top + offset.height >=
@@ -593,9 +610,17 @@ export default function sortableContainer(
               // If the current node is to the right on the same row, or below the node that's being dragged
               // then move it to the left
               translate.x = -(this.width + this.marginOffset.x);
+              if (rtl) {
+                translate.x *= -1;
+              }
+
               if (
-                edgeOffset.left + translate.x <
-                this.containerBoundingRect.left + offset.width
+                (!rtl &&
+                  edgeOffset.left + translate.x <
+                    this.containerBoundingRect.left + offset.width) ||
+                (rtl &&
+                  edgeOffset.left - translate.x <
+                    this.containerBoundingRect.width - offset.width)
               ) {
                 // If it moves passed the left bounds, then animate it to the last position of the previous row.
                 // We just use the offset of the previous node to calculate where to move, because that node's original position
@@ -609,20 +634,23 @@ export default function sortableContainer(
             }
           } else {
             if (
-              index > this.index &&
+              ((!rtl && index > this.index) || (rtl && index < this.index)) &&
               sortingOffset.left + windowScrollDelta.left + offset.width >=
                 edgeOffset.left
             ) {
               translate.x = -(this.width + this.marginOffset.x);
-              this.newIndex = index;
+
+              if (!rtl || (rtl && this.newIndex == null)) {
+                this.newIndex = index;
+              }
             } else if (
-              index < this.index &&
+              ((!rtl && index < this.index) || (rtl && index > this.index)) &&
               sortingOffset.left + windowScrollDelta.left <=
                 edgeOffset.left + offset.width
             ) {
               translate.x = this.width + this.marginOffset.x;
 
-              if (this.newIndex == null) {
+              if ((!rtl && this.newIndex == null) || rtl) {
                 this.newIndex = index;
               }
             }
