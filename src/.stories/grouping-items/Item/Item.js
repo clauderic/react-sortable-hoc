@@ -7,7 +7,14 @@ import styles from './Item.scss';
 const ENTER_KEY = 13;
 
 function Item(props) {
-  const {dragging, onClick, selected, selectedItemsCount, value} = props;
+  const {
+    dragging,
+    sorting,
+    onClick,
+    selected,
+    selectedItemsCount,
+    value,
+  } = props;
   const shouldRenderItemCountBadge = dragging && selectedItemsCount > 1;
 
   return (
@@ -16,6 +23,7 @@ function Item(props) {
         styles.Item,
         selected && !dragging && styles.selected,
         dragging && styles.dragging,
+        sorting && styles.sorting,
       )}
       onClick={() => onClick(value)}
       onKeyPress={(event) => {

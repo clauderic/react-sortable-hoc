@@ -38,41 +38,55 @@ const Handle = SortableHandle(({tabIndex}) => (
   </div>
 ));
 
-const Item = SortableElement(({
-  tabbable,
-  className,
-  isDisabled,
-  height,
-  style: propStyle,
-  shouldUseDragHandle,
-  value
-}) => {
-  const isTabbable = tabbable && !isDisabled;
-  const bodyTabIndex = isTabbable && !shouldUseDragHandle ? 0 : -1;
-  const handleTabIndex = isTabbable && shouldUseDragHandle ? 0 : -1;
+const Item = SortableElement(
+  ({
+    tabbable,
+    className,
+    isDisabled,
+    height,
+    style: propStyle,
+    shouldUseDragHandle,
+    value,
+    type,
+    isSorting,
+  }) => {
+    const isTabbable = tabbable && !isDisabled;
+    const bodyTabIndex = isTabbable && !shouldUseDragHandle ? 0 : -1;
+    const handleTabIndex = isTabbable && shouldUseDragHandle ? 0 : -1;
 
-  return (
-    <div
-      className={classNames(
-        className,
-        isDisabled && style.disabled,
-      )}
-      style={{
-        height,
-        ...propStyle,
-      }}
-      tabIndex={bodyTabIndex}
-    >
-      {shouldUseDragHandle && <Handle tabIndex={handleTabIndex} />}
-      <div className={style.wrapper}>
-        <span>Item</span> {value}
+    return (
+      <div
+        className={classNames(
+          className,
+          isDisabled && style.disabled,
+          isSorting && style.sorting,
+          shouldUseDragHandle && style.containsDragHandle,
+        )}
+        style={{
+          height,
+          ...propStyle,
+        }}
+        tabIndex={bodyTabIndex}
+      >
+        {shouldUseDragHandle && <Handle tabIndex={handleTabIndex} />}
+        <div className={style.wrapper}>
+          <span>Item</span> {value}
+        </div>
       </div>
-    </div>
-  );
-});
+    );
+  },
+);
 
 const SortableList = SortableContainer(
-  ({className, items, disabledItems = [], itemClass, shouldUseDragHandle}) => {
+  ({
+    className,
+    items,
+    disabledItems = [],
+    itemClass,
+    isSorting,
+    shouldUseDragHandle,
+    type,
+  }) => {
     return (
       <div className={className}>
         {items.map(({value, height}, index) => {
@@ -89,6 +103,8 @@ const SortableList = SortableContainer(
               value={value}
               height={height}
               shouldUseDragHandle={shouldUseDragHandle}
+              type={type}
+              isSorting={isSorting}
             />
           );
         })}
@@ -167,6 +183,8 @@ class ListWrapper extends Component {
     const {onSortStart} = this.props;
     this.setState({isSorting: true});
 
+    document.body.style.cursor = 'grabbing';
+
     if (onSortStart) {
       onSortStart(this.refs.component);
     }
@@ -180,6 +198,8 @@ class ListWrapper extends Component {
       items: arrayMove(items, oldIndex, newIndex),
       isSorting: false,
     });
+
+    document.body.style.cursor = '';
 
     if (onSortEnd) {
       onSortEnd(this.refs.component);
@@ -224,7 +244,7 @@ const SortableReactWindow = (Component) =>
       }
 
       renderRow = ({index, style}) => {
-        const {items, itemClass} = this.props;
+        const {items, itemClass, isSorting} = this.props;
         const {value, height} = items[index];
 
         return (
@@ -236,6 +256,7 @@ const SortableReactWindow = (Component) =>
             value={value}
             height={height}
             style={style}
+            isSorting={isSorting}
           />
         );
       };
@@ -244,7 +265,7 @@ const SortableReactWindow = (Component) =>
   );
 
 const SortableVirtualList = SortableContainer(
-  ({className, items, height, width, itemHeight, itemClass}) => {
+  ({className, items, height, width, itemHeight, itemClass, isSorting}) => {
     return (
       <VirtualList
         className={className}
@@ -261,6 +282,7 @@ const SortableVirtualList = SortableContainer(
               value={value}
               height={height}
               style={style}
+              isSorting={isSorting}
             />
           );
         }}
@@ -275,7 +297,15 @@ const SortableVirtualList = SortableContainer(
 // Function components cannot have refs, so we'll be using a class for React Virtualized
 class VirtualizedListWrapper extends Component {
   render() {
-    const {className, items, height, width, itemHeight, itemClass} = this.props;
+    const {
+      className,
+      items,
+      height,
+      width,
+      itemHeight,
+      itemClass,
+      isSorting,
+    } = this.props;
     return (
       <List
         ref="VirtualList"
@@ -293,6 +323,7 @@ class VirtualizedListWrapper extends Component {
               value={value}
               height={height}
               style={style}
+              isSorting={isSorting}
             />
           );
         }}
@@ -358,7 +389,7 @@ class TableWrapper extends Component {
 }
 
 const SortableInfiniteList = SortableContainer(
-  ({className, items, itemClass}) => {
+  ({className, items, itemClass, isSorting}) => {
     return (
       <Infinite
         className={className}
@@ -376,6 +407,7 @@ const SortableInfiniteList = SortableContainer(
             index={index}
             value={value}
             height={height}
+            isSorting={isSorting}
           />
         ))}
       </Infinite>
@@ -396,6 +428,7 @@ const ShrinkingSortableList = SortableContainer(
             value={value}
             height={isSorting ? 20 : height}
             shouldUseDragHandle={shouldUseDragHandle}
+            isSorting={isSorting}
           />
         ))}
       </div>
@@ -408,7 +441,12 @@ const NestedSortableList = SortableContainer(
     return (
       <div className={className}>
         {items.map((value, index) => (
-          <Category tabbable key={`category-${value}`} index={index} value={value} />
+          <Category
+            tabbable
+            key={`category-${value}`}
+            index={index}
+            value={value}
+          />
         ))}
       </div>
     );

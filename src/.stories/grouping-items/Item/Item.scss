@@ -36,6 +36,7 @@ $focusedOutlineColor: #4c9ffe;
   color: $color;
   font-weight: $fontWeight-regular;
 
+  cursor: grab;
 
   &:last-child {
     border-bottom: none;

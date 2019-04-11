@@ -23,6 +23,17 @@ $focusedOutlineColor: #4c9ffe;
 .item {
   position: relative;
   border-bottom: 1px solid #999;
+
+  cursor: grab;
+  touch-action: manipulation;
+
+  &.sorting {
+    pointer-events: none;
+  }
+}
+
+.containsDragHandle {
+  cursor: default;
 }
 
 // Stylized
@@ -77,6 +88,8 @@ $focusedOutlineColor: #4c9ffe;
   > svg {
     opacity: 0.3;
   }
+
+  cursor: grab;
 }
 
 // Horizontal list
@@ -165,6 +178,8 @@ $focusedOutlineColor: #4c9ffe;
 .helper {
   box-shadow: 0 5px 5px -5px rgba(0, 0, 0, 0.2),
     0 -5px 5px -5px rgba(0, 0, 0, 0.2);
+
+  cursor: grabbing;
 }
 
 .stylizedHelper {
