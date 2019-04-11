@@ -1,5 +1,7 @@
 @import url(https://fonts.googleapis.com/css?family=Montserrat:400);
 
+$focusedOutlineColor: #4c9ffe;
+
 .root {
   display: flex;
   height: 100%;
@@ -32,6 +34,7 @@
   border-radius: 3px;
   outline: none;
 }
+
 .stylizedItem {
   display: flex;
   align-items: center;
@@ -46,8 +49,9 @@
   color: #333;
   font-weight: 400;
 
-  &:focus {
-    border: 2px solid lightsteelblue
+  &:focus:not(.containsDragHandle) {
+    text-indent: -2px;
+    border: 2px solid $focusedOutlineColor;
   }
 }
 
@@ -61,18 +65,18 @@
   width: 18px;
   height: 18px;
   outline: none;
-
-  &:focus {
-    outline: 4px solid lightsteelblue
-  }
 }
+
 .handle {
   display: block;
   width: 18px;
   height: 18px;
-  opacity: 0.25;
   margin-right: 20px;
-  cursor: row-resize;
+  overflow: hidden;
+
+  > svg {
+    opacity: 0.3;
+  }
 }
 
 // Horizontal list
@@ -162,24 +166,31 @@
   box-shadow: 0 5px 5px -5px rgba(0, 0, 0, 0.2),
     0 -5px 5px -5px rgba(0, 0, 0, 0.2);
 }
+
 .stylizedHelper {
-  box-shadow: 0 5px 5px -5px rgba(0, 0, 0, 0.2),
-    0 -5px 5px -5px rgba(0, 0, 0, 0.2);
-  background-color: rgba(255, 255, 255, 0.8);
-  cursor: row-resize;
+  border: 1px solid #efefef;
+  box-shadow: 0 5px 5px -5px rgba(0, 0, 0, 0.2);
+  background-color: rgba(255, 255, 255, 0.9);
+  border-radius: 3px;
 
   &.horizontalItem {
     cursor: col-resize;
   }
+
   &.gridItem {
     background-color: transparent;
     white-space: nowrap;
     box-shadow: none;
+    border: none;
 
     .wrapper {
-      background-color: rgba(255, 255, 255, 0.8);
+      background-color: rgba(255, 255, 255, 0.9);
       box-shadow: 0 0 7px rgba(0, 0, 0, 0.15);
     }
+  }
+
+  &:focus {
+    box-shadow: 0 0px 5px 1px $focusedOutlineColor;
   }
 }
 
