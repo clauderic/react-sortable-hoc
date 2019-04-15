@@ -18,7 +18,7 @@
 - **Works with virtualization libraries: [react-virtualized](https://github.com/bvaughn/react-virtualized/), [react-tiny-virtual-list](https://github.com/clauderic/react-tiny-virtual-list), [react-infinite](https://github.com/seatgeek/react-infinite), etc.**
 - **Horizontal lists, vertical lists, or a grid** ↔ ↕ ⤡
 - **Touch support** 👌
-- **Keyboard support** :wheelchair:
+- **Accessible: supports keyboard sorting**
 
 ## Installation
 
@@ -131,6 +131,7 @@ Examples: `10` (which is the same as `"10px"`), `"50%"`
 | collection | Number or String | `0`     |           | The collection the element is part of. This is useful if you have multiple groups of sortable elements within the same `SortableContainer`. [Example](http://clauderic.github.io/react-sortable-hoc/#/basic-configuration/multiple-lists) |
 | disabled   | Boolean          | `false` |           | Whether the element should be sortable or not                                                                                                                                                                                             |
 
+
 ## FAQ
 
 ### Running Examples
@@ -141,6 +142,12 @@ In root folder, run the following commands to launch React Storybook:
 $ npm install
 $ npm start
 ```
+
+### Accessibility
+
+React Sortable HOC supports keyboard sorting out of the box. To enable it, make sure your `SortableElement` or `SortableHandle` is focusable. This can be done by setting `tabIndex={0}` on the outermost HTML node rendered by the component you're enhancing with `SortableElement` or `SortableHandle`.
+
+Once an item is focused/tabbed to, press `SPACE` to pick it up, `ArrowUp` or `ArrowLeft` moves it one place backward in the list, `ArrowDown` or `ArrowRight` moves items one place forward in the list; pressing `SPACE` again drops the item in it's new position. Pressing `ESC` before the item is dropped will cancel the sort operations.
 
 ### Grid support
 
@@ -180,12 +187,6 @@ const SortableList = SortableContainer(({items}) => {
   );
 });
 ```
-
-### Accessibility
-
-`react-sortable-hoc` supports sorting using only the keyboard! To enable it, all you need to do is make your `SortableElement`s or `SortableHandle`s tabbable (depending on how you've set `useDragHandle`). This can be done by setting `tabIndex={0}` on the outermost element of your component.
-
-Once an item is focused/tabbed to, pressing `SPACE` picks it up, `ArrowUp`/`ArrowLeft` moves it one place backward in the list, `ArrowDown`/`ArrowRight` moves it one place forward in the list, and `SPACE` again drops the item in place. Press `ESC` anytime in between to cancel the sort.
 
 ## Dependencies
 
