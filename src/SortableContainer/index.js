@@ -24,7 +24,6 @@ import {
   setTransitionDuration,
   setTranslate3d,
   KEYCODE,
-  getTargetIndex,
 } from '../utils';
 
 import AutoScroller from '../AutoScroller';
@@ -326,11 +325,11 @@ export default function sortableContainer(
 
           const containerEdge = useWindowAsScrollContainer
             ? {
-                left: 0,
-                right: this.contentWindow.innerWidth,
-                top: 0,
-                bottom: this.contentWindow.innerHeight,
-              }
+              left: 0,
+              right: this.contentWindow.innerWidth,
+              top: 0,
+              bottom: this.contentWindow.innerHeight,
+            }
             : this.scrollContainerBoundingClientRect;
 
           this.minTranslate.x =
@@ -534,8 +533,6 @@ export default function sortableContainer(
         x: offset.x - this.initialOffset.x,
         y: offset.y - this.initialOffset.y,
       };
-
-      console.log({offset, initialOffset: this.initialOffset});
 
       // Adjust for window scroll
       translate.y -= window.pageYOffset - this.initialWindowScroll.top;
