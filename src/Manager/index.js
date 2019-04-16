@@ -32,7 +32,7 @@ export default class Manager {
         return nodes[i];
       }
     }
-    
+
     return undefined;
   }
 
