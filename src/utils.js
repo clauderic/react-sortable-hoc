@@ -273,7 +273,7 @@ export function cloneNode(node) {
       const destCtx = field.getContext('2d');
       destCtx.drawImage(fields[i], 0, 0);
     }
-  });
+  }
 
   return clonedNode;
 }
