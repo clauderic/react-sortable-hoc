@@ -254,9 +254,11 @@ export function cloneNode(node) {
   const selector = 'input, textarea, select, canvas, [contenteditable]';
   const fields = node.querySelectorAll(selector);
   const clonedNode = node.cloneNode(true);
-  const clonedFields = [...clonedNode.querySelectorAll(selector)];
+  const clonedFields = clonedNode.querySelectorAll(selector);
 
-  clonedFields.forEach((field, i) => {
+  for (let i = 0; i < clonedFields.length; i++) {
+    const field = clonedFields[i];
+
     if (field.type !== 'file') {
       field.value = fields[i].value;
     }
