@@ -225,9 +225,9 @@ function isScrollable(el) {
   const overflowRegex = /(auto|scroll)/;
   const properties = ['overflow', 'overflowX', 'overflowY'];
 
-  return properties.find((property) =>
+  return properties.filter((property) =>
     overflowRegex.test(computedStyle[property]),
-  );
+  ).length > 0;
 }
 
 export function getScrollingParent(el) {
