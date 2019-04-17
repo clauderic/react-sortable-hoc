@@ -119,6 +119,15 @@ export function provideDisplayName(prefix, Component) {
   return componentName ? `${prefix}(${componentName})` : prefix;
 }
 
+export function getScrollAdjustedBoundingClientRect(node, delta) {
+  const boundingClientRect = node.getBoundingClientRect();
+
+  return {
+    top: boundingClientRect.top + delta.top,
+    left: boundingClientRect.left + delta.left,
+  };
+}
+
 export function getPosition(event) {
   if (event.touches && event.touches.length) {
     return {
