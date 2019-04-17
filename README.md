@@ -147,7 +147,7 @@ $ npm start
 
 React Sortable HOC supports keyboard sorting out of the box. To enable it, make sure your `SortableElement` or `SortableHandle` is focusable. This can be done by setting `tabIndex={0}` on the outermost HTML node rendered by the component you're enhancing with `SortableElement` or `SortableHandle`.
 
-Once an item is focused/tabbed to, press `SPACE` to pick it up, `ArrowUp` or `ArrowLeft` moves it one place backward in the list, `ArrowDown` or `ArrowRight` moves items one place forward in the list; pressing `SPACE` again drops the item in it's new position. Pressing `ESC` before the item is dropped will cancel the sort operations.
+Once an item is focused/tabbed to, pressing `SPACE` picks it up, `ArrowUp` or `ArrowLeft` moves it one place backward in the list, `ArrowDown` or `ArrowRight` moves items one place forward in the list, pressing `SPACE` again drops the item in its new position. Pressing `ESC` before the item is dropped will cancel the sort operations.
 
 ### Grid support
 
