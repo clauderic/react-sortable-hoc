@@ -2,6 +2,8 @@ $color: #333;
 $white: #fff;
 $backgroundColor: $white;
 
+$padding: 20px;
+
 $boxShadow: 0 5px 5px -5px rgba(0, 0, 0, 0.2);
 
 $fontWeight-regular: 400;
@@ -11,10 +13,12 @@ $borderRadius: 3px;
 $borderWidth: 1px;
 $borderColor: #efefef;
 
+$focusedOutlineColor: #4c9ffe;
+
 .root {
   display: block;
   width: 250px;
-  padding: 20px;
+  padding: $padding;
   background-color: $backgroundColor;
   border-bottom: $borderWidth solid #efefef;
   box-sizing: border-box;
@@ -40,6 +44,19 @@ $borderColor: #efefef;
   label {
     input {
       margin-right: 0.5em;
+    }
+  }
+
+  &:focus {
+    outline: none;
+    padding: $padding - 2px;
+    padding-bottom: $padding - 1px;
+    border: 2px solid $focusedOutlineColor;
+  }
+
+  &.dragging {
+    &:focus {
+      box-shadow: 0 0px 5px 1px $focusedOutlineColor;
     }
   }
 }
