@@ -138,8 +138,8 @@ const Category = SortableElement((props) => {
   return (
     <div className={style.category}>
       <div className={style.categoryHeader}>
-        <Handle />
-        <span tabIndex={tabIndex}>Category {props.value}</span>
+        <Handle tabIndex={tabIndex} />
+        <span>Category {props.value}</span>
       </div>
       <ListWrapper
         component={SortableList}
