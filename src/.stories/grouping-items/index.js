@@ -11,16 +11,18 @@ class GroupedItems extends React.Component {
   };
 
   render() {
-    const {items, selectedItems, sortingItemKey} = this.state;
+    const {items, isSorting, selectedItems, sortingItemKey} = this.state;
 
     return (
       <SortableList
         items={items.filter(this.filterItems)}
+        isSorting={isSorting}
         sortingItemKey={sortingItemKey}
         selectedItems={selectedItems}
         onItemSelect={this.handleItemSelect}
         shouldCancelStart={this.handleShouldCancelStart}
         updateBeforeSortStart={this.handleUpdateBeforeSortStart}
+        onSortStart={this.handleSortStart}
         onSortEnd={this.handleSortEnd}
         distance={3}
       />
@@ -56,6 +58,10 @@ class GroupedItems extends React.Component {
     );
   };
 
+  handleSortStart() {
+    document.body.style.cursor = 'grabbing';
+  }
+
   handleSortEnd = ({oldIndex, newIndex}) => {
     const {selectedItems} = this.state;
     let newItems;
@@ -80,6 +86,8 @@ class GroupedItems extends React.Component {
       sortingItemKey: null,
       selectedItems: [],
     });
+
+    document.body.style.cursor = '';
   };
 
   handleItemSelect = (item) => {

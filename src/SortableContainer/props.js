@@ -19,6 +19,7 @@ export const propTypes = {
       : PropTypes.instanceOf(HTMLElement),
   ]),
   hideSortableGhost: PropTypes.bool,
+  keyboardSortingTransitionDuration: PropTypes.number,
   lockAxis: PropTypes.string,
   lockOffset: PropTypes.oneOfType([
     PropTypes.number,

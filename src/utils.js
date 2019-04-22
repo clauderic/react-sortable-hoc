@@ -119,6 +119,15 @@ export function provideDisplayName(prefix, Component) {
   return componentName ? `${prefix}(${componentName})` : prefix;
 }
 
+export function getScrollAdjustedBoundingClientRect(node, scrollDelta) {
+  const boundingClientRect = node.getBoundingClientRect();
+
+  return {
+    top: boundingClientRect.top + scrollDelta.top,
+    left: boundingClientRect.left + scrollDelta.left,
+  };
+}
+
 export function getPosition(event) {
   if (event.touches && event.touches.length) {
     return {
@@ -163,7 +172,17 @@ export function getEdgeOffset(node, parent, offset = {left: 0, top: 0}) {
   return getEdgeOffset(node.parentNode, parent, nodeOffset);
 }
 
-function getLockPixelOffset({lockOffset, width, height}) {
+export function getTargetIndex(newIndex, prevIndex, oldIndex) {
+  if (newIndex < oldIndex && newIndex > prevIndex) {
+    return newIndex - 1;
+  } else if (newIndex > oldIndex && newIndex < prevIndex) {
+    return newIndex + 1;
+  } else {
+    return newIndex;
+  }
+}
+
+export function getLockPixelOffset({lockOffset, width, height}) {
   let offsetX = lockOffset;
   let offsetY = lockOffset;
   let unit = 'px';
@@ -239,6 +258,16 @@ export function getScrollingParent(el) {
     return getScrollingParent(el.parentNode);
   }
 }
+
+export const KEYCODE = {
+  TAB: 9,
+  ESC: 27,
+  SPACE: 32,
+  LEFT: 37,
+  UP: 38,
+  RIGHT: 39,
+  DOWN: 40,
+};
 
 export const NodeType = {
   Anchor: 'A',

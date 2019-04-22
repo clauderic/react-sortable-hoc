@@ -5,7 +5,7 @@ import Item from '../Item';
 
 import styles from './List.scss';
 
-function List({items, selectedItems, sortingItemKey, onItemSelect}) {
+function List({items, isSorting, selectedItems, sortingItemKey, onItemSelect}) {
   return (
     <div className={styles.List}>
       {items.map((value, index) => {
@@ -17,6 +17,7 @@ function List({items, selectedItems, sortingItemKey, onItemSelect}) {
             key={`item-${value}`}
             selected={isSelected}
             dragging={itemIsBeingDragged}
+            sorting={isSorting}
             index={index}
             value={value}
             onClick={onItemSelect}

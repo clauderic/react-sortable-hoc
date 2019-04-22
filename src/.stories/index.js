@@ -27,8 +27,8 @@ function getItems(count, height) {
   });
 }
 
-const Handle = SortableHandle(() => (
-  <div className={style.handle}>
+const Handle = SortableHandle(({tabIndex}) => (
+  <div className={style.handle} tabIndex={tabIndex}>
     <svg viewBox="0 0 50 50">
       <path
         d="M 0 7.5 L 0 12.5 L 50 12.5 L 50 7.5 L 0 7.5 z M 0 22.5 L 0 27.5 L 50 27.5 L 50 22.5 L 0 22.5 z M 0 37.5 L 0 42.5 L 50 42.5 L 50 37.5 L 0 37.5 z"
@@ -38,28 +38,54 @@ const Handle = SortableHandle(() => (
   </div>
 ));
 
-const Item = SortableElement((props) => {
-  return (
-    <div
-      className={classNames(
-        props.className,
-        props.isDisabled && style.disabled,
-      )}
-      style={{
-        height: props.height,
-        ...props.style,
-      }}
-    >
-      {props.shouldUseDragHandle && <Handle />}
-      <div className={style.wrapper}>
-        <span>Item</span> {props.value}
+const Item = SortableElement(
+  ({
+    tabbable,
+    className,
+    isDisabled,
+    height,
+    style: propStyle,
+    shouldUseDragHandle,
+    value,
+    type,
+    isSorting,
+  }) => {
+    const bodyTabIndex = tabbable && !shouldUseDragHandle ? 0 : -1;
+    const handleTabIndex = tabbable && shouldUseDragHandle ? 0 : -1;
+
+    return (
+      <div
+        className={classNames(
+          className,
+          isDisabled && style.disabled,
+          isSorting && style.sorting,
+          shouldUseDragHandle && style.containsDragHandle,
+        )}
+        style={{
+          height,
+          ...propStyle,
+        }}
+        tabIndex={bodyTabIndex}
+      >
+        {shouldUseDragHandle && <Handle tabIndex={handleTabIndex} />}
+        <div className={style.wrapper}>
+          <span>Item</span> {value}
+        </div>
       </div>
-    </div>
-  );
-});
+    );
+  },
+);
 
 const SortableList = SortableContainer(
-  ({className, items, disabledItems = [], itemClass, shouldUseDragHandle}) => {
+  ({
+    className,
+    items,
+    disabledItems = [],
+    itemClass,
+    isSorting,
+    shouldUseDragHandle,
+    type,
+  }) => {
     return (
       <div className={className}>
         {items.map(({value, height}, index) => {
@@ -67,6 +93,7 @@ const SortableList = SortableContainer(
 
           return (
             <Item
+              tabbable
               key={`item-${value}`}
               disabled={disabled}
               isDisabled={disabled}
@@ -75,6 +102,8 @@ const SortableList = SortableContainer(
               value={value}
               height={height}
               shouldUseDragHandle={shouldUseDragHandle}
+              type={type}
+              isSorting={isSorting}
             />
           );
         })}
@@ -104,10 +133,12 @@ class SortableListWithCustomContainer extends React.Component {
 }
 
 const Category = SortableElement((props) => {
+  const tabIndex = props.tabbable ? 0 : -1;
+
   return (
     <div className={style.category}>
       <div className={style.categoryHeader}>
-        <Handle />
+        <Handle tabIndex={tabIndex} />
         <span>Category {props.value}</span>
       </div>
       <ListWrapper
@@ -151,6 +182,8 @@ class ListWrapper extends Component {
     const {onSortStart} = this.props;
     this.setState({isSorting: true});
 
+    document.body.style.cursor = 'grabbing';
+
     if (onSortStart) {
       onSortStart(this.refs.component);
     }
@@ -164,6 +197,8 @@ class ListWrapper extends Component {
       items: arrayMove(items, oldIndex, newIndex),
       isSorting: false,
     });
+
+    document.body.style.cursor = '';
 
     if (onSortEnd) {
       onSortEnd(this.refs.component);
@@ -208,17 +243,19 @@ const SortableReactWindow = (Component) =>
       }
 
       renderRow = ({index, style}) => {
-        const {items, itemClass} = this.props;
+        const {items, itemClass, isSorting} = this.props;
         const {value, height} = items[index];
 
         return (
           <Item
+            tabbable
             key={value}
             index={index}
             className={itemClass}
             value={value}
             height={height}
             style={style}
+            isSorting={isSorting}
           />
         );
       };
@@ -227,7 +264,7 @@ const SortableReactWindow = (Component) =>
   );
 
 const SortableVirtualList = SortableContainer(
-  ({className, items, height, width, itemHeight, itemClass}) => {
+  ({className, items, height, width, itemHeight, itemClass, isSorting}) => {
     return (
       <VirtualList
         className={className}
@@ -237,12 +274,14 @@ const SortableVirtualList = SortableContainer(
           const {value, height} = items[index];
           return (
             <Item
+              tabbable
               key={value}
               index={index}
               className={itemClass}
               value={value}
               height={height}
               style={style}
+              isSorting={isSorting}
             />
           );
         }}
@@ -257,7 +296,15 @@ const SortableVirtualList = SortableContainer(
 // Function components cannot have refs, so we'll be using a class for React Virtualized
 class VirtualizedListWrapper extends Component {
   render() {
-    const {className, items, height, width, itemHeight, itemClass} = this.props;
+    const {
+      className,
+      items,
+      height,
+      width,
+      itemHeight,
+      itemClass,
+      isSorting,
+    } = this.props;
     return (
       <List
         ref="VirtualList"
@@ -268,12 +315,14 @@ class VirtualizedListWrapper extends Component {
           const {value, height} = items[index];
           return (
             <Item
+              tabbable
               key={value}
               index={index}
               className={itemClass}
               value={value}
               height={height}
               style={style}
+              isSorting={isSorting}
             />
           );
         }}
@@ -339,20 +388,25 @@ class TableWrapper extends Component {
 }
 
 const SortableInfiniteList = SortableContainer(
-  ({className, items, itemClass}) => {
+  ({className, items, itemClass, isSorting}) => {
     return (
       <Infinite
         className={className}
         containerHeight={600}
         elementHeight={items.map(({height}) => height)}
+        // for react-infinite, a larger preload is better for keyboard sorting
+        preloadBatchSize={Infinite.containerHeightScaleFactor(2)}
+        preloadAdditionalHeight={Infinite.containerHeightScaleFactor(2)}
       >
         {items.map(({value, height}, index) => (
           <Item
+            tabbable
             key={`item-${index}`}
             className={itemClass}
             index={index}
             value={value}
             height={height}
+            isSorting={isSorting}
           />
         ))}
       </Infinite>
@@ -366,12 +420,14 @@ const ShrinkingSortableList = SortableContainer(
       <div className={className}>
         {items.map(({value, height}, index) => (
           <Item
+            tabbable
             key={`item-${value}`}
             className={itemClass}
             index={index}
             value={value}
             height={isSorting ? 20 : height}
             shouldUseDragHandle={shouldUseDragHandle}
+            isSorting={isSorting}
           />
         ))}
       </div>
@@ -384,7 +440,12 @@ const NestedSortableList = SortableContainer(
     return (
       <div className={className}>
         {items.map((value, index) => (
-          <Category key={`category-${value}`} index={index} value={value} />
+          <Category
+            tabbable
+            key={`category-${value}`}
+            index={index}
+            value={value}
+          />
         ))}
       </div>
     );

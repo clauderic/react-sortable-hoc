@@ -12,45 +12,62 @@ $borderWidth: 1px;
 $borderColor: #efefef;
 
 $selectedColor: $white;
-$selectedBackgroundColor: #759fff;
-$selectedBorderColor: #5e83d6;
+$selectedBackgroundColor: rgba(216, 232, 251, 0.9);
+$selectedBorderColor: #bbcee8;
 
 $badgeColor: $white;
 $badgeBackgroundColor: #f75959;
 $badgeBorderColor: #da4553;
 
+$focusedOutlineColor: #4c9ffe;
+
 .Item {
   display: flex;
   align-items: center;
   width: 100%;
-  padding: 20px;
+  height: 59px;
+  padding: 0 20px;
   background-color: $backgroundColor;
-  border-top: $borderWidth solid #efefef;
+  border-bottom: $borderWidth solid #efefef;
   box-sizing: border-box;
   user-select: none;
+  outline: none;
 
   color: $color;
   font-weight: $fontWeight-regular;
 
-  &:first-child {
-    border-top: none;
+  cursor: grab;
+
+  &:last-child {
+    border-bottom: none;
   }
 
   &.selected {
     background: $selectedBackgroundColor;
-    border: 1px solid $selectedBorderColor;
-    color: $selectedColor;
-    font-weight: $fontWeight-bold;
+    border-bottom-color: $selectedBorderColor;
 
-    & + .Item {
-      border-top: none;
+    &:focus {
+      border-bottom-color: $focusedOutlineColor;
     }
+  }
+
+  &.sorting {
+    pointer-events: none;
   }
 
   &.dragging {
     border-radius: $borderRadius;
     border: $borderWidth solid #efefef;
     box-shadow: $boxShadow;
+
+    &:focus {
+      box-shadow: 0 0px 5px 1px $focusedOutlineColor;
+    }
+  }
+
+  &:focus {
+    text-indent: -2px;
+    border: 2px solid $focusedOutlineColor;
   }
 }
 

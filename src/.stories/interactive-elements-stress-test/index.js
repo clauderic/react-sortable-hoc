@@ -2,6 +2,7 @@ import React from 'react';
 import arrayMove from 'array-move';
 
 import SortableList from './List';
+import ItemStyles from './Item/Item.scss';
 
 const items = {
   input: <input placeholder="Regular text input" />,
@@ -62,6 +63,7 @@ export default class InteractiveElements extends React.Component {
         distance={2}
         items={this.state.items}
         onSortEnd={this.onSortEnd}
+        helperClass={ItemStyles.dragging}
       />
     );
   }
