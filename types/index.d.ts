@@ -57,6 +57,7 @@ export interface SortableContainerProps {
   lockAxis?: Axis;
   helperClass?: string;
   transitionDuration?: number;
+  keySortingTransitionDuration?: number;
   pressDelay?: number;
   pressThreshold?: number;
   distance?: number;

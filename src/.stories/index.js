@@ -50,9 +50,8 @@ const Item = SortableElement(
     type,
     isSorting,
   }) => {
-    const isTabbable = tabbable && !isDisabled;
-    const bodyTabIndex = isTabbable && !shouldUseDragHandle ? 0 : -1;
-    const handleTabIndex = isTabbable && shouldUseDragHandle ? 0 : -1;
+    const bodyTabIndex = tabbable && !shouldUseDragHandle ? 0 : -1;
+    const handleTabIndex = tabbable && shouldUseDragHandle ? 0 : -1;
 
     return (
       <div

@@ -235,7 +235,7 @@ export default function sortableContainer(
           useWindowAsScrollContainer,
         } = this.props;
         const {node, collection} = active;
-        const {isKeySorting} = this.manager.active;
+        const {isKeySorting} = this.manager;
 
         if (typeof updateBeforeSortStart === 'function') {
           this._awaitingUpdateBeforeSortStart = true;
@@ -443,7 +443,7 @@ export default function sortableContainer(
 
     handleSortEnd = (event) => {
       const {hideSortableGhost, onSortEnd} = this.props;
-      const {collection, isKeySorting} = this.manager.active;
+      const {active: {collection}, isKeySorting} = this.manager;
       const nodes = this.manager.refs[collection];
 
       // Remove the event listeners if the node is still in the DOM
@@ -505,6 +505,7 @@ export default function sortableContainer(
 
       // Update manager state
       this.manager.active = null;
+      this.manager.isKeySorting = false;
 
       this.setState({
         sorting: false,
@@ -532,8 +533,9 @@ export default function sortableContainer(
         lockOffset,
         lockToContainerEdges,
         transitionDuration,
+        keySortingTransitionDuration = transitionDuration,
       } = this.props;
-      const {isKeySorting} = this.manager.active;
+      const {isKeySorting} = this.manager;
       const {ignoreTransition} = event;
 
       const offset = getPosition(event);
@@ -581,8 +583,8 @@ export default function sortableContainer(
         translate.x = 0;
       }
 
-      if (isKeySorting && transitionDuration && !ignoreTransition) {
-        setTransitionDuration(this.helper, transitionDuration);
+      if (isKeySorting && keySortingTransitionDuration && !ignoreTransition) {
+        setTransitionDuration(this.helper, keySortingTransitionDuration);
       }
 
       setTranslate3d(this.helper, translate);
@@ -597,7 +599,7 @@ export default function sortableContainer(
           this.offsetEdge.left + this.translate.x + containerScrollDelta.left,
         top: this.offsetEdge.top + this.translate.y + containerScrollDelta.top,
       };
-      const {isKeySorting} = this.manager.active;
+      const {isKeySorting} = this.manager;
 
       const prevIndex = this.newIndex;
       this.newIndex = null;
@@ -627,9 +629,11 @@ export default function sortableContainer(
           edgeOffset = getEdgeOffset(node, this.container);
           nodes[i].edgeOffset = edgeOffset;
           // While we're at it, cache the boundingClientRect, used during keyboard sorting
-          nodes[i].boundingClientRect = getScrollAdjustedBoundingClientRect(
-            node, containerScrollDelta,
-          );
+          if (isKeySorting) {
+            nodes[i].boundingClientRect = getScrollAdjustedBoundingClientRect(
+              node, containerScrollDelta,
+            );
+          }
         }
 
         // Get a reference to the next and previous node
@@ -640,9 +644,11 @@ export default function sortableContainer(
         // We need this for calculating the animation in a grid setup
         if (nextNode && !nextNode.edgeOffset) {
           nextNode.edgeOffset = getEdgeOffset(nextNode.node, this.container);
-          nextNode.boundingClientRect = getScrollAdjustedBoundingClientRect(
-            nextNode.node, containerScrollDelta,
-          );
+          if (isKeySorting) {
+            nextNode.boundingClientRect = getScrollAdjustedBoundingClientRect(
+              nextNode.node, containerScrollDelta,
+            );
+          }
         }
 
         // If the node is the one we're currently animating, skip it
@@ -788,7 +794,7 @@ export default function sortableContainer(
 
     autoscroll = () => {
       const {disableAutoscroll} = this.props;
-      const {isKeySorting} = this.manager.active;
+      const {isKeySorting} = this.manager;
 
       if (disableAutoscroll) {
         return;
@@ -861,19 +867,15 @@ export default function sortableContainer(
     }
 
     handleKeyDown = (event) => {
-      const {keyCode, target} = event;
-      const {shouldCancelStart, useDragHandle} = this.props;
-
-      const isValidSortingTarget = useDragHandle
-        ? isSortableHandle(target)
-        : target.sortableInfo;
+      const {keyCode} = event;
+      const {shouldCancelStart} = this.props;
 
       if (
-        (this.manager.active && !this.manager.active.isKeySorting) ||
+        (this.manager.active && !this.manager.isKeySorting) ||
         (!this.manager.active &&
           (keyCode !== KEYCODE.SPACE ||
             shouldCancelStart(event) ||
-            !isValidSortingTarget))
+            !this.isValidSortingTarget(event)))
       ) {
         return;
       }
@@ -910,10 +912,10 @@ export default function sortableContainer(
 
       this.initialFocusedNode = target;
 
+      this.manager.isKeySorting = true;
       this.manager.active = {
         index,
         collection,
-        isKeySorting: true,
       };
 
       this.handlePress(event);
@@ -973,6 +975,17 @@ export default function sortableContainer(
       if (this.manager.active) {
         this.keyDrop(event);
       }
+    };
+
+    isValidSortingTarget = (event) => {
+      const {useDragHandle} = this.props;
+      const {target} = event;
+      const node = closest(target, (el) => el.sortableInfo != null);
+
+      return node && node.sortableInfo && !node.sortableInfo.disabled &&
+      (useDragHandle
+      ? isSortableHandle(target)
+      : target.sortableInfo);
     };
 
     render() {

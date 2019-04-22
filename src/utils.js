@@ -172,22 +172,6 @@ export function getEdgeOffset(node, parent, offset = {left: 0, top: 0}) {
   return getEdgeOffset(node.parentNode, parent, nodeOffset);
 }
 
-export function getScrollingElement(el) {
-  let overflow;
-
-  try {
-    overflow = window.getComputedStyle(el).overflow;
-  } catch (err) {
-    return null;
-  }
-
-  if (overflow === 'auto' || overflow === 'scroll') {
-    return el;
-  } else {
-    return getScrollingElement(el.parentNode);
-  }
-}
-
 export function getTargetIndex(newIndex, prevIndex, oldIndex) {
   if (newIndex < oldIndex && newIndex > prevIndex) {
     return newIndex - 1;
