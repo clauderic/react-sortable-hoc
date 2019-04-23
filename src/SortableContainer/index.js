@@ -804,26 +804,15 @@ export default function sortableContainer(
         this.newIndex = prevIndex;
       }
 
-      if (onSortOver) {
-        if (isKeySorting &&
-          this.prevIndex != null &&
-          this.newIndex !== this.prevIndex
-        ) {
-          onSortOver({
-            collection: this.manager.active.collection,
-            index: this.index,
-            newIndex: this.newIndex,
-            oldIndex: this.prevIndex,
-            isKeySorting,
-          });
-        } else if (!isKeySorting && this.newIndex !== prevIndex) {
-          onSortOver({
-            collection: this.manager.active.collection,
-            index: this.index,
-            newIndex: this.newIndex,
-            oldIndex: prevIndex,
-          });
-        }
+      const oldIndex = isKeySorting ? this.prevIndex : prevIndex;
+      if (onSortOver && this.newIndex !== oldIndex) {
+        onSortOver({
+          collection: this.manager.active.collection,
+          index: this.index,
+          newIndex: this.newIndex,
+          oldIndex,
+          isKeySorting,
+        });
       }
     }
 
