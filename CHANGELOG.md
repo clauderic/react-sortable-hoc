@@ -2,6 +2,19 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+<a name="1.9.0"></a>
+
+# [1.9.0](https://github.com/clauderic/react-sortable-hoc/compare/v1.1.0...v1.9.0) (2019-04-23)
+
+### Bug Fixes
+
+- issue with radio input name collision when cloning helper ([5337c97](https://github.com/clauderic/react-sortable-hoc/commit/5337c97))
+
+### Features
+
+- add support for keyboard sorting ([#501](https://github.com/clauderic/react-sortable-hoc/issues/501)) ([439b92f](https://github.com/clauderic/react-sortable-hoc/commit/439b92f))
+- prevent sort start on contentEditable target ([d64c8cf](https://github.com/clauderic/react-sortable-hoc/commit/d64c8cf))
+
 <a name="1.8.3"></a>
 
 ## [1.8.3](https://github.com/clauderic/react-sortable-hoc/compare/v1.8.2...v1.8.3) (2019-03-20)
