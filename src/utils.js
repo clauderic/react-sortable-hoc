@@ -296,7 +296,11 @@ export function cloneNode(node) {
       field.name = `__sortableClone__${field.name}`;
     }
 
-    if (field.tagName === NodeType.Canvas) {
+    if (
+      field.tagName === NodeType.Canvas &&
+      fields[i].width > 0 &&
+      fields[i].height > 0
+    ) {
       const destCtx = field.getContext('2d');
       destCtx.drawImage(fields[i], 0, 0);
     }
