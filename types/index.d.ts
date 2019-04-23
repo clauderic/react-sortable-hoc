@@ -16,6 +16,7 @@ export interface SortOver {
   oldIndex: number;
   newIndex: number;
   collection: Offset;
+  isKeySorting: boolean;
 }
 
 export interface SortEnd {

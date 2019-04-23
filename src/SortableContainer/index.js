@@ -242,7 +242,10 @@ export default function sortableContainer(
 
           try {
             const {index} = node.sortableInfo;
-            await updateBeforeSortStart({collection, index, node}, event);
+            await updateBeforeSortStart(
+              {collection, index, node, isKeySorting},
+              event,
+            );
           } finally {
             this._awaitingUpdateBeforeSortStart = false;
           }
@@ -801,13 +804,26 @@ export default function sortableContainer(
         this.newIndex = prevIndex;
       }
 
-      if (onSortOver && this.newIndex !== prevIndex) {
-        onSortOver({
-          collection: this.manager.active.collection,
-          index: this.index,
-          newIndex: this.newIndex,
-          oldIndex: prevIndex,
-        });
+      if (onSortOver) {
+        if (isKeySorting &&
+          this.prevIndex != null &&
+          this.newIndex !== this.prevIndex
+        ) {
+          onSortOver({
+            collection: this.manager.active.collection,
+            index: this.index,
+            newIndex: this.newIndex,
+            oldIndex: this.prevIndex,
+            isKeySorting,
+          });
+        } else if (!isKeySorting && this.newIndex !== prevIndex) {
+          onSortOver({
+            collection: this.manager.active.collection,
+            index: this.index,
+            newIndex: this.newIndex,
+            oldIndex: prevIndex,
+          });
+        }
       }
     }
 
