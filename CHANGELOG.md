@@ -2,9 +2,18 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+<a name="1.9.1"></a>
+
+## [1.9.1](https://github.com/clauderic/react-sortable-hoc/compare/v1.9.0...v1.9.1) (2019-04-24)
+
+### Bug Fixes
+
+- do not copy canvas context if it has neither width nor height ([#530](https://github.com/clauderic/react-sortable-hoc/issues/530)) ([3808437](https://github.com/clauderic/react-sortable-hoc/commit/3808437))
+- pass isKeySorting to onSortOver and updateBeforeSortStart handler props ([#531](https://github.com/clauderic/react-sortable-hoc/issues/531)) ([763fd33](https://github.com/clauderic/react-sortable-hoc/commit/763fd33)
+
 <a name="1.9.0"></a>
 
-# [1.9.0](https://github.com/clauderic/react-sortable-hoc/compare/v1.1.0...v1.9.0) (2019-04-23)
+# [1.9.0](https://github.com/clauderic/react-sortable-hoc/compare/v1.8.3...v1.9.0) (2019-04-23)
 
 ### Bug Fixes
 
