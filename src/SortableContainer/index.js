@@ -332,11 +332,11 @@ export default function sortableContainer(
             height: containerHeight,
           } = useWindowAsScrollContainer
             ? {
-              top: 0,
-              left: 0,
-              width: this.contentWindow.innerWidth,
-              height: this.contentWindow.innerHeight,
-            }
+                top: 0,
+                left: 0,
+                width: this.contentWindow.innerWidth,
+                height: this.contentWindow.innerHeight,
+              }
             : this.containerBoundingRect;
           const containerBottom = containerTop + containerHeight;
           const containerRight = containerLeft + containerWidth;
@@ -386,7 +386,8 @@ export default function sortableContainer(
             .forEach((className) => this.helper.classList.add(className));
         }
 
-        this.listenerNode = event.touches ? node : this.contentWindow;
+        // this.listenerNode = event.touches ? node : this.contentWindow;
+        this.listenerNode = event.touches ? event.target : this.contentWindow;
 
         if (isKeySorting) {
           this.listenerNode.addEventListener('wheel', this.handleKeyEnd, true);
