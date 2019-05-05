@@ -1039,7 +1039,7 @@ export default function sortableContainer(
         return helperContainer.call(this);
       }
 
-      return this.props.helperContainer || this.document.body; //Why body and not this.container by default?
+      return this.props.helperContainer || this.container;
     }
 
     get containerScrollDelta() {
