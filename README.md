@@ -1,6 +1,8 @@
 100% credit for this project belongs to clauderic and the rest of the [react-sortable-hoc team](http://clauderic.github.io/react-sortable-hoc/). This fork merely solves a simple mobile dragging issue described and solved [here](https://gist.github.com/parris/dda613e3ae78f14eb2dc9fa0f4bfce3d).
 If and when [my pull request](https://github.com/clauderic/react-sortable-hoc/pull/532) is merged, I'll be happy to pull this down. I will keep this package in sync with the original as often as I can.
 
+[npm package with fix(es) applied](https://www.npmjs.com/package/react-sortable-hoc-fixed)
+
 ----------------------------
 
 # <img src="https://user-images.githubusercontent.com/1416436/54170652-dfd59d80-444d-11e9-9c51-658638c0454b.png" width="400" alt="React Sortable HOC" />
