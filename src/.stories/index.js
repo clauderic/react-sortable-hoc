@@ -538,6 +538,21 @@ storiesOf('General | Configuration / Options', module)
       </div>
     );
   })
+  .add('onShouldSortOver (only odd indices)', () => {
+    return (
+      <div className={style.root}>
+        <ListWrapper
+          component={SortableList}
+          items={getItems(50, 59)}
+          helperClass={style.stylizedHelper}
+          onShouldSortOver={({index, newIndex}) => {
+            console.log('new index', index, newIndex);
+            return (newIndex & 1) === 0;
+          }}
+        />
+      </div>
+    );
+  })
   .add('Disabled items', () => {
     return (
       <div className={style.root}>

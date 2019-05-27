@@ -332,11 +332,11 @@ export default function sortableContainer(
             height: containerHeight,
           } = useWindowAsScrollContainer
             ? {
-              top: 0,
-              left: 0,
-              width: this.contentWindow.innerWidth,
-              height: this.contentWindow.innerHeight,
-            }
+                top: 0,
+                left: 0,
+                width: this.contentWindow.innerWidth,
+                height: this.contentWindow.innerHeight,
+              }
             : this.containerBoundingRect;
           const containerBottom = containerTop + containerHeight;
           const containerRight = containerLeft + containerWidth;
@@ -603,7 +603,13 @@ export default function sortableContainer(
     }
 
     animateNodes() {
-      const {transitionDuration, hideSortableGhost, onSortOver} = this.props;
+      const {
+        transitionDuration,
+        hideSortableGhost,
+        onShouldSortOver,
+        onSortOver,
+      } = this.props;
+      const animations = [];
       const {containerScrollDelta, windowScrollDelta} = this;
       const nodes = this.manager.getOrderedRefs();
       const sortingOffset = {
@@ -791,8 +797,7 @@ export default function sortableContainer(
           }
         }
 
-        setTranslate3d(node, translate);
-        nodes[i].translate = translate;
+        animations.push({i, translate});
       }
 
       if (this.newIndex == null) {
@@ -805,7 +810,33 @@ export default function sortableContainer(
       }
 
       const oldIndex = isKeySorting ? this.prevIndex : prevIndex;
-      if (onSortOver && this.newIndex !== oldIndex) {
+
+      if (this.newIndex === oldIndex) {
+        return;
+      }
+
+      if (
+        onShouldSortOver &&
+        !onShouldSortOver({
+          collection: this.manager.active.collection,
+          index: this.index,
+          newIndex: this.newIndex,
+          oldIndex,
+          isKeySorting,
+        })
+      ) {
+        return;
+      }
+
+      for (const data of animations) {
+        const nodesI = nodes[data.i];
+        const translate = data.translate;
+
+        setTranslate3d(nodesI.node, translate);
+        nodesI.translate = translate;
+      }
+
+      if (onSortOver) {
         onSortOver({
           collection: this.manager.active.collection,
           index: this.index,

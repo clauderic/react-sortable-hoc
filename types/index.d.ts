@@ -68,6 +68,7 @@ export interface SortableContainerProps {
   onSortMove?: SortMoveHandler;
   onSortEnd?: SortEndHandler;
   onSortOver?: SortOverHandler;
+  onShouldSortOver?: SortOverHandler;
   useDragHandle?: boolean;
   useWindowAsScrollContainer?: boolean;
   hideSortableGhost?: boolean;
