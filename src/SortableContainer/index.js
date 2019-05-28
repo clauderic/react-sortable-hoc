@@ -126,6 +126,7 @@ export default function sortableContainer(
 
       this.touched = true;
       this.position = getPosition(event);
+      this.prevPosition = this.position;
 
       const node = closest(event.target, (el) => el.sortableInfo != null);
 
@@ -188,8 +189,6 @@ export default function sortableContainer(
           y: this.position.y - position.y,
         };
         const combinedDelta = Math.abs(delta.x) + Math.abs(delta.y);
-
-        this.delta = delta;
 
         if (!distance && (!pressThreshold || combinedDelta >= pressThreshold)) {
           clearTimeout(this.cancelTimer);
@@ -437,6 +436,13 @@ export default function sortableContainer(
         event.preventDefault();
       }
 
+      const position = getPosition(event);
+      this.direction = {
+        x: this.prevPosition.x - position.x,
+        y: this.prevPosition.y - position.y,
+      };
+      this.prevPosition = position;
+
       this.updateHelperPosition(event);
       this.animateNodes();
       this.autoscroll();
@@ -610,7 +616,7 @@ export default function sortableContainer(
         onSortOver,
       } = this.props;
       const animations = [];
-      const {containerScrollDelta, windowScrollDelta} = this;
+      const {containerScrollDelta, windowScrollDelta, direction} = this;
       const nodes = this.manager.getOrderedRefs();
       const sortingOffset = {
         left:
@@ -823,6 +829,7 @@ export default function sortableContainer(
           newIndex: this.newIndex,
           oldIndex,
           isKeySorting,
+          direction,
         })
       ) {
         return;

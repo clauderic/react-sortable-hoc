@@ -545,8 +545,8 @@ storiesOf('General | Configuration / Options', module)
           component={SortableList}
           items={getItems(50, 59)}
           helperClass={style.stylizedHelper}
-          onShouldSortOver={({index, newIndex}) => {
-            console.log('new index', index, newIndex);
+          onShouldSortOver={({index, newIndex, direction}) => {
+            console.log('index newIndex direction', index, newIndex, direction);
             return (newIndex & 1) === 0;
           }}
         />
