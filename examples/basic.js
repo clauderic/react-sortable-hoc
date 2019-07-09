@@ -1,9 +1,9 @@
 import React, {Component} from 'react';
 import {render} from 'react-dom';
-import {sortableContainer, sortableElement} from 'react-sortable-hoc';
+import {SortableContainer as sortableContainer, SortableElement} from 'react-sortable-hoc';
 import arrayMove from 'array-move';
 
-const SortableItem = sortableElement(({value}) => <li>{value}</li>);
+const SortableItem = SortableElement(({value}) => <li>{value}</li>);
 
 const SortableContainer = sortableContainer(({children}) => {
   return <ul>{children}</ul>;
