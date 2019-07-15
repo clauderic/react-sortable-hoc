@@ -40,6 +40,7 @@ export const propTypes = {
   updateBeforeSortStart: PropTypes.func,
   useDragHandle: PropTypes.bool,
   useWindowAsScrollContainer: PropTypes.bool,
+  disableKeyboardInteraction: PropTypes.bool,
 };
 
 export const defaultProps = {

@@ -64,7 +64,10 @@ export default function sortableContainer(
     }
 
     componentDidMount() {
-      const {useWindowAsScrollContainer} = this.props;
+      const {
+        useWindowAsScrollContainer,
+        disableKeyboardInteraction,
+      } = this.props;
       const container = this.getContainer();
 
       Promise.resolve(container).then((containerNode) => {
@@ -97,11 +100,17 @@ export default function sortableContainer(
           ),
         );
 
+        if (!disableKeyboardInteraction) {
+          return;
+        }
+
         this.container.addEventListener('keydown', this.handleKeyDown);
       });
     }
 
     componentWillUnmount() {
+      const {disableKeyboardInteraction} = this.props;
+
       if (this.helper && this.helper.parentNode) {
         this.helper.parentNode.removeChild(this.helper);
       }
@@ -114,6 +123,11 @@ export default function sortableContainer(
           this.container.removeEventListener(eventName, this.events[key]),
         ),
       );
+
+      if (!disableKeyboardInteraction) {
+        return;
+      }
+
       this.container.removeEventListener('keydown', this.handleKeyDown);
     }
 
@@ -332,11 +346,11 @@ export default function sortableContainer(
             height: containerHeight,
           } = useWindowAsScrollContainer
             ? {
-              top: 0,
-              left: 0,
-              width: this.contentWindow.innerWidth,
-              height: this.contentWindow.innerHeight,
-            }
+                top: 0,
+                left: 0,
+                width: this.contentWindow.innerWidth,
+                height: this.contentWindow.innerHeight,
+              }
             : this.containerBoundingRect;
           const containerBottom = containerTop + containerHeight;
           const containerRight = containerLeft + containerWidth;
