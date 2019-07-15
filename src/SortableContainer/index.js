@@ -247,6 +247,7 @@ export default function sortableContainer(
           updateBeforeSortStart,
           onSortStart,
           useWindowAsScrollContainer,
+          disableKeyboardInteraction,
         } = this.props;
         const {node, collection} = active;
         const {isKeySorting} = this.manager;
@@ -409,7 +410,6 @@ export default function sortableContainer(
             this.handleKeyEnd,
             true,
           );
-          this.listenerNode.addEventListener('keydown', this.handleKeyDown);
         } else {
           events.move.forEach((eventName) =>
             this.listenerNode.addEventListener(
@@ -425,6 +425,10 @@ export default function sortableContainer(
               false,
             ),
           );
+        }
+
+        if (isKeySorting && !disableKeyboardInteraction) {
+          this.listenerNode.addEventListener('keydown', this.handleKeyDown);
         }
 
         this.setState({
@@ -461,7 +465,11 @@ export default function sortableContainer(
     };
 
     handleSortEnd = (event) => {
-      const {hideSortableGhost, onSortEnd} = this.props;
+      const {
+        hideSortableGhost,
+        onSortEnd,
+        disableKeyboardInteraction,
+      } = this.props;
       const {
         active: {collection},
         isKeySorting,
@@ -481,7 +489,6 @@ export default function sortableContainer(
             this.handleKeyEnd,
             true,
           );
-          this.listenerNode.removeEventListener('keydown', this.handleKeyDown);
         } else {
           events.move.forEach((eventName) =>
             this.listenerNode.removeEventListener(
@@ -496,6 +503,10 @@ export default function sortableContainer(
             ),
           );
         }
+      }
+
+      if (this.listenerNode && !disableKeyboardInteraction) {
+        this.listenerNode.removeEventListener('keydown', this.handleKeyDown);
       }
 
       // Remove the helper from the DOM
