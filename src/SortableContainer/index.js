@@ -100,7 +100,7 @@ export default function sortableContainer(
           ),
         );
 
-        if (!disableKeyboardInteraction) {
+        if (disableKeyboardInteraction) {
           return;
         }
 
@@ -124,7 +124,7 @@ export default function sortableContainer(
         ),
       );
 
-      if (!disableKeyboardInteraction) {
+      if (disableKeyboardInteraction) {
         return;
       }
 
