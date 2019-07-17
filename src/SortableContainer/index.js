@@ -59,7 +59,7 @@ export default function sortableContainer(WrappedComponent, config = {withRef: f
       lockToContainerEdges: false,
       lockOffset: '50%',
       getHelperDimensions: ({node}) => ({
-        width: node.offsetWidth,
+        width:  Math.round(node.getBoundingClientRect().width),
         height: node.offsetHeight,
       }),
     };
