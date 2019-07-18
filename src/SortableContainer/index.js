@@ -332,11 +332,11 @@ export default function sortableContainer(
             height: containerHeight,
           } = useWindowAsScrollContainer
             ? {
-              top: 0,
-              left: 0,
-              width: this.contentWindow.innerWidth,
-              height: this.contentWindow.innerHeight,
-            }
+                top: 0,
+                left: 0,
+                width: this.contentWindow.innerWidth,
+                height: this.contentWindow.innerHeight,
+              }
             : this.containerBoundingRect;
           const containerBottom = containerTop + containerHeight;
           const containerRight = containerLeft + containerWidth;
@@ -707,7 +707,10 @@ export default function sortableContainer(
               translate.x = this.width + this.marginOffset.x;
               if (
                 edgeOffset.left + translate.x >
-                this.containerBoundingRect.width - offset.width
+                (this.props.wrapper
+                  ? this.props.wrapper
+                  : this.containerBoundingRect.width) -
+                  offset.width
               ) {
                 // If it moves passed the right bounds, then animate it to the first position of the next row.
                 // We just use the offset of the next node to calculate where to move, because that node's original position
