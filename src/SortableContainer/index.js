@@ -707,9 +707,7 @@ export default function sortableContainer(
               translate.x = this.width + this.marginOffset.x;
               if (
                 edgeOffset.left + translate.x >
-                (this.props.wrapper
-                  ? this.props.wrapper
-                  : this.containerBoundingRect.width) -
+                (this.props.wrapper || this.containerBoundingRect.width) -
                   offset.width
               ) {
                 // If it moves passed the right bounds, then animate it to the first position of the next row.
