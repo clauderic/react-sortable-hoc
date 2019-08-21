@@ -153,7 +153,11 @@ export default function sortableContainer(
          * prevent subsequent 'mousemove' events from being fired
          * (see https://github.com/clauderic/react-sortable-hoc/issues/118)
          */
-        if (!isTouchEvent(event) && event.target.tagName === NodeType.Anchor) {
+        if (
+          !isTouchEvent(event) &&
+          (event.target.tagName === NodeType.Anchor ||
+            event.target.tagName === NodeType.Button)
+        ) {
           event.preventDefault();
         }
 
