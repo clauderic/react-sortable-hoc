@@ -1,5 +1,5 @@
 {
-  "extends": ["plugin:shopify/react"],
+  "extends": ["plugin:shopify/react", "plugin:prettier/recommended"],
   "rules": {
     "no-process-env": "off",
     "no-lonely-if": "off",

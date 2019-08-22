@@ -41,7 +41,6 @@ export default function sortableContainer(
 
       validateProps(props);
 
-      this.state = {};
       this.manager = new Manager();
       this.events = {
         end: this.handleEnd,
@@ -49,6 +48,8 @@ export default function sortableContainer(
         start: this.handleStart,
       };
     }
+
+    state = {};
 
     static displayName = provideDisplayName('sortableList', WrappedComponent);
     static defaultProps = defaultProps;
@@ -332,11 +333,11 @@ export default function sortableContainer(
             height: containerHeight,
           } = useWindowAsScrollContainer
             ? {
-              top: 0,
-              left: 0,
-              width: this.contentWindow.innerWidth,
-              height: this.contentWindow.innerHeight,
-            }
+                top: 0,
+                left: 0,
+                width: this.contentWindow.innerWidth,
+                height: this.contentWindow.innerHeight,
+              }
             : this.containerBoundingRect;
           const containerBottom = containerTop + containerHeight;
           const containerRight = containerLeft + containerWidth;
