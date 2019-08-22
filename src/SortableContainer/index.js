@@ -23,13 +23,18 @@ import {
   setInlineStyles,
   setTransitionDuration,
   setTranslate3d,
-  KEYCODE,
   getTargetIndex,
   getScrollAdjustedBoundingClientRect,
 } from '../utils';
 
 import AutoScroller from '../AutoScroller';
-import {defaultProps, omittedProps, propTypes, validateProps} from './props';
+import {
+  defaultProps,
+  omittedProps,
+  propTypes,
+  validateProps,
+  defaultKeyCodes,
+} from './props';
 
 export default function sortableContainer(
   WrappedComponent,
@@ -893,12 +898,17 @@ export default function sortableContainer(
 
     handleKeyDown = (event) => {
       const {keyCode} = event;
-      const {shouldCancelStart} = this.props;
+      const {shouldCancelStart, keyCodes: customKeyCodes = {}} = this.props;
+
+      const keyCodes = {
+        ...defaultKeyCodes,
+        ...customKeyCodes,
+      };
 
       if (
         (this.manager.active && !this.manager.isKeySorting) ||
         (!this.manager.active &&
-          (keyCode !== KEYCODE.SPACE ||
+          (!keyCodes.lift.includes(keyCode) ||
             shouldCancelStart(event) ||
             !this.isValidSortingTarget(event)))
       ) {
@@ -908,25 +918,17 @@ export default function sortableContainer(
       event.stopPropagation();
       event.preventDefault();
 
-      switch (keyCode) {
-        case KEYCODE.SPACE:
-          if (this.manager.active) {
-            this.keyDrop(event);
-          } else {
-            this.keyLift(event);
-          }
-          break;
-        case KEYCODE.DOWN:
-        case KEYCODE.RIGHT:
-          this.keyMove(1);
-          break;
-        case KEYCODE.UP:
-        case KEYCODE.LEFT:
-          this.keyMove(-1);
-          break;
-        case KEYCODE.ESC:
-          this.newIndex = this.manager.active.index;
-          this.keyDrop(event);
+      if (keyCodes.lift.includes(keyCode) && !this.manager.active) {
+        this.keyLift(event);
+      } else if (keyCodes.drop.includes(keyCode) && this.manager.active) {
+        this.keyDrop(event);
+      } else if (keyCodes.cancel.includes(keyCode)) {
+        this.newIndex = this.manager.active.index;
+        this.keyDrop(event);
+      } else if (keyCodes.up.includes(keyCode)) {
+        this.keyMove(-1);
+      } else if (keyCodes.down.includes(keyCode)) {
+        this.keyMove(1);
       }
     };
 

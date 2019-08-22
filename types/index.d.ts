@@ -59,6 +59,13 @@ export interface SortableContainerProps {
   helperClass?: string;
   transitionDuration?: number;
   keyboardSortingTransitionDuration?: number;
+  keyCodes?: {
+    lift?: number[];
+    drop?: number[];
+    cancel?: number[];
+    up?: number[];
+    down?: number[];
+  },
   pressDelay?: number;
   pressThreshold?: number;
   distance?: number;

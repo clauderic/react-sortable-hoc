@@ -1,6 +1,7 @@
 import PropTypes from 'prop-types';
 import invariant from 'invariant';
 
+import {KEYCODE} from '../utils';
 import defaultGetHelperDimensions from './defaultGetHelperDimensions';
 import defaultShouldCancelStart from './defaultShouldCancelStart';
 
@@ -35,11 +36,26 @@ export const propTypes = {
   onSortStart: PropTypes.func,
   pressDelay: PropTypes.number,
   pressThreshold: PropTypes.number,
+  keyCodes: PropTypes.objectOf({
+    lift: PropTypes.arrayOf(PropTypes.number),
+    drop: PropTypes.arrayOf(PropTypes.number),
+    cancel: PropTypes.arrayOf(PropTypes.number),
+    up: PropTypes.arrayOf(PropTypes.number),
+    down: PropTypes.arrayOf(PropTypes.number),
+  }),
   shouldCancelStart: PropTypes.func,
   transitionDuration: PropTypes.number,
   updateBeforeSortStart: PropTypes.func,
   useDragHandle: PropTypes.bool,
   useWindowAsScrollContainer: PropTypes.bool,
+};
+
+export const defaultKeyCodes = {
+  lift: [KEYCODE.SPACE],
+  drop: [KEYCODE.SPACE],
+  cancel: [KEYCODE.ESC],
+  up: [KEYCODE.UP, KEYCODE.LEFT],
+  down: [KEYCODE.DOWN, KEYCODE.RIGHT],
 };
 
 export const defaultProps = {
@@ -52,6 +68,7 @@ export const defaultProps = {
   lockToContainerEdges: false,
   pressDelay: 0,
   pressThreshold: 5,
+  keyCodes: defaultKeyCodes,
   shouldCancelStart: defaultShouldCancelStart,
   transitionDuration: 300,
   useWindowAsScrollContainer: false,
