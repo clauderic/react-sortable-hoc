@@ -2,6 +2,20 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+<a name="1.10.0"></a>
+
+# [1.10.0](https://github.com/clauderic/react-sortable-hoc/compare/v1.9.1...v1.10.0) (2019-08-22)
+
+### Bug Fixes
+
+- don't spread the keysToOmit parameter in omit util ([#563](https://github.com/clauderic/react-sortable-hoc/issues/563)) ([1c69772](https://github.com/clauderic/react-sortable-hoc/commit/1c69772))
+- Fix broken UMD build ([#587](https://github.com/clauderic/react-sortable-hoc/issues/587)) ([6cb7750](https://github.com/clauderic/react-sortable-hoc/commit/6cb7750))
+- remove browser field with umd bundle ([#541](https://github.com/clauderic/react-sortable-hoc/issues/541)) ([d3b30fd](https://github.com/clauderic/react-sortable-hoc/commit/d3b30fd)
+
+### Features
+
+- Add keyCodes prop to configure the keyboard shortcuts ([#588](https://github.com/clauderic/react-sortable-hoc/issues/588)) ([4c6d8dd](https://github.com/clauderic/react-sortable-hoc/commit/4c6d8dd))
+
 <a name="1.9.1"></a>
 
 ## [1.9.1](https://github.com/clauderic/react-sortable-hoc/compare/v1.9.0...v1.9.1) (2019-04-24)
@@ -65,7 +79,6 @@ All notable changes to this project will be documented in this file. See [standa
 - copy canvas content into cloned node ([43ad122](https://github.com/clauderic/react-sortable-hoc/commit/43ad122))
 - get updated index after updateBeforeSortStart ([4471a0a](https://github.com/clauderic/react-sortable-hoc/commit/4471a0a))
 - helperContainer PropType definition broke server-side rendering ([#471](https://github.com/clauderic/react-sortable-hoc/issues/471)) ([c0eef97](https://github.com/clauderic/react-sortable-hoc/commit/c0eef97))
-- invalid helperContainer PropType definition ([#493](https://github.com/clauderic/react-sortable-hoc/issues/493)) ([dc1d18f](https://github.com/clauderic/react-sortable-hoc/commit/dc1d18f))
 - lock axis story should not use lockToContainerEdges ([db1d3a9](https://github.com/clauderic/react-sortable-hoc/commit/db1d3a9))
 - omit disableAutoscroll prop ([#502](https://github.com/clauderic/react-sortable-hoc/issues/502)) ([e994e73](https://github.com/clauderic/react-sortable-hoc/commit/e994e73))
 - omit spreading helperContainer prop ([#497](https://github.com/clauderic/react-sortable-hoc/issues/497)) ([12bafdf](https://github.com/clauderic/react-sortable-hoc/commit/12bafdf))
