@@ -33,5 +33,5 @@ export default create({
   brandTitle: 'React Sortable HOC',
   brandUrl: 'https://github.com/clauderic/react-sortable-hoc',
   brandImage:
-    'https://d12c9k59mfk1gc.cloudfront.net/items/1T3k3f1s0v3K283t2W1s/react-sortable-hoc.svg',
+    'https://user-images.githubusercontent.com/1416436/54170652-dfd59d80-444d-11e9-9c51-658638c0454b.png',
 });
