@@ -2,6 +2,14 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+<a name="1.10.1"></a>
+
+## [1.10.1](https://github.com/clauderic/react-sortable-hoc/compare/v1.10.0...v1.10.1) (2019-08-22)
+
+### Bug Fixes
+
+- PropType definition for keyCodes was incorrect ([eaf5070](https://github.com/clauderic/react-sortable-hoc/commit/eaf5070))
+
 <a name="1.10.0"></a>
 
 # [1.10.0](https://github.com/clauderic/react-sortable-hoc/compare/v1.9.1...v1.10.0) (2019-08-22)
