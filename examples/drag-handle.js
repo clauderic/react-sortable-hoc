@@ -37,7 +37,7 @@ class App extends Component {
     return (
       <SortableContainer onSortEnd={this.onSortEnd} useDragHandle>
         {items.map((value, index) => (
-          <SortableItem key={`item-${index}`} index={index} value={value} />
+          <SortableItem key={`item-${value}`} index={index} value={value} />
         ))}
       </SortableContainer>
     );

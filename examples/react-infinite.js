@@ -16,7 +16,7 @@ const SortableInfiniteList = sortableContainer(({items}) => {
     >
       {items.map(({value, height}, index) => (
         <SortableItem
-          key={`item-${index}`}
+          key={`item-${value}`}
           index={index}
           value={value}
           height={height}
