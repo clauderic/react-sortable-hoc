@@ -34,6 +34,8 @@ export const propTypes = {
   onSortMove: PropTypes.func,
   onSortOver: PropTypes.func,
   onSortStart: PropTypes.func,
+  onDropOver: PropTypes.func,
+  onDropCancel: PropTypes.func,
   pressDelay: PropTypes.number,
   pressThreshold: PropTypes.number,
   keyCodes: PropTypes.shape({
