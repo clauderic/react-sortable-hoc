@@ -609,7 +609,13 @@ export default function sortableContainer(
     }
 
     animateNodes() {
-      const {transitionDuration, hideSortableGhost, onSortOver} = this.props;
+      const {
+        transitionDuration,
+        hideSortableGhost,
+        onSortOver,
+        onDropOver,
+        onDropCancel,
+      } = this.props;
       const {containerScrollDelta, windowScrollDelta} = this;
       const nodes = this.manager.getOrderedRefs();
       const sortingOffset = {
@@ -621,15 +627,21 @@ export default function sortableContainer(
 
       const prevIndex = this.newIndex;
       this.newIndex = null;
+      const mouseTopEdge = sortingOffset.top + windowScrollDelta.top;
+      const mouseOffsetY = this.initialOffset.y - this.boundingClientRect.top;
+      const mouseY = mouseTopEdge + mouseOffsetY;
 
       for (let i = 0, len = nodes.length; i < len; i++) {
         const {node} = nodes[i];
         const {index} = node.sortableInfo;
         const width = node.offsetWidth;
         const height = node.offsetHeight;
+        const offsetHeight =
+          this.height > height ? height / 2 : this.height / 2;
+        const offsetWidth = this.width > width ? width / 2 : this.width / 2;
         const offset = {
-          height: this.height > height ? height / 2 : this.height / 2,
-          width: this.width > width ? width / 2 : this.width / 2,
+          height: onDropOver ? 0 : offsetHeight,
+          width: onDropOver ? 0 : offsetWidth,
         };
 
         // For keyboard sorting, we want user input to dictate the position of the nodes
@@ -672,9 +684,16 @@ export default function sortableContainer(
             );
           }
         }
+        const topEdge = edgeOffset.top;
+        const bottomEdge = topEdge + this.height;
 
         // If the node is the one we're currently animating, skip it
         if (index === this.index) {
+          if (mouseY >= topEdge && mouseY <= bottomEdge) {
+            if (onDropCancel) {
+              onDropCancel();
+            }
+          }
           if (hideSortableGhost) {
             /*
              * With windowing libraries such as `react-virtualized`, the sortableGhost
@@ -793,6 +812,19 @@ export default function sortableContainer(
             translate.y = this.height + this.marginOffset.y;
             if (this.newIndex == null) {
               this.newIndex = index;
+            }
+          }
+          if (
+            mouseY >= topEdge + translate.y &&
+            mouseY <= bottomEdge + translate.y
+          ) {
+            // Mouse moving downwards
+            if (onDropOver) {
+              onDropOver({index});
+            }
+          } else if (mouseY >= topEdge && mouseY <= bottomEdge) {
+            if (onDropCancel) {
+              onDropCancel();
             }
           }
         }
