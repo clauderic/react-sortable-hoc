@@ -628,8 +628,8 @@ export default function sortableContainer(
         const width = node.offsetWidth;
         const height = node.offsetHeight;
         const offset = {
-          height: this.height > height ? height / 2 : this.height / 2,
-          width: this.width > width ? width / 2 : this.width / 2,
+          height: this.height / 2 - height / 2,
+          width: this.width / 2 - width / 2,
         };
 
         // For keyboard sorting, we want user input to dictate the position of the nodes
@@ -701,11 +701,11 @@ export default function sortableContainer(
             if (
               mustShiftForward ||
               (index < this.index &&
-                ((sortingOffset.left + windowScrollDelta.left - offset.width <=
+                ((sortingOffset.left + windowScrollDelta.left <=
                   edgeOffset.left &&
-                  sortingOffset.top + windowScrollDelta.top <=
-                    edgeOffset.top + offset.height) ||
-                  sortingOffset.top + windowScrollDelta.top + offset.height <=
+                  sortingOffset.top + windowScrollDelta.top - height / 2 <=
+                    edgeOffset.top) ||
+                  sortingOffset.top + windowScrollDelta.top + height / 2 <=
                     edgeOffset.top))
             ) {
               // If the current node is to the left on the same row, or above the node that's being dragged
@@ -729,12 +729,12 @@ export default function sortableContainer(
             } else if (
               mustShiftBackward ||
               (index > this.index &&
-                ((sortingOffset.left + windowScrollDelta.left + offset.width >=
+                ((sortingOffset.left + windowScrollDelta.left >=
                   edgeOffset.left &&
-                  sortingOffset.top + windowScrollDelta.top + offset.height >=
-                    edgeOffset.top) ||
-                  sortingOffset.top + windowScrollDelta.top + offset.height >=
-                    edgeOffset.top + height))
+                  sortingOffset.top + windowScrollDelta.top >=
+                    edgeOffset.top - height / 2) ||
+                  sortingOffset.top + windowScrollDelta.top >=
+                    edgeOffset.top + height / 2))
             ) {
               // If the current node is to the right on the same row, or below the node that's being dragged
               // then move it to the left
@@ -766,7 +766,7 @@ export default function sortableContainer(
               mustShiftForward ||
               (index < this.index &&
                 sortingOffset.left + windowScrollDelta.left <=
-                  edgeOffset.left + offset.width)
+                  edgeOffset.left - offset.width)
             ) {
               translate.x = this.width + this.marginOffset.x;
 
@@ -788,7 +788,7 @@ export default function sortableContainer(
             mustShiftForward ||
             (index < this.index &&
               sortingOffset.top + windowScrollDelta.top <=
-                edgeOffset.top + offset.height)
+                edgeOffset.top - offset.height)
           ) {
             translate.y = this.height + this.marginOffset.y;
             if (this.newIndex == null) {
