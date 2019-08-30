@@ -6,6 +6,10 @@ import invariant from 'invariant';
 import Manager from '../Manager';
 import {isSortableHandle} from '../SortableHandle';
 
+export const SortableContext = React.createContext({
+  manager: {},
+})
+
 import {
   cloneNode,
   closest,
@@ -59,15 +63,6 @@ export default function sortableContainer(
     static displayName = provideDisplayName('sortableList', WrappedComponent);
     static defaultProps = defaultProps;
     static propTypes = propTypes;
-    static childContextTypes = {
-      manager: PropTypes.object.isRequired,
-    };
-
-    getChildContext() {
-      return {
-        manager: this.manager,
-      };
-    }
 
     componentDidMount() {
       const {useWindowAsScrollContainer} = this.props;
@@ -1032,7 +1027,11 @@ export default function sortableContainer(
     render() {
       const ref = config.withRef ? 'wrappedInstance' : null;
 
-      return <WrappedComponent ref={ref} {...omit(this.props, omittedProps)} />;
+      return (
+        <SortableContext.Provider value={{ manager: this.manager }}>
+          <WrappedComponent ref={ref} {...omit(this.props, omittedProps)} />
+        </SortableContext.Provider>
+      )
     }
 
     get helperContainer() {
