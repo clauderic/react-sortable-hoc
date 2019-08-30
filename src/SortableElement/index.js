@@ -24,7 +24,7 @@ export default function sortableElement(
       WrappedComponent,
     );
 
-    static contextTypes = SortableContext;
+    static contextType = SortableContext;
 
     static propTypes = propTypes;
 
