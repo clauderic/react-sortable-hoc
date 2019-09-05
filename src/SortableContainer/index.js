@@ -8,7 +8,7 @@ import {isSortableHandle} from '../SortableHandle';
 
 export const SortableContext = React.createContext({
   manager: {},
-})
+});
 
 import {
   cloneNode,
@@ -876,7 +876,7 @@ export default function sortableContainer(
         'To access the wrapped instance, you need to pass in {withRef: true} as the second argument of the SortableContainer() call',
       );
 
-      return this.refs.wrappedInstance;
+      return this.wrappedInstance.current;
     }
 
     getContainer() {
@@ -1024,14 +1024,16 @@ export default function sortableContainer(
       );
     };
 
+    wrappedInstance = React.createRef();
+
     render() {
-      const ref = config.withRef ? 'wrappedInstance' : null;
+      const ref = config.withRef ? this.wrappedInstance : null;
 
       return (
-        <SortableContext.Provider value={{ manager: this.manager }}>
+        <SortableContext.Provider value={{manager: this.manager}}>
           <WrappedComponent ref={ref} {...omit(this.props, omittedProps)} />
         </SortableContext.Provider>
-      )
+      );
     }
 
     get helperContainer() {
