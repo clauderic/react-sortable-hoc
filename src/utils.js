@@ -68,9 +68,12 @@ export function setInlineStyles(node, styles) {
   });
 }
 
-export function setTranslate3d(node, translate) {
+export function setTranslate3d(node, translate, otherTransform) {
   node.style[`${vendorPrefix}Transform`] =
-    translate == null ? '' : `translate3d(${translate.x}px,${translate.y}px,0)`;
+    translate == null
+      ? ''
+      : `translate3d(${translate.x}px,${translate.y}px,0) ${otherTransform ||
+          ''}`;
 }
 
 export function setTransitionDuration(node, duration) {
