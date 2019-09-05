@@ -83,11 +83,13 @@ export default function sortableElement(
         config.withRef,
         'To access the wrapped instance, you need to pass in {withRef: true} as the second argument of the SortableElement() call',
       );
-      return this.refs.wrappedInstance;
+      return this.wrappedInstance.current;
     }
 
+    wrappedInstance = React.createRef();
+
     render() {
-      const ref = config.withRef ? 'wrappedInstance' : null;
+      const ref = config.withRef ? this.wrappedInstance : null;
 
       return <WrappedComponent ref={ref} {...omit(this.props, omittedProps)} />;
     }
