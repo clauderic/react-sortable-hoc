@@ -5,7 +5,10 @@ export default class AutoScroller {
   }
 
   clear() {
-    clearInterval(this.interval);
+    if (this.interval) {
+      clearInterval(this.interval);
+    }
+
     this.interval = null;
   }
 
