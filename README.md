@@ -41,7 +41,7 @@ var SortableElement = Sortable.SortableElement;
 Alternatively, an UMD build is also available:
 
 ```html
-<script src="react-sortable-hoc/dist/umd/react-sortable-hoc.js"></script>
+<script src="react-sortable-hoc/dist/react-sortable-hoc.umd.js"></script>
 ```
 
 ## Usage
