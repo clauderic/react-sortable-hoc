@@ -827,6 +827,7 @@ export default function sortableContainer(
       const {isKeySorting} = this.manager;
 
       if (disableAutoscroll) {
+        this.autoScroller.clear();
         return;
       }
 
