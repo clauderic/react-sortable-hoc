@@ -1,14 +1,9 @@
 import * as React from 'react';
-import PropTypes from 'prop-types';
 import {findDOMNode} from 'react-dom';
 import invariant from 'invariant';
 
 import Manager from '../Manager';
 import {isSortableHandle} from '../SortableHandle';
-
-export const SortableContext = React.createContext({
-  manager: {},
-});
 
 import {
   cloneNode,
@@ -39,6 +34,10 @@ import {
   validateProps,
   defaultKeyCodes,
 } from './props';
+
+export const SortableContext = React.createContext({
+  manager: {},
+});
 
 export default function sortableContainer(
   WrappedComponent,
@@ -1025,12 +1024,13 @@ export default function sortableContainer(
     };
 
     wrappedInstance = React.createRef();
+    sortableContextValue = {manager: this.manager};
 
     render() {
       const ref = config.withRef ? this.wrappedInstance : null;
 
       return (
-        <SortableContext.Provider value={{manager: this.manager}}>
+        <SortableContext.Provider value={this.sortableContextValue}>
           <WrappedComponent ref={ref} {...omit(this.props, omittedProps)} />
         </SortableContext.Provider>
       );
