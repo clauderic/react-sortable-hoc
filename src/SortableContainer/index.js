@@ -46,10 +46,13 @@ export default function sortableContainer(
   return class WithSortableContainer extends React.Component {
     constructor(props) {
       super(props);
+      const manager = new Manager();
 
       validateProps(props);
 
-      this.manager = new Manager();
+      this.manager = manager;
+      this.wrappedInstance = React.createRef();
+      this.sortableContextValue = {manager};
       this.events = {
         end: this.handleEnd,
         move: this.handleMove,
@@ -1022,9 +1025,6 @@ export default function sortableContainer(
         (useDragHandle ? isSortableHandle(target) : target.sortableInfo)
       );
     };
-
-    wrappedInstance = React.createRef();
-    sortableContextValue = {manager: this.manager};
 
     render() {
       const ref = config.withRef ? this.wrappedInstance : null;
