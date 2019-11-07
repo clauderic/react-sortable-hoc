@@ -298,8 +298,8 @@ export default function sortableContainer(
         };
 
         this.initialWindowScroll = {
-          left: window.pageXOffset,
-          top: window.pageYOffset,
+          left: this.contentWindow.pageXOffset,
+          top: this.contentWindow.pageYOffset,
         };
 
         this.helper = this.helperContainer.appendChild(cloneNode(node));
@@ -559,8 +559,10 @@ export default function sortableContainer(
       };
 
       // Adjust for window scroll
-      translate.y -= window.pageYOffset - this.initialWindowScroll.top;
-      translate.x -= window.pageXOffset - this.initialWindowScroll.left;
+      translate.y -=
+        this.contentWindow.pageYOffset - this.initialWindowScroll.top;
+      translate.x -=
+        this.contentWindow.pageXOffset - this.initialWindowScroll.left;
 
       this.translate = translate;
 
