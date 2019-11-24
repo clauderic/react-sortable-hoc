@@ -126,7 +126,14 @@ export default function sortableContainer(
     handleStart = (event) => {
       const {distance, shouldCancelStart} = this.props;
 
-      if (event.button === 2 || shouldCancelStart(event)) {
+      const isRightClick =
+        // macOS trackpad ctrl click
+        (event.buttons === 1 && event.ctrlKey === true) ||
+        // Regular mouse right click or macOS double-finger tap
+        event.which === 3 ||
+        event.button === 2;
+
+      if (isRightClick || shouldCancelStart(event)) {
         return;
       }
 
@@ -634,9 +641,9 @@ export default function sortableContainer(
 
         // For keyboard sorting, we want user input to dictate the position of the nodes
         const mustShiftBackward =
-          isKeySorting && (index > this.index && index <= prevIndex);
+          isKeySorting && index > this.index && index <= prevIndex;
         const mustShiftForward =
-          isKeySorting && (index < this.index && index >= prevIndex);
+          isKeySorting && index < this.index && index >= prevIndex;
 
         const translate = {
           x: 0,
