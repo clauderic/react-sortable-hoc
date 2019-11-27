@@ -392,7 +392,7 @@ export default function sortableContainer(
             .forEach((className) => this.helper.classList.add(className));
         }
 
-        this.listenerNode = event.touches ? node : this.contentWindow;
+        this.listenerNode = event.touches ? event.target : this.contentWindow;
 
         if (isKeySorting) {
           this.listenerNode.addEventListener('wheel', this.handleKeyEnd, true);
@@ -634,9 +634,9 @@ export default function sortableContainer(
 
         // For keyboard sorting, we want user input to dictate the position of the nodes
         const mustShiftBackward =
-          isKeySorting && (index > this.index && index <= prevIndex);
+          isKeySorting && index > this.index && index <= prevIndex;
         const mustShiftForward =
-          isKeySorting && (index < this.index && index >= prevIndex);
+          isKeySorting && index < this.index && index >= prevIndex;
 
         const translate = {
           x: 0,
