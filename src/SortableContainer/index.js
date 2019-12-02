@@ -248,10 +248,12 @@ export default function sortableContainer(
 
           try {
             const {index} = node.sortableInfo;
-            await updateBeforeSortStart(
+            const result = await updateBeforeSortStart(
               {collection, index, node, isKeySorting},
               event,
             );
+            // If `updateBeforeSortStart` resolves to false, cancel drag before it starts
+            if (result === false) return;
           } finally {
             this._awaitingUpdateBeforeSortStart = false;
           }
