@@ -253,7 +253,10 @@ export default function sortableContainer(
               event,
             );
             // If `updateBeforeSortStart` resolves to false, cancel sort before it starts
-            if (result === false) return;
+            if (result === false) {
+              this._awaitingUpdateBeforeSortStart = false;
+              return;
+            }
           } finally {
             this._awaitingUpdateBeforeSortStart = false;
           }
