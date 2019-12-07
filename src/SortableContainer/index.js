@@ -627,7 +627,7 @@ export default function sortableContainer(
       const prevIndex = this.newIndex;
       this.newIndex = null;
 
-      const nodesTransitionStyle = {};
+      const nodesStyle = {};
       for (let i = 0, len = nodes.length; i < len; i++) {
         const {node} = nodes[i];
         const {index} = node.sortableInfo;
@@ -799,19 +799,19 @@ export default function sortableContainer(
           }
         }
 
-        nodesTransitionStyle[i] = setTranslate3d(translate);
+        nodesStyle[i] = setTranslate3d(translate);
       }
 
       for (let i = 0, len = nodes.length; i < len; i++) {
         const {transitionDuration} = this.props;
         if (transitionDuration) {
-          nodesTransitionStyle[i] = {
-            ...nodesTransitionStyle[i],
+          nodesStyle[i] = {
+            ...nodesStyle[i],
             ...setTransitionDuration(transitionDuration),
           };
         }
 
-        setInlineStyles(nodes[i].node, nodesTransitionStyle[i]);
+        setInlineStyles(nodes[i].node, nodesStyle[i]);
       }
 
       if (this.newIndex == null) {
