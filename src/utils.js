@@ -248,7 +248,7 @@ function isScrollable(el) {
   });
 }
 
-function getScrollingParent(el) {
+export function getScrollingParent(el) {
   if (!(el instanceof el.ownerDocument.defaultView.HTMLElement)) {
     return null;
   } else if (isScrollable(el)) {
