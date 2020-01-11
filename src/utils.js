@@ -68,14 +68,20 @@ export function setInlineStyles(node, styles) {
   });
 }
 
-export function setTranslate3d(node, translate) {
-  node.style[`${vendorPrefix}Transform`] =
-    translate == null ? '' : `translate3d(${translate.x}px,${translate.y}px,0)`;
+export function setTranslate3d(translate) {
+  return {
+    [`${vendorPrefix}Transform`]:
+      translate == null
+        ? ''
+        : `translate3d(${translate.x}px,${translate.y}px,0)`,
+  };
 }
 
-export function setTransitionDuration(node, duration) {
-  node.style[`${vendorPrefix}TransitionDuration`] =
-    duration == null ? '' : `${duration}ms`;
+export function setTransitionDuration(duration) {
+  return {
+    [`${vendorPrefix}TransitionDuration`]:
+      duration == null ? '' : `${duration}ms`,
+  };
 }
 
 export function closest(el, fn) {

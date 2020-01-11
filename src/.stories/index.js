@@ -516,7 +516,7 @@ storiesOf('General | Layout / Grid', module).add('Basic setup', () => {
       <ListWrapper
         component={SortableList}
         axis={'xy'}
-        items={getItems(10, 110)}
+        items={getItems(50, 110)}
         helperClass={style.stylizedHelper}
         className={classNames(style.list, style.stylizedList, style.grid)}
         itemClass={classNames(style.stylizedItem, style.gridItem)}
