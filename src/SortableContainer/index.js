@@ -302,7 +302,9 @@ export default function sortableContainer(
           top: window.pageYOffset,
         };
 
-        this.helper = this.helperContainer.appendChild(cloneNode(node));
+        const clonedNode = cloneNode(node);
+
+        this.helper = this.helperContainer.appendChild(clonedNode);
 
         setInlineStyles(this.helper, {
           boxSizing: 'border-box',
@@ -425,7 +427,10 @@ export default function sortableContainer(
         });
 
         if (onSortStart) {
-          onSortStart({node, index, collection, isKeySorting}, event);
+            onSortStart(
+              {clonedNode, node, index, collection, isKeySorting},
+              event,
+            );
         }
 
         if (isKeySorting) {

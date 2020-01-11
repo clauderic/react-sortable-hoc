@@ -145,6 +145,21 @@ $focusedOutlineColor: #4c9ffe;
   }
 }
 
+// Table
+.table {
+    display: block;
+    width: 400px;
+    height: 600px;
+    white-space: nowrap;
+    border: 0;
+    background-color: transparent;
+}
+
+.tableItem {
+    background: #FFF;
+    border: 1px solid #EFEFEF;
+}
+
 // Nested
 .category {
   height: auto;
