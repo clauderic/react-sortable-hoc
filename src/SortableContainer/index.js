@@ -821,6 +821,8 @@ export default function sortableContainer(
           newIndex: this.newIndex,
           oldIndex,
           isKeySorting,
+          nodes,
+          helper: this.helper,
         });
       }
     }

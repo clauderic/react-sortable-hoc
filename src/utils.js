@@ -259,6 +259,19 @@ export function getScrollingParent(el) {
   }
 }
 
+export function getContainerGridGap(element) {
+  const style = window.getComputedStyle(element);
+
+  if (style.display === 'grid') {
+    return {
+      x: getPixelValue(style.gridColumnGap),
+      y: getPixelValue(style.gridRowGap),
+    };
+  }
+
+  return {x: 0, y: 0};
+}
+
 export const KEYCODE = {
   TAB: 9,
   ESC: 27,

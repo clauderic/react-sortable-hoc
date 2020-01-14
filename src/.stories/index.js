@@ -22,7 +22,7 @@ function getItems(count, height) {
   return range(count).map((value) => {
     return {
       value,
-      height: height || heights[random(0, heights.length - 1)],
+      height: height == null ? heights[random(0, heights.length - 1)] : height,
     };
   });
 }
@@ -178,14 +178,14 @@ class ListWrapper extends Component {
     height: 600,
   };
 
-  onSortStart = () => {
+  onSortStart = (...args) => {
     const {onSortStart} = this.props;
     this.setState({isSorting: true});
 
     document.body.style.cursor = 'grabbing';
 
     if (onSortStart) {
-      onSortStart(this.refs.component);
+      onSortStart(this.refs.component, ...args);
     }
   };
 
@@ -511,15 +511,53 @@ storiesOf('General | Layout / Horizontal list', module).add(
 );
 
 storiesOf('General | Layout / Grid', module).add('Basic setup', () => {
+  const transformOrigin = {
+    x: 0,
+    y: 0,
+  };
+
   return (
     <div className={style.root}>
       <ListWrapper
         component={SortableList}
         axis={'xy'}
-        items={getItems(10, 110)}
+        items={getItems(9, false)}
         helperClass={style.stylizedHelper}
         className={classNames(style.list, style.stylizedList, style.grid)}
         itemClass={classNames(style.stylizedItem, style.gridItem)}
+        onSortStart={(_, {node}, event) => {
+          const boundingClientRect = node.getBoundingClientRect();
+          console.log(event);
+
+          transformOrigin.x = event.clientX - boundingClientRect.left;
+          transformOrigin.y = event.clientY - boundingClientRect.top;
+        }}
+        onSortOver={({nodes, newIndex, index, helper}) => {
+          const finalNodes = arrayMove(nodes, index, newIndex);
+          const oldNode = nodes[index].node;
+          const newNode = nodes[newIndex].node;
+          const helperScale = newNode.offsetWidth / oldNode.offsetWidth;
+          const helperWrapperNode = helper.childNodes[0];
+
+          helperWrapperNode.style.transform = `scale(${helperScale})`;
+          helperWrapperNode.style.transformOrigin = `${transformOrigin.x} -${transformOrigin.y}`;
+
+          finalNodes.forEach(({node}, i) => {
+            const oldNode = nodes[i].node;
+            const scale = oldNode.offsetWidth / node.offsetWidth;
+            const wrapperNode = node.childNodes[0];
+
+            wrapperNode.style.transform = `scale(${scale})`;
+            wrapperNode.style.transformOrigin = newIndex > i ? '0 0' : '100% 0';
+          });
+        }}
+        onSortEnd={() => {
+          [...document.querySelectorAll(`.${style.wrapper}`)].forEach(
+            (node) => {
+              node.style.transform = '';
+            },
+          );
+        }}
       />
     </div>
   );
