@@ -527,10 +527,15 @@ storiesOf('General | Layout / Grid', module).add('Basic setup', () => {
         itemClass={classNames(style.stylizedItem, style.gridItem)}
         onSortStart={(_, {node}, event) => {
           const boundingClientRect = node.getBoundingClientRect();
-          console.log(event);
 
-          transformOrigin.x = event.clientX - boundingClientRect.left;
-          transformOrigin.y = event.clientY - boundingClientRect.top;
+          transformOrigin.x =
+            ((event.clientX - boundingClientRect.left) /
+              boundingClientRect.width) *
+            100;
+          transformOrigin.y =
+            ((event.clientY - boundingClientRect.top) /
+              boundingClientRect.height) *
+            100;
         }}
         onSortOver={({nodes, newIndex, index, helper}) => {
           const finalNodes = arrayMove(nodes, index, newIndex);
@@ -540,7 +545,7 @@ storiesOf('General | Layout / Grid', module).add('Basic setup', () => {
           const helperWrapperNode = helper.childNodes[0];
 
           helperWrapperNode.style.transform = `scale(${helperScale})`;
-          helperWrapperNode.style.transformOrigin = `${transformOrigin.x} -${transformOrigin.y}`;
+          helperWrapperNode.style.transformOrigin = `${transformOrigin.x}% ${transformOrigin.y}%`;
 
           finalNodes.forEach(({node}, i) => {
             const oldNode = nodes[i].node;
