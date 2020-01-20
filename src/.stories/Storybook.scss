@@ -129,13 +129,6 @@ $focusedOutlineColor: #4c9ffe;
   border: none;
   background-color: transparent;
 
-  &:first-child {
-    width: auto !important;
-    height: auto !important;
-    grid-column-end: span 2;
-    grid-row-end: span 2;
-  }
-
   .wrapper {
     display: flex;
     align-items: center;
@@ -144,11 +137,35 @@ $focusedOutlineColor: #4c9ffe;
     height: 100%;
     background-color: #fff;
     transform: scale(1);
-    transition: transform 150ms ease;
     font-size: 28px;
 
     span {
       display: none;
+    }
+  }
+}
+
+.gridVariableSized {
+  .gridItem {
+    &[data-index='0'] {
+      width: auto !important;
+      height: auto !important;
+      grid-column-end: span 2;
+      grid-row-end: span 2;
+    }
+  }
+
+  &.isSorting {
+    .gridItem {
+      transition: transform 150ms ease;
+    }
+  }
+}
+
+.gridItemVariableSized {
+  &[data-index='0'] {
+    .wrapper {
+      font-size: 56px;
     }
   }
 }
@@ -197,6 +214,7 @@ $focusedOutlineColor: #4c9ffe;
     box-shadow: 0 5px 5px -5px rgba(0, 0, 0, 0.2);
     background-color: rgba(255, 255, 255, 0.9);
     border-radius: 3px;
+    transition: transform 150ms ease-in-out;
 
     &.horizontalItem {
       cursor: col-resize;
