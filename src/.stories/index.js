@@ -22,7 +22,7 @@ function getItems(count, height) {
   return range(count).map((value) => {
     return {
       value,
-      height: height || heights[random(0, heights.length - 1)],
+      height: height == null ? heights[random(0, heights.length - 1)] : height,
     };
   });
 }
@@ -47,7 +47,7 @@ const Item = SortableElement(
     style: propStyle,
     shouldUseDragHandle,
     value,
-    type,
+    itemIndex,
     isSorting,
   }) => {
     const bodyTabIndex = tabbable && !shouldUseDragHandle ? 0 : -1;
@@ -66,6 +66,7 @@ const Item = SortableElement(
           ...propStyle,
         }}
         tabIndex={bodyTabIndex}
+        data-index={itemIndex}
       >
         {shouldUseDragHandle && <Handle tabIndex={handleTabIndex} />}
         <div className={style.wrapper}>
@@ -99,6 +100,7 @@ const SortableList = SortableContainer(
               isDisabled={disabled}
               className={itemClass}
               index={index}
+              itemIndex={index}
               value={value}
               height={height}
               shouldUseDragHandle={shouldUseDragHandle}
@@ -178,14 +180,14 @@ class ListWrapper extends Component {
     height: 600,
   };
 
-  onSortStart = () => {
+  onSortStart = (...args) => {
     const {onSortStart} = this.props;
     this.setState({isSorting: true});
 
     document.body.style.cursor = 'grabbing';
 
     if (onSortStart) {
-      onSortStart(this.refs.component);
+      onSortStart(this.refs.component, ...args);
     }
   };
 
@@ -230,7 +232,7 @@ const SortableReactWindow = (Component) =>
         return (
           <Component
             ref="VirtualList"
-            className={className}
+            className={classNames(className, style.isSorting)}
             itemSize={
               itemHeight == null ? (index) => items[index].height : itemHeight
             }
@@ -510,20 +512,93 @@ storiesOf('General | Layout / Horizontal list', module).add(
   },
 );
 
-storiesOf('General | Layout / Grid', module).add('Basic setup', () => {
-  return (
-    <div className={style.root}>
-      <ListWrapper
-        component={SortableList}
-        axis={'xy'}
-        items={getItems(10, 110)}
-        helperClass={style.stylizedHelper}
-        className={classNames(style.list, style.stylizedList, style.grid)}
-        itemClass={classNames(style.stylizedItem, style.gridItem)}
-      />
-    </div>
-  );
-});
+storiesOf('General | Layout / Grid', module)
+  .add('Basic setup', () => {
+    const transformOrigin = {
+      x: 0,
+      y: 0,
+    };
+
+    return (
+      <div className={style.root}>
+        <ListWrapper
+          component={SortableList}
+          axis={'xy'}
+          items={getItems(10, false)}
+          helperClass={style.stylizedHelper}
+          className={classNames(style.list, style.stylizedList, style.grid)}
+          itemClass={classNames(style.stylizedItem, style.gridItem)}
+        />
+      </div>
+    );
+  })
+  .add('Large first item', () => {
+    const transformOrigin = {
+      x: 0,
+      y: 0,
+    };
+
+    return (
+      <div className={style.root}>
+        <ListWrapper
+          component={SortableList}
+          axis={'xy'}
+          items={getItems(9, false)}
+          helperClass={style.stylizedHelper}
+          className={classNames(
+            style.list,
+            style.stylizedList,
+            style.grid,
+            style.gridVariableSized,
+          )}
+          itemClass={classNames(
+            style.stylizedItem,
+            style.gridItem,
+            style.gridItemVariableSized,
+          )}
+          onSortStart={(_, {node}, event) => {
+            const boundingClientRect = node.getBoundingClientRect();
+
+            transformOrigin.x =
+              ((event.clientX - boundingClientRect.left) /
+                boundingClientRect.width) *
+              100;
+            transformOrigin.y =
+              ((event.clientY - boundingClientRect.top) /
+                boundingClientRect.height) *
+              100;
+          }}
+          onSortOver={({nodes, newIndex, index, helper}) => {
+            const finalNodes = arrayMove(nodes, index, newIndex);
+            const oldNode = nodes[index].node;
+            const newNode = nodes[newIndex].node;
+            const helperScale = newNode.offsetWidth / oldNode.offsetWidth;
+            const helperWrapperNode = helper.childNodes[0];
+
+            helperWrapperNode.style.transform = `scale(${helperScale})`;
+            helperWrapperNode.style.transformOrigin = `${transformOrigin.x}% ${transformOrigin.y}%`;
+
+            finalNodes.forEach(({node}, i) => {
+              const oldNode = nodes[i].node;
+              const scale = oldNode.offsetWidth / node.offsetWidth;
+              const wrapperNode = node.childNodes[0];
+
+              wrapperNode.style.transform = `scale(${scale})`;
+              wrapperNode.style.transformOrigin =
+                newIndex > i ? '0 0' : '100% 0';
+            });
+          }}
+          onSortEnd={() => {
+            [...document.querySelectorAll(`.${style.wrapper}`)].forEach(
+              (node) => {
+                node.style.transform = '';
+              },
+            );
+          }}
+        />
+      </div>
+    );
+  });
 
 storiesOf('General | Configuration / Options', module)
   .add('Drag handle', () => {

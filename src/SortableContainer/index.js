@@ -11,6 +11,7 @@ import {
   closest,
   events,
   getScrollingParent,
+  getContainerGridGap,
   getEdgeOffset,
   getElementMargin,
   getLockPixelOffsets,
@@ -260,16 +261,18 @@ export default function sortableContainer(
         // Need to get the latest value for `index` in case it changes during `updateBeforeSortStart`
         const {index} = node.sortableInfo;
         const margin = getElementMargin(node);
+        const gridGap = getContainerGridGap(this.container);
         const containerBoundingRect = this.scrollContainer.getBoundingClientRect();
-        const dimensions = getHelperDimensions({collection, index, node});
+        const dimensions = getHelperDimensions({index, node, collection});
 
         this.node = node;
         this.margin = margin;
+        this.gridGap = gridGap;
         this.width = dimensions.width;
         this.height = dimensions.height;
         this.marginOffset = {
-          x: this.margin.left + this.margin.right,
-          y: Math.max(this.margin.top, this.margin.bottom),
+          x: this.margin.left + this.margin.right + this.gridGap.x,
+          y: Math.max(this.margin.top, this.margin.bottom, this.gridGap.y),
         };
         this.boundingClientRect = node.getBoundingClientRect();
         this.containerBoundingRect = containerBoundingRect;
@@ -425,7 +428,17 @@ export default function sortableContainer(
         });
 
         if (onSortStart) {
-          onSortStart({node, index, collection, isKeySorting}, event);
+          onSortStart(
+            {
+              node,
+              index,
+              collection,
+              isKeySorting,
+              nodes: this.manager.getOrderedRefs(),
+              helper: this.helper,
+            },
+            event,
+          );
         }
 
         if (isKeySorting) {
@@ -458,7 +471,7 @@ export default function sortableContainer(
         active: {collection},
         isKeySorting,
       } = this.manager;
-      const nodes = this.manager.refs[collection];
+      const nodes = this.manager.getOrderedRefs();
 
       // Remove the event listeners if the node is still in the DOM
       if (this.listenerNode) {
@@ -533,6 +546,7 @@ export default function sortableContainer(
             newIndex: this.newIndex,
             oldIndex: this.index,
             isKeySorting,
+            nodes,
           },
           event,
         );
@@ -818,6 +832,8 @@ export default function sortableContainer(
           newIndex: this.newIndex,
           oldIndex,
           isKeySorting,
+          nodes,
+          helper: this.helper,
         });
       }
     }

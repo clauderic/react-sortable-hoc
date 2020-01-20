@@ -9,6 +9,8 @@ export interface SortStart {
   index: number;
   collection: Offset;
   isKeySorting: boolean;
+  nodes: HTMLElement[];
+  helper: HTMLElement;
 }
 
 export interface SortOver {
@@ -17,6 +19,8 @@ export interface SortOver {
   newIndex: number;
   collection: Offset;
   isKeySorting: boolean;
+  nodes: HTMLElement[];
+  helper: HTMLElement;
 }
 
 export interface SortEnd {
@@ -24,6 +28,7 @@ export interface SortEnd {
   newIndex: number;
   collection: Offset;
   isKeySorting: boolean;
+  nodes: HTMLElement[];
 }
 
 export type SortEvent = React.MouseEvent<any> | React.TouchEvent<any>;
@@ -65,7 +70,7 @@ export interface SortableContainerProps {
     cancel?: number[];
     up?: number[];
     down?: number[];
-  },
+  };
   pressDelay?: number;
   pressThreshold?: number;
   distance?: number;
