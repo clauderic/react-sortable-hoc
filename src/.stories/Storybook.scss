@@ -153,11 +153,11 @@ $focusedOutlineColor: #4c9ffe;
       grid-column-end: span 2;
       grid-row-end: span 2;
     }
-  }
 
-  &.isSorting {
-    .gridItem {
-      transition: transform 150ms ease;
+    &.sorting {
+      .wrapper {
+        transition: transform 150ms ease-in-out;
+      }
     }
   }
 }

@@ -180,19 +180,20 @@ class ListWrapper extends Component {
     height: 600,
   };
 
-  onSortStart = (...args) => {
+  onSortStart = (event) => {
     const {onSortStart} = this.props;
     this.setState({isSorting: true});
 
     document.body.style.cursor = 'grabbing';
 
     if (onSortStart) {
-      onSortStart(this.refs.component, ...args);
+      onSortStart(event, this.refs.component);
     }
   };
 
-  onSortEnd = ({oldIndex, newIndex}) => {
+  onSortEnd = (event) => {
     const {onSortEnd} = this.props;
+    const {oldIndex, newIndex} = event;
     const {items} = this.state;
 
     this.setState({
@@ -203,7 +204,7 @@ class ListWrapper extends Component {
     document.body.style.cursor = '';
 
     if (onSortEnd) {
-      onSortEnd(this.refs.component);
+      onSortEnd(event, this.refs.component);
     }
   };
 
@@ -556,7 +557,7 @@ storiesOf('General | Layout / Grid', module)
             style.gridItem,
             style.gridItemVariableSized,
           )}
-          onSortStart={(_, {node}, event) => {
+          onSortStart={({node}, event) => {
             const boundingClientRect = node.getBoundingClientRect();
 
             transformOrigin.x =
@@ -581,19 +582,21 @@ storiesOf('General | Layout / Grid', module)
             finalNodes.forEach(({node}, i) => {
               const oldNode = nodes[i].node;
               const scale = oldNode.offsetWidth / node.offsetWidth;
-              const wrapperNode = node.childNodes[0];
+              const wrapperNode = node.querySelector(`.${style.wrapper}`);
 
               wrapperNode.style.transform = `scale(${scale})`;
               wrapperNode.style.transformOrigin =
                 newIndex > i ? '0 0' : '100% 0';
             });
           }}
-          onSortEnd={() => {
-            [...document.querySelectorAll(`.${style.wrapper}`)].forEach(
-              (node) => {
-                node.style.transform = '';
-              },
-            );
+          onSortEnd={({nodes}) => {
+            console.log(nodes);
+
+            nodes.forEach(({node}) => {
+              const wrapperNode = node.querySelector(`.${style.wrapper}`);
+
+              wrapperNode.style.transform = '';
+            });
           }}
         />
       </div>
@@ -762,7 +765,7 @@ storiesOf('Advanced examples | Virtualization libraries / react-window', module)
           items={getItems(500, 59)}
           itemHeight={59}
           helperClass={style.stylizedHelper}
-          onSortEnd={(ref) => {
+          onSortEnd={(_, ref) => {
             // We need to inform React Window that the order of the items has changed
             const instance = ref.getWrappedInstance();
             const list = instance.refs.VirtualList;
@@ -780,7 +783,7 @@ storiesOf('Advanced examples | Virtualization libraries / react-window', module)
           component={SortableReactWindow(VariableSizeList)}
           items={getItems(500)}
           helperClass={style.stylizedHelper}
-          onSortEnd={(ref) => {
+          onSortEnd={(_, ref) => {
             // We need to inform React Window that the item heights have changed
             const instance = ref.getWrappedInstance();
             const list = instance.refs.VirtualList;
@@ -816,7 +819,7 @@ storiesOf(
           items={getItems(500)}
           itemHeight={89}
           helperClass={style.stylizedHelper}
-          onSortEnd={(ref) => {
+          onSortEnd={(_, ref) => {
             // We need to inform React Virtualized that the item heights have changed
             const instance = ref.getWrappedInstance();
             const list = instance.refs.VirtualList;
