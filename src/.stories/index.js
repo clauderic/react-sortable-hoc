@@ -180,20 +180,20 @@ class ListWrapper extends Component {
     height: 600,
   };
 
-  onSortStart = (event) => {
+  onSortStart = (sortEvent, nativeEvent) => {
     const {onSortStart} = this.props;
     this.setState({isSorting: true});
 
     document.body.style.cursor = 'grabbing';
 
     if (onSortStart) {
-      onSortStart(event, this.refs.component);
+      onSortStart(sortEvent, nativeEvent, this.refs.component);
     }
   };
 
-  onSortEnd = (event) => {
+  onSortEnd = (sortEvent, nativeEvent) => {
     const {onSortEnd} = this.props;
-    const {oldIndex, newIndex} = event;
+    const {oldIndex, newIndex} = sortEvent;
     const {items} = this.state;
 
     this.setState({
@@ -204,7 +204,7 @@ class ListWrapper extends Component {
     document.body.style.cursor = '';
 
     if (onSortEnd) {
-      onSortEnd(event, this.refs.component);
+      onSortEnd(sortEvent, nativeEvent, this.refs.component);
     }
   };
 
@@ -534,11 +534,6 @@ storiesOf('General | Layout / Grid', module)
     );
   })
   .add('Large first item', () => {
-    const transformOrigin = {
-      x: 0,
-      y: 0,
-    };
-
     return (
       <div className={style.root}>
         <ListWrapper
@@ -557,17 +552,21 @@ storiesOf('General | Layout / Grid', module)
             style.gridItem,
             style.gridItemVariableSized,
           )}
-          onSortStart={({node}, event) => {
-            const boundingClientRect = node.getBoundingClientRect();
+          onSortStart={({node, helper}, event) => {
+            const nodeBoundingClientRect = node.getBoundingClientRect();
+            const helperWrapperNode = helper.childNodes[0];
+            const transformOrigin = {
+              x:
+                ((event.clientX - nodeBoundingClientRect.left) /
+                  nodeBoundingClientRect.width) *
+                100,
+              y:
+                ((event.clientY - nodeBoundingClientRect.top) /
+                  nodeBoundingClientRect.height) *
+                100,
+            };
 
-            transformOrigin.x =
-              ((event.clientX - boundingClientRect.left) /
-                boundingClientRect.width) *
-              100;
-            transformOrigin.y =
-              ((event.clientY - boundingClientRect.top) /
-                boundingClientRect.height) *
-              100;
+            helperWrapperNode.style.transformOrigin = `${transformOrigin.x}% ${transformOrigin.y}%`;
           }}
           onSortOver={({nodes, newIndex, index, helper}) => {
             const finalNodes = arrayMove(nodes, index, newIndex);
@@ -577,7 +576,6 @@ storiesOf('General | Layout / Grid', module)
             const helperWrapperNode = helper.childNodes[0];
 
             helperWrapperNode.style.transform = `scale(${helperScale})`;
-            helperWrapperNode.style.transformOrigin = `${transformOrigin.x}% ${transformOrigin.y}%`;
 
             finalNodes.forEach(({node}, i) => {
               const oldNode = nodes[i].node;
@@ -763,7 +761,7 @@ storiesOf('Advanced examples | Virtualization libraries / react-window', module)
           items={getItems(500, 59)}
           itemHeight={59}
           helperClass={style.stylizedHelper}
-          onSortEnd={(_, ref) => {
+          onSortEnd={(_sortEvent, _nativeEvent, ref) => {
             // We need to inform React Window that the order of the items has changed
             const instance = ref.getWrappedInstance();
             const list = instance.refs.VirtualList;
@@ -781,7 +779,7 @@ storiesOf('Advanced examples | Virtualization libraries / react-window', module)
           component={SortableReactWindow(VariableSizeList)}
           items={getItems(500)}
           helperClass={style.stylizedHelper}
-          onSortEnd={(_, ref) => {
+          onSortEnd={(_sortEvent, _nativeEvent, ref) => {
             // We need to inform React Window that the item heights have changed
             const instance = ref.getWrappedInstance();
             const list = instance.refs.VirtualList;
@@ -817,7 +815,7 @@ storiesOf(
           items={getItems(500)}
           itemHeight={89}
           helperClass={style.stylizedHelper}
-          onSortEnd={(_, ref) => {
+          onSortEnd={(_sortEvent, _nativeEvent, ref) => {
             // We need to inform React Virtualized that the item heights have changed
             const instance = ref.getWrappedInstance();
             const list = instance.refs.VirtualList;
