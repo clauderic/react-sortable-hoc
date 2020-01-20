@@ -590,8 +590,6 @@ storiesOf('General | Layout / Grid', module)
             });
           }}
           onSortEnd={({nodes}) => {
-            console.log(nodes);
-
             nodes.forEach(({node}) => {
               const wrapperNode = node.querySelector(`.${style.wrapper}`);
 
