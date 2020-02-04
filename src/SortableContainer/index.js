@@ -91,7 +91,7 @@ export default function sortableContainer(
 
         this.scrollContainer = useWindowAsScrollContainer
           ? this.document.scrollingElement || this.document.documentElement
-          : getScrollingParent(this.container) || this.container;
+          : getScrollingParent(this.container, this.props.scrollContainer) || this.container;
 
         this.autoScroller = new AutoScroller(
           this.scrollContainer,

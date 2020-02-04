@@ -249,7 +249,10 @@ function isScrollable(el) {
   );
 }
 
-export function getScrollingParent(el) {
+export function getScrollingParent(el, container = false) {
+  if (container) {
+    return document.querySelector(container)
+  }
   if (!(el instanceof HTMLElement)) {
     return null;
   } else if (isScrollable(el)) {
