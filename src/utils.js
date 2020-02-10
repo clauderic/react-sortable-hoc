@@ -240,9 +240,10 @@ export function getLockPixelOffsets({height, width, lockOffset}) {
 }
 
 function isScrollable(el) {
-  var computedStyle = el.ownerDocument.defaultView.getComputedStyle(el);
-  var overflowRegex = /(auto|scroll)/;
-  var properties = ['overflow', 'overflowX', 'overflowY'];
+  const computedStyle = el.ownerDocument.defaultView.getComputedStyle(el);
+  const overflowRegex = /(auto|scroll)/;
+  const properties = ['overflow', 'overflowX', 'overflowY'];
+  
   return properties.find(function (property) {
     return overflowRegex.test(computedStyle[property]);
   });
