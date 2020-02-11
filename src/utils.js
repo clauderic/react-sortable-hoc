@@ -243,10 +243,10 @@ function isScrollable(el) {
   const computedStyle = el.ownerDocument.defaultView.getComputedStyle(el);
   const overflowRegex = /(auto|scroll)/;
   const properties = ['overflow', 'overflowX', 'overflowY'];
-  
-  return properties.find(function (property) {
-    return overflowRegex.test(computedStyle[property]);
-  });
+
+  return properties.find((property) =>
+    overflowRegex.test(computedStyle[property]),
+  );
 }
 
 export function getScrollingParent(el) {
