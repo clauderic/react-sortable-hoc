@@ -1,0 +1,16 @@
+$backgroundColor: #f3f3f3;
+$borderColor: #efefef;
+$borderWidth: 1px;
+
+.List {
+  position: relative;
+  width: 400px;
+  height: 600px;
+  overflow: auto;
+  -webkit-overflow-scrolling: touch;
+  z-index: 0;
+  background-color: $backgroundColor;
+  border: $borderWidth solid $borderColor;
+  border-radius: 3px;
+  outline: none;
+}

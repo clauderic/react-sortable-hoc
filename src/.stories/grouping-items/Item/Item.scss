@@ -1,0 +1,86 @@
+$color: #333;
+$white: #fff;
+$backgroundColor: $white;
+
+$boxShadow: 0 5px 5px -5px rgba(0, 0, 0, 0.2);
+
+$fontWeight-regular: 400;
+$fontWeight-bold: 600;
+
+$borderRadius: 3px;
+$borderWidth: 1px;
+$borderColor: #efefef;
+
+$selectedColor: $white;
+$selectedBackgroundColor: rgba(216, 232, 251, 0.9);
+$selectedBorderColor: #bbcee8;
+
+$badgeColor: $white;
+$badgeBackgroundColor: #f75959;
+$badgeBorderColor: #da4553;
+
+$focusedOutlineColor: #4c9ffe;
+
+.Item {
+  display: flex;
+  align-items: center;
+  width: 100%;
+  height: 59px;
+  padding: 0 20px;
+  background-color: $backgroundColor;
+  border-bottom: $borderWidth solid #efefef;
+  box-sizing: border-box;
+  user-select: none;
+  outline: none;
+
+  color: $color;
+  font-weight: $fontWeight-regular;
+
+  cursor: grab;
+
+  &:last-child {
+    border-bottom: none;
+  }
+
+  &.selected {
+    background: $selectedBackgroundColor;
+    border-bottom-color: $selectedBorderColor;
+
+    &:focus {
+      border-bottom-color: $focusedOutlineColor;
+    }
+  }
+
+  &.sorting {
+    pointer-events: none;
+  }
+
+  &.dragging {
+    border-radius: $borderRadius;
+    border: $borderWidth solid #efefef;
+    box-shadow: $boxShadow;
+
+    &:focus {
+      box-shadow: 0 0px 5px 1px $focusedOutlineColor;
+    }
+  }
+
+  &:focus {
+    text-indent: -2px;
+    border: 2px solid $focusedOutlineColor;
+  }
+}
+
+.Badge {
+  position: absolute;
+  top: -8px;
+  right: -8px;
+  padding: 0.35em 0.5em;
+  border-radius: 0.3rem;
+
+  color: $badgeColor;
+  font-size: 0.8em;
+  font-weight: $fontWeight-bold;
+  background-color: $badgeBackgroundColor;
+  border: $borderWidth solid $badgeBorderColor;
+}

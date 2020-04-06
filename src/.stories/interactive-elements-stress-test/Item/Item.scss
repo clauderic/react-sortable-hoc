@@ -1,0 +1,62 @@
+$color: #333;
+$white: #fff;
+$backgroundColor: $white;
+
+$padding: 20px;
+
+$boxShadow: 0 5px 5px -5px rgba(0, 0, 0, 0.2);
+
+$fontWeight-regular: 400;
+$fontWeight-bold: 600;
+
+$borderRadius: 3px;
+$borderWidth: 1px;
+$borderColor: #efefef;
+
+$focusedOutlineColor: #4c9ffe;
+
+.root {
+  display: block;
+  width: 250px;
+  padding: $padding;
+  background-color: $backgroundColor;
+  border-bottom: $borderWidth solid #efefef;
+  box-sizing: border-box;
+  user-select: none;
+
+  color: $color;
+  font-family: sans-serif;
+  font-weight: $fontWeight-regular;
+
+  > * {
+    display: block;
+    width: 100%;
+    font-size: 14px;
+  }
+
+  > input,
+  > textarea {
+    padding: 5px;
+    border: 1px solid #e0e0e0;
+    box-sizing: border-box;
+  }
+
+  label {
+    input {
+      margin-right: 0.5em;
+    }
+  }
+
+  &:focus {
+    outline: none;
+    padding: $padding - 2px;
+    padding-bottom: $padding - 1px;
+    border: 2px solid $focusedOutlineColor;
+  }
+
+  &.dragging {
+    &:focus {
+      box-shadow: 0 0px 5px 1px $focusedOutlineColor;
+    }
+  }
+}
