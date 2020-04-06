@@ -542,12 +542,10 @@ export default function sortableContainer(
       if (typeof onSortEnd === 'function') {
         onSortEnd(
           {
-            oldIndex        : this.index,
-            newIndex        : this.newIndex,
-            overlapDetected : this.overlapDetected,
             collection,
             newIndex: this.newIndex,
             oldIndex: this.index,
+            overlapDetected: this.overlapDetected,
             isKeySorting,
             nodes,
           },
