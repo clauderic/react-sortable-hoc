@@ -71,6 +71,10 @@ $focusedOutlineColor: #4c9ffe;
   opacity: 0.5;
 }
 
+.locked {
+  cursor: default;
+}
+
 // Drag handle
 .handleWrapper {
   width: 18px;

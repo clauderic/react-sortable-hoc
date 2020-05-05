@@ -27,6 +27,27 @@ function getItems(count, height) {
   });
 }
 
+const arrayMoveWithLockedItems = (array, from, to, lockedIndices = []) => {
+  const isForward = to > from;
+  const lockedIndicesInRange = isForward
+    ? lockedIndices.filter((index) => index > from && index < to)
+    : lockedIndices.filter((index) => index < from && index > to);
+
+  const _from = isForward ? from : from - lockedIndicesInRange.length;
+  const _to = isForward ? to - lockedIndicesInRange.length : to;
+
+  const arr = arrayMove(
+    array.filter((_, index) => !lockedIndicesInRange.includes(index)),
+    _from,
+    _to,
+  );
+
+  lockedIndicesInRange.forEach((index) => {
+    arr.splice(index, 0, array[index]);
+  });
+  return arr;
+};
+
 const Handle = SortableHandle(({tabIndex}) => (
   <div className={style.handle} tabIndex={tabIndex}>
     <svg viewBox="0 0 50 50">
@@ -43,6 +64,7 @@ const Item = SortableElement(
     tabbable,
     className,
     isDisabled,
+    isLocked,
     height,
     style: propStyle,
     shouldUseDragHandle,
@@ -58,6 +80,7 @@ const Item = SortableElement(
         className={classNames(
           className,
           isDisabled && style.disabled,
+          isLocked && style.locked,
           isSorting && style.sorting,
           shouldUseDragHandle && style.containsDragHandle,
         )}
@@ -70,7 +93,9 @@ const Item = SortableElement(
       >
         {shouldUseDragHandle && <Handle tabIndex={handleTabIndex} />}
         <div className={style.wrapper}>
-          <span>Item</span> {value}
+          <span>Item</span>
+          {value}
+          {isLocked ? '🔒' : ''}
         </div>
       </div>
     );
@@ -82,6 +107,7 @@ const SortableList = SortableContainer(
     className,
     items,
     disabledItems = [],
+    lockedItems = [],
     itemClass,
     isSorting,
     shouldUseDragHandle,
@@ -91,6 +117,7 @@ const SortableList = SortableContainer(
       <div className={className}>
         {items.map(({value, height}, index) => {
           const disabled = disabledItems.includes(value);
+          const locked = lockedItems.includes(value);
 
           return (
             <Item
@@ -98,6 +125,8 @@ const SortableList = SortableContainer(
               key={`item-${value}`}
               disabled={disabled}
               isDisabled={disabled}
+              locked={locked}
+              isLocked={locked}
               className={itemClass}
               index={index}
               itemIndex={index}
@@ -171,6 +200,9 @@ class ListWrapper extends Component {
     component: PropTypes.func,
     shouldUseDragHandle: PropTypes.bool,
     disabledItems: PropTypes.arrayOf(PropTypes.string),
+    lockedItems: PropTypes.arrayOf(
+      PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
+    ),
   };
 
   static defaultProps = {
@@ -192,12 +224,17 @@ class ListWrapper extends Component {
   };
 
   onSortEnd = (sortEvent, nativeEvent) => {
-    const {onSortEnd} = this.props;
+    const {lockedItems: lockedItemIndices, onSortEnd} = this.props;
     const {oldIndex, newIndex} = sortEvent;
     const {items} = this.state;
 
     this.setState({
-      items: arrayMove(items, oldIndex, newIndex),
+      items: arrayMoveWithLockedItems(
+        items,
+        oldIndex,
+        newIndex,
+        lockedItemIndices,
+      ),
       isSorting: false,
     });
 
@@ -491,9 +528,8 @@ storiesOf('General | Layout / Vertical list', module)
     );
   });
 
-storiesOf('General | Layout / Horizontal list', module).add(
-  'Basic setup',
-  () => {
+storiesOf('General | Layout / Horizontal list', module)
+  .add('Basic setup', () => {
     return (
       <div className={style.root}>
         <ListWrapper
@@ -510,8 +546,26 @@ storiesOf('General | Layout / Horizontal list', module).add(
         />
       </div>
     );
-  },
-);
+  })
+  .add('w/ locked items', () => {
+    return (
+      <div className={style.root}>
+        <ListWrapper
+          component={SortableList}
+          axis={'x'}
+          items={getItems(50, 300)}
+          lockedItems={[2, 3, 7]}
+          helperClass={style.stylizedHelper}
+          className={classNames(
+            style.list,
+            style.stylizedList,
+            style.horizontalList,
+          )}
+          itemClass={classNames(style.stylizedItem, style.horizontalItem)}
+        />
+      </div>
+    );
+  });
 
 storiesOf('General | Layout / Grid', module)
   .add('Basic setup', () => {
@@ -597,6 +651,21 @@ storiesOf('General | Layout / Grid', module)
         />
       </div>
     );
+  })
+  .add('w/ locked items', () => {
+    return (
+      <div className={style.root}>
+        <ListWrapper
+          component={SortableList}
+          axis={'xy'}
+          items={getItems(10, false)}
+          lockedItems={[2, 3, 7]}
+          helperClass={style.stylizedHelper}
+          className={classNames(style.list, style.stylizedList, style.grid)}
+          itemClass={classNames(style.stylizedItem, style.gridItem)}
+        />
+      </div>
+    );
   });
 
 storiesOf('General | Configuration / Options', module)
@@ -620,6 +689,18 @@ storiesOf('General | Configuration / Options', module)
           items={getItems(10, 59)}
           helperClass={style.stylizedHelper}
           disabledItems={[2, 3, 7]}
+        />
+      </div>
+    );
+  })
+  .add('w/ locked items', () => {
+    return (
+      <div className={style.root}>
+        <ListWrapper
+          component={SortableList}
+          items={getItems(10, 59)}
+          helperClass={style.stylizedHelper}
+          lockedItems={[2, 3, 7]}
         />
       </div>
     );
