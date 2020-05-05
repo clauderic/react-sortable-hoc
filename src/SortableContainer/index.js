@@ -712,7 +712,6 @@ export default function sortableContainer(
 
         // Get a reference to the next and previous node
         const nextNode = i < nodes.length - 1 && nodes[i + 1];
-        const prevNode = i > 0 && nodes[i - 1];
 
         // Also cache the next node's edge offset if needed.
         // We need this for calculating the animation in a grid setup
