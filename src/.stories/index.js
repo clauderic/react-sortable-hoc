@@ -33,13 +33,10 @@ const arrayMoveWithLockedItems = (array, from, to, lockedIndices = []) => {
     ? lockedIndices.filter((index) => index > from && index < to)
     : lockedIndices.filter((index) => index < from && index > to);
 
-  const _from = isForward ? from : from - lockedIndicesInRange.length;
-  const _to = isForward ? to - lockedIndicesInRange.length : to;
-
   const arr = arrayMove(
     array.filter((_, index) => !lockedIndicesInRange.includes(index)),
-    _from,
-    _to,
+    isForward ? from : from - lockedIndicesInRange.length,
+    isForward ? to - lockedIndicesInRange.length : to,
   );
 
   lockedIndicesInRange.forEach((index) => {
