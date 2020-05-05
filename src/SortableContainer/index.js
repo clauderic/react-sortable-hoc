@@ -641,12 +641,16 @@ export default function sortableContainer(
       const prevIndex = this.newIndex;
       this.newIndex = null;
 
+      // Returns whether a node location is a valid location for another node
+      // to be moved into
+      const isAllowedToMoveToNode = ({node}) => !node.sortableInfo.locked;
+
       // Given an item index and a direction within the list in which it should be
       // moved, find the next valid index at which it can be positioned.
       const findNextSortIndex = (
         index,
         direction,
-        isAllowedToMoveToNode = ({node}) => !node.sortableInfo.locked,
+        predicate = isAllowedToMoveToNode,
       ) => {
         let i = index + 1;
         let loop = () => i < nodes.length;
@@ -659,7 +663,7 @@ export default function sortableContainer(
         }
 
         while (loop()) {
-          if (isAllowedToMoveToNode(nodes[i])) {
+          if (predicate(nodes[i])) {
             return i;
           }
           increment();
@@ -668,9 +672,9 @@ export default function sortableContainer(
 
       for (let i = 0, len = nodes.length; i < len; i++) {
         const {node} = nodes[i];
-        const {index, locked} = node.sortableInfo;
+        const {index} = node.sortableInfo;
 
-        if (locked) {
+        if (!isAllowedToMoveToNode(nodes[i])) {
           continue;
         }
 
