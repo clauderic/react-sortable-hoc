@@ -8,6 +8,7 @@ import arrayMove from 'array-move';
 import VirtualList from 'react-tiny-virtual-list';
 import {FixedSizeList, VariableSizeList} from 'react-window';
 import {defaultTableRowRenderer, Column, Table, List} from 'react-virtualized';
+import { Virtuoso } from 'react-virtuoso';
 import '!style-loader!css-loader!react-virtualized/styles.css';
 import Infinite from 'react-infinite';
 import range from 'lodash/range';
@@ -453,6 +454,69 @@ const NestedSortableList = SortableContainer(
       </div>
     );
   },
+);
+
+const ItemContainerSortable = sortableElement(props => (
+  <div {...props} />
+))
+
+const ItemContainer = props => {
+  const { ['data-index']: index } = props
+  return <ItemContainerSortable index={index} {...props} />
+}
+
+const ListContainerSortable = sortableContainer(
+  ({ listRef, children, className, style }) => (
+    <div ref={listRef} className={className} style={style}>
+      {children}
+    </div>
+  )
+)
+
+const SortableVirtuosoList = SortableContainer(
+  ({
+    isSorting,
+    items,
+    onSortEnd,
+    onSortStart,
+    ref,
+    useDragHandle,
+    className,
+    items,
+    height,
+    width,
+    itemClass
+  }) => {
+
+  const ListContainer = useCallback(
+    props => (
+      <ListContainerSortable
+        {...props}
+        helperDimensions={({ node }) => {
+          return { width, height, minHeight: 'auto' }
+        }}
+        {...({
+          isSorting,
+          items,
+          onSortEnd,
+          onSortStart,
+          ref,
+          useDragHandle
+        })}
+      />
+    ,
+    [height, width, isSorting, items, onSortEnd, onSortStart, ref, useDragHandle]
+  )
+
+  return (
+    <Virtuoso
+      className={className}
+      totalCount={items.length}
+      ItemContainer={ItemContainer}
+      ListContainer={ListContainer}
+      item={index => items[index]}
+    />
+  )
 );
 
 storiesOf('General | Layout / Vertical list', module)
