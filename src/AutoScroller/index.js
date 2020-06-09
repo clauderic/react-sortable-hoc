@@ -69,12 +69,10 @@ export default class AutoScroller {
 
     if (this.interval) {
       this.clear();
-      this.isAutoScrolling = false;
     }
 
     if (direction.x !== 0 || direction.y !== 0) {
       this.interval = setInterval(() => {
-        this.isAutoScrolling = true;
         const offset = {
           left: speed.x * direction.x,
           top: speed.y * direction.y,
