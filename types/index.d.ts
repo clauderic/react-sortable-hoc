@@ -82,6 +82,7 @@ export interface SortableContainerProps {
   onSortOver?: SortOverHandler;
   useDragHandle?: boolean;
   useWindowAsScrollContainer?: boolean;
+  useWindowAsAutoScrollerContainer?: boolean;
   hideSortableGhost?: boolean;
   lockToContainerEdges?: boolean;
   lockOffset?: Offset | [Offset, Offset];
