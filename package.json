@@ -53,9 +53,9 @@
     "prop-types": "^15.5.7"
   },
   "peerDependencies": {
-    "prop-types": "^15.5.7",
-    "react": "^0.14.0 || ^15.0.0 || ^16.0.0",
-    "react-dom": "^0.14.0 || ^15.0.0 || ^16.0.0"
+    "prop-types": ">=15.5.7",
+    "react": ">=0.14.0",
+    "react-dom": ">=0.14.0"
   },
   "devDependencies": {
     "@babel/core": "^7.2.2",
