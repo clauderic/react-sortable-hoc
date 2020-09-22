@@ -91,7 +91,8 @@ export function closest(el, fn) {
 }
 
 export function limit(min, max, value) {
-  return Math.max(min, Math.min(value, max));
+  const result = Math.max(min, Math.min(value, max));
+  return isNaN(result) ? value : result;
 }
 
 function getPixelValue(stringValue) {
