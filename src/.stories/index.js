@@ -612,6 +612,18 @@ storiesOf('General | Configuration / Options', module)
       </div>
     );
   })
+  .add('Lock to container edges', () => {
+    return (
+      <div className={style.root}>
+        <ListWrapper
+          component={SortableList}
+          lockToContainerEdges={true}
+          items={getItems(50, 59)}
+          helperClass={style.stylizedHelper}
+        />
+      </div>
+    );
+  })
   .add('Disabled items', () => {
     return (
       <div className={style.root}>
