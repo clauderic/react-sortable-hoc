@@ -45,6 +45,7 @@ export const propTypes = {
   }),
   shouldCancelStart: PropTypes.func,
   transitionDuration: PropTypes.number,
+  disableAnimation: PropTypes.bool,
   updateBeforeSortStart: PropTypes.func,
   useDragHandle: PropTypes.bool,
   useWindowAsScrollContainer: PropTypes.bool,

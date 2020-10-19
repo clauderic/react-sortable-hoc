@@ -623,7 +623,12 @@ export default function sortableContainer(
     }
 
     animateNodes() {
-      const {transitionDuration, hideSortableGhost, onSortOver} = this.props;
+      const {
+        transitionDuration,
+        hideSortableGhost,
+        onSortOver,
+        disableAnimation,
+      } = this.props;
       const {containerScrollDelta, windowScrollDelta} = this;
       const nodes = this.manager.getOrderedRefs();
       const sortingOffset = {
@@ -648,9 +653,9 @@ export default function sortableContainer(
 
         // For keyboard sorting, we want user input to dictate the position of the nodes
         const mustShiftBackward =
-          isKeySorting && (index > this.index && index <= prevIndex);
+          isKeySorting && index > this.index && index <= prevIndex;
         const mustShiftForward =
-          isKeySorting && (index < this.index && index >= prevIndex);
+          isKeySorting && index < this.index && index >= prevIndex;
 
         const translate = {
           x: 0,
@@ -811,8 +816,10 @@ export default function sortableContainer(
           }
         }
 
-        setTranslate3d(node, translate);
-        nodes[i].translate = translate;
+        if (!disableAnimation) {
+          setTranslate3d(node, translate);
+          nodes[i].translate = translate;
+        }
       }
 
       if (this.newIndex == null) {
