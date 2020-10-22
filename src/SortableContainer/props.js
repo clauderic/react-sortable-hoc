@@ -48,6 +48,8 @@ export const propTypes = {
   updateBeforeSortStart: PropTypes.func,
   useDragHandle: PropTypes.bool,
   useWindowAsScrollContainer: PropTypes.bool,
+  scrollXStartDistance: PropTypes.number,
+  scrollYStartDistance: PropTypes.number
 };
 
 export const defaultKeyCodes = {
@@ -72,6 +74,8 @@ export const defaultProps = {
   shouldCancelStart: defaultShouldCancelStart,
   transitionDuration: 300,
   useWindowAsScrollContainer: false,
+  scrollXStartDistance: 0,
+  scrollYStartDistance: 0
 };
 
 export const omittedProps = Object.keys(propTypes);

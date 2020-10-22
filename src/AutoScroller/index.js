@@ -1,7 +1,9 @@
 export default class AutoScroller {
-  constructor(container, onScrollCallback) {
+  constructor(container, onScrollCallback, scrollXStartDistance, scrollYStartDistance) {
     this.container = container;
     this.onScrollCallback = onScrollCallback;
+    this.scrollXStartDistance = scrollXStartDistance;
+    this.scrollYStartDistance = scrollYStartDistance;
   }
 
   clear() {
@@ -14,6 +16,8 @@ export default class AutoScroller {
   }
 
   update({translate, minTranslate, maxTranslate, width, height}) {
+    let scrollXStartDistance = this.scrollXStartDistance;
+    let scrollYStartDistance = this.scrollYStartDistance;
     const direction = {
       x: 0,
       y: 0,
@@ -41,25 +45,25 @@ export default class AutoScroller {
     const isLeft = scrollLeft === 0;
     const isRight = scrollWidth - scrollLeft - clientWidth === 0;
 
-    if (translate.y >= maxTranslate.y - height / 2 && !isBottom) {
+    if (translate.y >= maxTranslate.y - height / 2 - scrollYStartDistance && !isBottom) {
       // Scroll Down
       direction.y = 1;
       speed.y =
         acceleration.y *
         Math.abs((maxTranslate.y - height / 2 - translate.y) / height);
-    } else if (translate.x >= maxTranslate.x - width / 2 && !isRight) {
+    } else if (translate.x >= maxTranslate.x - width / 2 - scrollXStartDistance && !isRight) {
       // Scroll Right
       direction.x = 1;
       speed.x =
         acceleration.x *
         Math.abs((maxTranslate.x - width / 2 - translate.x) / width);
-    } else if (translate.y <= minTranslate.y + height / 2 && !isTop) {
+    } else if (translate.y <= minTranslate.y + height / 2 + scrollYStartDistance&& !isTop) {
       // Scroll Up
       direction.y = -1;
       speed.y =
         acceleration.y *
         Math.abs((translate.y - height / 2 - minTranslate.y) / height);
-    } else if (translate.x <= minTranslate.x + width / 2 && !isLeft) {
+    } else if (translate.x <= minTranslate.x + width / 2 + scrollXStartDistance && !isLeft) {
       // Scroll Left
       direction.x = -1;
       speed.x =
