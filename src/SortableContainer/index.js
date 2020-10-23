@@ -452,7 +452,7 @@ export default function sortableContainer(
       const {onSortMove} = this.props;
 
       // Prevent scrolling on mobile
-      if (typeof event.preventDefault === 'function') {
+      if (typeof event.preventDefault === 'function' && event.cancelable) {
         event.preventDefault();
       }
 
