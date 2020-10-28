@@ -466,7 +466,7 @@ export default function sortableContainer(
     };
 
     handleSortEnd = (event) => {
-      const {hideSortableGhost, onSortEnd} = this.props;
+      const {hideSortableGhost, onSortEnd, disableAnimation} = this.props;
       const {
         active: {collection},
         isKeySorting,
@@ -522,9 +522,11 @@ export default function sortableContainer(
         node.boundingClientRect = null;
 
         // Remove the transforms / transitions
-        setTranslate3d(el, null);
-        setTransitionDuration(el, null);
-        node.translate = null;
+        if (!disableAnimation) {
+          setTranslate3d(el, null);
+          setTransitionDuration(el, null);
+          node.translate = null;
+        }
       }
 
       // Stop autoscroll
