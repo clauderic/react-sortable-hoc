@@ -305,7 +305,13 @@ export default function sortableContainer(
           top: window.pageYOffset,
         };
 
-        this.helper = this.helperContainer.appendChild(cloneNode(node));
+        // removes any translate from the cloned node before appending it
+        const clonedNode = cloneNode(node);
+        setTranslate3d(clonedNode, null);
+        setTransitionDuration(clonedNode, null);
+        clonedNode.translate = null;
+
+        this.helper = this.helperContainer.appendChild(clonedNode);
 
         setInlineStyles(this.helper, {
           boxSizing: 'border-box',
