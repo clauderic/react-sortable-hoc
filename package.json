@@ -6,7 +6,7 @@
     "name": "Sairam",
     "email": "mohanvenkat459@gmail.com"
   },
-  "user": "sairam",
+  "user": "sairam459",
   "homepage": "https://github.com/sairam459/react-sortable-hoc",
   "source": "src/index.js",
   "main": "dist/react-sortable-hoc.js",
@@ -17,10 +17,10 @@
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "https://github.com/sairam/react-sortable-hoc.git"
+    "url": "https://github.com/sairam459/react-sortable-hoc.git"
   },
   "bugs": {
-    "url": "https://github.com/sairam/react-sortable-hoc/issues"
+    "url": "https://github.com/sairam459/react-sortable-hoc/issues"
   },
   "keywords": [
     "react",
