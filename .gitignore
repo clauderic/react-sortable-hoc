@@ -1,6 +1,5 @@
 *.DS_Store
 node_modules
-dist
 styles.min.css
 styles.min.css.map
 coverage
