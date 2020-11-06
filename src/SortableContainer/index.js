@@ -71,7 +71,7 @@ export default function sortableContainer(
     }
 
     componentDidMount() {
-      const {useWindowAsScrollContainer} = this.props;
+      const {useWindowAsScrollContainer, scrollXStartDistance, scrollYStartDistance} = this.props;
       const container = this.getContainer();
 
       Promise.resolve(container).then((containerNode) => {
@@ -96,6 +96,8 @@ export default function sortableContainer(
         this.autoScroller = new AutoScroller(
           this.scrollContainer,
           this.onAutoScroll,
+          scrollXStartDistance,
+          scrollYStartDistance
         );
 
         Object.keys(this.events).forEach((key) =>
