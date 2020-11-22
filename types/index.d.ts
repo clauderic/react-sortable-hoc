@@ -88,6 +88,7 @@ export interface SortableContainerProps {
   getContainer?: ContainerGetter;
   getHelperDimensions?: (sort: SortStart) => Dimensions;
   helperContainer?: HTMLElement | HelperContainerGetter;
+  disableAutoscroll?: boolean;
 }
 
 export interface SortableElementProps {
