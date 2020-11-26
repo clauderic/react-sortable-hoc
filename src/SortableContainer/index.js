@@ -839,7 +839,7 @@ export default function sortableContainer(
     }
 
     autoscroll = () => {
-      const {disableAutoscroll} = this.props;
+      const {disableAutoscroll,useWindowAsScrollContainer} = this.props;
       const {isKeySorting} = this.manager;
 
       if (disableAutoscroll) {
@@ -882,6 +882,7 @@ export default function sortableContainer(
         minTranslate: this.minTranslate,
         translate: this.translate,
         width: this.width,
+        useWindowAsScrollContainer,
       });
     };
 
