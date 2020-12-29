@@ -1,9 +1,9 @@
-import * as React from 'react';
-import PropTypes from 'prop-types';
-import {findDOMNode} from 'react-dom';
 import invariant from 'invariant';
-
-import {provideDisplayName, omit} from '../utils';
+import PropTypes from 'prop-types';
+import * as React from 'react';
+import {findDOMNode} from 'react-dom';
+import {SortableContext} from '../SortableContainer';
+import {omit, provideDisplayName} from '../utils';
 
 const propTypes = {
   index: PropTypes.number.isRequired,
@@ -23,9 +23,7 @@ export default function sortableElement(
       WrappedComponent,
     );
 
-    static contextTypes = {
-      manager: PropTypes.object.isRequired,
-    };
+    static contextType = SortableContext;
 
     static propTypes = propTypes;
 
@@ -84,11 +82,11 @@ export default function sortableElement(
         config.withRef,
         'To access the wrapped instance, you need to pass in {withRef: true} as the second argument of the SortableElement() call',
       );
-      return this.refs.wrappedInstance;
+      return this.wrappedInstance.current;
     }
 
     render() {
-      const ref = config.withRef ? 'wrappedInstance' : null;
+      const ref = config.withRef ? this.wrappedInstance : null;
 
       return <WrappedComponent ref={ref} {...omit(this.props, omittedProps)} />;
     }

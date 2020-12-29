@@ -1,8 +1,8 @@
-import * as React from 'react';
-import {findDOMNode} from 'react-dom';
 import invariant from 'invariant';
+import * as React from 'react';
+import { findDOMNode } from 'react-dom';
+import { provideDisplayName } from '../utils';
 
-import {provideDisplayName} from '../utils';
 
 export default function sortableHandle(
   WrappedComponent,
@@ -21,11 +21,13 @@ export default function sortableHandle(
         config.withRef,
         'To access the wrapped instance, you need to pass in {withRef: true} as the second argument of the SortableHandle() call',
       );
-      return this.refs.wrappedInstance;
+      return this.wrappedInstance.current;
     }
 
+    wrappedInstance = React.createRef();
+
     render() {
-      const ref = config.withRef ? 'wrappedInstance' : null;
+      const ref = config.withRef ? this.wrappedInstance : null;
 
       return <WrappedComponent ref={ref} {...this.props} />;
     }
