@@ -2,6 +2,21 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+<a name="2.0.0"></a>
+
+# [2.0.0](https://github.com/clauderic/react-sortable-hoc/compare/v1.11.0...v2.0.0) (2021-03-18)
+
+### Bug Fixes
+
+- Fixed React strict mode warnings by upgrading to new React context API and removing legacy refs ([#624](https://github.com/clauderic/react-sortable-hoc/pull/624)). Since the new context API was introduced in React ^16.3.0, the peer dependencies had to be upgraded accordingly.
+- Check if event is cancellable before calling `event.preventDefault()` [#752](https://github.com/clauderic/react-sortable-hoc/pull/752).
+- Fix touch events being lost by listening to event.target on mobile [#586](https://github.com/clauderic/react-sortable-hoc/pull/586).
+- Added `disableAutoscroll` prop to PropType definitions [#755](https://github.com/clauderic/react-sortable-hoc/pull/755).
+
+### Dependencies
+
+- Updated minimum peer dependencies for `react` and `react-dom` to ^16.3.0. Added ^17.0.0 to list of supported peer dependencies.
+
 <a name="1.11.0"></a>
 
 # [1.11.0](https://github.com/clauderic/react-sortable-hoc/compare/v1.10.1...v1.11.0) (2020-01-20)
