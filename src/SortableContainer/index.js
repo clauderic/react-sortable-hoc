@@ -392,7 +392,7 @@ export default function sortableContainer(
             .forEach((className) => this.helper.classList.add(className));
         }
 
-        this.listenerNode = event.touches ? node : this.contentWindow;
+        this.listenerNode = event.touches ? event.target : this.contentWindow;
 
         if (isKeySorting) {
           this.listenerNode.addEventListener('wheel', this.handleKeyEnd, true);
