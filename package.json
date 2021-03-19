@@ -48,11 +48,11 @@
     }
   },
   "dependencies": {
-    "@babel/runtime": "^7.2.0",
     "invariant": "^2.2.4",
     "prop-types": "^15.5.7"
   },
   "peerDependencies": {
+    "@babel/runtime": "^7.2.0",
     "prop-types": "^15.5.7",
     "react": "^0.14.0 || ^15.0.0 || ^16.0.0 || ^17.0.0",
     "react-dom": "^0.14.0 || ^15.0.0 || ^16.0.0 || ^17.0.0"
