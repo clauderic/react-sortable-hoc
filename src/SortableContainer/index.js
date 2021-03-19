@@ -1,5 +1,4 @@
 import * as React from 'react';
-import PropTypes from 'prop-types';
 import {findDOMNode} from 'react-dom';
 import invariant from 'invariant';
 
@@ -37,6 +36,10 @@ import {
   defaultKeyCodes,
 } from './props';
 
+export const SortableContext = React.createContext({
+  manager: {},
+});
+
 export default function sortableContainer(
   WrappedComponent,
   config = {withRef: false},
@@ -44,10 +47,13 @@ export default function sortableContainer(
   return class WithSortableContainer extends React.Component {
     constructor(props) {
       super(props);
+      const manager = new Manager();
 
       validateProps(props);
 
-      this.manager = new Manager();
+      this.manager = manager;
+      this.wrappedInstance = React.createRef();
+      this.sortableContextValue = {manager};
       this.events = {
         end: this.handleEnd,
         move: this.handleMove,
@@ -60,15 +66,6 @@ export default function sortableContainer(
     static displayName = provideDisplayName('sortableList', WrappedComponent);
     static defaultProps = defaultProps;
     static propTypes = propTypes;
-    static childContextTypes = {
-      manager: PropTypes.object.isRequired,
-    };
-
-    getChildContext() {
-      return {
-        manager: this.manager,
-      };
-    }
 
     componentDidMount() {
       const {useWindowAsScrollContainer} = this.props;
@@ -898,7 +895,7 @@ export default function sortableContainer(
         'To access the wrapped instance, you need to pass in {withRef: true} as the second argument of the SortableContainer() call',
       );
 
-      return this.refs.wrappedInstance;
+      return this.wrappedInstance.current;
     }
 
     getContainer() {
@@ -1047,9 +1044,13 @@ export default function sortableContainer(
     };
 
     render() {
-      const ref = config.withRef ? 'wrappedInstance' : null;
+      const ref = config.withRef ? this.wrappedInstance : null;
 
-      return <WrappedComponent ref={ref} {...omit(this.props, omittedProps)} />;
+      return (
+        <SortableContext.Provider value={this.sortableContextValue}>
+          <WrappedComponent ref={ref} {...omit(this.props, omittedProps)} />
+        </SortableContext.Provider>
+      );
     }
 
     get helperContainer() {
