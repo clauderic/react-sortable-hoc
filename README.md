@@ -10,6 +10,12 @@
 
 ### Examples available here: <a href="#">http://clauderic.github.io/react-sortable-hoc/</a>
 
+## ⚠️ Important notice for new consumers
+
+New consumers are strongly encouraged to **check out [@dnd-kit](https://github.com/clauderic/dnd-kit) before adopting this library in a new project**. It supports all of the features of react-sortable-hoc, but with a more modern and extensible architecture.
+
+This library will continue to receive critical updates and bug fixes for the foreseeable future, but there are no new features planned. In future versions of React, the [`findDOMNode`](https://reactjs.org/docs/react-dom.html#finddomnode) method will be deprecated. This method is a critical piece of the architecture of `react-sortable-hoc`, and it's unlikely that the library could continue to exist with its current architecture once this method is deprecated. In light of this, all development efforts have been redirected towards [@dnd-kit](https://github.com/clauderic/dnd-kit).
+
 ## Features
 
 - **Higher Order Components** – Integrates with your existing components
