@@ -103,7 +103,7 @@
     "rollup-plugin-replace": "^2.1.0",
     "rollup-plugin-uglify": "^6.0.0",
     "sass-loader": "^7.1.0",
-    "standard-version": "^4.4.0",
+    "standard-version": "^8.0.1",
     "style-loader": "^0.23.1"
   }
 }
