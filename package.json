@@ -81,7 +81,7 @@
     "husky": "^3.0.4",
     "lodash": "^4.12.0",
     "node-sass": "^4.11.0",
-    "postcss": "^7.0.7",
+    "postcss": "^8.2.10",
     "postcss-loader": "^3.0.0",
     "prettier": "^1.18.2",
     "pretty-quick": "^1.11.1",
