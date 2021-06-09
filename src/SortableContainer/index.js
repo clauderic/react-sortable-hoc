@@ -620,7 +620,7 @@ export default function sortableContainer(
     }
 
     animateNodes() {
-      const {transitionDuration, hideSortableGhost, onSortOver} = this.props;
+      const {rtl, transitionDuration, hideSortableGhost, onSortOver} = this.props;
       const {containerScrollDelta, windowScrollDelta} = this;
       const nodes = this.manager.getOrderedRefs();
       const sortingOffset = {
@@ -706,14 +706,19 @@ export default function sortableContainer(
           setTransitionDuration(node, transitionDuration);
         }
 
+        const translateXFactor = rtl ? -1 : 1;
+
         if (this.axis.x) {
           if (this.axis.y) {
             // Calculations for a grid setup
             if (
               mustShiftForward ||
               (index < this.index &&
-                ((sortingOffset.left + windowScrollDelta.left - offset.width <=
-                  edgeOffset.left &&
+                (((
+                    (!rtl && (sortingOffset.left + windowScrollDelta.left - offset.width <= edgeOffset.left))
+                    ||
+                    (rtl && (sortingOffset.left + windowScrollDelta.left + offset.width >= edgeOffset.left))
+                  ) &&
                   sortingOffset.top + windowScrollDelta.top <=
                     edgeOffset.top + offset.height) ||
                   sortingOffset.top + windowScrollDelta.top + offset.height <=
@@ -721,10 +726,11 @@ export default function sortableContainer(
             ) {
               // If the current node is to the left on the same row, or above the node that's being dragged
               // then move it to the right
-              translate.x = this.width + this.marginOffset.x;
+              translate.x = translateXFactor * (this.width + this.marginOffset.x);
               if (
-                edgeOffset.left + translate.x >
-                this.containerBoundingRect.width - offset.width * 2
+                (!rtl && (edgeOffset.left + translate.x > this.containerBoundingRect.width - offset.width * 2))
+                    ||
+                (rtl && edgeOffset.left + translate.x < this.containerBoundingRect.left + offset.width)
               ) {
                 // If it moves passed the right bounds, then animate it to the first position of the next row.
                 // We just use the offset of the next node to calculate where to move, because that node's original position
@@ -740,8 +746,11 @@ export default function sortableContainer(
             } else if (
               mustShiftBackward ||
               (index > this.index &&
-                ((sortingOffset.left + windowScrollDelta.left + offset.width >=
-                  edgeOffset.left &&
+                (((
+                    (!rtl && (sortingOffset.left + windowScrollDelta.left + offset.width >= edgeOffset.left))
+                    ||
+                    (rtl && (sortingOffset.left + windowScrollDelta.left - offset.width <= edgeOffset.left))
+                  ) &&
                   sortingOffset.top + windowScrollDelta.top + offset.height >=
                     edgeOffset.top) ||
                   sortingOffset.top + windowScrollDelta.top + offset.height >=
@@ -749,10 +758,11 @@ export default function sortableContainer(
             ) {
               // If the current node is to the right on the same row, or below the node that's being dragged
               // then move it to the left
-              translate.x = -(this.width + this.marginOffset.x);
+              translate.x = - 1 * translateXFactor * (this.width + this.marginOffset.x);
               if (
-                edgeOffset.left + translate.x <
-                this.containerBoundingRect.left + offset.width
+                  (!rtl && (edgeOffset.left + translate.x < this.containerBoundingRect.left + offset.width))
+                  ||
+                  (rtl && (edgeOffset.left + translate.x > this.containerBoundingRect.width - this.containerBoundingRect.left - offset.width * 2))
               ) {
                 // If it moves passed the left bounds, then animate it to the last position of the previous row.
                 // We just use the offset of the previous node to calculate where to move, because that node's original position
@@ -768,18 +778,26 @@ export default function sortableContainer(
             if (
               mustShiftBackward ||
               (index > this.index &&
-                sortingOffset.left + windowScrollDelta.left + offset.width >=
-                  edgeOffset.left)
+                  (
+                      (!rtl && (sortingOffset.left + windowScrollDelta.left + offset.width >= edgeOffset.left))
+                      ||
+                      (rtl && (sortingOffset.left + windowScrollDelta.left - offset.width <= edgeOffset.left))
+                  )
+              )
             ) {
-              translate.x = -(this.width + this.marginOffset.x);
+              translate.x = -1 * translateXFactor * (this.width + this.marginOffset.x);
               this.newIndex = index;
             } else if (
               mustShiftForward ||
               (index < this.index &&
-                sortingOffset.left + windowScrollDelta.left <=
-                  edgeOffset.left + offset.width)
+                  (
+                      (!rtl && (sortingOffset.left + windowScrollDelta.left - offset.width <= edgeOffset.left))
+                      ||
+                      (rtl && (sortingOffset.left + windowScrollDelta.left + offset.width >= edgeOffset.left))
+                  )
+              )
             ) {
-              translate.x = this.width + this.marginOffset.x;
+              translate.x = translateXFactor * (this.width + this.marginOffset.x);
 
               if (this.newIndex == null) {
                 this.newIndex = index;
@@ -879,6 +897,7 @@ export default function sortableContainer(
         minTranslate: this.minTranslate,
         translate: this.translate,
         width: this.width,
+        rtl: this.props.rtl
       });
     };
 
@@ -963,6 +982,9 @@ export default function sortableContainer(
     };
 
     keyMove = (shift) => {
+      if (this.props.rtl && this.props.axis.indexOf('x') !== -1) {
+        shift = -1 * shift;
+      }
       const nodes = this.manager.getOrderedRefs();
       const {index: lastIndex} = nodes[nodes.length - 1].node.sortableInfo;
       const newIndex = this.newIndex + shift;

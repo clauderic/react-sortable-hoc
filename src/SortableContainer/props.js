@@ -6,6 +6,7 @@ import defaultGetHelperDimensions from './defaultGetHelperDimensions';
 import defaultShouldCancelStart from './defaultShouldCancelStart';
 
 export const propTypes = {
+  rtl: PropTypes.bool,
   axis: PropTypes.oneOf(['x', 'y', 'xy']),
   contentWindow: PropTypes.any,
   disableAutoscroll: PropTypes.bool,
@@ -59,6 +60,7 @@ export const defaultKeyCodes = {
 };
 
 export const defaultProps = {
+  rtl: false,
   axis: 'y',
   disableAutoscroll: false,
   distance: 0,
