@@ -11,6 +11,10 @@ $focusedOutlineColor: #4c9ffe;
   align-items: center;
 }
 
+.rootAutoHeight {
+  height: auto;
+}
+
 // Base styles
 .list {
   width: 400px;
@@ -120,6 +124,10 @@ $focusedOutlineColor: #4c9ffe;
   white-space: nowrap;
   border: 0;
   background-color: transparent;
+}
+
+.gridAutoHeight {
+  height: auto;
 }
 
 .gridItem {

@@ -597,6 +597,26 @@ storiesOf('General | Layout / Grid', module)
         />
       </div>
     );
+  })
+  .add('Window as scroll container', () => {
+    return (
+      <div className={classNames(style.root, style.rootAutoHeight)}>
+        <ListWrapper
+          component={SortableList}
+          axis={'xy'}
+          items={getItems(40, false)}
+          helperClass={style.stylizedHelper}
+          useWindowAsScrollContainer
+          className={classNames(
+            style.list,
+            style.stylizedList,
+            style.grid,
+            style.gridAutoHeight,
+          )}
+          itemClass={classNames(style.stylizedItem, style.gridItem)}
+        />
+      </div>
+    );
   });
 
 storiesOf('General | Configuration / Options', module)
