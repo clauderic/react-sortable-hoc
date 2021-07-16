@@ -438,22 +438,20 @@ const ShrinkingSortableList = SortableContainer(
   },
 );
 
-const NestedSortableList = SortableContainer(
-  ({className, items, isSorting}) => {
-    return (
-      <div className={className}>
-        {items.map((value, index) => (
-          <Category
-            tabbable
-            key={`category-${value}`}
-            index={index}
-            value={value}
-          />
-        ))}
-      </div>
-    );
-  },
-);
+const NestedSortableList = SortableContainer(({className, items}) => {
+  return (
+    <div className={className}>
+      {items.map((value, index) => (
+        <Category
+          tabbable
+          key={`category-${value}`}
+          index={index}
+          value={value}
+        />
+      ))}
+    </div>
+  );
+});
 
 storiesOf('General | Layout / Vertical list', module)
   .add('Basic setup', () => {
@@ -515,11 +513,6 @@ storiesOf('General | Layout / Horizontal list', module).add(
 
 storiesOf('General | Layout / Grid', module)
   .add('Basic setup', () => {
-    const transformOrigin = {
-      x: 0,
-      y: 0,
-    };
-
     return (
       <div className={style.root}>
         <ListWrapper
