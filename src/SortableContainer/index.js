@@ -724,7 +724,7 @@ export default function sortableContainer(
               translate.x = this.width + this.marginOffset.x;
               if (
                 edgeOffset.left + translate.x >
-                this.containerBoundingRect.width - offset.width * 2
+                this.containerBoundingRect.width / 2 - offset.width * 2
               ) {
                 // If it moves passed the right bounds, then animate it to the first position of the next row.
                 // We just use the offset of the next node to calculate where to move, because that node's original position
