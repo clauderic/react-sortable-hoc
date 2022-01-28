@@ -161,8 +161,8 @@ export function getEdgeOffset(node, parent, offset = {left: 0, top: 0}) {
 
   // Get the actual offsetTop / offsetLeft value, no matter how deep the node is nested
   const nodeOffset = {
-    left: offset.left + node.offsetLeft,
-    top: offset.top + node.offsetTop,
+    left: offset.left + node.getBoundingClientRect().left,
+    top: offset.top + node.getBoundingClientRect().top,
   };
 
   if (node.parentNode === parent) {
@@ -249,7 +249,10 @@ function isScrollable(el) {
   );
 }
 
-export function getScrollingParent(el) {
+export function getScrollingParent(el, container = false) {
+  if (container) {
+    return document.querySelector(container);
+  }
   if (!(el instanceof HTMLElement)) {
     return null;
   } else if (isScrollable(el)) {

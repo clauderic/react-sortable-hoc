@@ -88,7 +88,8 @@ export default function sortableContainer(
 
         this.scrollContainer = useWindowAsScrollContainer
           ? this.document.scrollingElement || this.document.documentElement
-          : getScrollingParent(this.container) || this.container;
+          : getScrollingParent(this.container, this.props.scrollContainer) ||
+            this.container;
 
         this.autoScroller = new AutoScroller(
           this.scrollContainer,
@@ -323,7 +324,7 @@ export default function sortableContainer(
 
           setInlineStyles(node, {
             opacity: 0,
-            visibility: 'hidden',
+            // visibility: 'hidden',
           });
         }
 
@@ -506,7 +507,7 @@ export default function sortableContainer(
       if (hideSortableGhost && this.sortableGhost) {
         setInlineStyles(this.sortableGhost, {
           opacity: '',
-          visibility: '',
+          // visibility: '',
         });
       }
 
@@ -636,8 +637,8 @@ export default function sortableContainer(
       for (let i = 0, len = nodes.length; i < len; i++) {
         const {node} = nodes[i];
         const {index} = node.sortableInfo;
-        const width = node.offsetWidth;
-        const height = node.offsetHeight;
+        const width = node.getBoundingClientRect().width;
+        const height = node.getBoundingClientRect().height;
         const offset = {
           height: this.height > height ? height / 2 : this.height / 2,
           width: this.width > width ? width / 2 : this.width / 2,
@@ -696,7 +697,7 @@ export default function sortableContainer(
 
             setInlineStyles(node, {
               opacity: 0,
-              visibility: 'hidden',
+              // visibility: 'hidden',
             });
           }
           continue;
@@ -789,9 +790,7 @@ export default function sortableContainer(
         } else if (this.axis.y) {
           if (
             mustShiftBackward ||
-            (index > this.index &&
-              sortingOffset.top + windowScrollDelta.top + offset.height >=
-                edgeOffset.top)
+            (index > this.index && sortingOffset.top + windowScrollDelta.top + this.boundingClientRect.height >= edgeOffset.top + offset.height)
           ) {
             translate.y = -(this.height + this.marginOffset.y);
             this.newIndex = index;
