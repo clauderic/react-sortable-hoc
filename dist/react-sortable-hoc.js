@@ -1,10 +1,736 @@
 'use strict';
 
-Object.defineProperty(exports, '__esModule', {value: true});
+Object.defineProperty(exports, '__esModule', { value: true });
 
-function _interopDefault(ex) {
-  return ex && typeof ex === 'object' && 'default' in ex ? ex['default'] : ex;
+function _interopDefault (ex) { return (ex && (typeof ex === 'object') && 'default' in ex) ? ex['default'] : ex; }
+
+var _extends = _interopDefault(require('@babel/runtime/helpers/extends'));
+var _slicedToArray = _interopDefault(require('@babel/runtime/helpers/slicedToArray'));
+var _classCallCheck = _interopDefault(require('@babel/runtime/helpers/classCallCheck'));
+var _createClass = _interopDefault(require('@babel/runtime/helpers/createClass'));
+var _assertThisInitialized = _interopDefault(require('@babel/runtime/helpers/assertThisInitialized'));
+var _inherits = _interopDefault(require('@babel/runtime/helpers/inherits'));
+var _possibleConstructorReturn = _interopDefault(require('@babel/runtime/helpers/possibleConstructorReturn'));
+var _getPrototypeOf = _interopDefault(require('@babel/runtime/helpers/getPrototypeOf'));
+var _defineProperty = _interopDefault(require('@babel/runtime/helpers/defineProperty'));
+var React = require('react');
+var PropTypes = _interopDefault(require('prop-types'));
+var reactDom = require('react-dom');
+var invariant = _interopDefault(require('invariant'));
+var _toConsumableArray = _interopDefault(require('@babel/runtime/helpers/toConsumableArray'));
+
+var Manager = function () {
+  function Manager() {
+    _classCallCheck(this, Manager);
+
+    _defineProperty(this, "refs", {});
+  }
+
+  _createClass(Manager, [{
+    key: "add",
+    value: function add(collection, ref) {
+      if (!this.refs[collection]) {
+        this.refs[collection] = [];
+      }
+
+      this.refs[collection].push(ref);
+    }
+  }, {
+    key: "remove",
+    value: function remove(collection, ref) {
+      var index = this.getIndex(collection, ref);
+
+      if (index !== -1) {
+        this.refs[collection].splice(index, 1);
+      }
+    }
+  }, {
+    key: "isActive",
+    value: function isActive() {
+      return this.active;
+    }
+  }, {
+    key: "getActive",
+    value: function getActive() {
+      var _this = this;
+
+      return this.refs[this.active.collection].find(function (_ref) {
+        var node = _ref.node;
+        return node.sortableInfo.index == _this.active.index;
+      });
+    }
+  }, {
+    key: "getIndex",
+    value: function getIndex(collection, ref) {
+      return this.refs[collection].indexOf(ref);
+    }
+  }, {
+    key: "getOrderedRefs",
+    value: function getOrderedRefs() {
+      var collection = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : this.active.collection;
+      return this.refs[collection].sort(sortByIndex);
+    }
+  }]);
+
+  return Manager;
+}();
+
+function sortByIndex(_ref2, _ref3) {
+  var index1 = _ref2.node.sortableInfo.index;
+  var index2 = _ref3.node.sortableInfo.index;
+  return index1 - index2;
 }
+
+function arrayMove(array, from, to) {
+  if (process.env.NODE_ENV !== 'production') {
+    if (typeof console !== 'undefined') {
+      console.warn("Deprecation warning: arrayMove will no longer be exported by 'react-sortable-hoc' in the next major release. Please install the `array-move` package locally instead. https://www.npmjs.com/package/array-move");
+    }
+  }
+
+  array = array.slice();
+  array.splice(to < 0 ? array.length + to : to, 0, array.splice(from, 1)[0]);
+  return array;
+}
+function omit(obj, keysToOmit) {
+  return Object.keys(obj).reduce(function (acc, key) {
+    if (keysToOmit.indexOf(key) === -1) {
+      acc[key] = obj[key];
+    }
+
+    return acc;
+  }, {});
+}
+var events = {
+  end: ['touchend', 'touchcancel', 'mouseup'],
+  move: ['touchmove', 'mousemove'],
+  start: ['touchstart', 'mousedown']
+};
+var vendorPrefix = function () {
+  if (typeof window === 'undefined' || typeof document === 'undefined') {
+    return '';
+  }
+
+  var styles = window.getComputedStyle(document.documentElement, '') || ['-moz-hidden-iframe'];
+  var pre = (Array.prototype.slice.call(styles).join('').match(/-(moz|webkit|ms)-/) || styles.OLink === '' && ['', 'o'])[1];
+
+  switch (pre) {
+    case 'ms':
+      return 'ms';
+
+    default:
+      return pre && pre.length ? pre[0].toUpperCase() + pre.substr(1) : '';
+  }
+}();
+function setInlineStyles(node, styles) {
+  Object.keys(styles).forEach(function (key) {
+    node.style[key] = styles[key];
+  });
+}
+function setTranslate3d(node, translate) {
+  node.style["".concat(vendorPrefix, "Transform")] = translate == null ? '' : "translate3d(".concat(translate.x, "px,").concat(translate.y, "px,0)");
+}
+function setTransitionDuration(node, duration) {
+  node.style["".concat(vendorPrefix, "TransitionDuration")] = duration == null ? '' : "".concat(duration, "ms");
+}
+function closest(el, fn) {
+  while (el) {
+    if (fn(el)) {
+      return el;
+    }
+
+    el = el.parentNode;
+  }
+
+  return null;
+}
+function limit(min, max, value) {
+  return Math.max(min, Math.min(value, max));
+}
+
+function getPixelValue(stringValue) {
+  if (stringValue.substr(-2) === 'px') {
+    return parseFloat(stringValue);
+  }
+
+  return 0;
+}
+
+function getElementMargin(element) {
+  var style = window.getComputedStyle(element);
+  return {
+    bottom: getPixelValue(style.marginBottom),
+    left: getPixelValue(style.marginLeft),
+    right: getPixelValue(style.marginRight),
+    top: getPixelValue(style.marginTop)
+  };
+}
+function provideDisplayName(prefix, Component) {
+  var componentName = Component.displayName || Component.name;
+  return componentName ? "".concat(prefix, "(").concat(componentName, ")") : prefix;
+}
+function getScrollAdjustedBoundingClientRect(node, scrollDelta) {
+  var boundingClientRect = node.getBoundingClientRect();
+  return {
+    top: boundingClientRect.top + scrollDelta.top,
+    left: boundingClientRect.left + scrollDelta.left
+  };
+}
+function getPosition(event) {
+  if (event.touches && event.touches.length) {
+    return {
+      x: event.touches[0].pageX,
+      y: event.touches[0].pageY
+    };
+  } else if (event.changedTouches && event.changedTouches.length) {
+    return {
+      x: event.changedTouches[0].pageX,
+      y: event.changedTouches[0].pageY
+    };
+  } else {
+    return {
+      x: event.pageX,
+      y: event.pageY
+    };
+  }
+}
+function isTouchEvent(event) {
+  return event.touches && event.touches.length || event.changedTouches && event.changedTouches.length;
+}
+function getEdgeOffset(node, parent) {
+  var offset = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : {
+    left: 0,
+    top: 0
+  };
+
+  if (!node) {
+    return undefined;
+  }
+
+  var nodeOffset = {
+    left: offset.left + node.offsetLeft,
+    top: offset.top + node.offsetTop
+  };
+
+  if (node.parentNode === parent) {
+    return nodeOffset;
+  }
+
+  return getEdgeOffset(node.parentNode, parent, nodeOffset);
+}
+function getTargetIndex(newIndex, prevIndex, oldIndex) {
+  if (newIndex < oldIndex && newIndex > prevIndex) {
+    return newIndex - 1;
+  } else if (newIndex > oldIndex && newIndex < prevIndex) {
+    return newIndex + 1;
+  } else {
+    return newIndex;
+  }
+}
+function getLockPixelOffset(_ref) {
+  var lockOffset = _ref.lockOffset,
+      width = _ref.width,
+      height = _ref.height;
+  var offsetX = lockOffset;
+  var offsetY = lockOffset;
+  var unit = 'px';
+
+  if (typeof lockOffset === 'string') {
+    var match = /^[+-]?\d*(?:\.\d*)?(px|%)$/.exec(lockOffset);
+    invariant(match !== null, 'lockOffset value should be a number or a string of a ' + 'number followed by "px" or "%". Given %s', lockOffset);
+    offsetX = parseFloat(lockOffset);
+    offsetY = parseFloat(lockOffset);
+    unit = match[1];
+  }
+
+  invariant(isFinite(offsetX) && isFinite(offsetY), 'lockOffset value should be a finite. Given %s', lockOffset);
+
+  if (unit === '%') {
+    offsetX = offsetX * width / 100;
+    offsetY = offsetY * height / 100;
+  }
+
+  return {
+    x: offsetX,
+    y: offsetY
+  };
+}
+function getLockPixelOffsets(_ref2) {
+  var height = _ref2.height,
+      width = _ref2.width,
+      lockOffset = _ref2.lockOffset;
+  var offsets = Array.isArray(lockOffset) ? lockOffset : [lockOffset, lockOffset];
+  invariant(offsets.length === 2, 'lockOffset prop of SortableContainer should be a single ' + 'value or an array of exactly two values. Given %s', lockOffset);
+
+  var _offsets = _slicedToArray(offsets, 2),
+      minLockOffset = _offsets[0],
+      maxLockOffset = _offsets[1];
+
+  return [getLockPixelOffset({
+    height: height,
+    lockOffset: minLockOffset,
+    width: width
+  }), getLockPixelOffset({
+    height: height,
+    lockOffset: maxLockOffset,
+    width: width
+  })];
+}
+
+function isScrollable(el) {
+  var computedStyle = window.getComputedStyle(el);
+  var overflowRegex = /(auto|scroll)/;
+  var properties = ['overflow', 'overflowX', 'overflowY'];
+  return properties.find(function (property) {
+    return overflowRegex.test(computedStyle[property]);
+  });
+}
+
+function getScrollingParent(el) {
+  var container = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : false;
+
+  if (container) {
+    return document.querySelector(container);
+  }
+
+  if (!(el instanceof HTMLElement)) {
+    return null;
+  } else if (isScrollable(el)) {
+    return el;
+  } else {
+    return getScrollingParent(el.parentNode);
+  }
+}
+function getContainerGridGap(element) {
+  var style = window.getComputedStyle(element);
+
+  if (style.display === 'grid') {
+    return {
+      x: getPixelValue(style.gridColumnGap),
+      y: getPixelValue(style.gridRowGap)
+    };
+  }
+
+  return {
+    x: 0,
+    y: 0
+  };
+}
+var KEYCODE = {
+  TAB: 9,
+  ESC: 27,
+  SPACE: 32,
+  LEFT: 37,
+  UP: 38,
+  RIGHT: 39,
+  DOWN: 40
+};
+var NodeType = {
+  Anchor: 'A',
+  Button: 'BUTTON',
+  Canvas: 'CANVAS',
+  Input: 'INPUT',
+  Option: 'OPTION',
+  Textarea: 'TEXTAREA',
+  Select: 'SELECT'
+};
+function cloneNode(node) {
+  var selector = 'input, textarea, select, canvas, [contenteditable]';
+  var fields = node.querySelectorAll(selector);
+  var clonedNode = node.cloneNode(true);
+
+  var clonedFields = _toConsumableArray(clonedNode.querySelectorAll(selector));
+
+  clonedFields.forEach(function (field, i) {
+    if (field.type !== 'file') {
+      field.value = fields[i].value;
+    }
+
+    if (field.type === 'radio' && field.name) {
+      field.name = "__sortableClone__".concat(field.name);
+    }
+
+    if (field.tagName === NodeType.Canvas && fields[i].width > 0 && fields[i].height > 0) {
+      var destCtx = field.getContext('2d');
+      destCtx.drawImage(fields[i], 0, 0);
+    }
+  });
+  return clonedNode;
+}
+
+function _createSuper(Derived) { var hasNativeReflectConstruct = _isNativeReflectConstruct(); return function _createSuperInternal() { var Super = _getPrototypeOf(Derived), result; if (hasNativeReflectConstruct) { var NewTarget = _getPrototypeOf(this).constructor; result = Reflect.construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return _possibleConstructorReturn(this, result); }; }
+
+function _isNativeReflectConstruct() { if (typeof Reflect === "undefined" || !Reflect.construct) return false; if (Reflect.construct.sham) return false; if (typeof Proxy === "function") return true; try { Boolean.prototype.valueOf.call(Reflect.construct(Boolean, [], function () {})); return true; } catch (e) { return false; } }
+function sortableHandle(WrappedComponent) {
+  var _class, _temp;
+
+  var config = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {
+    withRef: false
+  };
+  return _temp = _class = function (_React$Component) {
+    _inherits(WithSortableHandle, _React$Component);
+
+    var _super = _createSuper(WithSortableHandle);
+
+    function WithSortableHandle() {
+      _classCallCheck(this, WithSortableHandle);
+
+      return _super.apply(this, arguments);
+    }
+
+    _createClass(WithSortableHandle, [{
+      key: "componentDidMount",
+      value: function componentDidMount() {
+        var node = reactDom.findDOMNode(this);
+        node.sortableHandle = true;
+      }
+    }, {
+      key: "getWrappedInstance",
+      value: function getWrappedInstance() {
+        invariant(config.withRef, 'To access the wrapped instance, you need to pass in {withRef: true} as the second argument of the SortableHandle() call');
+        return this.refs.wrappedInstance;
+      }
+    }, {
+      key: "render",
+      value: function render() {
+        var ref = config.withRef ? 'wrappedInstance' : null;
+        return React.createElement(WrappedComponent, _extends({
+          ref: ref
+        }, this.props));
+      }
+    }]);
+
+    return WithSortableHandle;
+  }(React.Component), _defineProperty(_class, "displayName", provideDisplayName('sortableHandle', WrappedComponent)), _temp;
+}
+function isSortableHandle(node) {
+  return node.sortableHandle != null;
+}
+
+var AutoScroller = function () {
+  function AutoScroller(container, onScrollCallback) {
+    _classCallCheck(this, AutoScroller);
+
+    this.container = container;
+    this.onScrollCallback = onScrollCallback;
+  }
+
+  _createClass(AutoScroller, [{
+    key: "clear",
+    value: function clear() {
+      if (this.interval == null) {
+        return;
+      }
+
+      clearInterval(this.interval);
+      this.interval = null;
+    }
+  }, {
+    key: "update",
+    value: function update(_ref) {
+      var _this = this;
+
+      var translate = _ref.translate,
+          minTranslate = _ref.minTranslate,
+          maxTranslate = _ref.maxTranslate,
+          width = _ref.width,
+          height = _ref.height;
+      var direction = {
+        x: 0,
+        y: 0
+      };
+      var speed = {
+        x: 1,
+        y: 1
+      };
+      var acceleration = {
+        x: 10,
+        y: 10
+      };
+      var _this$container = this.container,
+          scrollTop = _this$container.scrollTop,
+          scrollLeft = _this$container.scrollLeft,
+          scrollHeight = _this$container.scrollHeight,
+          scrollWidth = _this$container.scrollWidth,
+          clientHeight = _this$container.clientHeight,
+          clientWidth = _this$container.clientWidth;
+      var isTop = scrollTop === 0;
+      var isBottom = scrollHeight - scrollTop - clientHeight === 0;
+      var isLeft = scrollLeft === 0;
+      var isRight = scrollWidth - scrollLeft - clientWidth === 0;
+
+      if (translate.y >= maxTranslate.y - height / 2 && !isBottom) {
+        direction.y = 1;
+        speed.y = acceleration.y * Math.abs((maxTranslate.y - height / 2 - translate.y) / height);
+      } else if (translate.x >= maxTranslate.x - width / 2 && !isRight) {
+        direction.x = 1;
+        speed.x = acceleration.x * Math.abs((maxTranslate.x - width / 2 - translate.x) / width);
+      } else if (translate.y <= minTranslate.y + height / 2 && !isTop) {
+        direction.y = -1;
+        speed.y = acceleration.y * Math.abs((translate.y - height / 2 - minTranslate.y) / height);
+      } else if (translate.x <= minTranslate.x + width / 2 && !isLeft) {
+        direction.x = -1;
+        speed.x = acceleration.x * Math.abs((translate.x - width / 2 - minTranslate.x) / width);
+      }
+
+      if (this.interval) {
+        this.clear();
+        this.isAutoScrolling = false;
+      }
+
+      if (direction.x !== 0 || direction.y !== 0) {
+        this.interval = setInterval(function () {
+          _this.isAutoScrolling = true;
+          var offset = {
+            left: speed.x * direction.x,
+            top: speed.y * direction.y
+          };
+          _this.container.scrollTop += offset.top;
+          _this.container.scrollLeft += offset.left;
+
+          _this.onScrollCallback(offset);
+        }, 5);
+      }
+    }
+  }]);
+
+  return AutoScroller;
+}();
+
+function defaultGetHelperDimensions(_ref) {
+  var node = _ref.node;
+  return {
+    height: node.offsetHeight,
+    width: node.offsetWidth
+  };
+}
+
+function defaultShouldCancelStart(event) {
+  var interactiveElements = [NodeType.Input, NodeType.Textarea, NodeType.Select, NodeType.Option, NodeType.Button];
+
+  if (interactiveElements.indexOf(event.target.tagName) !== -1) {
+    return true;
+  }
+
+  if (closest(event.target, function (el) {
+    return el.contentEditable === 'true';
+  })) {
+    return true;
+  }
+
+  return false;
+}
+
+var propTypes = {
+  axis: PropTypes.oneOf(['x', 'y', 'xy']),
+  contentWindow: PropTypes.any,
+  disableAutoscroll: PropTypes.bool,
+  distance: PropTypes.number,
+  getContainer: PropTypes.func,
+  getHelperDimensions: PropTypes.func,
+  helperClass: PropTypes.string,
+  helperContainer: PropTypes.oneOfType([PropTypes.func, typeof HTMLElement === 'undefined' ? PropTypes.any : PropTypes.instanceOf(HTMLElement)]),
+  hideSortableGhost: PropTypes.bool,
+  keyboardSortingTransitionDuration: PropTypes.number,
+  lockAxis: PropTypes.string,
+  lockOffset: PropTypes.oneOfType([PropTypes.number, PropTypes.string, PropTypes.arrayOf(PropTypes.oneOfType([PropTypes.number, PropTypes.string]))]),
+  lockToContainerEdges: PropTypes.bool,
+  onSortEnd: PropTypes.func,
+  onSortMove: PropTypes.func,
+  onSortOver: PropTypes.func,
+  onSortStart: PropTypes.func,
+  pressDelay: PropTypes.number,
+  pressThreshold: PropTypes.number,
+  keyCodes: PropTypes.shape({
+    lift: PropTypes.arrayOf(PropTypes.number),
+    drop: PropTypes.arrayOf(PropTypes.number),
+    cancel: PropTypes.arrayOf(PropTypes.number),
+    up: PropTypes.arrayOf(PropTypes.number),
+    down: PropTypes.arrayOf(PropTypes.number)
+  }),
+  shouldCancelStart: PropTypes.func,
+  transitionDuration: PropTypes.number,
+  updateBeforeSortStart: PropTypes.func,
+  useDragHandle: PropTypes.bool,
+  useWindowAsScrollContainer: PropTypes.bool
+};
+var defaultKeyCodes = {
+  lift: [KEYCODE.SPACE],
+  drop: [KEYCODE.SPACE],
+  cancel: [KEYCODE.ESC],
+  up: [KEYCODE.UP, KEYCODE.LEFT],
+  down: [KEYCODE.DOWN, KEYCODE.RIGHT]
+};
+var defaultProps = {
+  axis: 'y',
+  disableAutoscroll: false,
+  distance: 0,
+  getHelperDimensions: defaultGetHelperDimensions,
+  hideSortableGhost: true,
+  lockOffset: '50%',
+  lockToContainerEdges: false,
+  pressDelay: 0,
+  pressThreshold: 5,
+  keyCodes: defaultKeyCodes,
+  shouldCancelStart: defaultShouldCancelStart,
+  transitionDuration: 300,
+  useWindowAsScrollContainer: false
+};
+var omittedProps = Object.keys(propTypes);
+function validateProps(props) {
+  invariant(!(props.distance && props.pressDelay), 'Attempted to set both `pressDelay` and `distance` on SortableContainer, you may only use one or the other, not both at the same time.');
+}
+
+function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
+
+function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys(Object(source), true).forEach(function (key) { _defineProperty(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
+
+function _finallyRethrows(body, finalizer) {
+  try {
+    var result = body();
+  } catch (e) {
+    return finalizer(true, e);
+  }
+
+  if (result && result.then) {
+    return result.then(finalizer.bind(null, false), finalizer.bind(null, true));
+  }
+
+  return finalizer(false, result);
+}
+
+function _createSuper$1(Derived) { var hasNativeReflectConstruct = _isNativeReflectConstruct$1(); return function _createSuperInternal() { var Super = _getPrototypeOf(Derived), result; if (hasNativeReflectConstruct) { var NewTarget = _getPrototypeOf(this).constructor; result = Reflect.construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return _possibleConstructorReturn(this, result); }; }
+
+function _isNativeReflectConstruct$1() { if (typeof Reflect === "undefined" || !Reflect.construct) return false; if (Reflect.construct.sham) return false; if (typeof Proxy === "function") return true; try { Boolean.prototype.valueOf.call(Reflect.construct(Boolean, [], function () {})); return true; } catch (e) { return false; } }
+function sortableContainer(WrappedComponent) {
+  var _class, _temp;
+
+  var config = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {
+    withRef: false
+  };
+  return _temp = _class = function (_React$Component) {
+    _inherits(WithSortableContainer, _React$Component);
+
+    var _super = _createSuper$1(WithSortableContainer);
+
+    function WithSortableContainer(props) {
+      var _this;
+
+      _classCallCheck(this, WithSortableContainer);
+
+      _this = _super.call(this, props);
+
+      _defineProperty(_assertThisInitialized(_this), "state", {});
+
+      _defineProperty(_assertThisInitialized(_this), "handleStart", function (event) {
+        var _this$props = _this.props,
+            distance = _this$props.distance,
+            shouldCancelStart = _this$props.shouldCancelStart;
+
+        if (event.button === 2 || shouldCancelStart(event)) {
+          return;
+        }
+
+        _this.touched = true;
+        _this.position = getPosition(event);
+        var node = closest(event.target, function (el) {
+          return el.sortableInfo != null;
+        });
+
+        if (node && node.sortableInfo && _this.nodeIsChild(node) && !_this.state.sorting) {
+          var useDragHandle = _this.props.useDragHandle;
+          var _node$sortableInfo = node.sortableInfo,
+              index = _node$sortableInfo.index,
+              collection = _node$sortableInfo.collection,
+              disabled = _node$sortableInfo.disabled;
+
+          if (disabled) {
+            return;
+          }
+
+          if (useDragHandle && !closest(event.target, isSortableHandle)) {
+            return;
+          }
+
+          _this.manager.active = {
+            collection: collection,
+            index: index
+          };
+
+          if (!isTouchEvent(event) && event.target.tagName === NodeType.Anchor) {
+            event.preventDefault();
+          }
+
+          if (!distance) {
+            if (_this.props.pressDelay === 0) {
+              _this.handlePress(event);
+            } else {
+              _this.pressTimer = setTimeout(function () {
+                return _this.handlePress(event);
+              }, _this.props.pressDelay);
+            }
+          }
+        }
+      });
+
+      _defineProperty(_assertThisInitialized(_this), "nodeIsChild", function (node) {
+        return node.sortableInfo.manager === _this.manager;
+      });
+
+      _defineProperty(_assertThisInitialized(_this), "handleMove", function (event) {
+        var _this$props2 = _this.props,
+            distance = _this$props2.distance,
+            pressThreshold = _this$props2.pressThreshold;
+
+        if (!_this.state.sorting && _this.touched && !_this._awaitingUpdateBeforeSortStart) {
+          var position = getPosition(event);
+          var delta = {
+            x: _this.position.x - position.x,
+            y: _this.position.y - position.y
+          };
+          var combinedDelta = Math.abs(delta.x) + Math.abs(delta.y);
+          _this.delta = delta;
+
+          if (!distance && (!pressThreshold || combinedDelta >= pressThreshold)) {
+            clearTimeout(_this.cancelTimer);
+            _this.cancelTimer = setTimeout(_this.cancel, 0);
+          } else if (distance && combinedDelta >= distance && _this.manager.isActive()) {
+            _this.handlePress(event);
+          }
+        }
+      });
+
+      _defineProperty(_assertThisInitialized(_this), "handleEnd", function () {
+        _this.touched = false;
+
+        _this.cancel();
+      });
+
+      _defineProperty(_assertThisInitialized(_this), "cancel", function () {
+        var distance = _this.props.distance;
+        var sorting = _this.state.sorting;
+
+        if (!sorting) {
+          if (!distance) {
+            clearTimeout(_this.pressTimer);
+          }
+
+          _this.manager.active = null;
+        }
+      });
+
+      _defineProperty(_assertThisInitialized(_this), "handlePress", function (event) {
+        try {
+          var active = _this.manager.getActive();
+
+          var _temp6 = function () {
+            if (active) {
+              var _temp7 = function _temp7() {
+                var index = _node.sortableInfo.index;
+                var margin = getElementMargin(_node);
+                var gridGap = getContainerGridGap(_this.container);
+
+                var containerBoundingRect = _this.scrollContainer.getBoundingClientRect();
 
 var _extends = _interopDefault(require('@babel/runtime/helpers/extends'));
 var _slicedToArray = _interopDefault(
