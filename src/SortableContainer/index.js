@@ -640,8 +640,8 @@ export default function sortableContainer(
       for (let i = 0, len = nodes.length; i < len; i++) {
         const {node} = nodes[i];
         const {index} = node.sortableInfo;
-        const width = node.offsetWidth;
-        const height = node.offsetHeight;
+        const width = node.getBoundingClientRect().width;
+        const height = node.getBoundingClientRect().height;
         const offset = {
           height: this.height > height ? height / 2 : this.height / 2,
           width: this.width > width ? width / 2 : this.width / 2,
@@ -794,8 +794,10 @@ export default function sortableContainer(
           if (
             mustShiftBackward ||
             (index > this.index &&
-              sortingOffset.top + windowScrollDelta.top + offset.height >=
-                edgeOffset.top)
+              sortingOffset.top +
+                windowScrollDelta.top +
+                this.boundingClientRect.height >=
+                edgeOffset.top + offset.height)
           ) {
             translate.y = -(this.height + this.marginOffset.y);
             this.newIndex = index;
