@@ -793,7 +793,11 @@ export default function sortableContainer(
         } else if (this.axis.y) {
           if (
             mustShiftBackward ||
-            (index > this.index && sortingOffset.top + windowScrollDelta.top + this.boundingClientRect.height >= edgeOffset.top + offset.height)
+            (index > this.index &&
+              sortingOffset.top +
+                windowScrollDelta.top +
+                this.boundingClientRect.height >=
+                edgeOffset.top + offset.height)
           ) {
             translate.y = -(this.height + this.marginOffset.y);
             this.newIndex = index;
