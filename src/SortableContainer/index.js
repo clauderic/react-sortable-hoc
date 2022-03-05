@@ -164,9 +164,12 @@ export default function sortableContainer(
         if (!distance) {
           if (this.props.pressDelay === 0) {
             this.handlePress(event);
-          } else {
+          } else if (!this.pressTimer) {
             this.pressTimer = setTimeout(
-              () => this.handlePress(event),
+              () => {
+                this.pressTimer = 0;
+                this.handlePress(event);
+              },
               this.props.pressDelay,
             );
           }
@@ -220,6 +223,7 @@ export default function sortableContainer(
       if (!sorting) {
         if (!distance) {
           clearTimeout(this.pressTimer);
+          this.pressTimer = 0;
         }
         this.manager.active = null;
       }
