@@ -246,10 +246,15 @@ export default function sortableContainer(
 
           try {
             const {index} = node.sortableInfo;
-            await updateBeforeSortStart(
+            const result = await updateBeforeSortStart(
               {collection, index, node, isKeySorting},
               event,
             );
+            // If `updateBeforeSortStart` resolves to false, cancel sort before it starts
+            if (result === false) {
+              this._awaitingUpdateBeforeSortStart = false;
+              return;
+            }
           } finally {
             this._awaitingUpdateBeforeSortStart = false;
           }
