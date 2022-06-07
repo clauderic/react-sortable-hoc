@@ -390,6 +390,10 @@ export default function sortableContainer(
           helperClass
             .split(' ')
             .forEach((className) => this.helper.classList.add(className));
+          this.originTransfrom =
+            window.getComputedStyle(this.helper).transform === 'none'
+              ? undefined
+              : window.getComputedStyle(this.helper).transform;
         }
 
         this.listenerNode = event.touches ? event.target : this.contentWindow;
@@ -616,7 +620,7 @@ export default function sortableContainer(
         setTransitionDuration(this.helper, keyboardSortingTransitionDuration);
       }
 
-      setTranslate3d(this.helper, translate);
+      setTranslate3d(this.helper, translate, this.originTransfrom);
     }
 
     animateNodes() {
