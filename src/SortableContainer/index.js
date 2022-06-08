@@ -260,6 +260,12 @@ export default function sortableContainer(
         const margin = getElementMargin(node);
         const gridGap = getContainerGridGap(this.container);
         const containerBoundingRect = this.scrollContainer.getBoundingClientRect();
+
+        // Need for correct sorting behavior in grid layout with enabled `useWindowAsScrollContainer`
+        if (useWindowAsScrollContainer) {
+          containerBoundingRect.width = this.container.clientWidth;
+        }
+
         const dimensions = getHelperDimensions({index, node, collection});
 
         this.node = node;
@@ -645,9 +651,9 @@ export default function sortableContainer(
 
         // For keyboard sorting, we want user input to dictate the position of the nodes
         const mustShiftBackward =
-          isKeySorting && (index > this.index && index <= prevIndex);
+          isKeySorting && index > this.index && index <= prevIndex;
         const mustShiftForward =
-          isKeySorting && (index < this.index && index >= prevIndex);
+          isKeySorting && index < this.index && index >= prevIndex;
 
         const translate = {
           x: 0,
