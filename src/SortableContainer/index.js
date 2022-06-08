@@ -97,7 +97,7 @@ export default function sortableContainer(
 
         Object.keys(this.events).forEach((key) =>
           events[key].forEach((eventName) =>
-            this.container.addEventListener(eventName, this.events[key], false),
+            this.container.addEventListener(eventName, this.events[key], { passive: false }),
           ),
         );
 
@@ -395,11 +395,11 @@ export default function sortableContainer(
         this.listenerNode = event.touches ? event.target : this.contentWindow;
 
         if (isKeySorting) {
-          this.listenerNode.addEventListener('wheel', this.handleKeyEnd, true);
+          this.listenerNode.addEventListener('wheel', this.handleKeyEnd, { passive: true });
           this.listenerNode.addEventListener(
             'mousedown',
             this.handleKeyEnd,
-            true,
+            { passive: true },
           );
           this.listenerNode.addEventListener('keydown', this.handleKeyDown);
         } else {
@@ -407,14 +407,14 @@ export default function sortableContainer(
             this.listenerNode.addEventListener(
               eventName,
               this.handleSortMove,
-              false,
+              { passive: false },
             ),
           );
           events.end.forEach((eventName) =>
             this.listenerNode.addEventListener(
               eventName,
               this.handleSortEnd,
-              false,
+              { passive: false },
             ),
           );
         }
