@@ -104,8 +104,7 @@ export interface Config {
 export type WrappedComponentFactory<P> = (props: P) => JSX.Element;
 
 export type WrappedComponent<P> =
-  | React.ComponentClass<P>
-  | React.SFC<P>
+  | React.ComponentType<P>
   | WrappedComponentFactory<P>;
 
 export function SortableContainer<P>(
