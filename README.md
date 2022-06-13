@@ -67,7 +67,7 @@ const SortableItem = SortableElement(({value}) => <li>{value}</li>);
 
 const SortableList = SortableContainer(({items}) => {
   return (
-    <ul>
+    <ul> // note: there MUST be a DOM element at the top level. another example would be to use a <div>. see https://github.com/clauderic/react-sortable-hoc/issues/367
       {items.map((value, index) => (
         <SortableItem key={`item-${value}`} index={index} value={value} />
       ))}
