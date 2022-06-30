@@ -23,6 +23,10 @@ export interface SortOver {
   helper: HTMLElement;
 }
 
+export interface ShouldSortOver extends SortOver {
+  direction: {x: number; y: number};
+}
+
 export interface SortEnd {
   oldIndex: number;
   newIndex: number;
@@ -46,6 +50,11 @@ export type SortMoveHandler = (event: SortEvent) => void;
 export type SortEndHandler = (sort: SortEnd, event: SortEvent) => void;
 
 export type SortOverHandler = (sort: SortOver, event: SortEvent) => void;
+
+export type ShouldSortOverHandler = (
+  sort: ShouldSortOver,
+  event: SortEvent,
+) => void;
 
 export type ContainerGetter = (
   element: React.ReactElement<any>,
@@ -80,6 +89,7 @@ export interface SortableContainerProps {
   onSortMove?: SortMoveHandler;
   onSortEnd?: SortEndHandler;
   onSortOver?: SortOverHandler;
+  onShouldSortOver?: ShouldSortOverHandler;
   useDragHandle?: boolean;
   useWindowAsScrollContainer?: boolean;
   hideSortableGhost?: boolean;

@@ -130,6 +130,7 @@ export default function sortableContainer(
 
       this.touched = true;
       this.position = getPosition(event);
+      this.prevPosition = this.position;
 
       const node = closest(event.target, (el) => el.sortableInfo != null);
 
@@ -192,8 +193,6 @@ export default function sortableContainer(
           y: this.position.y - position.y,
         };
         const combinedDelta = Math.abs(delta.x) + Math.abs(delta.y);
-
-        this.delta = delta;
 
         if (!distance && (!pressThreshold || combinedDelta >= pressThreshold)) {
           clearTimeout(this.cancelTimer);
@@ -453,6 +452,13 @@ export default function sortableContainer(
         event.preventDefault();
       }
 
+      const position = getPosition(event);
+      this.direction = {
+        x: this.prevPosition.x - position.x,
+        y: this.prevPosition.y - position.y,
+      };
+      this.prevPosition = position;
+
       this.updateHelperPosition(event);
       this.animateNodes();
       this.autoscroll();
@@ -620,8 +626,14 @@ export default function sortableContainer(
     }
 
     animateNodes() {
-      const {transitionDuration, hideSortableGhost, onSortOver} = this.props;
-      const {containerScrollDelta, windowScrollDelta} = this;
+      const {
+        transitionDuration,
+        hideSortableGhost,
+        onShouldSortOver,
+        onSortOver,
+      } = this.props;
+      const animations = [];
+      const {containerScrollDelta, windowScrollDelta, direction} = this;
       const nodes = this.manager.getOrderedRefs();
       const sortingOffset = {
         left:
@@ -808,8 +820,7 @@ export default function sortableContainer(
           }
         }
 
-        setTranslate3d(node, translate);
-        nodes[i].translate = translate;
+        animations.push({i, translate});
       }
 
       if (this.newIndex == null) {
@@ -822,7 +833,34 @@ export default function sortableContainer(
       }
 
       const oldIndex = isKeySorting ? this.prevIndex : prevIndex;
-      if (onSortOver && this.newIndex !== oldIndex) {
+
+      if (this.newIndex === oldIndex) {
+        return;
+      }
+
+      if (
+        onShouldSortOver &&
+        !onShouldSortOver({
+          collection: this.manager.active.collection,
+          index: this.index,
+          newIndex: this.newIndex,
+          oldIndex,
+          isKeySorting,
+          direction,
+        })
+      ) {
+        return;
+      }
+
+      for (const data of animations) {
+        const nodesI = nodes[data.i];
+        const translate = data.translate;
+
+        setTranslate3d(nodesI.node, translate);
+        nodesI.translate = translate;
+      }
+
+      if (onSortOver) {
         onSortOver({
           collection: this.manager.active.collection,
           index: this.index,

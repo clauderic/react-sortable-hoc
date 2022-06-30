@@ -32,6 +32,7 @@ export const propTypes = {
   lockToContainerEdges: PropTypes.bool,
   onSortEnd: PropTypes.func,
   onSortMove: PropTypes.func,
+  onShouldSortOver: PropTypes.func,
   onSortOver: PropTypes.func,
   onSortStart: PropTypes.func,
   pressDelay: PropTypes.number,
