@@ -241,7 +241,7 @@ export function getLockPixelOffsets({height, width, lockOffset}) {
 
 function isScrollable(el) {
   const computedStyle = window.getComputedStyle(el);
-  const overflowRegex = /(auto|scroll)/;
+  const overflowRegex = /(auto|overlay|scroll)/;
   const properties = ['overflow', 'overflowX', 'overflowY'];
 
   return properties.find((property) =>
