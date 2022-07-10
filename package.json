@@ -54,7 +54,7 @@
   },
   "peerDependencies": {
     "prop-types": "^15.5.7",
-    "react": "^16.3.0 || ^17.0.0",
+    "react": "^16.3.0 || ^17.0.0 || ^18.0.0",
     "react-dom": "^16.3.0 || ^17.0.0"
   },
   "devDependencies": {
