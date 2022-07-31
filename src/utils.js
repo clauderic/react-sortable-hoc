@@ -272,6 +272,10 @@ export function getContainerGridGap(element) {
   return {x: 0, y: 0};
 }
 
+export function getLinearDistance(deltaX, deltaY) {
+  return Math.sqrt(deltaX ** 2, deltaY ** 2);
+}
+
 export const KEYCODE = {
   TAB: 9,
   ESC: 27,

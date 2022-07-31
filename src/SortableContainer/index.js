@@ -15,6 +15,7 @@ import {
   getElementMargin,
   getLockPixelOffsets,
   getPosition,
+  getLinearDistance,
   isTouchEvent,
   limit,
   NodeType,
@@ -191,7 +192,7 @@ export default function sortableContainer(
           x: this.position.x - position.x,
           y: this.position.y - position.y,
         };
-        const combinedDelta = Math.abs(delta.x) + Math.abs(delta.y);
+        const combinedDelta = getLinearDistance(Math.abs(delta.x), Math.abs(delta.y));
 
         this.delta = delta;
 
