@@ -1057,10 +1057,10 @@ export default function sortableContainer(
       const {helperContainer} = this.props;
 
       if (typeof helperContainer === 'function') {
-        return helperContainer();
+        return helperContainer.call(this);
       }
 
-      return this.props.helperContainer || this.document.body;
+      return this.props.helperContainer || this.container;
     }
 
     get containerScrollDelta() {
