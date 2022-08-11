@@ -97,7 +97,7 @@ export default function sortableContainer(
 
         Object.keys(this.events).forEach((key) =>
           events[key].forEach((eventName) =>
-            this.container.addEventListener(eventName, this.events[key], false),
+            this.container.addEventListener(eventName, this.events[key], { passive: false }),
           ),
         );
 
