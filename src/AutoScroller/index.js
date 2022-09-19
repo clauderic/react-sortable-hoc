@@ -13,7 +13,7 @@ export default class AutoScroller {
     this.interval = null;
   }
 
-  update({translate, minTranslate, maxTranslate, width, height}) {
+  update({translate, minTranslate, maxTranslate, width, height, useWindowAsScrollContainer}) {
     const direction = {
       x: 0,
       y: 0,
@@ -36,8 +36,10 @@ export default class AutoScroller {
       clientWidth,
     } = this.container;
 
+    const windowHeight = window.innerHeight;
+
     const isTop = scrollTop === 0;
-    const isBottom = scrollHeight - scrollTop - clientHeight === 0;
+    const isBottom = scrollHeight - scrollTop - (useWindowAsScrollContainer ? windowHeight : clientHeight) === 0;
     const isLeft = scrollLeft === 0;
     const isRight = scrollWidth - scrollLeft - clientWidth === 0;
 
