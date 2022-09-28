@@ -105,7 +105,7 @@ export type WrappedComponentFactory<P> = (props: P) => JSX.Element;
 
 export type WrappedComponent<P> =
   | React.ComponentClass<P>
-  | React.SFC<P>
+  | React.FC<P>
   | WrappedComponentFactory<P>;
 
 export function SortableContainer<P>(
