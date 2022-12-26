@@ -301,6 +301,7 @@ export function cloneNode(node) {
   clonedFields.forEach((field, i) => {
     if (field.type !== 'file') {
       field.value = fields[i].value;
+      field.checked = fields[i].checked;
     }
 
     // Fixes an issue with original radio buttons losing their value once the
