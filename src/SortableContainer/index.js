@@ -124,7 +124,7 @@ export default function sortableContainer(
     handleStart = (event) => {
       const {distance, shouldCancelStart} = this.props;
 
-      if (event.button === 2 || shouldCancelStart(event)) {
+      if (event.button !== 0 || shouldCancelStart(event)) {
         return;
       }
 
